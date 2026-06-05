@@ -1,0 +1,18 @@
+import type { Academy } from "@/types/academy";
+import { create } from "zustand";
+
+interface ActiveAcademyState {
+  activeAcademy: Academy | null;
+  setActiveAcademy: (data: Academy | null) => void;
+}
+
+export const useActiveAcademyState = create<ActiveAcademyState>((set) => ({
+  activeAcademy: JSON.parse(
+    localStorage.getItem("activeAcademy") || "null",
+  ) as Academy | null,
+
+  setActiveAcademy: (data) => {
+    localStorage.setItem("activeAcademy", JSON.stringify(data));
+    set({ activeAcademy: data });
+  },
+}));

@@ -1,0 +1,397 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                String  @id @default(cuid())
+  name              String
+  phone             String  @unique
+  password          String
+  isPasswordChanged Boolean @default(false)
+  roles             Role[]  @default([])
+  isActive          Boolean @default(true)
+
+  captainProfile   Captain?
+  secretaryProfile Secretary?
+
+  academies        Academy[]            @relation("AcademyOwners")
+  receivedPayments PaymentTransaction[] @relation("PaymentReceiver")
+
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+  logoutAt               DateTime?
+  subscriptions          Subscription[]
+  userLedgerTransactions LedgerTransaction[]
+}
+
+model BlacklistedToken {
+  id        String   @id @default(cuid())
+  jti       String   @unique
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+model Academy {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  phone       String  @unique
+  address     String
+  paymentLink String?
+
+  socialMediaPlatforms SocialMedia[]
+  owners               User[]               @relation("AcademyOwners")
+  courses              Course[]
+  subscriptions        Subscription[]
+  expenses             Expense[]
+  clients              Client[]
+  Lessons              Lesson[]
+  payments             PaymentTransaction[]
+
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+  userLedgerTransactions LedgerTransaction[]
+}
+
+model SocialMedia {
+  id        String   @id @default(cuid())
+  platform  Platform
+  url       String
+  academyId String
+  academy   Academy  @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  @@unique([platform, academyId])
+}
+
+model Secretary {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  baseSalary  Float
+  targetCount Int
+  bonusAmount Float
+  createdAt   DateTime @default(now())
+}
+
+model Captain {
+  id                 String          @id @default(cuid())
+  userId             String          @unique
+  user               User            @relation(fields: [userId], references: [id], onDelete: Restrict)
+  isActive           Boolean         @default(true)
+  captainLessonPrice Float
+  trainingType       TrainingSupport @default(BOTH)
+  createdAt          DateTime        @default(now())
+
+  lessons Lesson[] @relation("CaptainLessons")
+
+  @@index([isActive, trainingType])
+}
+
+model Car {
+  id              String       @id @default(cuid())
+  modelName       String
+  plateNumber     String       @unique
+  gearType        Transmission
+  carSessionPrice Float        @default(0)
+  isActive        Boolean      @default(true)
+  lessons         Lesson[]
+  createdAt       DateTime     @default(now())
+
+  @@index([isActive, gearType])
+}
+
+model Area {
+  id            String          @id @default(cuid())
+  name          String          @unique
+  supportType   TrainingSupport
+  isActive      Boolean         @default(true)
+  lessons       Lesson[]
+  createdAt     DateTime        @default(now())
+  subscriptions Subscription[]
+
+  @@index([isActive])
+  @@index([supportType])
+}
+
+model Client {
+  id           String       @id @default(cuid())
+  name         String
+  phone        String
+  clientSource ClientSource @default(OFFICE)
+
+  academyId String
+  academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  subscriptions Subscription[]
+  lessons       Lesson[]
+  payments      PaymentTransaction[]
+
+  createdAt DateTime @default(now())
+
+  @@unique([academyId, phone])
+  @@index([academyId])
+  @@index([name])
+  @@index([phone])
+}
+
+model Subscription {
+  id                         String             @id @default(cuid())
+  status                     SubscriptionStatus @default(PAUSED)
+  priceAtBooking             Float
+  totalSessions              Int
+  sessionDurationMinutes     Int
+  trainingTypeAtRegistration Transmission       @default(AUTOMATIC)
+  areaId                     String
+  area                       Area               @relation(fields: [areaId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Restrict)
+
+  academyId String
+  academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  lessons  Lesson[]
+  payments PaymentTransaction[]
+
+  createdAt   DateTime @default(now())
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([clientId])
+  @@index([academyId])
+}
+
+model ProofOfPaymentImage {
+  id       String @id @default(cuid())
+  imageUrl String
+  publicId String
+
+  transaction   PaymentTransaction? @relation(fields: [transactionId], references: [id])
+  transactionId String              @unique
+}
+
+model PaymentTransaction {
+  id                  String               @id @default(cuid())
+  amount              Float
+  paymentMethod       PaymentMethod
+  type                TransactionType      @default(PAYMENT)
+  status              Status               @default(PENDING)
+  proofOfPaymentImage ProofOfPaymentImage?
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Restrict)
+
+  receiverId String
+  receiver   User   @relation("PaymentReceiver", fields: [receiverId], references: [id], onDelete: Restrict)
+
+  academyId String
+  academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([receiverId])
+  @@index([subscriptionId])
+  @@index([createdAt])
+  @@index([status])
+}
+
+model Lesson {
+  id                 String       @id @default(cuid())
+  startTime          DateTime
+  endTime            DateTime
+  status             LessonStatus @default(SCHEDULED)
+  transmission       Transmission
+  expectedAmount     Float?
+  carSessionPrice    Float
+  captainLessonPrice Float
+  isPaid             Boolean      @default(false)
+
+  captainId String
+  captain   Captain @relation("CaptainLessons", fields: [captainId], references: [id], onDelete: Restrict)
+
+  carId String
+  car   Car    @relation(fields: [carId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  areaId String
+  area   Area   @relation(fields: [areaId], references: [id], onDelete: Restrict)
+
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Restrict)
+
+  academyId String
+  academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  @@index([captainId, startTime, endTime])
+  @@index([carId, startTime, endTime])
+  @@index([clientId, startTime, endTime])
+  @@index([status])
+}
+
+model TrainingDetails {
+  id       String  @id @default(cuid())
+  text     String
+  course   Course? @relation(fields: [courseId], references: [id])
+  courseId String?
+}
+
+model Course {
+  id                     String            @id @default(cuid())
+  name                   String
+  description            String
+  isActive               Boolean           @default(true)
+  priceOriginal          Float
+  priceDiscounted        Float
+  totalSessions          Int
+  practicalSessions      Int
+  sessionDurationMinutes Int
+  courseFeatures         TrainingDetails[]
+  featuredReason         String?
+
+  academyId String
+  academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  subscriptions Subscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([academyId, name])
+  @@unique([academyId, id])
+  @@index([name])
+}
+
+model Expense {
+  id     String      @id @default(cuid())
+  amount Float
+  type   ExpenseType
+
+  academyId String
+  academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+
+  @@index([academyId, createdAt])
+}
+
+model LedgerTransaction {
+  id String @id @default(cuid())
+
+  userId    String
+  academyId String
+
+  category LedgerCategory
+
+  amount Decimal @db.Decimal(10, 2)
+
+  referenceId String?
+
+  ledgerEffect LedgerEffect @default(CREDIT)
+  notes        String?
+
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  academy Academy @relation(fields: [academyId], references: [id])
+}
+
+enum LedgerCategory {
+  FROM_CUSTOMER // العميل سدد
+  TO_CUSTOMER // العميل رجع له فلوس
+
+  TO_USER // المستخدم له فلوس
+  FROM_USER // المستخدم خد فلوس من الأكادمية
+
+  BONUS // بزنص للمستخدم
+  PENALTY // خصم للمستخدم
+}
+
+enum LedgerEffect {
+  CREDIT
+  DEBIT
+}
+
+enum Role {
+  OWNER
+  SECRETARY
+  CAPTAIN
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATIC
+}
+
+enum TrainingSupport {
+  MANUAL
+  AUTOMATIC
+  BOTH
+}
+
+enum LessonStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELED
+  CANCELED_CHARGED
+}
+
+enum ExpenseType {
+  MARKETING
+  MAINTENANCE
+  UTILITIES
+  RENT
+  GENERAL
+}
+
+enum PaymentMethod {
+  CASH
+  ELECTRONIC_WALLET
+}
+
+enum TransactionType {
+  PAYMENT
+  REFUND
+}
+
+enum Platform {
+  FACEBOOK
+  INSTAGRAM
+  TIKTOK
+  YOUTUBE
+  WHATSAPP
+  WEBSITE
+  GMAIL
+}
+
+enum Status {
+  PENDING
+  COMPLETED
+  REJECTED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  FULLYBOOKED
+  PAUSED
+  COMPLETED
+  CANCELED
+}
+
+enum ClientSource {
+  PLATFORM
+  OFFICE
+}
