@@ -8,6 +8,11 @@ export const academyBaseSelect: AcademySelect = {
   paymentLink: true,
 };
 
+export const academyWithOwnersSelect: AcademySelect = {
+  ...academyBaseSelect,
+  owners: { select: { id: true } }
+};
+
 export const academyDetailsSelect: AcademySelect = {
   ...academyBaseSelect,
   createdAt: true,

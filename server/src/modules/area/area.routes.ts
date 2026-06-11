@@ -1,44 +1,44 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./area.schema";
-import * as controller from "./area.controller";
 import checkRole from "../../middlewares/role.middleware";
+import AreaController from "./area.controller";
 
 const router = Router();
 
 router.get(
   "/",
   validation(Schema.GetAllAreasSchema),
-  checkRole(["OWNER"]),
-  controller.getAllAreas,
+  checkRole(["OWNER", "SECRETARY"]),
+  AreaController.getAllAreas,
 );
 
 router.post(
   "/",
   validation(Schema.CreateAreaSchema),
   checkRole(["OWNER"]),
-  controller.createArea,
+  AreaController.createArea,
 );
 
 router.get(
   "/:areaId",
   validation(Schema.GetAreaDetailsSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getDetailsArea,
+  AreaController.getDetailsArea,
 );
 
 router.patch(
   "/:areaId",
   validation(Schema.UpdateAreaSchema),
   checkRole(["OWNER"]),
-  controller.updateArea,
+  AreaController.updateArea,
 );
 
 router.delete(
   "/:areaId",
   validation(Schema.DeleteAreaSchema),
   checkRole(["OWNER"]),
-  controller.deleteArea,
+  AreaController.deleteArea,
 );
 
 export default router;

@@ -20,7 +20,7 @@ export const buildCaptainWhere = ({
   }
 
   if (trainingType) {
-    where.trainingType = trainingType;
+    where.trainingType = { in: ["BOTH", trainingType] };
   }
 
   if (typeof isActive !== "undefined") {

@@ -51,7 +51,7 @@ export const getSubscriptionStatus = ({
     return SubscriptionStatus.PAUSED;
   }
 
-  const oneThirdLessons = Math.floor(totalLessons / 3);
+  const oneThirdLessons = Math.floor(totalLessons / 4);
 
   if (bookedLessons > oneThirdLessons && totalPaid < subscriptionPrice) {
     return SubscriptionStatus.PAUSED;

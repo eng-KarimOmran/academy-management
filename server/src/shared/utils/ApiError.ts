@@ -13,7 +13,8 @@ export type UniqueField =
   | "SubscriptionAlreadyCancelled"
   | "CaptainTimeConflict"
   | "CarTimeConflict"
-  | "ClientTimeConflict";
+  | "ClientTimeConflict"
+  | "OWNER"
 
 class ApiError {
   static NotFound({
@@ -67,6 +68,7 @@ class ApiError {
       CaptainTimeConflict: "الكابتن لديه حصة أخرى في هذا الوقت",
       CarTimeConflict: "السيارة محجوزة في هذا الوقت",
       ClientTimeConflict: "العميل لديه حصة أخرى في هذا الوقت",
+      OWNER: "المستخدم مالك بالفعل",
     };
     const message = customMessage || messages[field] || "حدث تعارض في البيانات";
     return new ErrorResponse(message, 409);
@@ -89,7 +91,7 @@ class ApiError {
     return new ErrorResponse(message, 401);
   }
 
-  static ValidationError(message: string) {
+  static ValidationError(message: string = "بيانات خاطئة أو غير كاملة") {
     return new ErrorResponse(message, 422);
   }
 

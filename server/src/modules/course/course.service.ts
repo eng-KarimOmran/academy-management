@@ -1,123 +1,99 @@
 import * as DTO from "./course.dto";
 import ApiError from "../../shared/utils/ApiError";
-import { getPaginationParams } from "../../shared/utils/Pagination";
-import {
-  createCourse,
-  findCourseById,
-  findCourseByName,
-  findManyCourse,
-  updateCourse,
-  remove,
-  addCourseFeatures,
-  deleteCourseFeatures,
-} from "./course.repository";
+import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
 import { CourseCreateInput } from "../../../prisma/generated/models";
 import { buildCourseWhere } from "./course.utils";
 import { courseDetailsSelect } from "./course.selectors";
+import CourseRepository from "./course.repository";
 
-export const create = async (dataSafe: DTO.CreateDto) => {
-  const { body, params } = dataSafe;
-  const { academyId } = params;
+const CourseService = {
+  async create(dataSafe: DTO.CreateDto) {
+    const { body, params } = dataSafe;
+    const { academyId } = params;
 
-  const courseExists = await findCourseByName({ academyId, name: body.name });
+    const courseExists = await CourseRepository.findCourseByName({ academyId, name: body.name });
+    if (courseExists) throw ApiError.Conflict("Name");
 
-  if (courseExists) throw ApiError.Conflict("Name");
+    const data: CourseCreateInput = {
+      ...body,
+      academy: { connect: { id: academyId } },
+    };
 
-  const data: CourseCreateInput = {
-    ...body,
-    academy: { connect: { id: academyId } },
-  };
+    return await CourseRepository.create({ data });
+  },
 
-  return await createCourse(data);
-};
+  async update(dataSafe: DTO.UpdateDto) {
+    const { body, params } = dataSafe;
+    const { courseId, academyId } = params;
+    const { name } = body;
 
-export const update = async (dataSafe: DTO.UpdateDto) => {
-  const { body, params } = dataSafe;
-  const { courseId, academyId } = params;
+    const course = await CourseRepository.findCourseById({ id: courseId });
+    if (!course) throw ApiError.NotFound({ model: "Course" });
 
-  const { name } = body;
+    if (name && name !== course.name) {
+      const nameTaken = await CourseRepository.findCourseByName({ name, academyId });
+      if (nameTaken) throw ApiError.Conflict("Name");
+    }
 
-  const course = await findCourseById({ id: courseId });
+    return await CourseRepository.update({ id: courseId, data: body });
+  },
 
-  if (!course) throw ApiError.NotFound({ model: "Course" });
+  async getAll(dataSafe: DTO.GetAllDto) {
+    const { query, params } = dataSafe;
+    const { academyId } = params;
+    const { limit, page, search, isActive } = query;
 
-  if (name && name !== course.name) {
-    const nameTaken = await findCourseByName({ name, academyId });
-    if (nameTaken) throw ApiError.Conflict("Name");
+    const where = buildCourseWhere({ search, isActive, academyId });
+    const { take, skip } = getPagination({ page, limit });
+
+    const { courses, count } = await CourseRepository.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { createdAt: "desc" },
+    });
+
+    const totalPages = getTotalPages({ limit, count });
+    const pagination = { limit, page, totalPages, total: count };
+
+    return { items: courses, pagination };
+  },
+
+  async getDetails(dataSafe: DTO.GetDetailsDto) {
+    const { courseId } = dataSafe.params;
+
+    const course = await CourseRepository.findCourseById({
+      id: courseId,
+      select: courseDetailsSelect,
+    });
+
+    if (!course) throw ApiError.NotFound({ model: "Course" });
+
+    return course;
+  },
+
+  async deleteCourse(dataSafe: DTO.DeleteDto) {
+    const { courseId } = dataSafe.params;
+
+    const course = await CourseRepository.findCourseById({ id: courseId });
+    if (!course) throw ApiError.NotFound({ model: "Course" });
+
+    return await CourseRepository.delete({ id: courseId });
+  },
+
+  async addFeature({ courseId, text }: { courseId: string; text: string }) {
+    const course = await CourseRepository.findCourseById({ id: courseId });
+    if (!course) throw ApiError.NotFound({ model: "Course" });
+
+    return await CourseRepository.addCourseFeature({ courseId, text });
+  },
+
+  async deleteFeature({ courseId, featureId }: { courseId: string; featureId: string }) {
+    const course = await CourseRepository.findCourseById({ id: courseId });
+    if (!course) throw ApiError.NotFound({ model: "Course" });
+
+    return await CourseRepository.deleteCourseFeature({ courseId, featureId });
   }
-
-  return await updateCourse({ id: courseId, data: body });
 };
 
-export const getAll = async (dataSafe: DTO.GetAllDto) => {
-  const { query, params } = dataSafe;
-  const { academyId } = params;
-  const { limit, page, search, isActive } = query;
-
-  const where = buildCourseWhere({ search, isActive, academyId });
-
-  const { count, courses } = await findManyCourse({
-    where,
-    take: limit,
-    skip: Math.min(0, page - 1) * limit,
-    orderBy: { createdAt: "desc" },
-  });
-
-  const { safePage, totalPages } = getPaginationParams({
-    limit,
-    page,
-    count,
-  });
-
-  const pagination = { limit, page: safePage, total: count, totalPages };
-
-  return { items: courses, pagination };
-};
-
-export const getDetails = async (dataSafe: DTO.GetDetailsDto) => {
-  const { courseId } = dataSafe.params;
-
-  const course = await findCourseById({
-    id: courseId,
-    select: courseDetailsSelect,
-  });
-
-  if (!course) throw ApiError.NotFound({ model: "Course" });
-
-  return course;
-};
-
-export const deleteCourse = async (dataSafe: DTO.DeleteDto) => {
-  const { courseId } = dataSafe.params;
-
-  const course = await findCourseById({ id: courseId });
-  if (!course) throw ApiError.NotFound({ model: "Course" });
-
-  return await remove(courseId);
-};
-
-export const addFeature = async ({
-  courseId,
-  text,
-}: {
-  courseId: string;
-  text: string;
-}) => {
-  const course = await findCourseById({ id: courseId });
-  if (!course) throw ApiError.NotFound({ model: "Course" });
-
-  return await addCourseFeatures({ courseId, text });
-};
-
-export const deleteFeature = async ({
-  courseId,
-  featureId,
-}: {
-  courseId: string;
-  featureId: string;
-}) => {
-  const course = await findCourseById({ id: courseId });
-  if (!course) throw ApiError.NotFound({ model: "Course" });
-  
-  return await deleteCourseFeatures({ courseId, featureId });
-};
+export default CourseService;

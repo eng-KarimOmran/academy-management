@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./course.schema";
-import * as controller from "./course.controller";
+import CourseController from "./course.controller";
 import checkRole from "../../middlewares/role.middleware";
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
 
@@ -11,7 +11,7 @@ router.get(
   "/",
   validation(Schema.GetAllSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getAllCourses,
+  CourseController.getAllCourses,
 );
 
 router.post(
@@ -19,7 +19,7 @@ router.post(
   validation(Schema.CreateSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.createCourse,
+  CourseController.createCourse,
 );
 
 router.post(
@@ -27,7 +27,7 @@ router.post(
   validation(Schema.AddCourseFeaturesSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.addCourseFeatures,
+  CourseController.addCourseFeatures,
 );
 
 router.delete(
@@ -35,13 +35,13 @@ router.delete(
   validation(Schema.DeleteCourseFeaturesSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.deleteCourseFeatures,
+  CourseController.deleteCourseFeatures,
 );
 
 router.get(
   "/:courseId",
   validation(Schema.GetDetailsSchema),
-  controller.getDetailsCourse,
+  CourseController.getDetailsCourse,
 );
 
 router.patch(
@@ -49,7 +49,7 @@ router.patch(
   validation(Schema.UpdateSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.updateCourse,
+  CourseController.updateCourse,
 );
 
 router.delete(
@@ -57,7 +57,7 @@ router.delete(
   validation(Schema.DeleteSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.deleteCourse,
+  CourseController.deleteCourse,
 );
 
 export default router;

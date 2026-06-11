@@ -1,80 +1,64 @@
-import * as DTO from "./area.dto";
 import ApiError from "../../shared/utils/ApiError";
-import { getPaginationParams } from "../../shared/utils/Pagination";
-import * as areaService from "./area.repository";
+import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
+import { AreaCreateInput, AreaUpdateInput } from "../../../prisma/generated/models";
 import { buildAreaWhere } from "./area.utils";
+import AreaRepository from "./area.repository";
 
-export const create = async (dataSafe: DTO.CreateDto) => {
-  const { body } = dataSafe;
+const AreaService = {
+  async create({ name, isActive, supportType }: { name: string; isActive?: boolean; supportType: any }) {
+    const areaExists = await AreaRepository.findByName({ name });
+    if (areaExists) throw ApiError.Conflict("Name");
 
-  const areaExists = await areaService.findAreaByName(body.name);
+    const data: AreaCreateInput = { name, isActive, supportType };
+    return await AreaRepository.create({ data });
+  },
 
-  if (areaExists) throw ApiError.Conflict("Name");
+  async update({ areaId, name, isActive, supportType }: { areaId: string; name?: string; isActive?: boolean; supportType?: any }) {
+    const currentArea = await AreaRepository.findById({ areaId });
+    if (!currentArea) throw ApiError.NotFound({ model: "Area" });
 
-  return await areaService.createArea({ data: body });
+    if (name && name !== currentArea.name) {
+      const areaExists = await AreaRepository.findByName({ name });
+      if (areaExists) throw ApiError.Conflict("Name");
+    }
+
+    const data: AreaUpdateInput = {};
+    if (name) data.name = name;
+    if (typeof isActive !== "undefined") data.isActive = isActive;
+    if (supportType) data.supportType = supportType;
+
+    return await AreaRepository.update({ areaId, data });
+  },
+
+  async delete({ areaId }: { areaId: string }) {
+    const currentArea = await AreaRepository.findById({ areaId });
+    if (!currentArea) throw ApiError.NotFound({ model: "Area" });
+
+    return await AreaRepository.delete({ areaId });
+  },
+
+  async getDetails({ areaId }: { areaId: string }) {
+    const area = await AreaRepository.findById({ areaId });
+    if (!area) throw ApiError.NotFound({ model: "Area" });
+    return area;
+  },
+
+  async getAll({ limit, page, search, isActive, supportType }: { limit: number; page: number; search?: string; isActive?: boolean; supportType?: any }) {
+    const where = buildAreaWhere({ search, isActive, supportType });
+    const { take, skip } = getPagination({ page, limit });
+
+    const { areas, count } = await AreaRepository.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { createdAt: "desc" }
+    });
+
+    const totalPages = getTotalPages({ limit, count });
+    const pagination = { limit, page, totalPages, total: count };
+
+    return { items: areas, pagination };
+  },
 };
 
-export const getAll = async (dataSafe: DTO.GetAllDto) => {
-  const { limit, page, search, isActive, supportType } = dataSafe.query;
-
-  const where = buildAreaWhere({ search, isActive, supportType });
-
-  const { areas, count } = await areaService.findManyArea({
-    where,
-    take: limit,
-    skip: Math.min(0, page - 1) * limit,
-    orderBy: { createdAt: "desc" },
-  });
-
-  const { safePage, totalPages } = getPaginationParams({ limit, page, count });
-
-  const pagination = {
-    limit,
-    page: safePage,
-    count,
-    totalPages,
-  };
-
-  return {
-    items: areas,
-    pagination,
-  };
-};
-
-export const getDetails = async (dataSafe: DTO.GetDetailsDto) => {
-  const { areaId } = dataSafe.params;
-
-  const area = await areaService.findAreaById(areaId);
-
-  if (!area) throw ApiError.NotFound({ model: "Area" });
-
-  return area;
-};
-
-export const update = async (dataSafe: DTO.UpdateDto) => {
-  const { body, params } = dataSafe;
-  const { areaId } = params;
-
-  const area = await areaService.findAreaById(areaId);
-
-  if (!area) throw ApiError.NotFound({ model: "Area" });
-
-  const areaExists = await areaService.findAreaByName(area.name);
-
-  if (!areaExists) throw ApiError.Conflict("Name");
-
-  const areaUpdate = await areaService.update({ id: areaId, data: body });
-
-  return areaUpdate;
-};
-
-export const remove = async (dataSafe: DTO.DeleteDto) => {
-  const { areaId } = dataSafe.params;
-
-  const area = await areaService.findAreaById(areaId);
-  if (!area) throw ApiError.NotFound({ model: "Area" });
-
-  const areaRemove = await areaService.remove(areaId);
-
-  return areaRemove;
-};
+export default AreaService;

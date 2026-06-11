@@ -41,6 +41,7 @@ export type LedgerTransactionMinAggregateOutputType = {
   category: $Enums.LedgerCategory | null
   amount: runtime.Decimal | null
   referenceId: string | null
+  referenceCategory: $Enums.ReferenceCategory | null
   ledgerEffect: $Enums.LedgerEffect | null
   notes: string | null
   createdAt: Date | null
@@ -53,6 +54,7 @@ export type LedgerTransactionMaxAggregateOutputType = {
   category: $Enums.LedgerCategory | null
   amount: runtime.Decimal | null
   referenceId: string | null
+  referenceCategory: $Enums.ReferenceCategory | null
   ledgerEffect: $Enums.LedgerEffect | null
   notes: string | null
   createdAt: Date | null
@@ -65,6 +67,7 @@ export type LedgerTransactionCountAggregateOutputType = {
   category: number
   amount: number
   referenceId: number
+  referenceCategory: number
   ledgerEffect: number
   notes: number
   createdAt: number
@@ -87,6 +90,7 @@ export type LedgerTransactionMinAggregateInputType = {
   category?: true
   amount?: true
   referenceId?: true
+  referenceCategory?: true
   ledgerEffect?: true
   notes?: true
   createdAt?: true
@@ -99,6 +103,7 @@ export type LedgerTransactionMaxAggregateInputType = {
   category?: true
   amount?: true
   referenceId?: true
+  referenceCategory?: true
   ledgerEffect?: true
   notes?: true
   createdAt?: true
@@ -111,6 +116,7 @@ export type LedgerTransactionCountAggregateInputType = {
   category?: true
   amount?: true
   referenceId?: true
+  referenceCategory?: true
   ledgerEffect?: true
   notes?: true
   createdAt?: true
@@ -210,6 +216,7 @@ export type LedgerTransactionGroupByOutputType = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal
   referenceId: string | null
+  referenceCategory: $Enums.ReferenceCategory
   ledgerEffect: $Enums.LedgerEffect
   notes: string | null
   createdAt: Date
@@ -245,6 +252,7 @@ export type LedgerTransactionWhereInput = {
   category?: Prisma.EnumLedgerCategoryFilter<"LedgerTransaction"> | $Enums.LedgerCategory
   amount?: Prisma.DecimalFilter<"LedgerTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFilter<"LedgerTransaction"> | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFilter<"LedgerTransaction"> | $Enums.LedgerEffect
   notes?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerTransaction"> | Date | string
@@ -259,6 +267,7 @@ export type LedgerTransactionOrderByWithRelationInput = {
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  referenceCategory?: Prisma.SortOrder
   ledgerEffect?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -276,6 +285,7 @@ export type LedgerTransactionWhereUniqueInput = Prisma.AtLeast<{
   category?: Prisma.EnumLedgerCategoryFilter<"LedgerTransaction"> | $Enums.LedgerCategory
   amount?: Prisma.DecimalFilter<"LedgerTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFilter<"LedgerTransaction"> | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFilter<"LedgerTransaction"> | $Enums.LedgerEffect
   notes?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerTransaction"> | Date | string
@@ -290,6 +300,7 @@ export type LedgerTransactionOrderByWithAggregationInput = {
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
+  referenceCategory?: Prisma.SortOrder
   ledgerEffect?: Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -310,6 +321,7 @@ export type LedgerTransactionScalarWhereWithAggregatesInput = {
   category?: Prisma.EnumLedgerCategoryWithAggregatesFilter<"LedgerTransaction"> | $Enums.LedgerCategory
   amount?: Prisma.DecimalWithAggregatesFilter<"LedgerTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.StringNullableWithAggregatesFilter<"LedgerTransaction"> | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryWithAggregatesFilter<"LedgerTransaction"> | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectWithAggregatesFilter<"LedgerTransaction"> | $Enums.LedgerEffect
   notes?: Prisma.StringNullableWithAggregatesFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LedgerTransaction"> | Date | string
@@ -320,6 +332,7 @@ export type LedgerTransactionCreateInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -334,6 +347,7 @@ export type LedgerTransactionUncheckedCreateInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -344,6 +358,7 @@ export type LedgerTransactionUpdateInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -358,6 +373,7 @@ export type LedgerTransactionUncheckedUpdateInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,6 +386,7 @@ export type LedgerTransactionCreateManyInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -380,6 +397,7 @@ export type LedgerTransactionUpdateManyMutationInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -392,6 +410,7 @@ export type LedgerTransactionUncheckedUpdateManyInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,6 +433,7 @@ export type LedgerTransactionCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
+  referenceCategory?: Prisma.SortOrder
   ledgerEffect?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -430,6 +450,7 @@ export type LedgerTransactionMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
+  referenceCategory?: Prisma.SortOrder
   ledgerEffect?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -442,6 +463,7 @@ export type LedgerTransactionMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   amount?: Prisma.SortOrder
   referenceId?: Prisma.SortOrder
+  referenceCategory?: Prisma.SortOrder
   ledgerEffect?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -547,6 +569,10 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumReferenceCategoryFieldUpdateOperationsInput = {
+  set?: $Enums.ReferenceCategory
+}
+
 export type EnumLedgerEffectFieldUpdateOperationsInput = {
   set?: $Enums.LedgerEffect
 }
@@ -556,6 +582,7 @@ export type LedgerTransactionCreateWithoutUserInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -568,6 +595,7 @@ export type LedgerTransactionUncheckedCreateWithoutUserInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -609,6 +637,7 @@ export type LedgerTransactionScalarWhereInput = {
   category?: Prisma.EnumLedgerCategoryFilter<"LedgerTransaction"> | $Enums.LedgerCategory
   amount?: Prisma.DecimalFilter<"LedgerTransaction"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFilter<"LedgerTransaction"> | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFilter<"LedgerTransaction"> | $Enums.LedgerEffect
   notes?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerTransaction"> | Date | string
@@ -619,6 +648,7 @@ export type LedgerTransactionCreateWithoutAcademyInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -631,6 +661,7 @@ export type LedgerTransactionUncheckedCreateWithoutAcademyInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -668,6 +699,7 @@ export type LedgerTransactionCreateManyUserInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -678,6 +710,7 @@ export type LedgerTransactionUpdateWithoutUserInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -690,6 +723,7 @@ export type LedgerTransactionUncheckedUpdateWithoutUserInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -701,6 +735,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutUserInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -712,6 +747,7 @@ export type LedgerTransactionCreateManyAcademyInput = {
   category: $Enums.LedgerCategory
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: string | null
+  referenceCategory?: $Enums.ReferenceCategory
   ledgerEffect?: $Enums.LedgerEffect
   notes?: string | null
   createdAt?: Date | string
@@ -722,6 +758,7 @@ export type LedgerTransactionUpdateWithoutAcademyInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -734,6 +771,7 @@ export type LedgerTransactionUncheckedUpdateWithoutAcademyInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -745,6 +783,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutAcademyInput = {
   category?: Prisma.EnumLedgerCategoryFieldUpdateOperationsInput | $Enums.LedgerCategory
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   referenceId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  referenceCategory?: Prisma.EnumReferenceCategoryFieldUpdateOperationsInput | $Enums.ReferenceCategory
   ledgerEffect?: Prisma.EnumLedgerEffectFieldUpdateOperationsInput | $Enums.LedgerEffect
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -759,6 +798,7 @@ export type LedgerTransactionSelect<ExtArgs extends runtime.Types.Extensions.Int
   category?: boolean
   amount?: boolean
   referenceId?: boolean
+  referenceCategory?: boolean
   ledgerEffect?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -773,6 +813,7 @@ export type LedgerTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.T
   category?: boolean
   amount?: boolean
   referenceId?: boolean
+  referenceCategory?: boolean
   ledgerEffect?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -787,6 +828,7 @@ export type LedgerTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   category?: boolean
   amount?: boolean
   referenceId?: boolean
+  referenceCategory?: boolean
   ledgerEffect?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -801,12 +843,13 @@ export type LedgerTransactionSelectScalar = {
   category?: boolean
   amount?: boolean
   referenceId?: boolean
+  referenceCategory?: boolean
   ledgerEffect?: boolean
   notes?: boolean
   createdAt?: boolean
 }
 
-export type LedgerTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "academyId" | "category" | "amount" | "referenceId" | "ledgerEffect" | "notes" | "createdAt", ExtArgs["result"]["ledgerTransaction"]>
+export type LedgerTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "academyId" | "category" | "amount" | "referenceId" | "referenceCategory" | "ledgerEffect" | "notes" | "createdAt", ExtArgs["result"]["ledgerTransaction"]>
 export type LedgerTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
@@ -833,6 +876,7 @@ export type $LedgerTransactionPayload<ExtArgs extends runtime.Types.Extensions.I
     category: $Enums.LedgerCategory
     amount: runtime.Decimal
     referenceId: string | null
+    referenceCategory: $Enums.ReferenceCategory
     ledgerEffect: $Enums.LedgerEffect
     notes: string | null
     createdAt: Date
@@ -1267,6 +1311,7 @@ export interface LedgerTransactionFieldRefs {
   readonly category: Prisma.FieldRef<"LedgerTransaction", 'LedgerCategory'>
   readonly amount: Prisma.FieldRef<"LedgerTransaction", 'Decimal'>
   readonly referenceId: Prisma.FieldRef<"LedgerTransaction", 'String'>
+  readonly referenceCategory: Prisma.FieldRef<"LedgerTransaction", 'ReferenceCategory'>
   readonly ledgerEffect: Prisma.FieldRef<"LedgerTransaction", 'LedgerEffect'>
   readonly notes: Prisma.FieldRef<"LedgerTransaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"LedgerTransaction", 'DateTime'>

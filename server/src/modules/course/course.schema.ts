@@ -56,10 +56,6 @@ export const GetDetailsSchema = {
   params: z.object({ courseId: id, academyId: id }),
 };
 
-export const GetActiveSchema = {
-  params: z.object({ academyId: id }),
-};
-
 export const AddCourseFeaturesSchema = {
   params: z.object({ academyId: id, courseId: id }),
   body: z.object({

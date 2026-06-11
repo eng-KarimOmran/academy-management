@@ -1,84 +1,71 @@
-import { RoleService } from "../../shared/services/role.service";
-import { User } from "../../../prisma/generated/client";
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import {
   CaptainCreateInput,
   CaptainOrderByWithRelationInput,
+  CaptainSelect,
   CaptainUpdateInput,
   CaptainWhereInput,
 } from "../../../prisma/generated/models";
-
-import { prisma } from "../../lib/prisma";
 import { CaptainBaseSelect } from "./captain.selectors";
+import { lessonBaseSelect } from "../lesson/lesson.selectors";
+import getClient from "../../shared/utils/getClient"
 
-export const findCaptainById = async (id: string) => {
-  return await prisma.captain.findUnique({
-    where: { id },
-    select: CaptainBaseSelect,
-  });
+const CaptainRepository = {
+  async create({ data, select, tx }: { data: CaptainCreateInput; select?: CaptainSelect; tx?: TransactionClient }) {
+    return getClient(tx).captain.create({
+      data,
+      select: select ?? CaptainBaseSelect,
+    });
+  },
+
+  async update({ captainId, data, select, tx }: { captainId: string; data: CaptainUpdateInput; select?: CaptainSelect; tx?: TransactionClient }) {
+    return getClient(tx).captain.update({
+      where: { id: captainId },
+      data,
+      select: select ?? CaptainBaseSelect,
+    });
+  },
+
+  async delete({ captainId, select, tx }: { captainId: string; select?: CaptainSelect; tx?: TransactionClient }) {
+    return getClient(tx).captain.delete({
+      where: { id: captainId },
+      select: select ?? CaptainBaseSelect,
+    });
+  },
+
+  async findById({ captainId, select, tx }: { captainId: string; select?: CaptainSelect; tx?: TransactionClient }) {
+    return getClient(tx).captain.findUnique({
+      where: { id: captainId },
+      select: select ?? CaptainBaseSelect,
+    });
+  },
+
+  async findByUserId({ userId, select, tx }: { userId: string; select?: CaptainSelect; tx?: TransactionClient }) {
+    return getClient(tx).captain.findUnique({
+      where: { userId },
+      select: select ?? CaptainBaseSelect,
+    });
+  },
+
+  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: CaptainWhereInput; orderBy?: CaptainOrderByWithRelationInput; select?: CaptainSelect; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    const [captains, count] = await Promise.all([
+      client.captain.findMany({ where, skip, take, orderBy, select: select ?? CaptainBaseSelect }),
+      client.captain.count({ where }),
+    ]);
+    return { captains, count };
+  },
+
+  async getLessonsByCaptainId({ captainId, gte, lte, tx }: { captainId: string; gte: Date; lte: Date; tx?: TransactionClient }) {
+    return getClient(tx).lesson.findMany({
+      where: {
+        captainId,
+        startTime: { gte, lte },
+      },
+      select: lessonBaseSelect,
+      orderBy: { startTime: "asc" },
+    });
+  }
 };
 
-export const findManyCaptain = async ({
-  where,
-  skip,
-  take,
-  orderBy,
-}: {
-  where?: CaptainWhereInput;
-  skip?: number;
-  take?: number;
-  orderBy?: CaptainOrderByWithRelationInput;
-}) => {
-  const [captains, count] = await prisma.$transaction([
-    prisma.captain.findMany({
-      where,
-      select: CaptainBaseSelect,
-      skip,
-      take,
-      orderBy,
-    }),
-    prisma.captain.count({ where }),
-  ]);
-  return { captains, count };
-};
-
-export const createCaptain = async ({
-  data,
-  user,
-}: {
-  data: CaptainCreateInput;
-  user: User;
-}) => {
-  const [captain] = await prisma.$transaction([
-    prisma.captain.create({ data, select: CaptainBaseSelect }),
-    RoleService.addRole(user, "CAPTAIN"),
-  ]);
-  return { captain };
-};
-
-export const updateCaptain = async ({
-  id,
-  data,
-}: {
-  id: string;
-  data: CaptainUpdateInput;
-}) => {
-  return await prisma.captain.update({
-    where: { id },
-    data,
-    select: CaptainBaseSelect,
-  });
-};
-
-export const removeCaptain = async ({
-  id,
-  user,
-}: {
-  id: string;
-  user: User;
-}) => {
-  return await prisma.$transaction(async (tx) => {
-    const captain = await tx.captain.delete({ where: { id } });
-    await RoleService.removeRole(user, "CAPTAIN", tx);
-    return captain;
-  });
-};
+export default CaptainRepository;

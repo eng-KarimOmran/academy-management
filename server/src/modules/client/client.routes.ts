@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./client.schema";
-import * as controller from "./client.controller";
+import ClientController from "./client.controller";
 import checkRole from "../../middlewares/role.middleware";
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
 
@@ -12,28 +12,28 @@ router.get(
   validation(Schema.GetAllClientsSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.getAllClients,
+  ClientController.getAllClients,
 );
 
 router.post(
   "/",
   validation(Schema.CreateClientSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.createClient,
+  ClientController.createClient,
 );
 
 router.get(
   "/phone/:phone",
   validation(Schema.GetClientByPhoneSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getDetailsClientByPhone,
+  ClientController.getDetailsClientByPhone,
 );
 
 router.get(
   "/:clientId",
   validation(Schema.GetClientDetailsSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getDetailsClient,
+  ClientController.getDetailsClient,
 );
 
 router.patch(
@@ -41,7 +41,7 @@ router.patch(
   validation(Schema.UpdateClientSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.updateClient,
+  ClientController.updateClient,
 );
 
 router.delete(
@@ -49,7 +49,7 @@ router.delete(
   validation(Schema.DeleteClientSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.deleteClient,
+  ClientController.deleteClient,
 );
 
 export default router;

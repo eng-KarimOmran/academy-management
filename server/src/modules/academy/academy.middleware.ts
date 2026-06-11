@@ -1,39 +1,50 @@
 import { Response, NextFunction } from "express";
 import { RequestAuth } from "../../middlewares/auth.middleware";
-import { findAcademyById, findAcademyByOwner } from "./academy.repository";
+import AcademyRepository from "./academy.repository";
 import ApiError from "../../shared/utils/ApiError";
 import { Academy } from "../../../prisma/generated/client";
+import { academyBaseSelect, academyWithOwnersSelect } from "./academy.selector";
+
+export type AcademyWithOwners = Academy & { owners: { id: string }[] };
 
 export interface RequestAcademy extends RequestAuth {
-  academy?: Academy;
+  academy?: AcademyWithOwners;
 }
+
+export const checkAcademyExists = async (
+  req: RequestAcademy,
+  res: Response,
+  next: NextFunction,
+) => {
+  const academyId = req.params.academyId as string;
+
+  const academy = await AcademyRepository.findById({ academyId, select: academyWithOwnersSelect });
+  if (!academy) throw ApiError.NotFound({ model: "Academy" });
+
+  req.academy = academy;
+  next();
+};
 
 export const isAcademyOwnerMiddleware = async (
   req: RequestAcademy,
   res: Response,
   next: NextFunction,
 ) => {
-  const { id } = req.userLogin!;
-  const academyId = req.params.academyId as string;
+  const userId = req.userLogin?.id;
+  const academyId = req.academy?.id
 
-  const academy = await findAcademyByOwner({ academyId, ownerId: id });
+  if (!userId || !academyId) throw ApiError.ValidationError();
 
-  if (!academy) {
-    throw ApiError.Forbidden();
-  }
+  const academy = await AcademyRepository.findById({
+    academyId,
+    select: academyBaseSelect
+  });
 
-  req.academy = academy;
-
-  next();
-};
-
-export const checkAcademyExists = async (
-  req: RequestAuth,
-  res: Response,
-  next: NextFunction,
-) => {
-  const academyId = req.params.academyId as string;
-  const academy = await findAcademyById(academyId);
   if (!academy) throw ApiError.NotFound({ model: "Academy" });
+
+  const isAcademyOwner = academy.owners.some((o) => o.id === userId);
+  if (!isAcademyOwner) throw ApiError.Forbidden();
+
+  req.academy = academy as AcademyWithOwners;
   next();
 };

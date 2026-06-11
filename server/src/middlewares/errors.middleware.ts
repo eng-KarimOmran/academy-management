@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { IErrorResponse } from "../shared/utils/errorResponse";
-import { cookieAccess, cookieRefresh } from "../shared/utils/cookie";
 
 const globalErrorHandler = (
   err: IErrorResponse,

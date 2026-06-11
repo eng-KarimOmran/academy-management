@@ -1,3 +1,4 @@
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import {
   PaymentTransactionCreateInput,
   PaymentTransactionOrderByWithRelationInput,
@@ -5,87 +6,70 @@ import {
   PaymentTransactionUpdateInput,
   PaymentTransactionWhereInput,
 } from "../../../prisma/generated/models";
-
-import { prisma } from "../../lib/prisma";
-import { recalculateSubscriptionStatus } from "../subscription/subscription.repository";
+import getClient from "../../shared/utils/getClient";
 import { paymentTransactionBaseSelect } from "./paymentTransaction.selectors";
+import LedgerRepository from "../ledger/ledger.repository";
+import SubscriptionRepository from "../subscription/subscription.repository";
 
-export const findPaymentTransactionById = async ({
-  id,
-  select = paymentTransactionBaseSelect,
-}: {
-  id: string;
-  select?: PaymentTransactionSelect;
-}) => {
-  return await prisma.paymentTransaction.findUnique({
-    where: { id },
-    select,
-  });
-};
+const PaymentTransactionRepository = {
+  async findById({ id, select = paymentTransactionBaseSelect, tx }: { id: string; select?: PaymentTransactionSelect; tx?: TransactionClient }) {
+    return await getClient(tx).paymentTransaction.findUnique({
+      where: { id },
+      select,
+    });
+  },
 
-export const findManyPaymentTransactions = async (data: {
-  where?: PaymentTransactionWhereInput;
-  skip?: number;
-  take?: number;
-  orderBy?: PaymentTransactionOrderByWithRelationInput;
-}) => {
-  const [transactions, count] = await prisma.$transaction([
-    prisma.paymentTransaction.findMany({
-      ...data,
-      select: paymentTransactionBaseSelect,
-    }),
-    prisma.paymentTransaction.count({
-      where: data.where,
-    }),
-  ]);
+  async findMany({ where, skip, take, orderBy, select = paymentTransactionBaseSelect, tx }: { where?: PaymentTransactionWhereInput; skip?: number; take?: number; orderBy?: PaymentTransactionOrderByWithRelationInput; select?: PaymentTransactionSelect; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    const [transactions, count] = await Promise.all([
+      client.paymentTransaction.findMany({ where, skip, take, orderBy, select }),
+      client.paymentTransaction.count({ where }),
+    ]);
 
-  return { transactions, count };
-};
+    return { transactions, count };
+  },
 
-export const createPaymentTransaction = async (
-  data: PaymentTransactionCreateInput,
-) => {
-  return await prisma.$transaction(async (tx) => {
-    const payment = await tx.paymentTransaction.create({
+  async create({ data, tx }: { data: PaymentTransactionCreateInput; tx?: TransactionClient }) {
+    const client = getClient(tx);
+
+    const payment = await client.paymentTransaction.create({
       data,
       select: paymentTransactionBaseSelect,
     });
+
     const isCustomerPayment = payment.type === "PAYMENT";
 
     if (payment.paymentMethod === "CASH") {
-      await tx.ledgerTransaction.create({
+      await LedgerRepository.create({
         data: {
           amount: payment.amount,
-          academyId: payment.academy.id,
-          userId: payment.receiver.id,
           referenceId: payment.id,
+          referenceCategory: "paymentId",
           category: isCustomerPayment ? "FROM_CUSTOMER" : "TO_CUSTOMER",
-          ledgerEffect: isCustomerPayment ? "DEBIT" : "CREDIT",
-          notes: isCustomerPayment ? "العميل دفع فلوس" : "تم رد فلوس للعميل",
+          notes: isCustomerPayment ? `تحصيل كاش - فاتورة رقم: ${payment.id}` : `رد مالي كاش - فاتورة رقم: ${payment.id}`,
+          academy: { connect: { id: payment.academyId } },
+          user: { connect: { id: payment.receiverId } },
         },
+        tx: client,
       });
     }
 
-    await recalculateSubscriptionStatus({ id: payment.subscription.id, tx });
-
+    await SubscriptionRepository.recalculateSubscriptionStatus({ id: payment.subscriptionId });
     return payment;
-  });
-};
+  },
 
-export const updatePaymentTransaction = async ({
-  id,
-  data,
-}: {
-  id: string;
-  data: PaymentTransactionUpdateInput;
-}) => {
-  return await prisma.$transaction(async (tx) => {
-    const payment = await tx.paymentTransaction.update({
+  async update({ id, data, tx }: { id: string; data: PaymentTransactionUpdateInput; tx?: TransactionClient }) {
+    const client = getClient(tx);
+
+    const payment = await client.paymentTransaction.update({
       where: { id },
       data,
       select: paymentTransactionBaseSelect,
     });
-    await recalculateSubscriptionStatus({ id: payment.subscription.id, tx });
+
+    await SubscriptionRepository.recalculateSubscriptionStatus({ id: payment.subscriptionId });
     return payment;
-  });
+  }
 };
+
+export default PaymentTransactionRepository;

@@ -18,6 +18,29 @@ export const userAuthSelect: UserSelect = {
 export const userDetailsSelect: UserSelect = {
   ...userBaseSelect,
   createdAt: true,
-  captainProfile: true,
-  secretaryProfile: true,
+  captainProfile: {
+    select: {
+      id: true,
+      captainLessonPrice: true,
+      isActive: true,
+      trainingType: true,
+      createdAt: true,
+    },
+  },
+  secretaryProfile: {
+    select: {
+      id: true,
+      baseSalary: true,
+      bonusAmount: true,
+      targetCount: true,
+      createdAt: true,
+    },
+  },
+};
+
+export const userAcademyRelationsSelect: UserSelect = {
+  id: true,
+  captainProfile: { select: { id: true } },
+  secretaryProfile: { select: { id: true } },
+  academies: { select: { id: true } }
 };

@@ -4,6 +4,8 @@ export const clientBaseSelect: ClientSelect = {
   id: true,
   name: true,
   phone: true,
+  createdAt: true,
+  academyId: true,
 };
 
 export const clientDetailsSelect: ClientSelect = {
@@ -12,6 +14,11 @@ export const clientDetailsSelect: ClientSelect = {
     select: {
       id: true,
       status: true,
+      course: {
+        select: {
+          name: true,
+        },
+      },
       createdAt: true,
     },
   },

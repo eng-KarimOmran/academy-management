@@ -417,6 +417,13 @@ export type DecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumReferenceCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferenceCategory | Prisma.EnumReferenceCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferenceCategoryFilter<$PrismaModel> | $Enums.ReferenceCategory
+}
+
 export type EnumLedgerEffectFilter<$PrismaModel = never> = {
   equals?: $Enums.LedgerEffect | Prisma.EnumLedgerEffectFieldRefInput<$PrismaModel>
   in?: $Enums.LedgerEffect[] | Prisma.ListEnumLedgerEffectFieldRefInput<$PrismaModel>
@@ -448,6 +455,16 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type EnumReferenceCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferenceCategory | Prisma.EnumReferenceCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferenceCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ReferenceCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferenceCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferenceCategoryFilter<$PrismaModel>
 }
 
 export type EnumLedgerEffectWithAggregatesFilter<$PrismaModel = never> = {
@@ -865,6 +882,13 @@ export type NestedDecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type NestedEnumReferenceCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferenceCategory | Prisma.EnumReferenceCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferenceCategoryFilter<$PrismaModel> | $Enums.ReferenceCategory
+}
+
 export type NestedEnumLedgerEffectFilter<$PrismaModel = never> = {
   equals?: $Enums.LedgerEffect | Prisma.EnumLedgerEffectFieldRefInput<$PrismaModel>
   in?: $Enums.LedgerEffect[] | Prisma.ListEnumLedgerEffectFieldRefInput<$PrismaModel>
@@ -896,6 +920,16 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type NestedEnumReferenceCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferenceCategory | Prisma.EnumReferenceCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferenceCategory[] | Prisma.ListEnumReferenceCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferenceCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ReferenceCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferenceCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferenceCategoryFilter<$PrismaModel>
 }
 
 export type NestedEnumLedgerEffectWithAggregatesFilter<$PrismaModel = never> = {

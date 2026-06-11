@@ -1937,6 +1937,7 @@ export const LedgerTransactionScalarFieldEnum = {
   category: 'category',
   amount: 'amount',
   referenceId: 'referenceId',
+  referenceCategory: 'referenceCategory',
   ledgerEffect: 'ledgerEffect',
   notes: 'notes',
   createdAt: 'createdAt'
@@ -2217,6 +2218,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferenceCategory'
+ */
+export type EnumReferenceCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferenceCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferenceCategory[]'
+ */
+export type ListEnumReferenceCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferenceCategory[]'>
     
 
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./subscription.schema";
-import * as controller from "./subscription.controller";
+import SubscriptionController from "./subscription.controller";
 import checkRole from "../../middlewares/role.middleware";
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
 
@@ -11,7 +11,7 @@ router.post(
   "/",
   validation(Schema.CreateSubscriptionSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.createSubscription,
+  SubscriptionController.createSubscription,
 );
 
 router.get(
@@ -19,28 +19,30 @@ router.get(
   validation(Schema.GetAllSubscriptionsSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.getAllSubscriptions,
+  SubscriptionController.getAllSubscriptions,
 );
 
 router.post(
-  "/cancel/:subscriptionId",
+  "/:subscriptionId/cancel",
   validation(Schema.CancelSubscriptionSchema),
   checkRole(["OWNER"]),
-  controller.cancelSubscription,
+  isAcademyOwnerMiddleware,
+  SubscriptionController.cancelSubscription,
 );
 
 router.get(
   "/:subscriptionId",
   validation(Schema.GetSubscriptionDetailsSchema),
-  checkRole(["OWNER"]),
-  controller.getSubscriptionDetails,
+  checkRole(["OWNER", "SECRETARY"]),
+  SubscriptionController.getSubscriptionDetails,
 );
 
 router.delete(
   "/:subscriptionId",
   validation(Schema.DeleteSubscriptionSchema),
   checkRole(["OWNER"]),
-  controller.deleteSubscription,
+  isAcademyOwnerMiddleware,
+  SubscriptionController.deleteSubscription,
 );
 
 export default router;

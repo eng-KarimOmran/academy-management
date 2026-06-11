@@ -31,8 +31,8 @@ router.get(
 
 router.patch(
   "/:lessonId/status",
-  validation(Schema.ChangeLessonState),
-  checkRole(["OWNER", "SECRETARY", "CAPTAIN"]),
+  validation(Schema.ChangeLessonStateSchema),
+  checkRole(["OWNER", "CAPTAIN"]),
   controller.changeLessonState,
 );
 

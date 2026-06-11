@@ -6,6 +6,7 @@ import {
   GetAllCaptainsSchema,
   GetCaptainDetailsSchema,
   DeleteCaptainSchema,
+  GetLessonCaptainSchema,
 } from "./captain.schema";
 
 export type CreateDto = {
@@ -27,4 +28,9 @@ export type GetDetailsDto = {
 
 export type DeleteDto = {
   params: z.infer<typeof DeleteCaptainSchema.params>;
+};
+
+export type GetLessonCaptainDto = {
+  params: z.infer<typeof GetLessonCaptainSchema.params>;
+  query: z.infer<typeof GetLessonCaptainSchema.query>;
 };

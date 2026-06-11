@@ -298,7 +298,8 @@ model LedgerTransaction {
 
   amount Decimal @db.Decimal(10, 2)
 
-  referenceId String?
+  referenceId       String?
+  referenceCategory ReferenceCategory @default(ledgerId)
 
   ledgerEffect LedgerEffect @default(CREDIT)
   notes        String?
@@ -310,19 +311,27 @@ model LedgerTransaction {
 }
 
 enum LedgerCategory {
-  FROM_CUSTOMER // العميل سدد
-  TO_CUSTOMER // العميل رجع له فلوس
+  FROM_CUSTOMER // استلام من عميل
+  TO_CUSTOMER // رد فلوس لعميل
 
-  TO_USER // المستخدم له فلوس
-  FROM_USER // المستخدم خد فلوس من الأكادمية
+  TO_USER // فلوس للمستخدم
+  FROM_ACADEMY // استلام من الأكاديمية
+  TO_ACADEMY // دفع للأكاديمية
 
-  BONUS // بزنص للمستخدم
-  PENALTY // خصم للمستخدم
+  BONUS // مكافأة
+  PENALTY // خصم
 }
 
 enum LedgerEffect {
   CREDIT
   DEBIT
+}
+
+enum ReferenceCategory {
+  lessonId
+  paymentId
+  ledgerId
+  subscriptionId
 }
 
 enum Role {

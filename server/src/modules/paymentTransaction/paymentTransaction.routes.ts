@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./paymentTransaction.schema";
-import * as controller from "./paymentTransaction.controller";
+import PaymentTransactionController from "./paymentTransaction.controller";
 import checkRole from "../../middlewares/role.middleware";
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
 
@@ -11,7 +11,7 @@ router.post(
   "/",
   validation(Schema.CreatePaymentTransactionSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.createPaymentTransaction,
+  PaymentTransactionController.createPaymentTransaction,
 );
 
 router.get(
@@ -19,14 +19,14 @@ router.get(
   validation(Schema.GetAllPaymentTransactionsSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.getAllPaymentTransactions,
+  PaymentTransactionController.getAllPaymentTransactions,
 );
 
 router.get(
   "/:paymentId",
   validation(Schema.GetPaymentTransactionDetailsSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getPaymentTransactionDetails,
+  PaymentTransactionController.getPaymentTransactionDetails,
 );
 
 router.patch(
@@ -34,7 +34,7 @@ router.patch(
   validation(Schema.ChangePaymentStatusSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.changeStatusPaymentTransaction,
+  PaymentTransactionController.changeStatusPaymentTransaction,
 );
 
 export default router;

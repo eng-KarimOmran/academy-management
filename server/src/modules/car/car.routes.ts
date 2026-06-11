@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./car.schema";
-import * as controller from "./car.controller";
+import CarController from "./car.controller";
 import checkRole from "../../middlewares/role.middleware";
 
 const router = Router();
@@ -10,35 +10,35 @@ router.get(
   "/",
   validation(Schema.GetAllCarsSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getAllCars,
+  CarController.getAllCars,
 );
 
 router.post(
   "/",
   validation(Schema.CreateCarSchema),
   checkRole(["OWNER"]),
-  controller.createCar,
+  CarController.createCar,
 );
 
 router.get(
   "/:carId",
   validation(Schema.GetCarDetailsSchema),
   checkRole(["OWNER"]),
-  controller.getDetailsCar,
+  CarController.getDetailsCar,
 );
 
 router.patch(
   "/:carId",
   validation(Schema.UpdateCarSchema),
   checkRole(["OWNER"]),
-  controller.updateCar,
+  CarController.updateCar,
 );
 
 router.delete(
   "/:carId",
   validation(Schema.DeleteCarSchema),
   checkRole(["OWNER"]),
-  controller.deleteCar,
+  CarController.deleteCar,
 );
 
 export default router;

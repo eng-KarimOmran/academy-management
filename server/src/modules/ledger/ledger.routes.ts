@@ -1,20 +1,18 @@
 import { Router } from "express";
-
 import validation from "../../middlewares/validation.middleware";
 import checkRole from "../../middlewares/role.middleware";
-
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
-
 import * as Schema from "./ledger.schema";
-import * as controller from "./ledger.controller";
+import LedgerController from "./ledger.controller";
 
 const router = Router({ mergeParams: true });
 
 router.get(
   "/",
   validation(Schema.GetLedgerTransactionsSchema),
-  checkRole(["OWNER", "SECRETARY"]),
-  controller.getAllLedgerTransactions,
+  checkRole(["OWNER"]),
+  isAcademyOwnerMiddleware,
+  LedgerController.getAllLedgerTransactions,
 );
 
 router.post(
@@ -22,7 +20,7 @@ router.post(
   validation(Schema.CreateLedgerTransactionSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.createLedgerTransaction,
+  LedgerController.createLedgerTransaction,
 );
 
 router.get(
@@ -30,14 +28,31 @@ router.get(
   validation(Schema.getUserAccountsSchema),
   checkRole(["OWNER"]),
   isAcademyOwnerMiddleware,
-  controller.getUserAccounts,
+  LedgerController.getUserAccounts,
 );
 
 router.get(
   "/:ledgerId",
   validation(Schema.GetLedgerDetailsSchema),
   checkRole(["OWNER", "SECRETARY"]),
-  controller.getLedgerDetails,
+  isAcademyOwnerMiddleware,
+  LedgerController.getLedgerDetails,
+);
+
+router.patch(
+  "/:ledgerId",
+  validation(Schema.UpdateLedgerTransactionSchema),
+  checkRole(["OWNER"]),
+  isAcademyOwnerMiddleware,
+  LedgerController.updateLedgerTransaction,
+);
+
+router.delete(
+  "/:ledgerId",
+  validation(Schema.DeleteLedgerSchema),
+  checkRole(["OWNER"]),
+  isAcademyOwnerMiddleware,
+  LedgerController.deleteLedgerTransaction,
 );
 
 export default router;

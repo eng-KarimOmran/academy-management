@@ -15,7 +15,7 @@ export const CreateAcademySchema = {
     name: entityName,
     phone,
     address,
-    paymentLink: url.optional(),
+    paymentLink: url,
     owner: phone,
   }),
 };

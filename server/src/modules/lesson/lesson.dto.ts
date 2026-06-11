@@ -16,6 +16,11 @@ export type GetLessonDetailsDto = {
 };
 
 export type ChangeLessonStateDto = {
-  params: z.infer<typeof Schema.ChangeLessonState.params>;
-  body: z.infer<typeof Schema.ChangeLessonState.body>;
+  params: z.infer<typeof Schema.ChangeLessonStateSchema.params>;
+  body: z.infer<typeof Schema.ChangeLessonStateSchema.body>;
+};
+
+export type UpdateLessonDto = {
+  params: z.infer<typeof Schema.UpdateLessonSchema.params>;
+  body: z.infer<typeof Schema.UpdateLessonSchema.body>;
 };

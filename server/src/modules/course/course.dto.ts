@@ -24,10 +24,6 @@ export type GetDetailsDto = {
   params: z.infer<typeof Schema.GetDetailsSchema.params>;
 };
 
-export type GetActiveDto = {
-  params: z.infer<typeof Schema.GetActiveSchema.params>;
-};
-
 export type AddCourseFeaturesDto = {
   params: z.infer<typeof Schema.AddCourseFeaturesSchema.params>;
   body: z.infer<typeof Schema.AddCourseFeaturesSchema.body>;

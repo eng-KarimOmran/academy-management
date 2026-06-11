@@ -1,66 +1,59 @@
-import { Prisma } from "../../../prisma/generated/client";
-import { prisma } from "../../lib/prisma";
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
+import {
+  AreaCreateInput,
+  AreaOrderByWithRelationInput,
+  AreaSelect,
+  AreaUpdateInput,
+  AreaWhereInput,
+} from "../../../prisma/generated/models";
 import { areaBaseSelect } from "./area.selectors";
+import getClient from "../../shared/utils/getClient"
 
-export const findAreaById = async (id: string) => {
-  return await prisma.area.findUnique({
-    where: { id },
-    select: areaBaseSelect,
-  });
+const AreaRepository = {
+  async create({ data, select, tx }: { data: AreaCreateInput; select?: AreaSelect; tx?: TransactionClient }) {
+    return getClient(tx).area.create({
+      data,
+      select: select ?? areaBaseSelect,
+    });
+  },
+
+  async update({ areaId, data, select, tx }: { areaId: string; data: AreaUpdateInput; select?: AreaSelect; tx?: TransactionClient }) {
+    return getClient(tx).area.update({
+      where: { id: areaId },
+      data,
+      select: select ?? areaBaseSelect,
+    });
+  },
+
+  async delete({ areaId, select, tx }: { areaId: string; select?: AreaSelect; tx?: TransactionClient }) {
+    return getClient(tx).area.delete({
+      where: { id: areaId },
+      select: select ?? areaBaseSelect,
+    });
+  },
+
+  async findById({ areaId, select, tx }: { areaId: string; select?: AreaSelect; tx?: TransactionClient }) {
+    return getClient(tx).area.findUnique({
+      where: { id: areaId },
+      select: select ?? areaBaseSelect,
+    });
+  },
+
+  async findByName({ name, select, tx }: { name: string; select?: AreaSelect; tx?: TransactionClient }) {
+    return getClient(tx).area.findUnique({
+      where: { name },
+      select: select ?? areaBaseSelect,
+    });
+  },
+
+  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: AreaWhereInput; orderBy?: AreaOrderByWithRelationInput; select?: AreaSelect; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    const [areas, count] = await Promise.all([
+      client.area.findMany({ where, skip, take, orderBy, select: select ?? areaBaseSelect }),
+      client.area.count({ where })
+    ]);
+    return { areas, count };
+  },
 };
 
-export const findAreaByName = async (name: string) => {
-  return await prisma.area.findUnique({
-    where: { name },
-    select: areaBaseSelect,
-  });
-};
-
-export const findManyArea = async ({
-  where,
-  skip,
-  take,
-  orderBy,
-}: {
-  where?: Prisma.AreaWhereInput;
-  skip?: number;
-  take?: number;
-  orderBy?: Prisma.AreaOrderByWithRelationInput;
-}) => {
-  const [areas, count] = await prisma.$transaction([
-    prisma.area.findMany({ where, select: areaBaseSelect }),
-    prisma.area.count({ where }),
-  ]);
-  return { areas, count };
-};
-
-export const createArea = async ({
-  data,
-}: {
-  data: Prisma.AreaCreateInput;
-}) => {
-  return await prisma.area.create({
-    data,
-  });
-};
-
-export const update = async ({
-  id,
-  data,
-}: {
-  id: string;
-  data: Prisma.AreaUpdateInput;
-}) => {
-  return await prisma.area.update({
-    where: { id },
-    data,
-    select: areaBaseSelect,
-  });
-};
-
-export const remove = async (id: string) => {
-  return await prisma.area.delete({
-    where: { id },
-    select: areaBaseSelect,
-  });
-};
+export default AreaRepository;

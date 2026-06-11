@@ -8,10 +8,6 @@ import {
   date,
 } from "../../shared/utils/common.validation";
 
-// ==========================================
-// Create Ledger Transaction
-// ==========================================
-
 export const CreateLedgerTransactionSchema = {
   params: z.object({ academyId: id }),
   body: z.object({
@@ -22,9 +18,18 @@ export const CreateLedgerTransactionSchema = {
   }),
 };
 
-// ==========================================
-// Get Ledger Transactions (pagination)
-// ==========================================
+export const UpdateLedgerTransactionSchema = {
+  params: z.object({ academyId: id, ledgerId: id }),
+  body: z.object({
+    amount: positiveNumber.optional(),
+    category: ledgerCategory.optional(),
+    notes: z.string().optional(),
+  }),
+};
+
+export const DeleteLedgerSchema = {
+  params: z.object({ academyId: id, ledgerId: id }),
+};
 
 export const GetLedgerTransactionsSchema = {
   params: z.object({ academyId: id }),
@@ -33,18 +38,11 @@ export const GetLedgerTransactionsSchema = {
     limit: limit,
     category: ledgerCategory.optional(),
     ledgerEffect: ledgerEffect.optional(),
+    search: z.string().optional(),
   }),
 };
 
-// ==========================================
-// Get Ledger Details
-// ==========================================
-
 export const GetLedgerDetailsSchema = {
-  params: z.object({ academyId: id, ledgerId: id }),
-};
-
-export const DeleteLedgerSchema = {
   params: z.object({ academyId: id, ledgerId: id }),
 };
 

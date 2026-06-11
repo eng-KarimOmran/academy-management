@@ -18,5 +18,6 @@ export const LogoutSchema = {
 export const changePasswordSchema = {
   body: z.object({
     password,
+    newPassword: password,
   }),
 };

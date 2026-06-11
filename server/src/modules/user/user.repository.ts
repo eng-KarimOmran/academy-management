@@ -1,75 +1,68 @@
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import {
   UserCreateInput,
-  UserOrderByWithRelationInput,
-  UserSelect,
   UserUpdateInput,
   UserWhereInput,
+  UserOrderByWithRelationInput,
+  UserSelect,
 } from "../../../prisma/generated/models";
+import { userBaseSelect } from './user.selectors';
+import getClient from "../../shared/utils/getClient"
 
-import { prisma } from "../../lib/prisma";
-import { userBaseSelect } from "./user.selectors";
 
-export const findUserById = async ({
-  id,
-  select = userBaseSelect,
-}: {
-  id: string;
-  select?: UserSelect;
-}) => {
-  return await prisma.user.findUnique({
-    where: { id },
-    select,
-  });
+const UserRepository = {
+  async create({ data, select, tx }: { data: UserCreateInput; select?: UserSelect; tx?: TransactionClient }) {
+    return getClient(tx).user.create({
+      data,
+      select: select ?? userBaseSelect,
+    });
+  },
+
+  async update({ userId, data, select, tx }: { userId: string; data: UserUpdateInput; select?: UserSelect; tx?: TransactionClient }) {
+    return getClient(tx).user.update({
+      where: { id: userId },
+      data,
+      select: select ?? userBaseSelect,
+    });
+  },
+
+  async delete({ userId, select, tx }: { userId: string; select?: UserSelect; tx?: TransactionClient }) {
+    return getClient(tx).user.delete({
+      where: { id: userId },
+      select: select ?? userBaseSelect,
+    });
+  },
+
+  async findById({ userId, select, tx }: { userId: string; select?: UserSelect; tx?: TransactionClient }) {
+    return getClient(tx).user.findUnique({
+      where: { id: userId },
+      select: select ?? userBaseSelect,
+    });
+  },
+
+  async findByPhone({ phone, select, tx }: { phone: string; select?: UserSelect; tx?: TransactionClient }) {
+    return getClient(tx).user.findFirst({
+      where: { phone },
+      select: select ?? userBaseSelect,
+    });
+  },
+
+  async findFirst({ where, select, tx }: { where: UserWhereInput; select?: UserSelect; tx?: TransactionClient }) {
+    return getClient(tx).user.findFirst({
+      where,
+      select: select ?? userBaseSelect,
+    });
+  },
+
+  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: UserWhereInput; orderBy?: UserOrderByWithRelationInput; select?: UserSelect; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    const [users, count] = await Promise.all([
+      client.user.findMany({ where, skip, take, orderBy, select: select ?? userBaseSelect }),
+      client.user.count({ where }),
+    ]);
+
+    return { users, count };
+  }
 };
 
-export const findUserByPhone = async ({
-  phone,
-  select = userBaseSelect,
-}: {
-  phone: string;
-  select?: UserSelect;
-}) => {
-  return await prisma.user.findUnique({
-    where: { phone },
-    select,
-  });
-};
-
-export const createUser = async (data: UserCreateInput) => {
-  return await prisma.user.create({
-    data,
-    select: userBaseSelect,
-  });
-};
-
-export const updateUser = async ({
-  id,
-  data,
-}: {
-  id: string;
-  data: UserUpdateInput;
-}) => {
-  return await prisma.user.update({
-    where: { id },
-    data,
-    select: userBaseSelect,
-  });
-};
-
-export const deleteUser = async (id: string) => {
-  return await prisma.user.delete({ where: { id }, select: userBaseSelect });
-};
-
-export const findManyUsers = async (data: {
-  where: UserWhereInput;
-  skip: number;
-  take: number;
-  orderBy: UserOrderByWithRelationInput;
-}) => {
-  const [users, count] = await prisma.$transaction([
-    prisma.user.findMany({ ...data, select: userBaseSelect }),
-    prisma.user.count({ where: data.where }),
-  ]);
-
-  return { users, count };
-};
+export default UserRepository;

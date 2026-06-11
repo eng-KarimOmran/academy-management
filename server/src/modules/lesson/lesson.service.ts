@@ -1,193 +1,238 @@
-import { findAreaById } from "./../area/area.repository";
-import { findCarById } from "./../car/car.repository";
-import { findCaptainById } from "./../captain/captain.repository";
 import * as DTO from "./lesson.dto";
 import ApiError from "../../shared/utils/ApiError";
-
-import { getPaginationParams } from "../../shared/utils/Pagination";
-
-import {
-  createLesson,
-  findLessonById,
-  findManyLessons,
-  validateLessonConflict,
-  updateLesson,
-} from "./lesson.repository";
-
-import {
-  findSubscriptionById,
-  recalculateSubscriptionStatus,
-} from "../subscription/subscription.repository";
-
-import * as ledgerTransaction from "../ledger/ledger.repository";
-
-import {
-  buildLessonWhere,
-  calculateLessonTime,
-  subscriptionErrors,
-} from "./lesson.utils";
-import { LessonCreateInput } from "../../../prisma/generated/models";
+import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
+import { LessonCreateInput, LessonUpdateInput, PaymentTransactionCreateInput, PaymentTransactionWhereInput } from "../../../prisma/generated/models";
 import { prisma } from "../../lib/prisma";
+import { buildLessonWhere, calculateLessonTime, subscriptionErrors } from "./lesson.utils";
 
-export const create = async (dataSafe: DTO.CreateLessonDto) => {
-  const { body, params } = dataSafe;
-  const { academyId } = params;
+import LessonRepository from "./lesson.repository";
+import LedgerRepository from "../ledger/ledger.repository";
+import CaptainRepository from "../captain/captain.repository";
+import CarRepository from "../car/car.repository";
+import AreaRepository from "../area/area.repository";
+import SubscriptionRepository from "../subscription/subscription.repository";
+import PaymentTransactionRepository from "../paymentTransaction/paymentTransaction.repository";
 
-  const {
-    areaId,
-    captainId,
-    carId,
-    subscriptionId,
-    expectedAmount,
-    transmission,
-  } = body;
+const LessonService = {
+  async create(dataSafe: DTO.CreateLessonDto) {
+    const { body, params } = dataSafe;
+    const { academyId } = params;
+    const { areaId, captainId, carId, subscriptionId, expectedAmount, transmission } = body;
 
-  const subscription = await findSubscriptionById({ id: subscriptionId });
-  if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
-  if (subscription.status !== "ACTIVE") {
-    throw ApiError.BadRequest(subscriptionErrors[subscription.status]);
-  }
-
-  const captain = await findCaptainById(captainId);
-  if (!captain) throw ApiError.NotFound({ model: "Captain" });
-  if (!captain.isActive) throw ApiError.Inactive("Captain");
-
-  const car = await findCarById(carId);
-  if (!car) throw ApiError.NotFound({ model: "Car" });
-  if (!car.isActive) throw ApiError.Inactive("Car");
-
-  const area = await findAreaById(areaId);
-  if (!area) throw ApiError.NotFound({ model: "Area" });
-  if (!area.isActive) throw ApiError.Inactive("Area");
-
-  const { startTime, endTime } = calculateLessonTime(
-    body.startTime,
-    subscription.sessionDurationMinutes,
-  );
-
-  const data: LessonCreateInput = {
-    expectedAmount,
-    transmission,
-    status: "SCHEDULED",
-    captainLessonPrice: captain.captainLessonPrice,
-    carSessionPrice: car.carSessionPrice,
-    startTime,
-    endTime,
-    isPaid: false,
-    area: { connect: { id: areaId } },
-    car: { connect: { id: carId } },
-    captain: { connect: { id: captainId } },
-    subscription: { connect: { id: subscriptionId } },
-    academy: { connect: { id: academyId } },
-    client: { connect: { id: subscription.client.id } },
-  };
-
-  const lessonConflict = await validateLessonConflict({
-    captainId,
-    carId,
-    clientId: subscription.clientId,
-    startTime,
-    endTime,
-  });
-
-  if (lessonConflict) {
-    if (lessonConflict.captainId === captainId) {
-      throw ApiError.Conflict("CaptainTimeConflict");
+    const subscription = await SubscriptionRepository.findById({ id: subscriptionId });
+    if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
+    if (subscription.status !== "ACTIVE") {
+      throw ApiError.BadRequest(subscriptionErrors[subscription.status]);
     }
 
-    if (lessonConflict.carId === carId) {
-      throw ApiError.Conflict("CarTimeConflict");
+    const captain = await CaptainRepository.findById({ captainId });
+    if (!captain) throw ApiError.NotFound({ model: "Captain" });
+    if (!captain.isActive) throw ApiError.Inactive("Captain");
+
+    const car = await CarRepository.findById({ carId });
+    if (!car) throw ApiError.NotFound({ model: "Car" });
+    if (!car.isActive) throw ApiError.Inactive("Car");
+
+    const area = await AreaRepository.findById({ areaId });
+    if (!area) throw ApiError.NotFound({ model: "Area" });
+    if (!area.isActive) throw ApiError.Inactive("Area");
+
+    const { startTime, endTime } = calculateLessonTime(body.startTime, subscription.sessionDurationMinutes);
+
+    const lessonConflict = await LessonRepository.validateLessonConflict({
+      captainId,
+      carId,
+      clientId: subscription.clientId,
+      startTime,
+      endTime,
+    });
+
+    if (lessonConflict) {
+      if (lessonConflict.captainId === captainId) throw ApiError.Conflict("CaptainTimeConflict");
+      if (lessonConflict.carId === carId) throw ApiError.Conflict("CarTimeConflict");
+      throw ApiError.Conflict("ClientTimeConflict");
     }
 
-    throw ApiError.Conflict("ClientTimeConflict");
-  }
+    const data: LessonCreateInput = {
+      expectedAmount,
+      transmission,
+      status: "SCHEDULED",
+      captainLessonPrice: captain.captainLessonPrice,
+      carSessionPrice: car.carSessionPrice,
+      startTime,
+      endTime,
+      isPaid: false,
+      area: { connect: { id: areaId } },
+      car: { connect: { id: carId } },
+      captain: { connect: { id: captainId } },
+      subscription: { connect: { id: subscriptionId } },
+      academy: { connect: { id: academyId } },
+      client: { connect: { id: subscription.client.id } },
+    };
 
-  const lesson = await createLesson(data);
+    const lesson = await LessonRepository.create({ data });
+    await SubscriptionRepository.recalculateSubscriptionStatus({ id: subscriptionId });
 
-  await recalculateSubscriptionStatus({ id: subscriptionId });
+    return lesson;
+  },
 
-  return lesson;
-};
+  async getAll(dataSafe: DTO.GetAllLessonsDto) {
+    const { query, params } = dataSafe;
+    const { academyId } = params;
+    const { limit, page, status, transmission, search } = query;
 
-export const getAll = async (dataSafe: DTO.GetAllLessonsDto) => {
-  const { query, params } = dataSafe;
-  const { academyId } = params;
-  const { limit, page, status, transmission, search } = query;
+    const where = buildLessonWhere({ search, academyId, status, transmission });
+    const { take, skip } = getPagination({ page, limit });
 
-  const where = buildLessonWhere({ search, academyId, status, transmission });
+    const { lessons, count } = await LessonRepository.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { startTime: "asc" },
+    });
 
-  const { lessons, count } = await findManyLessons({
-    where,
-    take: limit,
-    skip: Math.max(0, page - 1) * limit,
-    orderBy: { startTime: "asc" },
-  });
+    const totalPages = getTotalPages({ limit, count });
+    const pagination = { limit, page, totalPages, total: count };
 
-  const { safePage, totalPages } = getPaginationParams({
-    limit,
-    page,
-    count,
-  });
+    return { items: lessons, pagination };
+  },
 
-  const pagination = { limit, page: safePage, total: count, totalPages };
+  async getDetails(dataSafe: DTO.GetLessonDetailsDto) {
+    const { lessonId } = dataSafe.params;
 
-  return { items: lessons, pagination };
-};
+    const lesson = await LessonRepository.findById({ id: lessonId });
+    if (!lesson) throw ApiError.NotFound({ model: "Lesson" });
 
-export const getDetails = async (dataSafe: DTO.GetLessonDetailsDto) => {
-  const { lessonId } = dataSafe.params;
+    return lesson;
+  },
 
-  const lesson = await findLessonById(lessonId);
+  async changeLessonState({ dataSafe, userId, proofOfPaymentImageId }: { dataSafe: DTO.ChangeLessonStateDto; userId: string; proofOfPaymentImageId?: string }) {
+    const { body, params } = dataSafe;
+    const { lessonId } = params;
+    const { status, amount, paymentMethod = "CASH" } = body;
 
-  if (!lesson) throw ApiError.NotFound({ model: "Lesson" });
-  return lesson;
-};
+    const lessonEx = await LessonRepository.findById({ id: lessonId });
+    if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
 
-export const changeState = async (dataSafe: DTO.ChangeLessonStateDto) => {
-  const { body, params } = dataSafe;
-  const { lessonId } = params;
-  const { status } = body;
+    const lesson = await prisma.$transaction(async (tx) => {
+      const isSettledStatus = ["COMPLETED", "CANCELED_CHARGED"].includes(status);
 
-  const lessonEx = await findLessonById(lessonId);
-  if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
+      if (!isSettledStatus && lessonEx.isPaid) {
+        await tx.ledgerTransaction.deleteMany({
+          where: { referenceId: lessonEx.id, referenceCategory: "lessonId" }
+        });
+        await LessonRepository.update({
+          id: lessonEx.id,
+          data: { status, isPaid: false },
+          tx,
+        });
+      }
+      else if (isSettledStatus && !lessonEx.isPaid) {
+        await LessonRepository.update({
+          id: lessonEx.id,
+          data: { status, isPaid: true },
+          tx,
+        });
 
-  if (["COMPLETED", "CANCELED_CHARGED"].includes(lessonEx.status)) {
-    throw ApiError.BadRequest("لا يمكن تعديل حالة الحصة بعد اكملها");
-  }
+        await LedgerRepository.create({
+          data: {
+            amount: lessonEx.captainLessonPrice,
+            category: "TO_USER",
+            notes: `مستحق حصة رقم: ${lessonEx.id}`,
+            referenceId: lessonEx.id,
+            referenceCategory: "lessonId",
+            academy: { connect: { id: lessonEx.academy.id } },
+            user: { connect: { id: lessonEx.captain.userId } },
+          },
+          tx,
+        });
+      }
+      else {
+        await LessonRepository.update({ id: lessonEx.id, data: { status }, tx });
+      }
 
-  const lesson = await prisma.$transaction(async (tx) => {
-    if (
-      ["COMPLETED", "CANCELED_CHARGED"].includes(status) &&
-      !lessonEx.isPaid
-    ) {
-      const lesson = await updateLesson({
-        id: lessonEx.id,
-        data: {
-          status,
-          isPaid: true,
-        },
-        tx,
-      });
-      await ledgerTransaction.create(
-        {
-          amount: lessonEx.captainLessonPrice,
-          category: "TO_USER",
-          ledgerEffect: "CREDIT",
-          notes: "مستحق حصص",
-          referenceId: lessonEx.id,
+      if (amount) {
+        const data: PaymentTransactionCreateInput = {
+          amount,
+          paymentMethod,
+          status: paymentMethod === "CASH" ? "COMPLETED" : "PENDING",
+          type: "PAYMENT",
+          ...(proofOfPaymentImageId && {
+            proofOfPaymentImage: { connect: { id: proofOfPaymentImageId } },
+          }),
           academy: { connect: { id: lessonEx.academy.id } },
-          user: { connect: { id: lessonEx.captain.userId } },
-        },
-        tx,
+          client: { connect: { id: lessonEx.client.id } },
+          receiver: { connect: { id: userId } },
+          subscription: { connect: { id: lessonEx.subscriptionId } },
+        }
+        await PaymentTransactionRepository.create({ data, tx });
+      }
+
+      return await LessonRepository.findById({ id: lessonEx.id, tx });
+    });
+
+    await SubscriptionRepository.recalculateSubscriptionStatus({ id: lessonEx.subscriptionId });
+    return lesson;
+  },
+
+  async update(dataSafe: DTO.UpdateLessonDto) {
+    const { body, params } = dataSafe;
+    const { lessonId } = params;
+    const { areaId, captainId, carId, expectedAmount, transmission } = body;
+
+    const lessonEx = await LessonRepository.findById({ id: lessonId });
+    if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
+
+    const lockedStatuses = ["COMPLETED", "CANCELED_CHARGED"];
+    if (lockedStatuses.includes(lessonEx.status)) {
+      throw ApiError.BadRequest(
+        "لا يمكن تعديل بيانات هذه الحصة لأنها في حالة مغلقة ماليًا (مكتملة أو ملغية برسوم). التعامل المالي يتم فقط عبر تغيير الحالة."
       );
-
-      return lesson;
-    } else {
-      return await updateLesson({ id: lessonEx.id, data: { status }, tx });
     }
-  });
 
-  await recalculateSubscriptionStatus({ id: lessonEx.subscriptionId });
+    const subscription = await SubscriptionRepository.findById({ id: lessonEx.subscriptionId });
+    if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
 
-  return lesson;
-};
+    const captain = await CaptainRepository.findById({ captainId });
+    if (!captain) throw ApiError.NotFound({ model: "Captain" });
+    if (!captain.isActive) throw ApiError.Inactive("Captain");
+
+    const car = await CarRepository.findById({ carId });
+    if (!car) throw ApiError.NotFound({ model: "Car" });
+    if (!car.isActive) throw ApiError.Inactive("Car");
+
+    const area = await AreaRepository.findById({ areaId });
+    if (!area) throw ApiError.NotFound({ model: "Area" });
+    if (!area.isActive) throw ApiError.Inactive("Area");
+
+    const { startTime, endTime } = calculateLessonTime(body.startTime, subscription.sessionDurationMinutes);
+
+    const lessonConflict = await LessonRepository.validateLessonConflict({
+      captainId,
+      carId,
+      clientId: subscription.clientId,
+      startTime,
+      endTime,
+    });
+
+    if (lessonConflict) {
+      if (lessonConflict.captainId === captainId) throw ApiError.Conflict("CaptainTimeConflict");
+      if (lessonConflict.carId === carId) throw ApiError.Conflict("CarTimeConflict");
+      throw ApiError.Conflict("ClientTimeConflict");
+    }
+
+    const data: LessonUpdateInput = {
+      expectedAmount,
+      transmission,
+      startTime,
+      endTime,
+      car: { connect: { id: carId } },
+      captain: { connect: { id: captainId } },
+      area: { connect: { id: areaId } },
+    };
+
+    return await LessonRepository.update({ id: lessonEx.id, data });
+  }
+}
+
+export default LessonService;

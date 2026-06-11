@@ -1,88 +1,77 @@
 import * as DTO from "./car.dto";
 import ApiError from "../../shared/utils/ApiError";
-import { getPaginationParams } from "../../shared/utils/Pagination";
-import {
-  createCar,
-  deleteCar,
-  findCarById,
-  findCarByPlateNumber,
-  findManyCars,
-  updateCar,
-} from "./car.repository";
+import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
 import { CarUpdateInput } from "../../../prisma/generated/models";
+import CarRepository from "./car.repository";
 import { buildCarWhere } from "./cat.utils";
 
-export const create = async (dataSafe: DTO.CreateDto) => {
-  const { body } = dataSafe;
-  const { plateNumber, ...otherData } = body;
+const CarService = {
+  async create(dataSafe: DTO.CreateDto) {
+    const { plateNumber, ...otherData } = dataSafe.body;
 
-  const carExists = await findCarByPlateNumber(plateNumber);
-  if (carExists) throw ApiError.Conflict("PlateNumber");
-
-  return await createCar({ plateNumber, ...otherData });
-};
-
-export const update = async (dataSafe: DTO.UpdateDto) => {
-  const { body, params } = dataSafe;
-  const { carId } = params;
-  const { plateNumber, ...otherData } = body;
-
-  const data: CarUpdateInput = { ...otherData };
-
-  const car = await findCarById(carId);
-
-  if (!car) {
-    throw ApiError.NotFound({ model: "Car" });
-  }
-
-  if (plateNumber && plateNumber !== car.plateNumber) {
-    const carExists = await findCarByPlateNumber(plateNumber);
+    const carExists = await CarRepository.findByPlateNumber({ plateNumber });
     if (carExists) throw ApiError.Conflict("PlateNumber");
-    data.plateNumber = plateNumber;
+
+    return await CarRepository.create({
+      data: { plateNumber, ...otherData }
+    });
+  },
+
+  async update(dataSafe: DTO.UpdateDto) {
+    const { body, params } = dataSafe;
+    const { carId } = params;
+    const { plateNumber, ...otherData } = body;
+
+    const car = await CarRepository.findById({ carId });
+    if (!car) throw ApiError.NotFound({ model: "Car" });
+
+    const data: CarUpdateInput = { ...otherData };
+
+    if (plateNumber && plateNumber !== car.plateNumber) {
+      const carExists = await CarRepository.findByPlateNumber({ plateNumber });
+      if (carExists) throw ApiError.Conflict("PlateNumber");
+      data.plateNumber = plateNumber;
+    }
+
+    return await CarRepository.update({ carId, data });
+  },
+
+  async getDetails(dataSafe: DTO.GetDetailsDto) {
+    const { carId } = dataSafe.params;
+
+    const car = await CarRepository.findById({ carId });
+    if (!car) throw ApiError.NotFound({ model: "Car" });
+
+    return car;
+  },
+
+  async remove(dataSafe: DTO.DeleteDto) {
+    const { carId } = dataSafe.params;
+
+    const car = await CarRepository.findById({ carId });
+    if (!car) throw ApiError.NotFound({ model: "Car" });
+
+    return await CarRepository.delete({ carId });
+  },
+
+  async getAll(dataSafe: DTO.GetAllDto) {
+    const { limit, page, search, gearType, isActive } = dataSafe.query;
+
+    const where = buildCarWhere({ search, gearType, isActive });
+    const { take, skip } = getPagination({ page, limit });
+
+    const { cars, count } = await CarRepository.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { createdAt: "desc" },
+    });
+
+    const totalPages = getTotalPages({ limit, count });
+    const pagination = { limit, page, totalPages, total: count };
+
+    return { items: cars, pagination };
   }
-
-  return await updateCar(carId, data);
 };
 
-export const getDetails = async (dataSafe: DTO.GetDetailsDto) => {
-  const { carId } = dataSafe.params;
-
-  const car = await findCarById(carId);
-  if (!car) throw ApiError.NotFound({ model: "Car" });
-
-  return car;
-};
-
-export const remove = async (dataSafe: DTO.DeleteDto) => {
-  const { carId } = dataSafe.params;
-
-  const car = await findCarById(carId);
-  if (!car) throw ApiError.NotFound({ model: "Car" });
-
-  return deleteCar(carId);
-};
-
-export const getAll = async (dataSafe: DTO.GetAllDto) => {
-  const { query } = dataSafe;
-  const { limit, page, search, gearType, isActive } = query;
-
-  const where = buildCarWhere({ search, gearType, isActive });
-
-  const { cars, count } = await findManyCars({
-    where,
-    take: limit,
-    skip: Math.min(0, page - 1) * limit,
-    orderBy: { createdAt: "desc" },
-  });
-
-  const { safePage, totalPages } = getPaginationParams({
-    limit,
-    page,
-    count,
-  });
-
-  return {
-    items: cars,
-    pagination: { limit, page: safePage, total: count, totalPages },
-  };
-};
+export default CarService;

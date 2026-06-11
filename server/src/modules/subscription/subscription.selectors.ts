@@ -1,4 +1,7 @@
-import { SubscriptionSelect } from "../../../prisma/generated/models";
+import {
+  SubscriptionGetPayload,
+  SubscriptionSelect,
+} from "../../../prisma/generated/models";
 
 export const subscriptionBaseSelect: SubscriptionSelect = {
   id: true,
@@ -9,7 +12,7 @@ export const subscriptionBaseSelect: SubscriptionSelect = {
   sessionDurationMinutes: true,
   createdAt: true,
   area: { select: { id: true, name: true } },
-  client: { select: { id: true, name: true, phone: true } },
+  client: { select: { id: true, name: true, phone: true, academyId: true } },
   course: { select: { id: true, name: true } },
   academy: { select: { id: true, name: true } },
 };
@@ -24,9 +27,6 @@ export const subscriptionDetailsSelect: SubscriptionSelect = {
       status: true,
       transmission: true,
       expectedAmount: true,
-      car: {
-        select: { id: true, modelName: true, plateNumber: true },
-      },
       area: {
         select: { id: true, name: true },
       },
@@ -52,3 +52,11 @@ export const subscriptionDetailsSelect: SubscriptionSelect = {
     },
   },
 };
+
+export type SubscriptionBaseDTO = SubscriptionGetPayload<{
+  select: typeof subscriptionBaseSelect;
+}>;
+
+export type SubscriptionDetailsDTO = SubscriptionGetPayload<{
+  select: typeof subscriptionDetailsSelect;
+}>;

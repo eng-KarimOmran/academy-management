@@ -4,9 +4,9 @@ import ApiError from "../shared/utils/ApiError";
 import { User } from "../../prisma/generated/client";
 import dayjs from "dayjs";
 import { RequestValidation } from "./validation.middleware";
-import { isBlacklisted } from "../modules/auth/auth.repository";
-import { findUserById } from "../modules/user/user.repository";
 import { userAuthSelect } from "../modules/user/user.selectors";
+import UserRepository from "../modules/user/user.repository";
+import AuthRepository from "../modules/auth/auth.repository";
 
 export interface RequestAuth extends RequestValidation {
   tokenPayload?: ITokenPayload;
@@ -25,8 +25,8 @@ const auth = (type: TokenType = TokenType.ACCESS): RequestHandler => {
 
     const tokenPayload = Token.verifyToken({ token, type });
 
-    const user = await findUserById({
-      id: tokenPayload.id,
+    const user = await UserRepository.findById({
+      userId: tokenPayload.id,
       select: userAuthSelect,
     });
 
@@ -34,7 +34,7 @@ const auth = (type: TokenType = TokenType.ACCESS): RequestHandler => {
       throw ApiError.NotFound({ model: "User" });
     }
 
-    const isTokenBanned = await isBlacklisted(tokenPayload.jti!);
+    const isTokenBanned = await AuthRepository.isBlacklisted({ jti: tokenPayload.jti! });
 
     if (isTokenBanned) {
       throw ApiError.Unauthorized("تم إنهاء هذه الجلسة");

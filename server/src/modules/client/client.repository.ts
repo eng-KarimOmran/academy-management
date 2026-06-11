@@ -1,3 +1,4 @@
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import {
   ClientCreateInput,
   ClientOrderByWithRelationInput,
@@ -5,98 +6,72 @@ import {
   ClientUpdateInput,
   ClientWhereInput,
 } from "../../../prisma/generated/models";
-import { prisma } from "../../lib/prisma";
 import { clientBaseSelect } from "./client.selectors";
+import getClient from "../../shared/utils/getClient"
 
-export const createClient = async (data: ClientCreateInput) => {
-  return await prisma.client.create({ data, select: clientBaseSelect });
-};
+const ClientRepository = {
+  async create({ data, select, tx }: { data: ClientCreateInput; select?: ClientSelect; tx?: TransactionClient }) {
+    return getClient(tx).client.create({
+      data,
+      select: select ?? clientBaseSelect,
+    });
+  },
 
-export const findClientById = async ({
-  id,
-  select = clientBaseSelect,
-}: {
-  id: string;
-  select?: ClientSelect;
-}) => {
-  return await prisma.client.findUnique({
-    where: { id },
-    select,
-  });
-};
+  async findById({ id, select, tx }: { id: string; select?: ClientSelect; tx?: TransactionClient }) {
+    return getClient(tx).client.findUnique({
+      where: { id },
+      select: select ?? clientBaseSelect,
+    });
+  },
 
-export const findClientByPhone = async ({
-  phone,
-  academyId,
-  select = clientBaseSelect,
-}: {
-  phone: string;
-  academyId: string;
-  select?: ClientSelect;
-}) => {
-  return await prisma.client.findUnique({
-    where: {
-      academyId_phone: {
-        phone,
-        academyId,
+  async findByPhone({ phone, academyId, select, tx }: { phone: string; academyId: string; select?: ClientSelect; tx?: TransactionClient }) {
+    return getClient(tx).client.findUnique({
+      where: {
+        academyId_phone: { phone, academyId },
       },
-    },
-    select,
-  });
-};
+      select: select ?? clientBaseSelect,
+    });
+  },
 
-export const updateClient = async ({
-  id,
-  data,
-}: {
-  id: string;
-  data: ClientUpdateInput;
-}) => {
-  return await prisma.client.update({
-    where: { id },
-    data,
-    select: clientBaseSelect,
-  });
-};
+  async update({ id, data, select, tx }: { id: string; data: ClientUpdateInput; select?: ClientSelect; tx?: TransactionClient }) {
+    return getClient(tx).client.update({
+      where: { id },
+      data,
+      select: select ?? clientBaseSelect,
+    });
+  },
 
-export const deleteClient = async (id: string) => {
-  return await prisma.client.delete({
-    where: { id },
-    select: clientBaseSelect,
-  });
-};
+  async delete({ id, select, tx }: { id: string; select?: ClientSelect; tx?: TransactionClient }) {
+    return getClient(tx).client.delete({
+      where: { id },
+      select: select ?? clientBaseSelect,
+    });
+  },
 
-export const findManyClients = async (data: {
-  where: ClientWhereInput;
-  skip: number;
-  take: number;
-  orderBy: ClientOrderByWithRelationInput;
-}) => {
-  const [clients, count] = await prisma.$transaction([
-    prisma.client.findMany({ ...data, select: clientBaseSelect }),
-    prisma.client.count({ where: data.where }),
-  ]);
+  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: ClientWhereInput; orderBy?: ClientOrderByWithRelationInput; select?: ClientSelect; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    const [clients, count] = await Promise.all([
+      client.client.findMany({ where, skip, take, orderBy, select: select ?? clientBaseSelect }),
+      client.client.count({ where }),
+    ]);
 
-  return { clients, count };
-};
+    return { clients, count };
+  },
 
-export const getOtherFilesByPhone = async ({
-  phone,
-  academyId,
-}: {
-  academyId: string;
-  phone: string;
-}) => {
-  return prisma.client.findMany({
-    where: { phone, NOT: { academyId } },
-    select: {
-      ...clientBaseSelect,
-      academy: {
-        select: {
-          id: true,
-          name: true,
+  async getOtherFilesByPhone({ phone, academyId, tx }: { academyId: string; phone: string; tx?: TransactionClient }) {
+    return getClient(tx).client.findMany({
+      where: { phone, NOT: { academyId } },
+      select: {
+        ...clientBaseSelect,
+        academy: {
+          select: {
+            id: true,
+            name: true,
+          },
         },
       },
-    },
-  });
+    });
+  }
 };
+
+export default ClientRepository;

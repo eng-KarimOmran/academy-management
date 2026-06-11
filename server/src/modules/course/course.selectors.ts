@@ -11,11 +11,12 @@ export const courseBaseSelect: CourseSelect = {
   priceDiscounted: true,
   priceOriginal: true,
   totalSessions: true,
+  academyId:true,
+  createdAt: true,
 };
 
 export const courseDetailsSelect: CourseSelect = {
   ...courseBaseSelect,
-  createdAt: true,
   courseFeatures: {
     select: {
       id: true,

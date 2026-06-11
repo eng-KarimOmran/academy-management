@@ -9,6 +9,7 @@ import {
   phone,
   price,
   booleanQuery,
+  date,
 } from "../../shared/utils/common.validation";
 
 export const CreateCaptainSchema = {
@@ -44,4 +45,9 @@ export const GetCaptainDetailsSchema = {
 
 export const DeleteCaptainSchema = {
   params: z.object({ captainId: id }),
+};
+
+export const GetLessonCaptainSchema = {
+  params: z.object({ userId: id }),
+  query: z.object({ gte: date.optional(), lte: date.optional() }),
 };

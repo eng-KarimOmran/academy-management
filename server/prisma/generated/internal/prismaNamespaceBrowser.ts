@@ -306,6 +306,7 @@ export const LedgerTransactionScalarFieldEnum = {
   category: 'category',
   amount: 'amount',
   referenceId: 'referenceId',
+  referenceCategory: 'referenceCategory',
   ledgerEffect: 'ledgerEffect',
   notes: 'notes',
   createdAt: 'createdAt'

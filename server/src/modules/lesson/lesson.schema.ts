@@ -8,6 +8,7 @@ import {
   lessonStatus,
   transmission,
   price,
+  paymentMethod,
 } from "../../shared/utils/common.validation";
 
 export const CreateLessonSchema = {
@@ -45,9 +46,26 @@ export const GetLessonDetailsSchema = {
   }),
 };
 
-export const ChangeLessonState = {
+export const ChangeLessonStateSchema = {
   params: z.object({ lessonId: id, academyId: id }),
   body: z.object({
     status: lessonStatus,
+    paymentMethod: paymentMethod.optional(),
+    amount: price.optional(),
+  }),
+};
+
+export const UpdateLessonSchema = {
+  params: z.object({
+    academyId: id,
+    lessonId: id,
+  }),
+  body: z.object({
+    startTime: futureDate,
+    transmission: transmission,
+    expectedAmount: price,
+    captainId: id,
+    carId: id,
+    areaId: id,
   }),
 };

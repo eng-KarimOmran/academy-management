@@ -1,122 +1,108 @@
 import * as DTO from "./client.dto";
 import ApiError from "../../shared/utils/ApiError";
-import { getPaginationParams } from "../../shared/utils/Pagination";
-import {
-  createClient,
-  deleteClient,
-  findClientById,
-  findClientByPhone,
-  findManyClients,
-  getOtherFilesByPhone,
-  updateClient,
-} from "./client.repository";
+import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
 import { buildClientWhere } from "./client.utils";
-import { clientDetailsSelect } from "./client.selectors";
+import { clientBaseSelect, clientDetailsSelect } from "./client.selectors";
+import ClientRepository from "./client.repository";
 
-export const create = async (dataSafe: DTO.CreateClientDto) => {
-  const { body, params } = dataSafe;
-  const { name, phone, clientSource } = body;
-  const { academyId } = params;
+const ClientService = {
+  async create(dataSafe: DTO.CreateClientDto) {
+    const { body, params } = dataSafe;
+    const { name, phone, clientSource } = body;
+    const { academyId } = params;
 
-  const clientExists = await findClientByPhone({ phone, academyId });
+    const clientExists = await ClientRepository.findByPhone({ phone, academyId });
+    if (clientExists) throw ApiError.Conflict("Phone");
 
-  if (clientExists) throw ApiError.Conflict("Phone");
+    return await ClientRepository.create({
+      data: {
+        phone,
+        name,
+        clientSource,
+        academy: { connect: { id: academyId } },
+      },
+    });
+  },
 
-  return await createClient({
-    phone,
-    name,
-    clientSource,
-    academy: { connect: { id: academyId } },
-  });
-};
+  async getAll(dataSafe: DTO.GetAllClientsDto) {
+    const { query, params } = dataSafe;
+    const { academyId } = params;
+    const { limit, page, search } = query;
 
-export const getAll = async (dataSafe: DTO.GetAllClientsDto) => {
-  const { query, params } = dataSafe;
-  const { academyId } = params;
-  const { limit, page, search } = query;
+    const where = buildClientWhere({ search, academyId });
+    const { take, skip } = getPagination({ page, limit });
 
-  const where = buildClientWhere({ search, academyId });
+    const { clients, count } = await ClientRepository.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { createdAt: "desc" },
+    });
 
-  const { count, clients } = await findManyClients({
-    where,
-    take: limit,
-    skip: Math.min(0, page - 1) * limit,
-    orderBy: { createdAt: "desc" },
-  });
+    const totalPages = getTotalPages({ limit, count });
+    const pagination = { limit, page, totalPages, total: count };
 
-  const { safePage, totalPages } = getPaginationParams({
-    limit,
-    page,
-    count,
-  });
+    return { items: clients, pagination };
+  },
 
-  const pagination = { limit, page: safePage, count, totalPages };
+  async getDetails(dataSafe: DTO.ClientDetailsDto) {
+    const { clientId, academyId } = dataSafe.params;
 
-  return { items: clients, pagination };
-};
+    const client = await ClientRepository.findById({
+      id: clientId,
+      select: clientDetailsSelect,
+    });
 
-export const getDetails = async (dataSafe: DTO.ClientDetailsDto) => {
-  const { clientId, academyId } = dataSafe.params;
+    if (!client) throw ApiError.NotFound({ model: "Client" });
 
-  const client = await findClientById({
-    id: clientId,
-    select: clientDetailsSelect,
-  });
-
-  if (!client) throw ApiError.NotFound({ model: "Client" });
-
-  const otherFiles = await getOtherFilesByPhone({
-    phone: client.phone,
-    academyId,
-  });
-
-  return { currentClient: client, otherFiles };
-};
-
-export const update = async (dataSafe: DTO.UpdateClientDto) => {
-  const { body, params } = dataSafe;
-  const { clientId, academyId } = params;
-
-  const client = await findClientById({ id: clientId });
-
-  if (!client) throw ApiError.NotFound({ model: "Client" });
-
-  if (body.phone && client.phone !== body.phone) {
-    const existingPhone = await findClientByPhone({
-      phone: body.phone,
+    const otherFiles = await ClientRepository.getOtherFilesByPhone({
+      phone: client.phone,
       academyId,
     });
-    if (existingPhone) throw ApiError.Conflict("Phone");
+
+    return { currentClient: client, otherFiles };
+  },
+
+  async update(dataSafe: DTO.UpdateClientDto) {
+    const { body, params } = dataSafe;
+    const { clientId, academyId } = params;
+
+    const client = await ClientRepository.findById({ id: clientId });
+    if (!client) throw ApiError.NotFound({ model: "Client" });
+
+    if (body.phone && client.phone !== body.phone) {
+      const existingPhone = await ClientRepository.findByPhone({
+        phone: body.phone,
+        academyId,
+      });
+      if (existingPhone) throw ApiError.Conflict("Phone");
+    }
+
+    return await ClientRepository.update({ id: clientId, data: body });
+  },
+
+  async remove(dataSafe: DTO.DeleteClientDto) {
+    const { clientId } = dataSafe.params;
+
+    const client = await ClientRepository.findById({ id: clientId });
+    if (!client) throw ApiError.NotFound({ model: "Client" });
+
+    return await ClientRepository.delete({ id: clientId });
+  },
+
+  async getClientByPhone(dataSafe: DTO.GetClientByPhoneDto) {
+    const { phone, academyId } = dataSafe.params;
+
+    const client = await ClientRepository.findByPhone({
+      phone,
+      academyId,
+      select: clientBaseSelect,
+    });
+
+    if (!client) throw ApiError.NotFound({ model: "Client" });
+
+    return client;
   }
-
-  return await updateClient({ id: clientId, data: body });
 };
 
-export const remove = async (dataSafe: DTO.DeleteClientDto) => {
-  const { clientId } = dataSafe.params;
-
-  const client = await findClientById({ id: clientId });
-
-  if (!client) throw ApiError.NotFound({ model: "Client" });
-
-  return await deleteClient(clientId);
-};
-
-export const getClientByPhone = async (dataSafe: DTO.GetClientByPhoneDto) => {
-  const { phone, academyId } = dataSafe.params;
-
-  const client = await findClientByPhone({
-    phone,
-    academyId,
-    select: clientDetailsSelect,
-  });
-
-  if (!client) throw ApiError.NotFound({ model: "Client" });
-
-  const otherFiles = await getOtherFilesByPhone({
-    phone,
-    academyId,
-  });
-
-  return { currentClient: client, otherFiles };
-};
+export default ClientService;

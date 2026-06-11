@@ -1,135 +1,97 @@
 import * as DTO from "./paymentTransaction.dto";
 import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
-import { getPaginationParams } from "../../shared/utils/Pagination";
+import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
+import { buildPaymentTransactionWhere, calculateFinancial } from "./paymentTransaction.utils";
+import PaymentTransactionRepository from "./paymentTransaction.repository";
+import { PaymentTransactionCreateInput } from "../../../prisma/generated/models";
+import SubscriptionRepository from "../subscription/subscription.repository";
 
-import {
-  buildPaymentTransactionWhere,
-  calculateFinancial,
-} from "./paymentTransaction.utils";
+const PaymentTransactionService = {
+  async createPayment(userId: string, dataSafe: DTO.CreatePaymentTransactionDto) {
+    const { body } = dataSafe;
+    const { amount, paymentMethod, subscriptionId, type } = body;
 
-import {
-  createPaymentTransaction,
-  findManyPaymentTransactions,
-  findPaymentTransactionById,
-  updatePaymentTransaction,
-} from "./paymentTransaction.repository";
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+      include: { payments: true },
+    });
 
-export const createPayment = async (
-  userId: string,
-  dataSafe: DTO.CreatePaymentTransactionDto,
-) => {
-  const { body } = dataSafe;
-  const { amount, paymentMethod, subscriptionId, type } = body;
+    if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
 
-  const subscription = await prisma.subscription.findUnique({
-    where: { id: subscriptionId },
-    include: { payments: true },
-  });
+    const { remaining } = calculateFinancial(subscription.payments, subscription.priceAtBooking);
 
-  if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
+    if (type === "PAYMENT" && amount > remaining) {
+      throw ApiError.Conflict(
+        "OVERPAYMENT",
+        `لا يمكنك دفع مبلغ ${amount}، المبلغ المتبقي المستحق هو ${remaining} فقط.`
+      );
+    }
 
-  const { remaining } = calculateFinancial(
-    subscription.payments,
-    subscription.priceAtBooking,
-  );
+    const data: PaymentTransactionCreateInput = {
+      amount,
+      paymentMethod,
+      type,
+      status: paymentMethod === "CASH" ? "COMPLETED" : "PENDING",
+      subscription: { connect: { id: subscriptionId } },
+      receiver: { connect: { id: userId } },
+      academy: { connect: { id: subscription.academyId } },
+      client: { connect: { id: subscription.clientId } },
+    };
 
-  if (amount > remaining) {
-    throw ApiError.Conflict(
-      "OVERPAYMENT",
-      `لا يمكنك دفع مبلغ ${amount}، المبلغ المتبقي المستحق هو ${remaining} فقط.`,
-    );
+    return await PaymentTransactionRepository.create({ data });
+  },
+
+  async getAllPaymentTransactions(dataSafe: DTO.GetAllPaymentTransactionsDto) {
+    const { query, params } = dataSafe;
+    const { academyId } = params;
+    const { limit, page, search, paymentMethod, status, type } = query;
+
+    const where = buildPaymentTransactionWhere({ search, academyId, paymentMethod, status, type });
+    const { take, skip } = getPagination({ page, limit });
+
+    const { count, transactions } = await PaymentTransactionRepository.findMany({
+      where,
+      take,
+      skip,
+      orderBy: { createdAt: "desc" },
+    });
+
+    const totalPages = getTotalPages({ limit, count });
+    const pagination = { limit, page, total: count, totalPages };
+
+    return { items: transactions, pagination };
+  },
+
+  async getPaymentTransactionDetails(dataSafe: DTO.GetPaymentTransactionDetailsDto) {
+    const { paymentId } = dataSafe.params;
+
+    const paymentTransaction = await PaymentTransactionRepository.findById({ id: paymentId });
+    if (!paymentTransaction) throw ApiError.NotFound({ model: "PaymentTransaction" });
+
+    return paymentTransaction;
+  },
+
+  async changePaymentStatus(dataSafe: DTO.ChangePaymentStatusDto) {
+    const { body, params } = dataSafe;
+    const { paymentId } = params;
+    const { status } = body;
+
+    const paymentTransaction = await PaymentTransactionRepository.findById({ id: paymentId });
+    if (!paymentTransaction) throw ApiError.NotFound({ model: "PaymentTransaction" });
+
+    if (paymentTransaction.status === status) return paymentTransaction;
+
+    return await prisma.$transaction(async (tx) => {
+      const updatedPayment = await PaymentTransactionRepository.update({
+        id: paymentId,
+        data: { status },
+        tx,
+      });
+      await SubscriptionRepository.recalculateSubscriptionStatus({ id: paymentTransaction.subscriptionId });
+      return updatedPayment;
+    });
   }
-
-  return await createPaymentTransaction({
-    amount,
-    paymentMethod,
-    type,
-    status: paymentMethod === "CASH" ? "COMPLETED" : "PENDING",
-    subscription: {
-      connect: {
-        id: subscriptionId,
-      },
-    },
-    receiver: {
-      connect: {
-        id: userId,
-      },
-    },
-    academy: {
-      connect: {
-        id: subscription.academyId,
-      },
-    },
-    client: {
-      connect: {
-        id: subscription.clientId,
-      },
-    },
-  });
 };
 
-export const getAllPaymentTransactions = async (
-  dataSafe: DTO.GetAllPaymentTransactionsDto,
-) => {
-  const { query, params } = dataSafe;
-  const { academyId } = params;
-  const { limit, page, search, paymentMethod, status, type } = query;
-
-  const where = buildPaymentTransactionWhere({
-    search,
-    academyId,
-    paymentMethod,
-    status,
-    type,
-  });
-
-  const { count, transactions } = await findManyPaymentTransactions({
-    where,
-    take: limit,
-    skip: Math.max(0, page - 1 * limit),
-    orderBy: { createdAt: "desc" },
-  });
-
-  const { safePage, totalPages } = getPaginationParams({
-    limit,
-    page,
-    count,
-  });
-
-  const pagination = { limit, page: safePage, total: count, totalPages };
-
-  return { items: transactions, pagination };
-};
-
-export const getPaymentTransactionDetails = async (
-  dataSafe: DTO.GetPaymentTransactionDetailsDto,
-) => {
-  const { paymentId } = dataSafe.params;
-
-  const paymentTransaction = await findPaymentTransactionById({
-    id: paymentId,
-  });
-
-  if (!paymentTransaction)
-    throw ApiError.NotFound({ model: "PaymentTransaction" });
-
-  return paymentTransaction;
-};
-
-export const changePaymentStatus = async (
-  dataSafe: DTO.ChangePaymentStatusDto,
-) => {
-  const { body, params } = dataSafe;
-  const { paymentId } = params;
-  const { status } = body;
-
-  const paymentTransaction = await findPaymentTransactionById({
-    id: paymentId,
-  });
-
-  if (!paymentTransaction)
-    throw ApiError.NotFound({ model: "PaymentTransaction" });
-
-  return await updatePaymentTransaction({ id: paymentId, data: { status } });
-};
+export default PaymentTransactionService;

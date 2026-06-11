@@ -21,7 +21,9 @@ export const buildAreaWhere = ({
   }
 
   if (supportType) {
-    where.supportType = supportType;
+    where.supportType = {
+      in: ["BOTH", supportType],
+    };
   }
 
   return where;

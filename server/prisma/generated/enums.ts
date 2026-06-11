@@ -13,7 +13,8 @@ export const LedgerCategory = {
   FROM_CUSTOMER: 'FROM_CUSTOMER',
   TO_CUSTOMER: 'TO_CUSTOMER',
   TO_USER: 'TO_USER',
-  FROM_USER: 'FROM_USER',
+  FROM_ACADEMY: 'FROM_ACADEMY',
+  TO_ACADEMY: 'TO_ACADEMY',
   BONUS: 'BONUS',
   PENALTY: 'PENALTY'
 } as const
@@ -27,6 +28,16 @@ export const LedgerEffect = {
 } as const
 
 export type LedgerEffect = (typeof LedgerEffect)[keyof typeof LedgerEffect]
+
+
+export const ReferenceCategory = {
+  lessonId: 'lessonId',
+  paymentId: 'paymentId',
+  ledgerId: 'ledgerId',
+  subscriptionId: 'subscriptionId'
+} as const
+
+export type ReferenceCategory = (typeof ReferenceCategory)[keyof typeof ReferenceCategory]
 
 
 export const Role = {

@@ -5,4 +5,5 @@ export const areaBaseSelect: AreaSelect = {
   name: true,
   supportType: true,
   isActive: true,
+  createdAt: true
 };

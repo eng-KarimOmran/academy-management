@@ -41,12 +41,29 @@ export const getLessonDetails = async (req: RequestAuth, res: Response) => {
 
 export const changeLessonState = async (req: RequestAuth, res: Response) => {
   const dataSafe = req.dataSafe as DTO.ChangeLessonStateDto;
+  const userLogin = req.userLogin!;
 
-  const updatedLesson = await LessonService.changeState(dataSafe);
+  const updatedLesson = await LessonService.changeLessonState({
+    userId: userLogin.id,
+    dataSafe,
+  });
 
   return sendSuccess({
     res,
     data: updatedLesson,
     message: `تم تغيير حالة الحصة`,
+  });
+};
+
+export const updateLesson = async (req: RequestAuth, res: Response) => {
+  const dataSafe = req.dataSafe as DTO.UpdateLessonDto;
+
+  const lesson = await LessonService.update(dataSafe);
+
+  return sendSuccess({
+    res,
+    statusCode: 201,
+    data: lesson,
+    message: "تمت جدولة الحصة بنجاح.",
   });
 };
