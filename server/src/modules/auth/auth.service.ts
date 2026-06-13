@@ -7,6 +7,7 @@ import UserRepository from "../user/user.repository"; // استدعاء الري
 import AuthRepository from "./auth.repository";
 import { userAuthSelect } from "../user/user.selectors";
 import HashHelper from "./auth.utils";
+import { CreateUserDto } from "../user/user.dto";
 
 const AuthService = {
   async login(dataSafe: DTO.LoginDto) {
@@ -27,6 +28,7 @@ const AuthService = {
     }
 
     const { access, refresh } = Token.generateTokens(user.id);
+    
     const safeUser = omit(user, ["password", "logoutAt"]);
 
     return {
@@ -75,6 +77,20 @@ const AuthService = {
 
     return true;
   },
+
+  async createFirstOwner(dataSafe: CreateUserDto) {
+    const { name, phone, password } = dataSafe.body;
+    const userExists = await UserRepository.findFirst({ where: { roles: { has: "OWNER" } } });
+
+    if (userExists) {
+      throw ApiError.Conflict("OWNER_ALREADY_EXISTS");
+    }
+
+    const hashedPassword = await HashHelper.hash(password);
+    const user = await UserRepository.create({ data: { name, phone, password: hashedPassword, roles: ["OWNER"] } })
+
+    return omit(user, ["password", "logoutAt"]);
+  }
 };
 
 export default AuthService;

@@ -1,5 +1,4 @@
 import z from "zod";
-
 import {
   id,
   limit,
@@ -7,9 +6,10 @@ import {
   entityName,
   boolean,
   price,
-} from "@/validations/common.validation";
+  booleanQuery,
+} from "../validations/common.validation";
 
-export const CreateCourseSchema = z.object({
+export const CreateSchema = z.object({
   academyId: id,
   name: entityName,
   description: z.string(),
@@ -21,8 +21,8 @@ export const CreateCourseSchema = z.object({
   featuredReason: z.string().optional(),
 });
 
-export const UpdateCourseSchema = z.object({
-  id,
+export const UpdateSchema = z.object({
+  courseId: id,
   academyId: id,
   name: entityName.optional(),
   description: z.string().optional(),
@@ -31,29 +31,36 @@ export const UpdateCourseSchema = z.object({
   totalSessions: positiveNumber.optional(),
   practicalSessions: positiveNumber.optional(),
   sessionDurationMinutes: positiveNumber.optional(),
-  trainingDetails: z.array(z.string()).optional(),
   featuredReason: z.string().optional(),
   isActive: boolean.optional(),
 });
 
-export const DeleteCourseSchema = z.object({
+export const DeleteSchema = z.object({
+  courseId: id,
   academyId: id,
-  id,
 });
 
-export const GetAllCoursesSchema = z.object({
+export const GetAllSchema = z.object({
   academyId: id,
   page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
+  limit: limit,
   search: z.string().optional(),
+  isActive: booleanQuery.optional(),
 });
 
-export const GetCourseDetailsSchema = z.object({
+export const GetDetailsSchema = z.object({
+  courseId: id,
   academyId: id,
-  id,
 });
 
-export const FilterCoursesSchema = z.object({
+export const AddCourseFeaturesSchema = z.object({
   academyId: id,
-  type: z.string().optional(),
+  courseId: id,
+  text: z.string(),
+});
+
+export const DeleteCourseFeaturesSchema = z.object({
+  academyId: id,
+  courseId: id,
+  featureId: id,
 });

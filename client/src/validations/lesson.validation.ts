@@ -7,8 +7,8 @@ import {
   futureDate,
   lessonStatus,
   transmission,
-  paymentMethod,
   price,
+  paymentMethod,
 } from "@/validations/common.validation";
 
 // ================== CREATE ==================
@@ -28,6 +28,7 @@ export const GetAllLessonsSchema = z.object({
   academyId: id,
   page: positiveNumber.optional().default(1),
   limit: limit,
+  search: z.string().optional(),
 });
 
 // ================== DETAILS ==================
@@ -36,25 +37,11 @@ export const GetLessonDetailsSchema = z.object({
   lessonId: id,
 });
 
-// ================== UPDATE ==================
-export const UpdateLessonSchema = z.object({
-  academyId: id,
-  lessonId: id,
-
-  startTime: futureDate.optional(),
-  captainId: id.optional(),
-  carId: id.optional(),
-  areaId: id.optional(),
-  expectedAmount: price.optional(),
-  transmission: transmission.optional(),
-});
-
 // ================== CHANGE STATUS ==================
 export const ChangeLessonStateSchema = z.object({
   academyId: id,
   lessonId: id,
-
   status: lessonStatus,
-  amount: price.optional(),
   paymentMethod: paymentMethod.optional(),
+  amount: price.optional(),
 });

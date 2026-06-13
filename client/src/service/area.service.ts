@@ -9,26 +9,34 @@ import { axiosClient } from "@/lib/axios";
 import type { Area } from "@/types/area";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 
-const bassUrl = "/area";
+const baseUrl = "/areas";
 
 export const getAllAreas = (data: GetAllAreasDto) => {
-  const query: string = `${bassUrl}?page=${data.page ?? 1}&limit=${data.limit ?? 10}&search=${data.search ?? ""}`;
-  return axiosClient.get<PaginatedResponse<Area>>(query);
+  return axiosClient.get<PaginatedResponse<Area>>(baseUrl, {
+    params: {
+      page: data.page ?? 1,
+      limit: data.limit ?? 10,
+      search: data.search ?? "",
+    },
+  });
 };
 
 export const deleteArea = (data: DeleteAreaDto) =>
-  axiosClient.delete<SuccessfulResponse<null>>(`${bassUrl}/${data.id}`);
+  axiosClient.delete<SuccessfulResponse<null>>(`${baseUrl}/${data.id}`);
 
 export const createArea = (data: CreateAreaDto) =>
-  axiosClient.post<SuccessfulResponse<Area>>(bassUrl, data);
+  axiosClient.post<SuccessfulResponse<Area>>(baseUrl, data);
 
 export const updateArea = (id: string, data: UpdateAreaDto) =>
-  axiosClient.patch<SuccessfulResponse<Area>>(`${bassUrl}/${id}`, data);
+  axiosClient.patch<SuccessfulResponse<Area>>(`${baseUrl}/${id}`, data);
 
 export const getArea = (id: string) =>
-  axiosClient.get<SuccessfulResponse<Area>>(`${bassUrl}/details/${id}`);
+  axiosClient.get<SuccessfulResponse<Area>>(`${baseUrl}/${id}`);
 
 export const getActiveAreas = (data: GetAreaActiveDto) =>
-  axiosClient.get<SuccessfulResponse<Area[]>>(
-    `${bassUrl}/active?type=${data.type}`,
-  );
+  axiosClient.get<PaginatedResponse<Area>>(baseUrl, {
+    params: {
+      supportType: data.type,
+      isActive: true,
+    },
+  });

@@ -6,6 +6,7 @@ import {
   positiveNumber,
   paymentMethod,
   transactionStatus,
+  transactionType,
 } from "@/validations/common.validation";
 
 export const CreatePaymentTransactionSchema = z.object({
@@ -13,26 +14,29 @@ export const CreatePaymentTransactionSchema = z.object({
   amount: positiveNumber,
   paymentMethod,
   subscriptionId: id,
-  lessonId: id.optional(),
+  type: transactionType,
+  proofImage: z.any().optional()
 });
 
 export const GetAllPaymentTransactionsSchema = z.object({
   academyId: id,
+  limit: limit,
   page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
+  search: z.string().optional(),
+  paymentMethod: paymentMethod.optional(),
+  status: transactionStatus.optional(),
+  type: transactionType.optional(),
 });
 
 export const GetPaymentTransactionDetailsSchema = z.object({
   academyId: id,
-  paymentId: id,
+  transactionId: id,
 });
 
-export const UpdatePaymentTransactionSchema = z.object({
+export const ChangePaymentStatusSchema = z.object({
   academyId: id,
   paymentId: id,
-  amount: positiveNumber.optional(),
-  paymentMethod: paymentMethod.optional(),
-  status: transactionStatus.optional(),
+  status: transactionStatus,
 });
 
 export const DeletePaymentTransactionSchema = z.object({

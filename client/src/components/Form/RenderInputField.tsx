@@ -16,7 +16,6 @@ import {
 import { arSA } from "date-fns/locale";
 import { arSA as arSADayPicker } from "react-day-picker/locale";
 
-// UI Components
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import {
@@ -43,7 +42,8 @@ export type InputType =
   | "password"
   | "date&time"
   | "tel"
-  | "url";
+  | "url"
+  | "img";
 
 export type Option = {
   label: string;
@@ -53,7 +53,7 @@ export type Option = {
 export type FieldConfig<T extends FieldValues> = {
   name: Path<T>;
   type: InputType;
-  label: string;
+  label?: string;
   col?: FormCol;
   placeholder?: string;
   disabled?: boolean;
@@ -328,7 +328,26 @@ export default function RenderInputField<T extends FieldValues>({
           }}
         />
       );
-
+    case "img":
+      return (
+        <Controller
+          name={config.name}
+          control={control}
+          render={({ field }) => (
+            <Input
+              id={String(config.name)}
+              type="file"
+              accept="image/*"
+              disabled={config.disabled}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                field.onChange(file);
+                handleChange(file);
+              }}
+            />
+          )}
+        />
+      );
     default:
       return null;
   }

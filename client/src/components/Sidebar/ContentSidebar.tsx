@@ -1,3 +1,4 @@
+import { useAuthState } from "@/store/AuthState";
 import {
   SidebarContent,
   SidebarGroup,
@@ -7,11 +8,24 @@ import {
   SidebarMenuItem,
 } from "../ui/sidebar";
 import { Link, useLocation } from "react-router-dom";
-import { dashboardRoutes } from "@/lib/dashboardRoutes";
+import { getDashboardRoutes } from "@/lib/getDashboardRoutes";
 
 export default function ContentSidebar() {
   const currentPath = useLocation().pathname;
-  const links = dashboardRoutes.filter((r) => r.showInNavbar === true);
+  const { user } = useAuthState();
+  const routes = getDashboardRoutes(user?.roles ?? []);
+  const links = routes.filter((r) => r.showInNavbar === true);
+
+  const getActiveLink = (currentPath: string, path: string): string => {
+    let currentPathSafe = "";
+    if (currentPath === "/dashboard") {
+      currentPathSafe = currentPath.replace("/dashboard", "");
+    } else {
+      currentPathSafe = currentPath.replace("/dashboard/", "");
+    }
+    return currentPathSafe === path ? "bg-sidebar-accent" : "bg-sidebar";
+  };
+
   return (
     <SidebarContent>
       <SidebarGroup>
@@ -20,11 +34,7 @@ export default function ContentSidebar() {
             {links.map((link) => (
               <SidebarMenuItem key={link.path}>
                 <SidebarMenuButton
-                  className={
-                    link.path === currentPath
-                      ? "bg-sidebar-accent"
-                      : "bg-sidebar"
-                  }
+                  className={getActiveLink(currentPath, link.path)}
                   tooltip={link.label}
                   asChild
                 >

@@ -8,7 +8,10 @@ import { PaymentTransactionCreateInput } from "../../../prisma/generated/models"
 import SubscriptionRepository from "../subscription/subscription.repository";
 
 const PaymentTransactionService = {
-  async createPayment(userId: string, dataSafe: DTO.CreatePaymentTransactionDto) {
+  async createPayment(userId: string, dataSafe: DTO.CreatePaymentTransactionDto, proofImage?: {
+    publicId: string;
+    imageUrl: string;
+  }) {
     const { body } = dataSafe;
     const { amount, paymentMethod, subscriptionId, type } = body;
 
@@ -39,7 +42,9 @@ const PaymentTransactionService = {
       client: { connect: { id: subscription.clientId } },
     };
 
-    return await PaymentTransactionRepository.create({ data });
+    return await prisma.$transaction(async (tx) => {
+      return await PaymentTransactionRepository.create({ data, tx, proofImage })
+    })
   },
 
   async getAllPaymentTransactions(dataSafe: DTO.GetAllPaymentTransactionsDto) {

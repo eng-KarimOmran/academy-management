@@ -1,17 +1,4 @@
-import type { Academy } from "./academy";
-import type { Area } from "./area";
-import type { Captain } from "./captain";
-import type { Car } from "./car";
-import type { Client } from "./client";
-import type {
-  LessonStatus,
-  PaymentMethod,
-  Status,
-  TransactionType,
-  Transmission,
-} from "./enums";
-
-import type { User } from "./user";
+import type { LessonStatus, Transmission } from "./enums";
 
 export interface LessonBase {
   id: string;
@@ -21,25 +8,35 @@ export interface LessonBase {
   transmission: Transmission;
   expectedAmount: number;
   subscriptionId: string;
-
-  captain: Captain;
-  car: Car;
-  area: Area;
-  client: Client;
-  academy: Academy;
-}
-
-export interface LessonDetails extends LessonBase {
-  carSessionPrice: number;
+  isPaid: boolean;
   captainLessonPrice: number;
-  paymentTransaction: {
+  carSessionPrice: number;
+  car: {
     id: string;
-    amount: number;
-    status: Status;
-    paymentMethod: PaymentMethod;
-    type: TransactionType;
-    isRemitted: boolean;
-    createdAt: string;
-    receiver: User;
-  } | null;
+    modelName: string;
+    plateNumber: string;
+  };
+  area: {
+    id: string;
+    name: string;
+  };
+  captain: {
+    id: string;
+    userId: string;
+    user: {
+      id: string;
+      name: string;
+      phone: string;
+    };
+  };
+  client: {
+    id: string;
+    name: string;
+    phone: string;
+  };
+  academy: {
+    id: string;
+    name: string;
+    phone: string;
+  };
 }

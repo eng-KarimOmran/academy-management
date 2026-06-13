@@ -23,13 +23,6 @@ export const enumTranslations = {
   RENT: "إيجار",
   GENERAL: "عام",
 
-  CHANGE_PROGRAM: "تغيير البرنامج",
-  DOES_NOT_WANT_COURSE: "لا يريد الكورس",
-  CAPTAIN_ISSUE: "مشكلة مع المدرب",
-  MANAGEMENT_ISSUE: "مشكلة إدارية",
-  ABSENCE_EXCEEDED: "تجاوز الغياب",
-  OTHER: "أخرى",
-
   CASH: "كاش",
   ELECTRONIC_WALLET: "محفظة إلكترونية",
 
@@ -40,6 +33,7 @@ export const enumTranslations = {
   BANNED: "محظور",
   PAUSED: "موقوف",
   POSTPONED: "مؤجل",
+  FULLYBOOKED: "نشط و تم حجز كل الحصص",
 
   FACEBOOK: "فيسبوك",
   INSTAGRAM: "إنستجرام",

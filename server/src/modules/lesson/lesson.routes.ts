@@ -1,7 +1,7 @@
 import { Router } from "express";
 import validation from "../../middlewares/validation.middleware";
 import * as Schema from "./lesson.schema";
-import * as controller from "./lesson.controller";
+import controller from "./lesson.controller";
 import checkRole from "../../middlewares/role.middleware";
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
 

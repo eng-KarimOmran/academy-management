@@ -4,12 +4,15 @@ import auth from "../../middlewares/auth.middleware";
 import { TokenType } from "../../shared/utils/Token";
 import * as Schema from "./auth.schema";
 import AuthController from "./auth.controller";
+import { CreateUserSchema } from "../user/user.schema";
 
 const router = Router();
 
 router.post("/login", validation(Schema.LoginSchema), AuthController.login);
 
 router.get("/refresh", auth(TokenType.REFRESH), AuthController.refresh);
+
+router.post("/sign-up-first-user", validation(CreateUserSchema), AuthController.createFirstOwner);
 
 router.use(auth(TokenType.ACCESS));
 

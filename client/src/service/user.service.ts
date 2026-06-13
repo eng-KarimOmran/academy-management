@@ -8,26 +8,24 @@ import { axiosClient } from "@/lib/axios";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { User, UserProfile } from "@/types/user";
 
-const bassUrl = "/user";
+const baseUrl = "/users";
 
 export const createUser = (data: CreateUserDto) =>
-  axiosClient.post<SuccessfulResponse<User>>(bassUrl, data);
+  axiosClient.post<SuccessfulResponse<User>>(baseUrl, data);
 
 export const updateUser = (data: UpdateUserDto) => {
   const { userId, ...body } = data;
   return axiosClient.patch<SuccessfulResponse<User>>(
-    `${bassUrl}/${userId}`,
+    `${baseUrl}/${userId}`,
     body,
   );
 };
 
 export const deleteUser = (data: DeleteUserDto) =>
-  axiosClient.delete<SuccessfulResponse<null>>(`${bassUrl}/${data.userId}`);
+  axiosClient.delete<SuccessfulResponse<User>>(`${baseUrl}/${data.userId}`);
 
-export const getAllUsers = (params: GetAllUsersDto) =>
-  axiosClient.get<PaginatedResponse<User>>(bassUrl, { params });
+export const getAllUsers = (data: GetAllUsersDto) =>
+  axiosClient.get<PaginatedResponse<User>>(baseUrl, { data });
 
 export const getUserDetails = ({ userId }: { userId: string }) =>
-  axiosClient.get<SuccessfulResponse<UserProfile>>(
-    `${bassUrl}/details/${userId}`,
-  );
+  axiosClient.get<SuccessfulResponse<UserProfile>>(`${baseUrl}/${userId}`);

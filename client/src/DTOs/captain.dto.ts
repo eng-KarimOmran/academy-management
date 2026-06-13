@@ -18,3 +18,5 @@ export type FilterCaptainsDto = z.infer<typeof Schema.FilterCaptainsSchema>;
 export type GetCaptainScheduleDto = z.infer<
   typeof Schema.GetCaptainScheduleSchema
 >;
+
+export type GetLessonCaptainDto = z.infer<typeof Schema.GetLessonCaptainSchema>;

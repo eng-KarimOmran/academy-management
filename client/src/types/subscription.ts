@@ -1,50 +1,68 @@
-import type { Academy } from "./academy";
-import type { Area } from "./area";
-import type { Client } from "./client";
-import type { Course } from "./course";
-import type { CancelReason, SubscriptionStatus, Transmission } from "./enums";
-import type { LessonBase } from "./lesson";
-import type { Payment } from "./transaction";
-import type { User } from "./user";
-
-interface SubscriptionCancellation {
-  id: string;
-  reason: CancelReason;
-  createdAt: string;
-  refundTransaction: unknown | null;
-}
+import type {
+  LessonStatus,
+  PaymentMethod,
+  Status,
+  SubscriptionStatus,
+  TransactionType,
+  Transmission,
+} from "./enums";
 
 export interface SubscriptionBase {
   id: string;
   status: SubscriptionStatus;
   priceAtBooking: number;
   totalSessions: number;
+  trainingTypeAtRegistration: Transmission;
   sessionDurationMinutes: number;
   createdAt: string;
-  trainingTypeAtRegistration: Transmission;
-  course: Course;
-  client: Client;
-  academy: Academy;
-  area: Area;
+  area: {
+    id: string;
+    name: string;
+  };
+  client: {
+    id: string;
+    name: string;
+    phone: string;
+    academyId: string;
+  };
+  course: {
+    id: string;
+    name: string;
+  };
+  academy: {
+    id: string;
+    name: string;
+  };
 }
 
-export interface Subscription {
-  id: string;
-  status: SubscriptionStatus;
-  priceAtBooking: number;
-  totalSessions: number;
-  sessionDurationMinutes: number;
-  trainingTypeAtRegistration: Transmission;
-  createdAt: string;
-
-  createdBy: User;
-  course: Course;
-  client: Client;
-  academy: Academy;
-  area: Area;
-
-  lessons: LessonBase[];
-  payments: Payment[];
-
-  cancellation: SubscriptionCancellation | null;
+export interface SubscriptionDetails extends SubscriptionBase {
+  payments: {
+    id: string;
+    amount: number;
+    paymentMethod: PaymentMethod;
+    type: TransactionType;
+    status: Status;
+    createdAt: string;
+    receiver: {
+      id: string;
+      name: string;
+      phone: string;
+    };
+  }[];
+  lessons: {
+    id: string;
+    startTime: string;
+    endTime: string;
+    status: LessonStatus;
+    transmission: Transmission;
+    expectedAmount: number | null;
+    area: {
+      id: string;
+      name: string;
+    };
+    captain: {
+      id: string;
+      user: { id: string; name: string; phone: string };
+    };
+  }[];
 }

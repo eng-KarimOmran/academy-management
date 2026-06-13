@@ -1,32 +1,20 @@
 import z from "zod";
 import * as Schema from "@/validations/course.validation";
 
-/**
- * CREATE
- */
-export type CreateCourseDto = z.infer<typeof Schema.CreateCourseSchema>;
+export type CreateCourseDto = z.infer<typeof Schema.CreateSchema>;
 
-/**
- * UPDATE
- */
-export type UpdateCourseDto = z.infer<typeof Schema.UpdateCourseSchema>;
+export type UpdateCourseDto = z.infer<typeof Schema.UpdateSchema>;
 
-/**
- * DELETE
- */
-export type DeleteCourseDto = z.infer<typeof Schema.DeleteCourseSchema>;
+export type DeleteCourseDto = z.infer<typeof Schema.DeleteSchema>;
 
-/**
- * GET ALL
- */
-export type GetAllCoursesDto = z.infer<typeof Schema.GetAllCoursesSchema>;
+export type GetAllCoursesDto = z.infer<typeof Schema.GetAllSchema>;
 
-/**
- * GET DETAILS
- */
-export type GetCourseDetailsDto = z.infer<typeof Schema.GetCourseDetailsSchema>;
+export type GetCourseDetailsDto = z.infer<typeof Schema.GetDetailsSchema>;
 
-/**
- * FILTER (optional)
- */
-export type FilterCoursesDto = z.infer<typeof Schema.FilterCoursesSchema>;
+export type AddCourseFeaturesDto = z.infer<
+  typeof Schema.AddCourseFeaturesSchema
+>;
+
+export type DeleteCourseFeaturesDto = z.infer<
+  typeof Schema.DeleteCourseFeaturesSchema
+>;

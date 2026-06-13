@@ -1,83 +1,199 @@
+import dayjs from "dayjs";
+import ClientRepository from "../client/client.repository";
+import CourseRepository from "../course/course.repository";
 import * as DTO from "./dashboard.dto";
-import DashboardRepository from "./dashboard.repository";
-import { getDashboardTimeFrames } from "./dashboard.utils";
+import SubscriptionRepository from "../subscription/subscription.repository";
+import PaymentTransactionRepository from "../paymentTransaction/paymentTransaction.repository";
+import LessonRepository from "../lesson/lesson.repository";
+
 
 const DashboardService = {
-    async getOwnerAnalytics(dataSafe: DTO.GetDashboardAnalyticsDto) {
-        const { academyId } = dataSafe.params;
-        const { startDate, endDate } = dataSafe.query;
-        const timeFrames = getDashboardTimeFrames({startDate, endDate});
-        const rawData = await DashboardRepository.getRawAnalytics({ academyId, timeFrames });
+    clients: async ({ params, query }: DTO.GetDashboardAnalyticsDto) => {
+        const { academyId } = params
+        const { startDate, endDate } = query
 
-        const totalSubscriptionsCount = rawData.newSubscriptions.length;
-
-        const totalWalletsPendingBalance = rawData.pendingPayments
-            .filter((p) => p.status === "PENDING")
-            .reduce((sum, p) => sum + p.amount, 0);
-
-        const subscriptionStatusesDistribution = rawData.newSubscriptions.reduce((acc, sub) => {
-            acc[sub.status] = (acc[sub.status] || 0) + 1;
-            return acc;
-        }, {} as Record<string, number>);
-
-
-        const coursesAnalytics = rawData.coursesStats.map((course) => ({
-            courseId: course.id,
-            courseTitle: course.title,
-            subscribersCount: course._count.subscriptions,
-        })).sort((a, b) => b.subscribersCount - a.subscribersCount);
-
-        const captainsMap: Record<string, { name: string; completedLessons: number }> = {};
-        const carsMap: Record<string, { label: string; totalLessons: number }> = {};
-        const areasMap: Record<string, { name: string; completedLessons: number }> = {};
-
-        rawData.lessonsStats.forEach((lesson) => {
-            if (lesson.captain && lesson.status === "COMPLETED") {
-                if (!captainsMap[lesson.captain.id]) {
-                    captainsMap[lesson.captain.id] = { name: lesson.captain.name, completedLessons: 0 };
-                }
-                captainsMap[lesson.captain.id].completedLessons += 1;
+        const dateFilter = (startDate && endDate) ? {
+            createdAt: {
+                gte: dayjs(startDate).startOf('day').toDate(),
+                lte: dayjs(endDate).endOf('day').toDate()
             }
+        } : {};
 
-            if (lesson.car && ["SCHEDULED", "COMPLETED"].includes(lesson.status)) {
-                const carLabel = `${lesson.car.model} (${lesson.car.plateNumber})`;
-                if (!carsMap[lesson.car.id]) {
-                    carsMap[lesson.car.id] = { label: carLabel, totalLessons: 0 };
+        const [
+            totalClients,
+            platformClients,
+            officeClients,
+            subscribedClients
+        ] = await Promise.all([
+            ClientRepository.count({
+                where: { academyId, ...dateFilter }
+            }),
+            ClientRepository.count({
+                where: { academyId, clientSource: "PLATFORM", ...dateFilter }
+            }),
+            ClientRepository.count({
+                where: { academyId, clientSource: "OFFICE", ...dateFilter }
+            }),
+            ClientRepository.count({
+                where: {
+                    academyId,
+                    ...dateFilter,
+                    subscriptions: { some: {} }
                 }
-                carsMap[lesson.car.id].totalLessons += 1;
-            }
+            }),
+        ]);
 
-            if (lesson.area && lesson.status === "COMPLETED") {
-                if (!areasMap[lesson.area.id]) {
-                    areasMap[lesson.area.id] = { name: lesson.area.name, completedLessons: 0 };
-                }
-                areasMap[lesson.area.id].completedLessons += 1;
-            }
-        });
-
-        const captainsAnalytics = Object.values(captainsMap).sort((a, b) => b.completedLessons - a.completedLessons);
-        const carsAnalytics = Object.values(carsMap).sort((a, b) => b.totalLessons - a.totalLessons);
-        const areasAnalytics = Object.values(areasMap).sort((a, b) => b.completedLessons - a.completedLessons);
+        const totalClientsInPeriod = platformClients + officeClients;
+        const nonSubscribedClients = totalClientsInPeriod - subscribedClients;
 
         return {
-            timeFramesUsed: {
-                operational: timeFrames.operational,
-                financial: timeFrames.financial
-            },
-            kpiCards: {
-                newSubscriptionsCount: totalSubscriptionsCount,
-                newClientsRegistered: rawData.newClientsCount,
-                walletsPendingBalance: totalWalletsPendingBalance,
-            },
-            chartsData: {
-                subscriptionStatuses: subscriptionStatusesDistribution,
-                coursesPopularity: coursesAnalytics,
-                captainsPerformance: captainsAnalytics,
-                carsUtilization: carsAnalytics,
-                areasDistribution: areasAnalytics,
-            }
+            totalClients,
+            platformClients,
+            officeClients,
+            subscribedClients,
+            nonSubscribedClients
         };
-    }
-};
+    },
+    courses: async ({ params, query }: DTO.GetDashboardAnalyticsDto) => {
+        const { academyId } = params
+        const { startDate, endDate } = query
+        const where = { academyId }
+
+        const dateFilter = (startDate && endDate) ? {
+            createdAt: {
+                gte: dayjs(startDate).startOf('day').toDate(),
+                lte: dayjs(endDate).endOf('day').toDate()
+            }
+        } : {};
+
+        const totalCourses = await CourseRepository.findMany({
+            where,
+            select: {
+                id: true,
+                name: true,
+                _count: {
+                    select: {
+                        subscriptions: { where: dateFilter }
+                    }
+                }
+            }
+        })
+
+        const courses = totalCourses.courses.map(({ id, name, _count }) => ({
+            id,
+            name,
+            subsCount: _count.subscriptions
+        }));
+
+        const total = totalCourses.count
+        return { total, courses }
+    },
+    subscriptions: async ({ params, query }: DTO.GetDashboardAnalyticsDto) => {
+        const { academyId } = params
+        const { startDate, endDate } = query
+
+        const dateFilter = (startDate && endDate) ? {
+            createdAt: {
+                gte: dayjs(startDate).startOf('day').toDate(),
+                lte: dayjs(endDate).endOf('day').toDate()
+            }
+        } : {};
+
+        const [
+            totalSubs,
+            activeSubs,
+            canceledSubs,
+            completedSubs,
+            pausedSubs
+        ] = await Promise.all([
+            SubscriptionRepository.count({ where: { academyId, ...dateFilter } }),
+            SubscriptionRepository.count({ where: { academyId, status: { in: ["ACTIVE", "FULLYBOOKED"] }, ...dateFilter } }),
+            SubscriptionRepository.count({ where: { academyId, status: "CANCELED", ...dateFilter } }),
+            SubscriptionRepository.count({ where: { academyId, status: "COMPLETED", ...dateFilter } }),
+            SubscriptionRepository.count({ where: { academyId, status: "PAUSED", ...dateFilter } }),
+        ]);
+
+        return {
+            totalSubs,
+            activeSubs,
+            canceledSubs,
+            completedSubs,
+            pausedSubs
+        };
+    },
+    transactions: async ({ params, query }: DTO.GetDashboardAnalyticsDto) => {
+        const { academyId } = params
+        const { startDate, endDate } = query
+
+        const dateFilter = (startDate && endDate) ? {
+            createdAt: {
+                gte: dayjs(startDate).startOf('day').toDate(),
+                lte: dayjs(endDate).endOf('day').toDate()
+            }
+        } : {};
+
+        const [totalPaidAmount, totalRefundedAmount] = await Promise.all([
+            PaymentTransactionRepository.aggregate({
+                where: {
+                    academyId,
+                    type: "PAYMENT",
+                    status: "COMPLETED",
+                    ...dateFilter
+                },
+            }),
+            PaymentTransactionRepository.aggregate({
+                where: {
+                    academyId,
+                    type: "REFUND",
+                    status: "COMPLETED",
+                    ...dateFilter
+                },
+            })
+        ]);
+
+        return {
+            totalPaidAmount,
+            totalRefundedAmount,
+        };
+    },
+    lessons: async ({ params, query }: DTO.GetDashboardAnalyticsDto) => {
+        const { academyId } = params
+        const { startDate, endDate } = query
+        const dateFilter = (startDate && endDate) ? {
+            startTime: {
+                gte: dayjs(startDate).startOf('day').toDate(),
+                lte: dayjs(endDate).endOf('day').toDate()
+            }
+        } : {};
+
+        const [
+            totalLessons,
+            scheduledLessons,
+            completedLessons,
+            canceledChargedLessons,
+            canceledLessons,
+            automaticLessons,
+            manualLessons
+        ] = await Promise.all([
+            LessonRepository.count({ where: { academyId, ...dateFilter } }),
+            LessonRepository.count({ where: { academyId, status: "SCHEDULED", ...dateFilter } }),
+            LessonRepository.count({ where: { academyId, status: "COMPLETED", ...dateFilter } }),
+            LessonRepository.count({ where: { academyId, status: "CANCELED_CHARGED", ...dateFilter } }),
+            LessonRepository.count({ where: { academyId, status: "CANCELED", ...dateFilter } }),
+            LessonRepository.count({ where: { academyId, transmission: "AUTOMATIC", ...dateFilter } }),
+            LessonRepository.count({ where: { academyId, transmission: "MANUAL", ...dateFilter } }),
+        ]);
+
+        return {
+            totalLessons,
+            scheduledLessons,
+            completedLessons,
+            canceledChargedLessons,
+            canceledLessons,
+            automaticLessons,
+            manualLessons
+        };
+    },
+}
 
 export default DashboardService;

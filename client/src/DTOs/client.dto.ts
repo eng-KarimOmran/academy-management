@@ -5,6 +5,7 @@ import {
   DeleteClientSchema,
   GetAllClientsSchema,
   GetClientDetailsSchema,
+  GetClientByPhoneSchema,
 } from "@/validations/client.validation";
 
 export type CreateClientDto = z.infer<typeof CreateClientSchema>;
@@ -16,3 +17,5 @@ export type DeleteClientDto = z.infer<typeof DeleteClientSchema>;
 export type GetAllClientsDto = z.infer<typeof GetAllClientsSchema>;
 
 export type GetClientDetailsDto = z.infer<typeof GetClientDetailsSchema>;
+
+export type GetClientByPhoneDto = z.infer<typeof GetClientByPhoneSchema>;

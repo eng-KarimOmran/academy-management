@@ -12,15 +12,18 @@ import {
   UserStatus,
   SubscriptionStatus,
   TransactionType,
-  Status,
   ExpenseType,
   ClientSource,
   RecordType,
+  StatusInput,
 } from "../types/enums";
 
 // --- Basic Types ---
 
-export const id = z.cuid2("معرف غير صالح");
+export const id = z
+  .string()
+  .transform((val) => val.toLowerCase())
+  .pipe(z.cuid2({ message: "معرف غير صالح" }));
 
 export const personName = z
   .string("الاسم مطلوب")
@@ -65,6 +68,9 @@ export const plateNumber = z
 
 export const email = z.email("البريد الإلكتروني غير صالح");
 
+export const booleanQuery = z
+  .enum(["true", "false"])
+  .transform((value) => value === "true");
 // --- Numbers & Finance ---
 
 export const positiveNumber = z
@@ -92,12 +98,10 @@ export const date = z.date({
   message: "التاريخ غير صالح",
 });
 
-export const futureDate = z.coerce
-  .date({
-    message: "التاريخ غير صالح",
-  })
+export const futureDate = z
+  .string()
   .refine((val) => dayjs(val).isAfter(dayjs().subtract(1, "minute")), {
-    message: "يجب أن يكون التاريخ في الحاضر أو المستقبل",
+    message: "Date must be in the present or future",
   });
 
 export const userRole = z.enum(Role, {
@@ -140,7 +144,7 @@ export const transactionType = z.enum(TransactionType, {
   message: "نوع العملية غير صالح",
 });
 
-export const transactionStatus = z.enum(Status, {
+export const transactionStatus = z.enum(StatusInput, {
   message: "الحالة غير صالحة",
 });
 

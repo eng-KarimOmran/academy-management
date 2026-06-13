@@ -9,6 +9,7 @@ import routerTransactions from "../paymentTransaction/paymentTransaction.routes"
 import routerLesson from "../lesson/lesson.routes";
 import routerLedger from "../ledger/ledger.routes";
 import AcademyController from "./academy.controller";
+import routerStatistics from "../dashboard/dashboard.routes";
 
 import { checkAcademyExists, isAcademyOwnerMiddleware } from "./academy.middleware";
 
@@ -29,7 +30,7 @@ router.post(
   AcademyController.createAcademy,
 );
 
-router.use(checkAcademyExists)
+router.use("/:academyId", checkAcademyExists);
 
 router.post(
   "/:academyId/owner",
@@ -96,5 +97,7 @@ router.use("/:academyId/transactions", routerTransactions);
 router.use("/:academyId/lessons", routerLesson);
 
 router.use("/:academyId/ledgers", routerLedger);
+
+router.use("/:academyId/statistics", routerStatistics);
 
 export default router;

@@ -53,7 +53,7 @@ const SubscriptionRepository = {
 
   async recalculateSubscriptionStatus({ id, tx }: { id: string; tx?: TransactionClient }) {
     const client = getClient(tx);
-    
+
     const subscription = await client.subscription.findUnique({
       where: { id },
       include: {
@@ -70,7 +70,7 @@ const SubscriptionRepository = {
       ["COMPLETED", "CANCELED_CHARGED"].includes(l.status)
     ).length;
 
-    const bookedLessons = subscription.lessons.filter((l) => 
+    const bookedLessons = subscription.lessons.filter((l) =>
       l.status === "SCHEDULED"
     ).length;
 
@@ -92,6 +92,11 @@ const SubscriptionRepository = {
       data: { status },
       select: subscriptionBaseSelect,
     });
+  },
+  
+  async count({ where, tx }: { where?: SubscriptionWhereInput; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    return await client.subscription.count({ where })
   }
 };
 

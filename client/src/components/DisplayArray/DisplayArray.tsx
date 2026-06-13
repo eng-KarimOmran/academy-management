@@ -10,9 +10,9 @@ import type { ReactNode } from "react";
 type ActionType = "add" | "update" | "delete";
 
 type Forms<T> = {
-  add: () => ReactNode;
-  update: (item: T) => ReactNode;
-  delete: (item: T) => ReactNode;
+  add?: () => ReactNode;
+  update?: (item: T) => ReactNode;
+  delete?: (item: T) => ReactNode;
 };
 
 export default function DisplayArray<T>({
@@ -37,7 +37,7 @@ export default function DisplayArray<T>({
         setConfigDialog({
           title: "إضافة",
           description: "قم بإدخال البيانات المطلوبة ثم اضغط حفظ.",
-          children: forms.add(),
+          children: forms.add ? forms.add() : <></>,
         });
         break;
 
@@ -47,7 +47,7 @@ export default function DisplayArray<T>({
         setConfigDialog({
           title: "تعديل",
           description: "قم بتعديل البيانات المطلوبة ثم اضغط حفظ.",
-          children: forms.update(item),
+          children: forms.update && forms.update(item),
         });
         break;
 
@@ -57,7 +57,7 @@ export default function DisplayArray<T>({
         setConfigDialog({
           title: "حذف",
           description: "هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء.",
-          children: forms.delete(item),
+          children: forms.delete && forms.delete(item),
         });
         break;
     }
@@ -67,8 +67,9 @@ export default function DisplayArray<T>({
     <section className="w-full rounded-md border bg-background">
       <div className="flex justify-between items-center p-4 bg-muted/50 rounded-t-md">
         <span className="font-semibold">{title}</span>
-
-        <Button onClick={() => handleAction("add")}>إضافة</Button>
+        {forms.add && (
+          <Button onClick={() => handleAction("add")}>إضافة</Button>
+        )}
       </div>
 
       <Separator />
@@ -96,16 +97,20 @@ export default function DisplayArray<T>({
 
               <ActionTable>
                 <div className="grid gap-2">
-                  <Button onClick={() => handleAction("update", item)}>
-                    تعديل <RiEditBoxLine className="h-4 w-4" />
-                  </Button>
+                  {forms.update && (
+                    <Button onClick={() => handleAction("update", item)}>
+                      تعديل <RiEditBoxLine className="h-4 w-4" />
+                    </Button>
+                  )}
 
-                  <Button
-                    variant="destructive"
-                    onClick={() => handleAction("delete", item)}
-                  >
-                    حذف <RiDeleteBin2Line className="h-4 w-4" />
-                  </Button>
+                  {forms.delete && (
+                    <Button
+                      variant="destructive"
+                      onClick={() => handleAction("delete", item)}
+                    >
+                      حذف <RiDeleteBin2Line className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </ActionTable>
             </li>

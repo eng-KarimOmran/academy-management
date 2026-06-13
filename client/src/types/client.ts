@@ -1,24 +1,30 @@
-import type { Academy } from "./academy";
-import type { ClientSource } from "./enums";
-import type { SubscriptionBase } from "./subscription";
+import type { SubscriptionStatus } from "./enums";
 
 export interface Client {
   id: string;
   name: string;
   phone: string;
+  createdAt: string;
   academyId: string;
 }
 
 interface CurrentClient extends Client {
-  clientSource: ClientSource;
-  academy: Academy;
-  subscriptions: SubscriptionBase[];
-  createdAt: string;
+  subscriptions: {
+    id: string;
+    status: SubscriptionStatus;
+    createdAt: string;
+    course: {
+      name: string;
+    };
+  }[];
 }
 
 interface OtherFile {
   id: string;
-  academy: Academy;
+  academy: {
+    id: string;
+    name: string;
+  };
 }
 
 export interface ClientDetails {

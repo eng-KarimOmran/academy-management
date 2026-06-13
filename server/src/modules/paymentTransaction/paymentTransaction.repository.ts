@@ -29,10 +29,8 @@ const PaymentTransactionRepository = {
     return { transactions, count };
   },
 
-  async create({ data, tx }: { data: PaymentTransactionCreateInput; tx?: TransactionClient }) {
-    const client = getClient(tx);
-
-    const payment = await client.paymentTransaction.create({
+  async create({ data, proofImage, tx }: { data: PaymentTransactionCreateInput; tx: TransactionClient, proofImage?: { publicId: string, imageUrl: string } }) {
+    const payment = await tx.paymentTransaction.create({
       data,
       select: paymentTransactionBaseSelect,
     });
@@ -47,28 +45,44 @@ const PaymentTransactionRepository = {
           referenceCategory: "paymentId",
           category: isCustomerPayment ? "FROM_CUSTOMER" : "TO_CUSTOMER",
           notes: isCustomerPayment ? `تحصيل كاش - فاتورة رقم: ${payment.id}` : `رد مالي كاش - فاتورة رقم: ${payment.id}`,
-          academy: { connect: { id: payment.academyId } },
-          user: { connect: { id: payment.receiverId } },
+          academy: { connect: { id: payment.academy.id } },
+          user: { connect: { id: payment.receiver.id } },
         },
-        tx: client,
+        tx,
       });
     }
 
-    await SubscriptionRepository.recalculateSubscriptionStatus({ id: payment.subscriptionId });
+    if (proofImage) {
+      const { imageUrl, publicId } = proofImage
+      await tx.proofOfPaymentImage.create({ data: { imageUrl, publicId, transactionId: payment.id } })
+    }
+    
+    await SubscriptionRepository.recalculateSubscriptionStatus({ id: payment.subscriptionId, tx });
     return payment;
   },
 
   async update({ id, data, tx }: { id: string; data: PaymentTransactionUpdateInput; tx?: TransactionClient }) {
     const client = getClient(tx);
-
     const payment = await client.paymentTransaction.update({
       where: { id },
       data,
       select: paymentTransactionBaseSelect,
     });
-
-    await SubscriptionRepository.recalculateSubscriptionStatus({ id: payment.subscriptionId });
+    await SubscriptionRepository.recalculateSubscriptionStatus({ id: payment.subscriptionId, tx: client });
     return payment;
+  },
+
+  async aggregate({ tx, where }: { tx?: TransactionClient; where: PaymentTransactionWhereInput }) {
+    const client = getClient(tx);
+
+    const result = await client.paymentTransaction.aggregate({
+      where,
+      _sum: {
+        amount: true
+      }
+    });
+
+    return result._sum.amount || 0;
   }
 };
 

@@ -137,7 +137,7 @@ const UserService = {
       },
       tx
     });
-  }
+  },
 };
 
 export default UserService;

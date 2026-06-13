@@ -1,14 +1,16 @@
-import z from "zod/v3";
+import z from "zod";
+
 import {
   CreateAcademySchema,
   UpdateAcademySchema,
   DeleteAcademySchema,
   GetAllAcademiesSchema,
   GetAcademySchema,
-  socialMediaSchema,
-  PhoneAcademySchema
+  AddOwnerSchema,
+  DeleteOwnerSchema,
+  AddSocialMediaSchema,
+  DeleteSocialMediaSchema,
 } from "../validations/academy.validation";
-
 
 export type CreateAcademyDto = z.infer<typeof CreateAcademySchema>;
 
@@ -18,9 +20,12 @@ export type DeleteAcademyDto = z.infer<typeof DeleteAcademySchema>;
 
 export type GetAllAcademiesDto = z.infer<typeof GetAllAcademiesSchema>;
 
-export type GetAcademyDetailsDto = {
-  params: z.infer<typeof GetAcademySchema.params>;
-};
+export type GetAcademyDetailsDto = z.infer<typeof GetAcademySchema>;
 
-export type SocialMediaSchemaDto = z.infer<typeof socialMediaSchema>;
-export type PhoneAcademyDto = z.infer<typeof PhoneAcademySchema>;
+export type AddSocialMediaDto = z.infer<typeof AddSocialMediaSchema>;
+
+export type DeleteSocialMediaDto = z.infer<typeof DeleteSocialMediaSchema>;
+
+export type AddAcademyOwnerDto = z.infer<typeof AddOwnerSchema>;
+
+export type DeleteAcademyOwnerDto = z.infer<typeof DeleteOwnerSchema>;

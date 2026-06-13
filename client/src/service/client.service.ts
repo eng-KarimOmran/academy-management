@@ -6,65 +6,58 @@ import type {
   DeleteClientDto,
   GetAllClientsDto,
   GetClientDetailsDto,
+  GetClientByPhoneDto,
 } from "@/DTOs/client.dto";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { Client, ClientDetails } from "@/types/client";
 
-/* =========================
-   Create Client
-========================= */
+const baseUrl = (academyId: string) => `/academies/${academyId}/clients`;
+
 export const createClient = (data: CreateClientDto) => {
   const { academyId, ...body } = data;
 
-  return axiosClient.post<SuccessfulResponse<Client>>(
-    `/academy/${academyId}/client`,
-    body,
-  );
+  return axiosClient.post<SuccessfulResponse<Client>>(baseUrl(academyId), body);
 };
 
-/* =========================
-   Update Client
-========================= */
 export const updateClient = (data: UpdateClientDto) => {
   const { academyId, id, ...body } = data;
 
   return axiosClient.patch<SuccessfulResponse<Client>>(
-    `/academy/${academyId}/client/${id}`,
+    `${baseUrl(academyId)}/${id}`,
     body,
   );
 };
 
-/* =========================
-   Delete Client
-========================= */
 export const deleteClient = (data: DeleteClientDto) => {
   const { academyId, id } = data;
 
   return axiosClient.delete<SuccessfulResponse<null>>(
-    `/academy/${academyId}/client/${id}`,
+    `${baseUrl(academyId)}/${id}`,
   );
 };
 
-/* =========================
-   Get All Clients
-========================= */
-export const getAllClients = (params: GetAllClientsDto) => {
-  const { academyId, ...query } = params;
+export const getAllClients = (data: GetAllClientsDto) => {
+  const { academyId } = data;
 
-  return axiosClient.get<PaginatedResponse<Client>>(
-    `/academy/${academyId}/client`,
-    {
-      params: query,
+  return axiosClient.get<PaginatedResponse<Client>>(baseUrl(academyId), {
+    params: {
+      page: data.page ?? 1,
+      limit: data.limit ?? 10,
+      search: data.search ?? "",
     },
-  );
+  });
 };
 
-/* =========================
-   Get Client Details
-========================= */
 export const getClientDetails = (params: GetClientDetailsDto) => {
   const { academyId, clientId } = params;
   return axiosClient.get<SuccessfulResponse<ClientDetails>>(
-    `/academy/${academyId}/client/details/${clientId}`,
+    `${baseUrl(academyId)}/${clientId}`,
+  );
+};
+
+export const getClientByPhone = (params: GetClientByPhoneDto) => {
+  const { academyId, phone } = params;
+  return axiosClient.get<SuccessfulResponse<Client>>(
+    `${baseUrl(academyId)}/phone/${phone}`,
   );
 };

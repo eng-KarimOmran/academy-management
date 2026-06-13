@@ -3,7 +3,7 @@ import { RequestAuth } from "../../middlewares/auth.middleware";
 import AcademyRepository from "./academy.repository";
 import ApiError from "../../shared/utils/ApiError";
 import { Academy } from "../../../prisma/generated/client";
-import { academyBaseSelect, academyWithOwnersSelect } from "./academy.selector";
+import { academyWithOwnersSelect } from "./academy.selector";
 
 export type AcademyWithOwners = Academy & { owners: { id: string }[] };
 
@@ -37,7 +37,7 @@ export const isAcademyOwnerMiddleware = async (
 
   const academy = await AcademyRepository.findById({
     academyId,
-    select: academyBaseSelect
+    select: academyWithOwnersSelect
   });
 
   if (!academy) throw ApiError.NotFound({ model: "Academy" });

@@ -11,32 +11,45 @@ import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { Car } from "@/types/car";
 import type { Transmission } from "@/types/enums";
 
-const bassUrl = "/car";
+const baseUrl = "/cars";
 
 /* ===================== GET ALL ===================== */
 export const getAllCars = (data: GetAllCarsDto) => {
-  const query: string = `${bassUrl}?page=${data.page ?? 1}&limit=${data.limit ?? 10}&search=${data.search ?? ""}`;
-  return axiosClient.get<PaginatedResponse<Car>>(query);
+  return axiosClient.get<PaginatedResponse<Car>>(baseUrl, {
+    params: {
+      page: data.page ?? 1,
+      limit: data.limit ?? 10,
+      search: data.search ?? "",
+    },
+  });
 };
 
 /* ===================== GET ONE ===================== */
 export const getCar = (data: GetCarDetailsDto) =>
-  axiosClient.get<SuccessfulResponse<Car>>(`${bassUrl}/details/${data.carId}`);
+  axiosClient.get<SuccessfulResponse<Car>>(`${baseUrl}/details/${data.carId}`);
 
 /* ===================== CREATE ===================== */
 export const createCar = (data: CreateCarDto) =>
-  axiosClient.post<SuccessfulResponse<Car>>(bassUrl, data);
+  axiosClient.post<SuccessfulResponse<Car>>(baseUrl, data);
 
 /* ===================== UPDATE ===================== */
 export const updateCar = (data: UpdateCarDto) => {
   const { carId, ...body } = data;
   console.log({ body });
-  return axiosClient.patch<SuccessfulResponse<Car>>(`${bassUrl}/${carId}`, body);
+  return axiosClient.patch<SuccessfulResponse<Car>>(
+    `${baseUrl}/${carId}`,
+    body,
+  );
 };
 
 /* ===================== DELETE ===================== */
 export const deleteCar = (data: DeleteCarDto) =>
-  axiosClient.delete<SuccessfulResponse<null>>(`${bassUrl}/${data.carId}`);
+  axiosClient.delete<SuccessfulResponse<null>>(`${baseUrl}/${data.carId}`);
 
-export const getActiveCar = ({ type }: { type: Transmission }) =>
-  axiosClient.get<SuccessfulResponse<Car[]>>(`${bassUrl}/active?type=${type}`);
+export const getActiveCar = ({ gearType }: { gearType: Transmission }) =>
+  axiosClient.get<PaginatedResponse<Car>>(baseUrl, {
+    params: {
+      gearType,
+      isActive: true,
+    },
+  });

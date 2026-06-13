@@ -4,11 +4,13 @@ import * as Schema from "./paymentTransaction.schema";
 import PaymentTransactionController from "./paymentTransaction.controller";
 import checkRole from "../../middlewares/role.middleware";
 import { isAcademyOwnerMiddleware } from "../academy/academy.middleware";
+import { uploadPaymentProof } from "./paymentTransaction.middleware";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
+  uploadPaymentProof,
   validation(Schema.CreatePaymentTransactionSchema),
   checkRole(["OWNER", "SECRETARY"]),
   PaymentTransactionController.createPaymentTransaction,

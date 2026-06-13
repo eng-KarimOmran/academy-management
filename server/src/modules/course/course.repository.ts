@@ -77,7 +77,7 @@ const CourseRepository = {
       },
       select: courseBaseSelect,
     });
-  }
+  },
 };
 
 export default CourseRepository;

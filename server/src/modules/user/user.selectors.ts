@@ -25,6 +25,9 @@ export const userDetailsSelect: UserSelect = {
       isActive: true,
       trainingType: true,
       createdAt: true,
+      _count: {
+        select: { lessons: true }
+      },
     },
   },
   secretaryProfile: {

@@ -37,11 +37,11 @@ export default function Logout() {
 
     service: (data) => logout(data.allDevices),
 
-    onSuccess: () => {
-      localStorage.clear();
+    onSuccess: async () => {
+      await queryClient.cancelQueries();
+      setUser(null);
       queryClient.clear();
       setConfigDialog(null);
-      setUser(null);
     },
   };
 

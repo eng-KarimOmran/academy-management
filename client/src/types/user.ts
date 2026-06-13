@@ -1,13 +1,11 @@
-import type {  CaptainBass } from "./captain";
-import type { Role, UserStatus } from "./enums";
-import type { Secretary } from "./secretary";
+import type { Role, TrainingSupport } from "./enums";
 
 export interface User {
   id: string;
   name: string;
   phone: string;
-  role: Role;
-  status: UserStatus;
+  roles: Role[];
+  isActive: boolean;
 }
 
 export interface UserAuth extends User {
@@ -15,7 +13,19 @@ export interface UserAuth extends User {
 }
 
 export interface UserProfile extends User {
-  captainProfile: CaptainBass | null;
-  secretaryProfile: Secretary | null;
   createdAt: string;
+  captainProfile: {
+    id: string;
+    captainLessonPrice: number;
+    isActive: boolean;
+    trainingType: TrainingSupport;
+    createdAt:string
+  } | null;
+  secretaryProfile: {
+    id: string;
+    baseSalary: number;
+    targetCount: number;
+    bonusAmount: number;
+    createdAt: string;
+  } | null;
 }

@@ -8,7 +8,7 @@ import {
   phone,
   transmission,
   date,
-  price
+  price,
 } from "@/validations/common.validation";
 
 export const CreateCaptainSchema = z.object({
@@ -44,4 +44,10 @@ export const FilterCaptainsSchema = z.object({
 export const GetCaptainScheduleSchema = z.object({
   id,
   date,
+});
+
+export const GetLessonCaptainSchema = z.object({
+  userId: id,
+  gte: z.string().optional(),
+  lte: z.string().optional(),
 });

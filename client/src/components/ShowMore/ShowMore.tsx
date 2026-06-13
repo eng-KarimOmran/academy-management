@@ -7,7 +7,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 
 type ShowMoreProps = {
-  text: string;
+  text?: string;
   columns?: number;
 };
 
@@ -18,7 +18,7 @@ function getMaxByColumns(columns: number) {
   return 8;
 }
 
-export default function ShowMore({ text, columns = 8 }: ShowMoreProps) {
+export default function ShowMore({ text = "", columns = 8 }: ShowMoreProps) {
   const isMobile = useIsMobile();
   const max = getMaxByColumns(columns);
   const isLong = text.length > max;

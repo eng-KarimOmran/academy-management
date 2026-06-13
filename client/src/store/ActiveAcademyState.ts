@@ -7,12 +7,9 @@ interface ActiveAcademyState {
 }
 
 export const useActiveAcademyState = create<ActiveAcademyState>((set) => ({
-  activeAcademy: JSON.parse(
-    localStorage.getItem("activeAcademy") || "null",
-  ) as Academy | null,
+  activeAcademy: null,
 
   setActiveAcademy: (data) => {
-    localStorage.setItem("activeAcademy", JSON.stringify(data));
     set({ activeAcademy: data });
   },
 }));

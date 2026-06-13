@@ -71,6 +71,11 @@ const ClientRepository = {
         },
       },
     });
+  },
+  
+  async count({ where, tx }: { where?: ClientWhereInput; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    return await client.client.count({ where })
   }
 };
 

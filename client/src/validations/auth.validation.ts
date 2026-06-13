@@ -14,9 +14,10 @@ export const LogoutSchema = z.object({
 export const ChangePasswordSchema = z
   .object({
     password,
-    confirmPassword: password,
+    newPassword: password,
+    confirmNewPassword: password,
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
     message: "كلمة السر وتأكيدها لازم يكونوا متطابقين",
     path: ["confirmPassword"],
   });

@@ -15,6 +15,7 @@ export type UniqueField =
   | "CarTimeConflict"
   | "ClientTimeConflict"
   | "OWNER"
+  | "OWNER_ALREADY_EXISTS"
 
 class ApiError {
   static NotFound({
@@ -69,6 +70,7 @@ class ApiError {
       CarTimeConflict: "السيارة محجوزة في هذا الوقت",
       ClientTimeConflict: "العميل لديه حصة أخرى في هذا الوقت",
       OWNER: "المستخدم مالك بالفعل",
+      OWNER_ALREADY_EXISTS: "يوجد مستخدم مالك بالفعل"
     };
     const message = customMessage || messages[field] || "حدث تعارض في البيانات";
     return new ErrorResponse(message, 409);

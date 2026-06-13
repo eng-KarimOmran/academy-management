@@ -1,7 +1,7 @@
 export const RecordType = ["ADVANCE", "DEDUCTION", "REWARD"] as const;
 export type RecordType = (typeof RecordType)[number];
 
-export const Role = ["OWNER", "SECRETARY", "CAPTAIN", "USER"] as const;
+export const Role = ["OWNER", "SECRETARY", "CAPTAIN"] as const;
 export type Role = (typeof Role)[number];
 
 export const Transmission = ["MANUAL", "AUTOMATIC"] as const;
@@ -62,15 +62,15 @@ export type Platform = (typeof Platform)[number];
 export const Status = ["PENDING", "COMPLETED", "REJECTED"] as const;
 export type Status = (typeof Status)[number];
 
+export const StatusInput = ["COMPLETED", "REJECTED"] as const;
+export type StatusInput = (typeof Status)[number];
+
 export const SubscriptionStatus = [
-  "PENDING_PAYMENT",
-  "PAID_WAITING_BOOKING",
-  "BOOKED_NOT_STARTED",
   "ACTIVE",
   "PAUSED",
-  "POSTPONED",
   "COMPLETED",
   "CANCELED",
+  "FULLYBOOKED",
 ] as const;
 
 export type SubscriptionStatus = (typeof SubscriptionStatus)[number];

@@ -13,8 +13,8 @@ export type GetPaymentTransactionDetailsDto = z.infer<
   typeof Schema.GetPaymentTransactionDetailsSchema
 >;
 
-export type UpdatePaymentTransactionDto = z.infer<
-  typeof Schema.UpdatePaymentTransactionSchema
+export type ChangePaymentStatusDto = z.infer<
+  typeof Schema.ChangePaymentStatusSchema
 >;
 
 export type DeletePaymentTransactionDto = z.infer<

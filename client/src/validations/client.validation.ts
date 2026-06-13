@@ -16,11 +16,10 @@ export const CreateClientSchema = z.object({
 });
 
 export const UpdateClientSchema = z.object({
-  academyId: id,
   id,
+  academyId: id,
   name: personName.optional(),
   phone: phone.optional(),
-  clientSource: clientSource.optional(),
 });
 
 export const DeleteClientSchema = z.object({
@@ -37,5 +36,10 @@ export const GetAllClientsSchema = z.object({
 
 export const GetClientDetailsSchema = z.object({
   academyId: id,
-  clientId:id,
+  clientId: id,
+});
+
+export const GetClientByPhoneSchema = z.object({
+  academyId: id,
+  phone,
 });

@@ -1,22 +1,20 @@
-import type { Academy } from "./academy";
 import type { PaymentMethod, Status, TransactionType } from "./enums";
-import type { LessonBase } from "./lesson";
-import type { SubscriptionBase } from "./subscription";
-import type { User } from "./user";
 
 export interface Payment {
   id: string;
   amount: number;
-  isRemitted: boolean;
-  createdAt: string;
-
   status: Status;
   paymentMethod: PaymentMethod;
   type: TransactionType;
-
-  receiver: User;
-  academy: Academy;
-  lesson: LessonBase | null;
-  subscription: SubscriptionBase;
+  proofOfPaymentImage: {
+    id: string,
+    imageUrl: string,
+    publicId: string,
+    transactionId: string
+  };
+  createdAt: string;
+  receiver: { id: string; name: string; phone: string };
+  academy: { id: string; name: string };
+  subscription: { id: string };
+  client: { id: string; name: string; phone: string };
 }
-

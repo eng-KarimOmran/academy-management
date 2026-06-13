@@ -16,6 +16,7 @@ export const CreatePaymentTransactionSchema = {
     paymentMethod,
     subscriptionId: id,
     type: transactionType,
+    proofImage: z.any().optional()
   }),
 };
 

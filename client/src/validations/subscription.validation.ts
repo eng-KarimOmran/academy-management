@@ -5,7 +5,6 @@ import {
   positiveNumber,
   phone,
   transmission,
-  cancelReason,
   id,
 } from "@/validations/common.validation";
 
@@ -37,5 +36,4 @@ export const DeleteSubscriptionSchema = z.object({
 export const CancelSubscriptionSchema = z.object({
   academyId: id,
   subscriptionId: id,
-  reason: cancelReason,
 });

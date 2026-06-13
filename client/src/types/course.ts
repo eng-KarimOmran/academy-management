@@ -1,22 +1,22 @@
 export interface Course {
   id: string;
   name: string;
-  priceDiscounted?: number;
-  totalSessions: number;
+  description: string;
+  featuredReason: string;
   isActive: boolean;
+  practicalSessions: number;
+  sessionDurationMinutes: number;
+  priceDiscounted: number;
+  priceOriginal: number;
+  totalSessions: number;
   academyId: string;
+  createdAt: string;
 }
 
+export interface CourseFeatures {
+  id: string;
+  text: string;
+}
 export interface CourseDetails extends Course {
-  description: string;
-
-  priceOriginal: number;
-
-  practicalSessions: number;
-
-  sessionDurationMinutes: number;
-
-  trainingDetails: string[];
-
-  featuredReason: string | null;
+  courseFeatures: CourseFeatures[];
 }

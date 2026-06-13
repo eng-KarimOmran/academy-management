@@ -8,44 +8,48 @@ import {
   positiveNumber,
   url,
   entityName,
-  email,
-} from "@/validations/common.validation";
-
-export const socialMediaSchema = z.object({
-  platform:platform,
-  url,
-});
+} from "./common.validation";
 
 export const CreateAcademySchema = z.object({
   name: entityName,
   phone,
   address,
-  instaPay: email,
+  paymentLink: url.optional(),
   owner: phone,
 });
 
 export const UpdateAcademySchema = z.object({
   academyId: id,
   name: entityName.optional(),
-  address: address.optional(),
-  instaPay: email.optional(),
   phone: phone.optional(),
-  owners: z.array(phone).optional(),
-  socialMediaPlatforms: z.array(socialMediaSchema).optional(),
+  address: address.optional(),
+  paymentLink: url.optional(),
 });
 
 export const DeleteAcademySchema = z.object({ academyId: id });
 
-export const GetAcademySchema = {
-  params: z.object({ academyId: id }),
-};
+export const GetAcademySchema = z.object({ academyId: id });
 
 export const GetAllAcademiesSchema = z.object({
   page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
+  limit: limit.optional().default(50),
   search: z.string().optional(),
 });
 
-export const PhoneAcademySchema = z.object({
+export const AddSocialMediaSchema = z.object({
+  academyId: id,
+  platform,
+  url,
+});
+
+export const DeleteSocialMediaSchema = z.object({
+  academyId: id,
+  platformId: id,
+});
+
+export const AddOwnerSchema = z.object({
+  academyId: id,
   phone,
 });
+
+export const DeleteOwnerSchema = z.object({ academyId: id, ownerId: id });

@@ -61,6 +61,11 @@ const LessonRepository = {
       where.id = { not: id };
     }
     return await getClient(tx).lesson.findFirst({ where });
+  },
+
+  async count({ where, tx }: { where?: LessonWhereInput; tx?: TransactionClient }) {
+    const client = getClient(tx);
+    return await client.lesson.count({ where })
   }
 };
 

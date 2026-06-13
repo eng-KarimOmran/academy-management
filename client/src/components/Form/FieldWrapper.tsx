@@ -4,7 +4,7 @@ import ErrorMessageForm from "./ErrorMessageForm";
 import type { FormCol } from "./Form";
 
 interface FieldWrapperProps {
-  label: string;
+  label?: string;
   error?: string;
   htmlFor: string;
   children: React.ReactNode;
@@ -29,9 +29,11 @@ export default function FieldWrapper({
 
   return (
     <div className={`flex flex-col gap-1 ${colClass}`}>
-      <Label htmlFor={htmlFor} className="font-medium">
-        {label}
-      </Label>
+      {label && (
+        <Label htmlFor={htmlFor} className="font-medium">
+          {label}
+        </Label>
+      )}
       {children}
       {error && <ErrorMessageForm message={error} />}
     </div>

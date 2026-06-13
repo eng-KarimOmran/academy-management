@@ -15,9 +15,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { RiArrowDownSLine, RiLogoutBoxLine } from "@remixicon/react";
+import {
+  RiArrowDownSLine,
+  RiDoorLockLine,
+  RiLogoutBoxLine,
+} from "@remixicon/react";
 import Logout from "@/components/Sidebar/FooterSidebar/Logout";
 import { useDialogState } from "@/store/DialogState";
+import { Link } from "react-router-dom";
 
 export default function NavUser() {
   const { isMobile } = useSidebar();
@@ -85,6 +90,12 @@ export default function NavUser() {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
+                <DropdownMenuItem variant="default" asChild>
+                  <Link to={"/dashboard/change-password"}>
+                    <RiDoorLockLine />
+                    تغير كلمة المرور
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem variant="destructive" onClick={handelLogout}>
                   <RiLogoutBoxLine />
                   تسجيل الخروج

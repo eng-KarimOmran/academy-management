@@ -8,8 +8,8 @@ export const paymentTransactionBaseSelect: PaymentTransactionSelect = {
   type: true,
   createdAt: true,
   proofOfPaymentImage: true,
+  subscriptionId: true,
   receiver: { select: { id: true, name: true, phone: true } },
   academy: { select: { id: true, name: true } },
-  subscription: { select: { id: true } },
   client: { select: { id: true, name: true, phone: true } },
 };

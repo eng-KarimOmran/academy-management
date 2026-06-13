@@ -1,27 +1,43 @@
-import type { Payment } from "@/types/transaction";
+import type { SubscriptionDetails } from "@/types/subscription";
 
 export interface CalculatePaymentSummary {
-  totalPaid: number;
-  remaining: number;
+  totalPaid: number; // إجمالي المدفوع
+  totalRefunded: number; // إجمالي المرتجع/الراجع
+  netPaid: number; // الصافي الفعلي
+  remaining: number; // المتبقي
   isFullyPaid: boolean;
 }
 
 export const calculatePaymentSummary = ({
-  payments,
+  payments = [],
   totalRequiredAmount,
 }: {
-  payments: Payment[];
+  payments?: SubscriptionDetails["payments"];
   totalRequiredAmount: number;
 }): CalculatePaymentSummary => {
-  const totalPaid = payments
-    .filter((p) => p.status === "COMPLETED")
-    .reduce((sum, p) => sum + p.amount, 0);
+  const summary = payments.reduce(
+    (acc, p) => {
+      if (p.status === "COMPLETED") {
+        if (p.type === "REFUND") {
+          acc.refunded += p.amount;
+        } else {
+          acc.paid += p.amount;
+        }
+      }
 
-  const remaining = totalRequiredAmount - totalPaid;
+      return acc;
+    },
+    { paid: 0, refunded: 0 },
+  );
+
+  const netPaid = summary.paid - summary.refunded;
+  const remainingRaw = totalRequiredAmount - netPaid;
 
   return {
-    totalPaid,
-    remaining: remaining > 0 ? remaining : 0,
-    isFullyPaid: remaining <= 0,
+    totalPaid: summary.paid,
+    totalRefunded: summary.refunded,
+    netPaid,
+    remaining: Math.max(remainingRaw, 0),
+    isFullyPaid: remainingRaw <= 0,
   };
 };

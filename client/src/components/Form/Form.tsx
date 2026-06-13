@@ -5,6 +5,7 @@ import {
   type FieldValues,
   type DefaultValues,
   type SubmitHandler,
+  type UseFormProps,
 } from "react-hook-form";
 
 import { toast } from "sonner";
@@ -17,14 +18,14 @@ import type { ZodType } from "zod";
 
 export type FormCol = "full" | "half" | "third" | "fourth";
 
-export interface FormProps<T extends FieldValues, R> {
+export type FormProps<T extends FieldValues, R> = {
   inputs: FieldConfig<T>[];
-  schema: ZodType<T, T>;
+  schema?: ZodType<T, T>;
   defaultValues?: DefaultValues<T>;
   submitButton: SubmitButtonProps;
-  service: (data: T) => Promise<AxiosResponse<SuccessfulResponse<R>>>;
-  onSuccess?: (data: SuccessfulResponse<R>) => void;
-}
+  service?: (data: T) => Promise<AxiosResponse<SuccessfulResponse<R>>>;
+  onSuccess?: (data: SuccessfulResponse<R> | T) => void;
+};
 
 export default function Form<T extends FieldValues, R>({
   inputs,
@@ -34,26 +35,33 @@ export default function Form<T extends FieldValues, R>({
   service,
   onSuccess,
 }: FormProps<T, R>) {
+  const initUseForm: UseFormProps<T> = {
+    ...(defaultValues && { defaultValues }),
+    ...(schema && { resolver: zodResolver(schema) }),
+  };
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<T>({
-    resolver: zodResolver(schema),
-    defaultValues,
-  });
+  } = useForm<T>(initUseForm);
 
   const onSubmit: SubmitHandler<T> = async (data) => {
     try {
-      const response = await service(data);
-      if (onSuccess) {
-        onSuccess(response.data);
+      if (service) {
+        const response = await service(data);
+        if (onSuccess) {
+          onSuccess(response.data);
+        }
+      } else {
+        if (onSuccess) {
+          onSuccess(data);
+        }
       }
     } catch (error) {
       const err = error as ErrorAxios;
       const errorMessage = err.response?.data?.message || "حدث خطأ غير متوقع";
-      console.log(errorMessage)
       toast.error(errorMessage);
     }
   };
