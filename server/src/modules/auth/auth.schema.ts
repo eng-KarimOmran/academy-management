@@ -23,14 +23,6 @@ export const changePasswordSchema = {
   }),
 };
 
-export const newPasswordSchema = {
-  params: z.object({ userId: id }),
-  body: z.object({
-    newPassword: password,
-  }),
-};
-
-
 export const createFirstUserSchema = {
   body: z.object({
     name: personName,

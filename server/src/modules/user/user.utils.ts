@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
-import { Role, User } from "../../../prisma/generated/client";
+import { User, UserRole } from "../../../prisma/generated/client";
 import ApiError from "../../shared/utils/ApiError";
-import { UserWhereInput } from "../../../prisma/generated/models";
+import { UserOrderByWithRelationInput, UserWhereInput } from "../../../prisma/generated/models";
 
 export const assertCanModifyUser = ({
   currentUser,
@@ -12,25 +12,23 @@ export const assertCanModifyUser = ({
 }) => {
   if (currentUser.id === targetUser.id) return;
 
-  if (!targetUser.roles.includes("OWNER")) return;
+  if (currentUser.userRole !== "ADMIN") throw ApiError.Forbidden()
 
-  const currentIsNewer = dayjs(currentUser.createdAt).isAfter(
-    dayjs(targetUser.createdAt),
-  );
+  const currentIsNewer = dayjs(currentUser.createdAt).isAfter(dayjs(targetUser.createdAt));
 
   if (currentIsNewer) {
-    throw ApiError.Forbidden("لا يمكنك تعديل أي بيانات خاصة بهذا المستخدم");
+    throw ApiError.Forbidden();
   }
 };
 
 export const buildUserWhere = ({
-  role,
   search,
   isActive,
+  userRole
 }: {
   search?: string;
-  role?: Role;
   isActive?: boolean;
+  userRole?: UserRole
 }): UserWhereInput => {
   const where: UserWhereInput = {};
 
@@ -41,13 +39,15 @@ export const buildUserWhere = ({
     ];
   }
 
-  if (role) {
-    where.roles = { has: role };
-  }
-
   if (typeof isActive !== "undefined") {
     where.isActive = isActive;
   }
 
+  if (userRole) {
+    where.userRole = userRole
+  }
+
   return where;
 };
+
+export const orderBy: UserOrderByWithRelationInput = { createdAt: "desc" } 

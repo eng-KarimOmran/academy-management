@@ -3,6 +3,7 @@ import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
 import { IAuthService } from "./auth.type";
 import { HashHelper, Token } from "./auth.utils";
+import env from "../../config/env";
 
 const AuthService: IAuthService = {
   async login({ phone, password }) {
@@ -54,9 +55,9 @@ const AuthService: IAuthService = {
 
     if (user) throw ApiError.Conflict("USER_ALREADY_EXISTS");
 
-    const hashPassword = await HashHelper.hash("12345678")
+    const hashPassword = await HashHelper.hash(env.app.DEFAULT_USER_PASSWORD)
 
-    const newUser = await prisma.user.create({ data: { name, phone, password: hashPassword } })
+    const newUser = await prisma.user.create({ data: { name, phone, password: hashPassword, userRole: "ADMIN" } })
 
     return { id: newUser.id, phone }
   },

@@ -68,7 +68,7 @@ export const auth = (type: TokenType = TokenType.ACCESS): RequestHandler => {
   };
 };
 
-export const checkPasswordChange: RequestHandler = async (
+export const checkPasswordChange = async (
   req: RequestAuth,
   res: Response,
   next: NextFunction,
@@ -78,5 +78,5 @@ export const checkPasswordChange: RequestHandler = async (
   if (!user.isPasswordChanged) {
     throw ApiError.passwordChangeRequired();
   }
-  next();
+  return next();
 };

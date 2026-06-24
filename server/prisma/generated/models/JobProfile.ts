@@ -45,6 +45,7 @@ export type JobProfileMinAggregateOutputType = {
   userId: string | null
   academyId: string | null
   jobProfileType: $Enums.JobProfileType | null
+  isActive: boolean | null
   baseSalary: number | null
   lessonPrice: number | null
   supportType: $Enums.SupportType | null
@@ -58,6 +59,7 @@ export type JobProfileMaxAggregateOutputType = {
   userId: string | null
   academyId: string | null
   jobProfileType: $Enums.JobProfileType | null
+  isActive: boolean | null
   baseSalary: number | null
   lessonPrice: number | null
   supportType: $Enums.SupportType | null
@@ -71,6 +73,7 @@ export type JobProfileCountAggregateOutputType = {
   userId: number
   academyId: number
   jobProfileType: number
+  isActive: number
   baseSalary: number
   lessonPrice: number
   supportType: number
@@ -100,6 +103,7 @@ export type JobProfileMinAggregateInputType = {
   userId?: true
   academyId?: true
   jobProfileType?: true
+  isActive?: true
   baseSalary?: true
   lessonPrice?: true
   supportType?: true
@@ -113,6 +117,7 @@ export type JobProfileMaxAggregateInputType = {
   userId?: true
   academyId?: true
   jobProfileType?: true
+  isActive?: true
   baseSalary?: true
   lessonPrice?: true
   supportType?: true
@@ -126,6 +131,7 @@ export type JobProfileCountAggregateInputType = {
   userId?: true
   academyId?: true
   jobProfileType?: true
+  isActive?: true
   baseSalary?: true
   lessonPrice?: true
   supportType?: true
@@ -226,6 +232,7 @@ export type JobProfileGroupByOutputType = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive: boolean
   baseSalary: number
   lessonPrice: number
   supportType: $Enums.SupportType
@@ -262,6 +269,7 @@ export type JobProfileWhereInput = {
   userId?: Prisma.StringFilter<"JobProfile"> | string
   academyId?: Prisma.StringFilter<"JobProfile"> | string
   jobProfileType?: Prisma.EnumJobProfileTypeFilter<"JobProfile"> | $Enums.JobProfileType
+  isActive?: Prisma.BoolFilter<"JobProfile"> | boolean
   baseSalary?: Prisma.FloatFilter<"JobProfile"> | number
   lessonPrice?: Prisma.FloatFilter<"JobProfile"> | number
   supportType?: Prisma.EnumSupportTypeFilter<"JobProfile"> | $Enums.SupportType
@@ -281,6 +289,7 @@ export type JobProfileOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   jobProfileType?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   baseSalary?: Prisma.SortOrder
   lessonPrice?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
@@ -304,6 +313,7 @@ export type JobProfileWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"JobProfile"> | string
   academyId?: Prisma.StringFilter<"JobProfile"> | string
   jobProfileType?: Prisma.EnumJobProfileTypeFilter<"JobProfile"> | $Enums.JobProfileType
+  isActive?: Prisma.BoolFilter<"JobProfile"> | boolean
   baseSalary?: Prisma.FloatFilter<"JobProfile"> | number
   lessonPrice?: Prisma.FloatFilter<"JobProfile"> | number
   supportType?: Prisma.EnumSupportTypeFilter<"JobProfile"> | $Enums.SupportType
@@ -323,6 +333,7 @@ export type JobProfileOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   jobProfileType?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   baseSalary?: Prisma.SortOrder
   lessonPrice?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
@@ -344,6 +355,7 @@ export type JobProfileScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"JobProfile"> | string
   academyId?: Prisma.StringWithAggregatesFilter<"JobProfile"> | string
   jobProfileType?: Prisma.EnumJobProfileTypeWithAggregatesFilter<"JobProfile"> | $Enums.JobProfileType
+  isActive?: Prisma.BoolWithAggregatesFilter<"JobProfile"> | boolean
   baseSalary?: Prisma.FloatWithAggregatesFilter<"JobProfile"> | number
   lessonPrice?: Prisma.FloatWithAggregatesFilter<"JobProfile"> | number
   supportType?: Prisma.EnumSupportTypeWithAggregatesFilter<"JobProfile"> | $Enums.SupportType
@@ -355,6 +367,7 @@ export type JobProfileScalarWhereWithAggregatesInput = {
 export type JobProfileCreateInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -374,6 +387,7 @@ export type JobProfileUncheckedCreateInput = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -389,6 +403,7 @@ export type JobProfileUncheckedCreateInput = {
 export type JobProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -408,6 +423,7 @@ export type JobProfileUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -425,6 +441,7 @@ export type JobProfileCreateManyInput = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -436,6 +453,7 @@ export type JobProfileCreateManyInput = {
 export type JobProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -449,6 +467,7 @@ export type JobProfileUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -482,6 +501,7 @@ export type JobProfileCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   jobProfileType?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   baseSalary?: Prisma.SortOrder
   lessonPrice?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
@@ -502,6 +522,7 @@ export type JobProfileMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   jobProfileType?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   baseSalary?: Prisma.SortOrder
   lessonPrice?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
@@ -515,6 +536,7 @@ export type JobProfileMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   jobProfileType?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   baseSalary?: Prisma.SortOrder
   lessonPrice?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
@@ -690,6 +712,7 @@ export type JobProfileUpdateOneRequiredWithoutPayrollsNestedInput = {
 export type JobProfileCreateWithoutFinancialAccountInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -708,6 +731,7 @@ export type JobProfileUncheckedCreateWithoutFinancialAccountInput = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -738,6 +762,7 @@ export type JobProfileUpdateToOneWithWhereWithoutFinancialAccountInput = {
 export type JobProfileUpdateWithoutFinancialAccountInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -756,6 +781,7 @@ export type JobProfileUncheckedUpdateWithoutFinancialAccountInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -770,6 +796,7 @@ export type JobProfileUncheckedUpdateWithoutFinancialAccountInput = {
 export type JobProfileCreateWithoutAcademyInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -787,6 +814,7 @@ export type JobProfileUncheckedCreateWithoutAcademyInput = {
   id?: string
   userId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -833,6 +861,7 @@ export type JobProfileScalarWhereInput = {
   userId?: Prisma.StringFilter<"JobProfile"> | string
   academyId?: Prisma.StringFilter<"JobProfile"> | string
   jobProfileType?: Prisma.EnumJobProfileTypeFilter<"JobProfile"> | $Enums.JobProfileType
+  isActive?: Prisma.BoolFilter<"JobProfile"> | boolean
   baseSalary?: Prisma.FloatFilter<"JobProfile"> | number
   lessonPrice?: Prisma.FloatFilter<"JobProfile"> | number
   supportType?: Prisma.EnumSupportTypeFilter<"JobProfile"> | $Enums.SupportType
@@ -844,6 +873,7 @@ export type JobProfileScalarWhereInput = {
 export type JobProfileCreateWithoutSubscriptionsInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -862,6 +892,7 @@ export type JobProfileUncheckedCreateWithoutSubscriptionsInput = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -892,6 +923,7 @@ export type JobProfileUpdateToOneWithWhereWithoutSubscriptionsInput = {
 export type JobProfileUpdateWithoutSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -910,6 +942,7 @@ export type JobProfileUncheckedUpdateWithoutSubscriptionsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -924,6 +957,7 @@ export type JobProfileUncheckedUpdateWithoutSubscriptionsInput = {
 export type JobProfileCreateWithoutUserInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -941,6 +975,7 @@ export type JobProfileUncheckedCreateWithoutUserInput = {
   id?: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -982,6 +1017,7 @@ export type JobProfileUpdateManyWithWhereWithoutUserInput = {
 export type JobProfileCreateWithoutLessonsInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -1000,6 +1036,7 @@ export type JobProfileUncheckedCreateWithoutLessonsInput = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -1030,6 +1067,7 @@ export type JobProfileUpdateToOneWithWhereWithoutLessonsInput = {
 export type JobProfileUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1048,6 +1086,7 @@ export type JobProfileUncheckedUpdateWithoutLessonsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1062,6 +1101,7 @@ export type JobProfileUncheckedUpdateWithoutLessonsInput = {
 export type JobProfileCreateWithoutPayrollsInput = {
   id?: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -1080,6 +1120,7 @@ export type JobProfileUncheckedCreateWithoutPayrollsInput = {
   userId: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -1110,6 +1151,7 @@ export type JobProfileUpdateToOneWithWhereWithoutPayrollsInput = {
 export type JobProfileUpdateWithoutPayrollsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1128,6 +1170,7 @@ export type JobProfileUncheckedUpdateWithoutPayrollsInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1143,6 +1186,7 @@ export type JobProfileCreateManyAcademyInput = {
   id?: string
   userId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -1154,6 +1198,7 @@ export type JobProfileCreateManyAcademyInput = {
 export type JobProfileUpdateWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1171,6 +1216,7 @@ export type JobProfileUncheckedUpdateWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1187,6 +1233,7 @@ export type JobProfileUncheckedUpdateManyWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1199,6 +1246,7 @@ export type JobProfileCreateManyUserInput = {
   id?: string
   academyId: string
   jobProfileType: $Enums.JobProfileType
+  isActive?: boolean
   baseSalary?: number
   lessonPrice?: number
   supportType: $Enums.SupportType
@@ -1210,6 +1258,7 @@ export type JobProfileCreateManyUserInput = {
 export type JobProfileUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1227,6 +1276,7 @@ export type JobProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1243,6 +1293,7 @@ export type JobProfileUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileType?: Prisma.EnumJobProfileTypeFieldUpdateOperationsInput | $Enums.JobProfileType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
   lessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
@@ -1305,6 +1356,7 @@ export type JobProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   userId?: boolean
   academyId?: boolean
   jobProfileType?: boolean
+  isActive?: boolean
   baseSalary?: boolean
   lessonPrice?: boolean
   supportType?: boolean
@@ -1325,6 +1377,7 @@ export type JobProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   userId?: boolean
   academyId?: boolean
   jobProfileType?: boolean
+  isActive?: boolean
   baseSalary?: boolean
   lessonPrice?: boolean
   supportType?: boolean
@@ -1340,6 +1393,7 @@ export type JobProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   userId?: boolean
   academyId?: boolean
   jobProfileType?: boolean
+  isActive?: boolean
   baseSalary?: boolean
   lessonPrice?: boolean
   supportType?: boolean
@@ -1355,6 +1409,7 @@ export type JobProfileSelectScalar = {
   userId?: boolean
   academyId?: boolean
   jobProfileType?: boolean
+  isActive?: boolean
   baseSalary?: boolean
   lessonPrice?: boolean
   supportType?: boolean
@@ -1363,7 +1418,7 @@ export type JobProfileSelectScalar = {
   createdAt?: boolean
 }
 
-export type JobProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "academyId" | "jobProfileType" | "baseSalary" | "lessonPrice" | "supportType" | "targetCount" | "bonusAmount" | "createdAt", ExtArgs["result"]["jobProfile"]>
+export type JobProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "academyId" | "jobProfileType" | "isActive" | "baseSalary" | "lessonPrice" | "supportType" | "targetCount" | "bonusAmount" | "createdAt", ExtArgs["result"]["jobProfile"]>
 export type JobProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
@@ -1397,6 +1452,7 @@ export type $JobProfilePayload<ExtArgs extends runtime.Types.Extensions.Internal
     userId: string
     academyId: string
     jobProfileType: $Enums.JobProfileType
+    isActive: boolean
     baseSalary: number
     lessonPrice: number
     supportType: $Enums.SupportType
@@ -1836,6 +1892,7 @@ export interface JobProfileFieldRefs {
   readonly userId: Prisma.FieldRef<"JobProfile", 'String'>
   readonly academyId: Prisma.FieldRef<"JobProfile", 'String'>
   readonly jobProfileType: Prisma.FieldRef<"JobProfile", 'JobProfileType'>
+  readonly isActive: Prisma.FieldRef<"JobProfile", 'Boolean'>
   readonly baseSalary: Prisma.FieldRef<"JobProfile", 'Float'>
   readonly lessonPrice: Prisma.FieldRef<"JobProfile", 'Float'>
   readonly supportType: Prisma.FieldRef<"JobProfile", 'SupportType'>

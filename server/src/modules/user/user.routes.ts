@@ -2,42 +2,48 @@ import { Router } from "express";
 import validation from "../../shared/middlewares/validation.middleware";
 import * as Schema from "./user.schema";
 import UserController from "./user.controller";
-import checkRole from "../../shared/middlewares/role.middleware";
+import { isAdmin } from "./user.middleware";
 
 const router = Router();
 
 router.get(
   "/",
   validation(Schema.GetAllUsersSchema),
-  checkRole(["OWNER"]),
+  isAdmin,
   UserController.getAllUser,
 );
 
 router.post(
   "/",
   validation(Schema.CreateUserSchema),
-  checkRole(["OWNER"]),
+  isAdmin,
   UserController.createUser,
 );
 
 router.get(
   "/:userId",
   validation(Schema.GetUserDetailsSchema),
-  checkRole(["OWNER"]),
   UserController.getDetailsUser,
+);
+
+router.patch(
+  "/:userId/new-password",
+  validation(Schema.newPasswordSchema),
+  isAdmin,
+  UserController.newPassword,
 );
 
 router.patch(
   "/:userId",
   validation(Schema.UpdateUserSchema),
-  checkRole(["OWNER"]),
+  isAdmin,
   UserController.updateUser,
 );
 
 router.delete(
   "/:userId",
   validation(Schema.DeleteUserSchema),
-  checkRole(["OWNER"]),
+  isAdmin,
   UserController.deleteUser,
 );
 

@@ -183,9 +183,9 @@ model Subscription {
 }
 
 enum JobProfileType {
-  trainer
-  secretary
-  manager
+  TRAINER
+  SECRETARY
+  MANAGER
 }
 
 model JobProfile {
@@ -198,6 +198,8 @@ model JobProfile {
   academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
 
   jobProfileType JobProfileType
+
+  isActive Boolean @default(true)
 
   baseSalary  Float       @default(0)
   lessonPrice Float       @default(0)
@@ -224,11 +226,17 @@ model User {
   email             String?  @unique
   logoutAt          DateTime @default(now())
   isPasswordChanged Boolean  @default(false)
+  userRole          UserRole @default(USER)
 
   jobProfile JobProfile[]
   academies  Academy[]    @relation("AcademyOwners")
 
   createdAt DateTime @default(now())
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }
 
 enum SupportType {

@@ -227,6 +227,7 @@ export const JobProfileScalarFieldEnum = {
   userId: 'userId',
   academyId: 'academyId',
   jobProfileType: 'jobProfileType',
+  isActive: 'isActive',
   baseSalary: 'baseSalary',
   lessonPrice: 'lessonPrice',
   supportType: 'supportType',
@@ -247,6 +248,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   logoutAt: 'logoutAt',
   isPasswordChanged: 'isPasswordChanged',
+  userRole: 'userRole',
   createdAt: 'createdAt'
 } as const
 

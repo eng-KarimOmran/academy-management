@@ -38,12 +38,20 @@ export type Transmission = (typeof Transmission)[keyof typeof Transmission]
 
 
 export const JobProfileType = {
-  trainer: 'trainer',
-  secretary: 'secretary',
-  manager: 'manager'
+  TRAINER: 'TRAINER',
+  SECRETARY: 'SECRETARY',
+  MANAGER: 'MANAGER'
 } as const
 
 export type JobProfileType = (typeof JobProfileType)[keyof typeof JobProfileType]
+
+
+export const UserRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const SupportType = {

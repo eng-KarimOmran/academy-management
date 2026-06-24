@@ -33,6 +33,7 @@ export type UserMinAggregateOutputType = {
   email: string | null
   logoutAt: Date | null
   isPasswordChanged: boolean | null
+  userRole: $Enums.UserRole | null
   createdAt: Date | null
 }
 
@@ -45,6 +46,7 @@ export type UserMaxAggregateOutputType = {
   email: string | null
   logoutAt: Date | null
   isPasswordChanged: boolean | null
+  userRole: $Enums.UserRole | null
   createdAt: Date | null
 }
 
@@ -57,6 +59,7 @@ export type UserCountAggregateOutputType = {
   email: number
   logoutAt: number
   isPasswordChanged: number
+  userRole: number
   createdAt: number
   _all: number
 }
@@ -71,6 +74,7 @@ export type UserMinAggregateInputType = {
   email?: true
   logoutAt?: true
   isPasswordChanged?: true
+  userRole?: true
   createdAt?: true
 }
 
@@ -83,6 +87,7 @@ export type UserMaxAggregateInputType = {
   email?: true
   logoutAt?: true
   isPasswordChanged?: true
+  userRole?: true
   createdAt?: true
 }
 
@@ -95,6 +100,7 @@ export type UserCountAggregateInputType = {
   email?: true
   logoutAt?: true
   isPasswordChanged?: true
+  userRole?: true
   createdAt?: true
   _all?: true
 }
@@ -180,6 +186,7 @@ export type UserGroupByOutputType = {
   email: string | null
   logoutAt: Date
   isPasswordChanged: boolean
+  userRole: $Enums.UserRole
   createdAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
@@ -213,6 +220,7 @@ export type UserWhereInput = {
   email?: Prisma.StringNullableFilter<"User"> | string | null
   logoutAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
+  userRole?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   jobProfile?: Prisma.JobProfileListRelationFilter
   academies?: Prisma.AcademyListRelationFilter
@@ -227,6 +235,7 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   logoutAt?: Prisma.SortOrder
   isPasswordChanged?: Prisma.SortOrder
+  userRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   jobProfile?: Prisma.JobProfileOrderByRelationAggregateInput
   academies?: Prisma.AcademyOrderByRelationAggregateInput
@@ -244,6 +253,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"User"> | boolean
   logoutAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
+  userRole?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   jobProfile?: Prisma.JobProfileListRelationFilter
   academies?: Prisma.AcademyListRelationFilter
@@ -258,6 +268,7 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   logoutAt?: Prisma.SortOrder
   isPasswordChanged?: Prisma.SortOrder
+  userRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -276,6 +287,7 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   logoutAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   isPasswordChanged?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  userRole?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
@@ -288,6 +300,7 @@ export type UserCreateInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
   jobProfile?: Prisma.JobProfileCreateNestedManyWithoutUserInput
   academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
@@ -302,6 +315,7 @@ export type UserUncheckedCreateInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
   jobProfile?: Prisma.JobProfileUncheckedCreateNestedManyWithoutUserInput
   academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
@@ -316,6 +330,7 @@ export type UserUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUpdateManyWithoutUserNestedInput
   academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
@@ -330,6 +345,7 @@ export type UserUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUncheckedUpdateManyWithoutUserNestedInput
   academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
@@ -344,6 +360,7 @@ export type UserCreateManyInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
 }
 
@@ -356,6 +373,7 @@ export type UserUpdateManyMutationInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -368,6 +386,7 @@ export type UserUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -395,6 +414,7 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   logoutAt?: Prisma.SortOrder
   isPasswordChanged?: Prisma.SortOrder
+  userRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -407,6 +427,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   logoutAt?: Prisma.SortOrder
   isPasswordChanged?: Prisma.SortOrder
+  userRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -419,6 +440,7 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   logoutAt?: Prisma.SortOrder
   isPasswordChanged?: Prisma.SortOrder
+  userRole?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -474,6 +496,10 @@ export type UserUpdateOneRequiredWithoutJobProfileNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJobProfileInput, Prisma.UserUpdateWithoutJobProfileInput>, Prisma.UserUncheckedUpdateWithoutJobProfileInput>
 }
 
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
+}
+
 export type UserCreateWithoutAcademiesInput = {
   id?: string
   name: string
@@ -483,6 +509,7 @@ export type UserCreateWithoutAcademiesInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
   jobProfile?: Prisma.JobProfileCreateNestedManyWithoutUserInput
 }
@@ -496,6 +523,7 @@ export type UserUncheckedCreateWithoutAcademiesInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
   jobProfile?: Prisma.JobProfileUncheckedCreateNestedManyWithoutUserInput
 }
@@ -533,6 +561,7 @@ export type UserScalarWhereInput = {
   email?: Prisma.StringNullableFilter<"User"> | string | null
   logoutAt?: Prisma.DateTimeFilter<"User"> | Date | string
   isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
+  userRole?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
@@ -545,6 +574,7 @@ export type UserCreateWithoutJobProfileInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
   academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
 }
@@ -558,6 +588,7 @@ export type UserUncheckedCreateWithoutJobProfileInput = {
   email?: string | null
   logoutAt?: Date | string
   isPasswordChanged?: boolean
+  userRole?: $Enums.UserRole
   createdAt?: Date | string
   academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
 }
@@ -587,6 +618,7 @@ export type UserUpdateWithoutJobProfileInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
 }
@@ -600,6 +632,7 @@ export type UserUncheckedUpdateWithoutJobProfileInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
 }
@@ -613,6 +646,7 @@ export type UserUpdateWithoutAcademiesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUpdateManyWithoutUserNestedInput
 }
@@ -626,6 +660,7 @@ export type UserUncheckedUpdateWithoutAcademiesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -639,6 +674,7 @@ export type UserUncheckedUpdateManyWithoutAcademiesInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  userRole?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -691,6 +727,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   logoutAt?: boolean
   isPasswordChanged?: boolean
+  userRole?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.User$jobProfileArgs<ExtArgs>
   academies?: boolean | Prisma.User$academiesArgs<ExtArgs>
@@ -706,6 +743,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   logoutAt?: boolean
   isPasswordChanged?: boolean
+  userRole?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -718,6 +756,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   logoutAt?: boolean
   isPasswordChanged?: boolean
+  userRole?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
@@ -730,10 +769,11 @@ export type UserSelectScalar = {
   email?: boolean
   logoutAt?: boolean
   isPasswordChanged?: boolean
+  userRole?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "password" | "isActive" | "email" | "logoutAt" | "isPasswordChanged" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "password" | "isActive" | "email" | "logoutAt" | "isPasswordChanged" | "userRole" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobProfile?: boolean | Prisma.User$jobProfileArgs<ExtArgs>
   academies?: boolean | Prisma.User$academiesArgs<ExtArgs>
@@ -757,6 +797,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     email: string | null
     logoutAt: Date
     isPasswordChanged: boolean
+    userRole: $Enums.UserRole
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1191,6 +1232,7 @@ export interface UserFieldRefs {
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly logoutAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly isPasswordChanged: Prisma.FieldRef<"User", 'Boolean'>
+  readonly userRole: Prisma.FieldRef<"User", 'UserRole'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     

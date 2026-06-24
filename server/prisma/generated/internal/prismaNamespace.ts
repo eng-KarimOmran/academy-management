@@ -2080,6 +2080,7 @@ export const JobProfileScalarFieldEnum = {
   userId: 'userId',
   academyId: 'academyId',
   jobProfileType: 'jobProfileType',
+  isActive: 'isActive',
   baseSalary: 'baseSalary',
   lessonPrice: 'lessonPrice',
   supportType: 'supportType',
@@ -2100,6 +2101,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   logoutAt: 'logoutAt',
   isPasswordChanged: 'isPasswordChanged',
+  userRole: 'userRole',
   createdAt: 'createdAt'
 } as const
 
@@ -2360,6 +2362,20 @@ export type EnumSupportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'SupportType[]'
  */
 export type ListEnumSupportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupportType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UserRole'
+ */
+export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+/**
+ * Reference to a field of type 'UserRole[]'
+ */
+export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 

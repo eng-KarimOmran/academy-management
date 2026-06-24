@@ -1,178 +1,152 @@
-import * as DTO from "./user.dto";
-import ApiError from "../../shared/utils/ApiError";
-import dayjs from "dayjs";
-import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
-import { Prisma, Role, User } from "../../../prisma/generated/client";
-import { omit } from "../../shared/utils/omit";
-import { assertCanModifyUser, buildUserWhere } from "./user.utils";
-import { userAcademyRelationsSelect, userDetailsSelect } from "./user.selectors";
-import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
-import HashHelper from "../auth/auth.utils";
+import { omit } from './../../shared/utils/omit';
+import { IUserService } from "./user.type";
 import { prisma } from "../../lib/prisma";
-
-interface IUserService {
-  create: (data: { dataSafe: DTO.CreateUserDto; tx?: TransactionClient }) => Promise<Partial<User>>;
-  update: (data: { currentUser: User; dataSafe: DTO.UpdateUserDto; tx?: TransactionClient }) => Promise<Partial<User>>;
-  delete: (data: { currentUser: User; dataSafe: DTO.DeleteUserDto; tx?: TransactionClient }) => Promise<Partial<User>>;
-  getAll: (data: { dataSafe: DTO.GetAllUsersDto; tx?: TransactionClient }) => Promise<{ items: Partial<User>[]; pagination: { limit: number; page: number; totalPages: number; total: number } }>;
-  getDetails: (data: { dataSafe: DTO.GetUserDetailsDto; tx?: TransactionClient }) => Promise<Partial<User>>;
-  recalculateUserRole: (data: { userId: string; tx?: TransactionClient }) => Promise<void>;
-}
+import ApiError from "../../shared/utils/ApiError";
+import { HashHelper } from "../auth/auth.utils";
+import env from "../../config/env";
+import { assertCanModifyUser, buildUserWhere, orderBy } from "./user.utils";
+import dayjs from "dayjs";
+import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
 
 const UserService: IUserService = {
-  async create({ dataSafe, tx }) {
-    const { name, phone, password } = dataSafe.body;
+  async createUser({ body }) {
+    const { name, phone } = body;
 
-    const run = async (tx: TransactionClient) => {
-      const userExists = await tx.user.findFirst({ where: { phone } });
-      if (userExists) throw ApiError.Conflict("Phone");
+    const userEx = await prisma.user.findUnique({
+      where: { phone },
+    });
 
-      const hashedPassword = await HashHelper.hash(password);
+    if (userEx) throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
 
-      const user = await tx.user.create({
-        data: {
-          name,
-          phone,
-          password: hashedPassword,
-        }
-      });
+    const hashPassword = await HashHelper.hash(
+      env.app.DEFAULT_USER_PASSWORD
+    );
 
-      return omit(user, ["password", "logoutAt"]);
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    const user = await prisma.user.create({
+      data: {
+        name,
+        phone,
+        password: hashPassword,
+      },
+    });
+    return omit(user, ["password", "logoutAt"])
   },
 
-  async update({ currentUser, dataSafe, tx }) {
-    const { body, params } = dataSafe;
+  async updateUser(dataSafe, currentUser) {
+    const { params, body } = dataSafe;
+    const { userId } = params
+
+    const targetUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!targetUser) throw ApiError.NotFound("User");
+
+    assertCanModifyUser({ currentUser, targetUser })
+
+    if (body.phone && body.phone !== targetUser.phone) {
+      const phoneExists = await prisma.user.findUnique({
+        where: { phone: body.phone },
+      });
+
+      if (phoneExists) {
+        throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
+      }
+    }
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: body,
+    });
+
+    return omit(user, ["password", "logoutAt"])
+  },
+
+  async deleteUser(dataSafe, currentUser) {
+    const { params } = dataSafe;
+    const { userId } = params
+
+    const targetUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!targetUser) throw ApiError.NotFound("User");
+
+    assertCanModifyUser({ currentUser, targetUser })
+
+    const user = await prisma.user.delete({
+      where: { id: userId },
+    });
+
+    return omit(user, ["password", "logoutAt"])
+  },
+
+  async getAllUsers(dataSafe) {
+    const { limit, page, ...query } = dataSafe.query;
+
+    const pagination = buildPagination({ page, limit })
+
+    const where = buildUserWhere(query)
+
+    const { users, count } = await prisma.$transaction(async (tx) => {
+      const [users, count] = await Promise.all(
+        [
+          tx.user.findMany({ where, ...pagination, orderBy }),
+          tx.user.count({ where })
+        ]
+      )
+      return { users, count }
+    })
+
+    const usersSafe = users.map((u) => omit(u, ["password", "logoutAt"]))
+
+    const paginationMeta = buildPaginationMeta({ limit, page, count })
+
+    return { items: usersSafe, pagination: paginationMeta }
+  },
+
+  async getUserDetails({ params }) {
     const { userId } = params;
-    const { name, phone, isActive } = body;
 
-    const run = async (tx: TransactionClient) => {
-      const targetUser = await tx.user.findUnique({ where: { id: userId } });
-      if (!targetUser) throw ApiError.NotFound({ model: "User" });
-
-      assertCanModifyUser({ currentUser, targetUser });
-
-      const updateData: Prisma.UserUpdateInput = {};
-
-      if (phone && phone !== targetUser.phone) {
-        const phoneExists = await tx.user.findFirst({ where: { phone } });
-        if (phoneExists) throw ApiError.Conflict("Phone");
-
-        updateData.phone = phone;
-        updateData.logoutAt = dayjs().toDate();
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        academies: true,
       }
+    });
 
-      if (name && name !== targetUser.name) updateData.name = name;
-      if (typeof isActive !== "undefined" && isActive !== targetUser.isActive) {
-        updateData.isActive = isActive;
-      }
+    if (!user) throw ApiError.NotFound("User");
 
-      if (Object.keys(updateData).length === 0) {
-        return omit(targetUser, ["password", "logoutAt"]);
-      }
 
-      const updatedUser = await tx.user.update({
-        where: { id: userId },
-        data: updateData,
-      });
-
-      return omit(updatedUser, ["password", "logoutAt"]);
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    return omit(user, ["password", "logoutAt"])
   },
 
-  async delete({ currentUser, dataSafe, tx }) {
-    const { userId } = dataSafe.params;
+  async newPassword(dataSafe, currentUser) {
+    const { params, body } = dataSafe;
+    const { userId } = params
+    const { newPassword } = body
 
-    const run = async (tx: TransactionClient) => {
-      const targetUser = await tx.user.findUnique({ where: { id: userId } });
-      if (!targetUser) throw ApiError.NotFound({ model: "User" });
+    const targetUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
 
-      assertCanModifyUser({ currentUser, targetUser });
+    if (!targetUser) throw ApiError.NotFound("User");
 
-      const user = await tx.user.delete({ where: { id: userId } });
+    assertCanModifyUser({ currentUser, targetUser })
 
-      return omit(user, ["password", "logoutAt"]);
-    };
+    const hashPassword = await HashHelper.hash(newPassword);
 
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        password: hashPassword,
+        isPasswordChanged: false,
+        logoutAt: dayjs().toDate(),
+      },
+    });
 
-  async getAll({ dataSafe, tx }) {
-    const { limit, page, search, role, isActive } = dataSafe.query;
-
-    const run = async (tx: TransactionClient) => {
-      const where = buildUserWhere({ role, search, isActive });
-      const { take, skip } = getPagination({ page, limit });
-
-      const [users, count] = await Promise.all([
-        tx.user.findMany({
-          where,
-          take,
-          skip,
-          orderBy: { createdAt: "desc" },
-        }),
-        tx.user.count({ where })
-      ]);
-
-      const totalPages = getTotalPages({ limit, count });
-      const pagination = { limit, page, totalPages, total: count };
-
-      const usersSafe = users.map((user) => omit(user, ["password", "logoutAt"]));
-
-      return { items: usersSafe, pagination };
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async getDetails({ dataSafe, tx }) {
-    const { userId } = dataSafe.params;
-
-    const run = async (tx: TransactionClient) => {
-      const user = await tx.user.findUnique({
-        where: { id: userId },
-        select: userDetailsSelect,
-      });
-
-      if (!user) throw ApiError.NotFound({ model: "User" });
-
-      return omit(user, ["password", "logoutAt"]);
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async recalculateUserRole({ userId, tx }) {
-    const run = async (tx: TransactionClient) => {
-      const user = await tx.user.findUnique({
-        where: { id: userId },
-        select: userAcademyRelationsSelect,
-      });
-
-      if (!user) throw ApiError.NotFound({ model: "User" });
-
-      const roles = new Set<Role>();
-
-      if (user.academies?.length) roles.add("OWNER");
-      if (user.captainProfile) roles.add("CAPTAIN");
-      if (user.secretaryProfile) roles.add("SECRETARY");
-
-      await tx.user.update({
-        where: { id: userId },
-        data: {
-          roles: {
-            set: [...roles],
-          },
-        },
-      });
-    };
-
-    tx ? await run(tx) : await prisma.$transaction(run);
+    return omit(user, ["password", "logoutAt"])
   },
 };
 
-export default UserService;
+export default UserService

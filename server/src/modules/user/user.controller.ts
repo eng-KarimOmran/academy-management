@@ -1,14 +1,14 @@
 import { Response } from "express";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./user.dto";
 import UserService from "./user.service";
 import sendSuccess from "../../shared/utils/successResponse";
+import { RequestAuth } from "../auth/auth.type";
 
 const UserController = {
   createUser: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateUserDto;
 
-    const user = await UserService.create({ dataSafe });
+    const user = await UserService.createUser({ body: dataSafe.body });
 
     return sendSuccess({
       res,
@@ -22,7 +22,7 @@ const UserController = {
     const currentUser = req.userLogin!;
     const dataSafe = req.dataSafe as DTO.UpdateUserDto;
 
-    const updatedUser = await UserService.update({ currentUser, dataSafe });
+    const updatedUser = await UserService.updateUser(dataSafe, currentUser);
 
     return sendSuccess({
       res,
@@ -35,7 +35,7 @@ const UserController = {
     const currentUser = req.userLogin!;
     const dataSafe = req.dataSafe as DTO.DeleteUserDto;
 
-    await UserService.delete({ currentUser, dataSafe });
+    await UserService.deleteUser(dataSafe, currentUser);
 
     return sendSuccess({
       res,
@@ -46,7 +46,7 @@ const UserController = {
   getAllUser: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllUsersDto;
 
-    const data = await UserService.getAll({ dataSafe });
+    const data = await UserService.getAllUsers(dataSafe);
 
     return sendSuccess({
       res,
@@ -57,7 +57,16 @@ const UserController = {
   getDetailsUser: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetUserDetailsDto;
 
-    const user = await UserService.getDetails({ dataSafe });
+    const user = await UserService.getUserDetails(dataSafe);
+
+    return sendSuccess({ res, data: user });
+  },
+
+  newPassword: async (req: RequestAuth, res: Response) => {
+    const dataSafe = req.dataSafe as DTO.NewPasswordDto;
+    const currentUser = req.userLogin!;
+
+    const user = await UserService.newPassword(dataSafe, currentUser);
 
     return sendSuccess({ res, data: user });
   },

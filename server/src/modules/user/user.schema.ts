@@ -1,4 +1,5 @@
 import z from "zod";
+
 import {
   id,
   personName,
@@ -8,13 +9,13 @@ import {
   positiveNumber,
   boolean,
   booleanQuery,
+  userRole,
 } from "../../shared/utils/common.validation";
 
 export const CreateUserSchema = {
   body: z.object({
     name: personName,
     phone,
-    password,
   }),
 };
 
@@ -24,6 +25,7 @@ export const UpdateUserSchema = {
     name: personName.optional(),
     phone: phone.optional(),
     isActive: boolean.optional(),
+    userRole: userRole.optional()
   }),
 };
 
@@ -40,7 +42,14 @@ export const GetAllUsersSchema = {
     page: positiveNumber.optional().default(1),
     limit: limit,
     search: z.string().optional(),
-    // role: userRole.optional(),
     isActive: booleanQuery.optional(),
+    userRole: userRole.optional()
+  }),
+};
+
+export const newPasswordSchema = {
+  params: z.object({ userId: id }),
+  body: z.object({
+    newPassword: password,
   }),
 };

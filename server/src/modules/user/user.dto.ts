@@ -21,3 +21,8 @@ export type GetAllUsersDto = {
 export type GetUserDetailsDto = {
   params: z.infer<typeof Schema.GetUserDetailsSchema.params>;
 };
+
+export type NewPasswordDto = {
+  params: z.infer<typeof Schema.newPasswordSchema.params>;
+  body: z.infer<typeof Schema.newPasswordSchema.body>;
+};

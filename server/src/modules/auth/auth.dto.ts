@@ -13,12 +13,7 @@ export type ChangePasswordDto = {
   body: z.infer<typeof Schema.changePasswordSchema.body>;
 };
 
-export type NewPasswordDto = {
-  params: z.infer<typeof Schema.newPasswordSchema.params>;
-  body: z.infer<typeof Schema.newPasswordSchema.body>;
-};
-
-export type CreateFirstUserDto = {
+export type createFirstUserDto = {
   body: z.infer<typeof Schema.createFirstUserSchema.body>;
 };
 
