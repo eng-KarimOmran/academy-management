@@ -3,37 +3,49 @@ import z from "zod";
 import {
   limit,
   positiveNumber,
-  phone,
   transmission,
   id,
+  subscriptionStatus,
 } from "@/validations/common.validation";
 
-export const CreateSubscriptionSchema = z.object({
-  academyId: id,
-  areaId: id,
-  courseId: id,
-  phone,
-  trainingTypeAtRegistration: transmission,
-});
+export const CreateSubscriptionSchema = {
+  params: z.object({
+    academyId: id,
+  }),
+  body: z.object({
+    clientId: id,
+    courseId: id,
+    areaId: id,
+    trainingTypeAtRegistration: transmission,
+  }),
+};
 
-export const GetAllSubscriptionsSchema = z.object({
-  academyId: id,
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
-  search: z.string().optional(),
-});
+export const GetAllSubscriptionsSchema = {
+  params: z.object({
+    academyId: id,
+  }),
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit,
+    search: z.string().optional(),
+    status: subscriptionStatus.optional(),
+  }),
+};
 
-export const GetSubscriptionDetailsSchema = z.object({
-  academyId: id,
-  subscriptionId: id,
-});
+export const GetSubscriptionDetailsSchema = {
+  params: z.object({ subscriptionId: id, academyId: id }),
+};
 
-export const DeleteSubscriptionSchema = z.object({
-  academyId: id,
-  subscriptionId: id,
-});
+export const DeleteSubscriptionSchema = {
+  params: z.object({
+    subscriptionId: id,
+    academyId: id,
+  }),
+};
 
-export const CancelSubscriptionSchema = z.object({
-  academyId: id,
-  subscriptionId: id,
-});
+export const CancelSubscriptionSchema = {
+  params: z.object({
+    academyId: id,
+    subscriptionId: id,
+  }),
+};

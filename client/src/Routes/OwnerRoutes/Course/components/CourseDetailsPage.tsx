@@ -6,9 +6,9 @@ import DisplayArray from "@/components/DisplayArray/DisplayArray";
 
 import UpdateCourse from "../Forms/UpdateCourse";
 import { useDialogState } from "@/store/DialogState";
-import { getCourseDetails } from "@/service/course.service";
 import AddFeature from "../Forms/AddFeature";
 import DeleteFeature from "../Forms/DeleteFeature";
+import { getDetailsCourse } from "@/service/course.service";
 
 export default function CourseDetailsPage() {
   const { courseId } = useParams();
@@ -19,7 +19,9 @@ export default function CourseDetailsPage() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["courses", courseId],
     queryFn: () =>
-      getCourseDetails({ courseId: courseId!, academyId: academyId! }),
+      getDetailsCourse({
+        params: { courseId: courseId!, academyId: academyId! },
+      }),
     staleTime: Infinity,
     enabled: !!courseId && !!academyId,
     select: (res) => res.data.data,

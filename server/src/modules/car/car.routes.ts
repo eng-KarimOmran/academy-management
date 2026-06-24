@@ -1,15 +1,15 @@
 import { Router } from "express";
-import validation from "../../middlewares/validation.middleware";
+import validation from "../../shared/middlewares/validation.middleware";
 import * as Schema from "./car.schema";
 import CarController from "./car.controller";
-import checkRole from "../../middlewares/role.middleware";
+import checkRole from "../../shared/middlewares/role.middleware";
 
 const router = Router();
 
 router.get(
   "/",
   validation(Schema.GetAllCarsSchema),
-  checkRole(["OWNER", "SECRETARY"]),
+  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
   CarController.getAllCars,
 );
 

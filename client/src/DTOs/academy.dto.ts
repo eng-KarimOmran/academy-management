@@ -12,20 +12,40 @@ import {
   DeleteSocialMediaSchema,
 } from "../validations/academy.validation";
 
-export type CreateAcademyDto = z.infer<typeof CreateAcademySchema>;
+export type CreateAcademyDto = {
+  body: z.infer<typeof CreateAcademySchema.body>;
+};
 
-export type UpdateAcademyDto = z.infer<typeof UpdateAcademySchema>;
+export type UpdateAcademyDto = {
+  params: z.infer<typeof UpdateAcademySchema.params>;
+  body: z.infer<typeof UpdateAcademySchema.body>;
+};
 
-export type DeleteAcademyDto = z.infer<typeof DeleteAcademySchema>;
+export type DeleteAcademyDto = {
+  params: z.infer<typeof DeleteAcademySchema.params>;
+};
 
-export type GetAllAcademiesDto = z.infer<typeof GetAllAcademiesSchema>;
+export type GetAllAcademiesDto = {
+  query: z.infer<typeof GetAllAcademiesSchema.query>;
+};
 
-export type GetAcademyDetailsDto = z.infer<typeof GetAcademySchema>;
+export type GetAcademyDetailsDto = {
+  params: z.infer<typeof GetAcademySchema.params>;
+};
 
-export type AddSocialMediaDto = z.infer<typeof AddSocialMediaSchema>;
+export type AddSocialMediaDto = {
+  params: z.infer<typeof AddSocialMediaSchema.params>;
+  body: z.infer<typeof AddSocialMediaSchema.body>;
+};
 
-export type DeleteSocialMediaDto = z.infer<typeof DeleteSocialMediaSchema>;
+export type DeleteSocialMediaDto = {
+  params: z.infer<typeof DeleteSocialMediaSchema.params>;
+};
 
-export type AddAcademyOwnerDto = z.infer<typeof AddOwnerSchema>;
+export type AddOwnerDto = {
+  params: z.infer<typeof AddOwnerSchema.params>;
+};
 
-export type DeleteAcademyOwnerDto = z.infer<typeof DeleteOwnerSchema>;
+export type DeleteOwnerDto = {
+  params: z.infer<typeof DeleteOwnerSchema.params>;
+};

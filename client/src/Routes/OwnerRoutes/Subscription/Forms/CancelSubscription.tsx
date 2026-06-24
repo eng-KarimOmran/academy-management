@@ -5,12 +5,12 @@ import type { SubscriptionBase } from "@/types/subscription";
 import type { CancelSubscriptionDto } from "@/DTOs/subscription.dto";
 
 import { cancelSubscription } from "@/service/subscription.service";
-import { CancelSubscriptionSchema } from "@/validations/subscription.validation";
 
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 
 import { useDialogState } from "@/store/DialogState";
+import { matchSchema } from "@/lib/matchSchema";
 
 export default function CancelSubscription({
   item,
@@ -19,22 +19,30 @@ export default function CancelSubscription({
 }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<CancelSubscriptionDto, SubscriptionBase> = {
-    inputs: [],
+  const params: CancelSubscriptionDto["params"] = {
+    academyId: item.academy.id,
+    subscriptionId: item.id,
+  };
 
-    defaultValues: {
-      academyId: item.academy.id,
-      subscriptionId: item.id,
-    },
+  const config: FormProps<{ text: string }, SubscriptionBase> = {
+    inputs: [
+      {
+        name: "text",
+        type: "text",
+        label: `اكتب "الغاء" لتأكيد الالغاء`,
+        placeholder: `اكتب "الغاء" للتأكيد`,
+      },
+    ],
 
-    schema: CancelSubscriptionSchema,
+    schema: matchSchema("text", "كلمة التأكيد", "الغاء"),
 
     submitButton: {
-      text: "إلغاء الاشتراك",
-      loadingText: "جاري الإلغاء...",
+      text: "حذف",
+      loadingText: "جاري الحذف...",
+      variant: "destructive",
     },
 
-    service: (data) => cancelSubscription(data),
+    service: () => cancelSubscription({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

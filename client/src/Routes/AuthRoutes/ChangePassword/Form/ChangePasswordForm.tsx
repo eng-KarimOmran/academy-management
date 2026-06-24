@@ -6,14 +6,14 @@ import { changePassword } from "@/service/auth.service";
 import { useAuthState } from "@/store/AuthState";
 import { useDialogState } from "@/store/DialogState";
 import type { UserAuth } from "@/types/user";
-import { ChangePasswordSchema } from "@/validations/auth.validation";
+import { changePasswordSchema } from "@/validations/auth.validation";
 import { toast } from "sonner";
 
 export default function ChangePasswordForm() {
   const { setUser } = useAuthState();
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<ChangePasswordDto, UserAuth> = {
+  const config: FormProps<ChangePasswordDto["body"], UserAuth> = {
     inputs: [
       {
         name: "password",
@@ -26,28 +26,16 @@ export default function ChangePasswordForm() {
         label: "كلمة المرور الجديده",
         col: "half",
       },
-      {
-        name: "confirmNewPassword",
-        type: "password",
-        label: "تأكيد كلمة المرور",
-        col: "half",
-      },
     ],
 
-    defaultValues: {
-      confirmNewPassword: "",
-      newPassword: "",
-      password: "",
-    },
-
-    schema: ChangePasswordSchema,
+    schema: changePasswordSchema.body,
 
     submitButton: {
       text: "تغير كلمة المرور",
       loadingText: "جاري تغير كلمة المرور...",
     },
 
-    service: (data) => changePassword(data),
+    service: (data) => changePassword({ body: data }),
 
     onSuccess: async () => {
       toast.success("تم تغير كلمة المرور بنجاح");

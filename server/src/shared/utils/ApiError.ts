@@ -1,124 +1,131 @@
-import { ModelName } from "../../../prisma/generated/internal/prismaNamespace";
 import ErrorResponse from "./errorResponse";
 
-export type UniqueField =
-  | "Phone"
-  | "Name"
-  | "PlateNumber"
-  | "CaptainProfile"
-  | "SecretaryProfile"
-  | "RoleConflict"
-  | "EXCESS_REFUND"
-  | "OVERPAYMENT"
-  | "SubscriptionAlreadyCancelled"
-  | "CaptainTimeConflict"
-  | "CarTimeConflict"
-  | "ClientTimeConflict"
-  | "OWNER"
-  | "OWNER_ALREADY_EXISTS"
+const NOT_FOUND_MESSAGES = {
+  User: "المستخدم غير موجود",
+  BlacklistedToken: "الجلسة انتهت أو الرمز غير صالح",
 
-class ApiError {
-  static NotFound({
-    model,
-    customMessage,
-  }: {
-    customMessage?: string;
-    model?: ModelName;
-  }) {
-    const messages: Record<ModelName, string> = {
-      User: "المستخدم غير موجود",
-      BlacklistedToken: "الجلسة انتهت أو الرمز غير صالح",
-      Academy: "الأكاديمية غير موجودة",
-      SocialMedia: "منصة التواصل الاجتماعي غير موجودة",
-      Secretary: "بيانات السكرتارية غير موجودة",
-      Captain: "بيانات الكابتن غير موجودة",
-      Car: "السيارة غير موجودة",
-      Area: "المنطقة غير موجودة",
-      Client: "العميل غير موجود",
-      Subscription: "الاشتراك غير موجود",
-      PaymentTransaction: "عملية الدفع غير موجودة",
-      Course: "الدورة التدريبية غير موجودة",
-      Lesson: "الحصة غير موجودة",
-      Expense: "سجل المصروفات غير موجود",
-      LedgerTransaction: "المعاملة غير موجوده",
-      ProofOfPaymentImage: "اثبات الدفع غير موجود",
-      TrainingDetails: "خصائص البرنامج غير موجود",
-    };
-    let message: string = "";
-    if (model) {
-      message = messages[model];
-    } else if (customMessage) {
-      message = customMessage;
-    } else {
-      message = "السجل المطلوب غير موجود";
-    }
-    return new ErrorResponse(message, 404);
-  }
+  Academy: "الأكاديمية غير موجودة",
+  SocialMedia: "منصة التواصل الاجتماعي غير موجودة",
+  Address: "العنوان غير موجود",
+  Phone: "رقم الهاتف غير موجود",
 
-  static Conflict(field: UniqueField, customMessage?: string) {
-    const messages: Record<UniqueField, string> = {
-      Phone: "رقم الهاتف مسجل بالفعل",
-      Name: "هذا الاسم مستخدم مسبقاً",
-      PlateNumber: "رقم اللوحة مسجل لسيارة أخرى بالفعل",
-      CaptainProfile: "هذا المستخدم لديه ملف كابتن بالفعل",
-      SecretaryProfile: "هذا المستخدم لديه ملف سكرتارية بالفعل",
-      RoleConflict: "لا يمكن للمستخدم أن يكون كابتن وسكرتارية في نفس الوقت",
-      OVERPAYMENT: "المبلغ المدفوع يتجاوز الرصيد المتبقي المطلوب",
-      EXCESS_REFUND: "مبلغ الاسترداد يتجاوز إجمالي المبلغ المدفوع",
-      SubscriptionAlreadyCancelled: "هذا الاشتراك ملغي بالفعل",
-      CaptainTimeConflict: "الكابتن لديه حصة أخرى في هذا الوقت",
-      CarTimeConflict: "السيارة محجوزة في هذا الوقت",
-      ClientTimeConflict: "العميل لديه حصة أخرى في هذا الوقت",
-      OWNER: "المستخدم مالك بالفعل",
-      OWNER_ALREADY_EXISTS: "يوجد مستخدم مالك بالفعل"
-    };
-    const message = customMessage || messages[field] || "حدث تعارض في البيانات";
-    return new ErrorResponse(message, 409);
-  }
+  Car: "السيارة غير موجودة",
+  Area: "المنطقة غير موجودة",
+  Client: "العميل غير موجود",
+  Subscription: "الاشتراك غير موجود",
+  Course: "الدورة التدريبية غير موجودة",
+  Lesson: "الحصة غير موجودة",
 
-  static Forbidden(
-    message: string = "غير مسموح لك بالوصول صلاحياتك غير كافية",
-  ) {
-    return new ErrorResponse(message, 403);
-  }
+  ProofOfPaymentImage: "إثبات الدفع غير موجود",
+  TrainingDetails: "خصائص البرنامج غير موجودة",
+  LedgerTransaction: "المعاملة غير موجودة",
 
-  static AccountBlocked(customMessage?: string) {
+  Employee: "الموظف غير موجود",
+  PaymentLink: "رابط الدفع غير موجود",
+  Person: "الشخص غير موجود",
+  PersonPhone: "هاتف الشخص غير موجود",
+} as const;
+
+export const CONFLICT_MESSAGES = {
+  // Identity / Uniqueness
+  PHONE_ALREADY_EXISTS: "رقم الهاتف مسجل بالفعل",
+  EMAIL_ALREADY_EXISTS: "البريد الإلكتروني مستخدم بالفعل",
+  NAME_ALREADY_EXISTS: "هذا الاسم مستخدم مسبقاً",
+  ADDRESS_ALREADY_EXISTS: "العنوان مسجل بالفعل",
+
+  // Vehicle
+  PLATE_NUMBER_ALREADY_EXISTS: "رقم اللوحة مسجل لسيارة أخرى بالفعل",
+
+  // Roles / Profiles
+  CAPTAIN_PROFILE_EXISTS: "هذا الموظف لديه ملف كابتن بالفعل",
+  SECRETARY_PROFILE_EXISTS: "هذا الموظف لديه ملف سكرتارية بالفعل",
+  ROLE_ALREADY_ASSIGNED: "المستخدم لديه بالفعل الصلاحية",
+  USER_ALREADY_EXISTS: "يوجد مستخدم بالفعل",
+  OWNER_ALREADY_ASSIGNED: "المستخدم مالك بالفعل",
+
+  // Financial
+  OVERPAYMENT: "المبلغ المدفوع يتجاوز الرصيد المطلوب",
+  EXCESS_REFUND: "مبلغ الاسترداد يتجاوز إجمالي المدفوع",
+  INSUFFICIENT_REMAINING_BALANCE: "الرصيد المتبقي غير كافٍ",
+  SUBSCRIPTION_ALREADY_PAID: "هذا الاشتراك تم سداده بالكامل",
+  SUBSCRIPTION_ALREADY_CANCELLED: "هذا الاشتراك ملغي بالفعل",
+  PAYROLL_ALREADY_PAID: "تم دفع الراتب خلال هذه الفترة",
+
+  // Scheduling
+  CAPTAIN_TIME_CONFLICT: "الكابتن لديه حصة أخرى في هذا الوقت",
+  CAR_TIME_CONFLICT: "السيارة محجوزة في هذا الوقت",
+  CLIENT_TIME_CONFLICT: "العميل لديه حصة أخرى في هذا الوقت",
+
+  // Platform / System
+  PLATFORM_ALREADY_EXISTS: "المنصة مسجلة بالفعل",
+  SOCIAL_MEDIA_ALREADY_EXISTS: "منصة التواصل الاجتماعي مسجلة بالفعل",
+} as const;
+
+type NotFoundModel = keyof typeof NOT_FOUND_MESSAGES;
+type ConflictField = keyof typeof CONFLICT_MESSAGES;
+
+
+const ApiError = {
+  NotFound(model: NotFoundModel) {
+    return new ErrorResponse(NOT_FOUND_MESSAGES[model], 404);
+  },
+
+  Conflict(field: ConflictField, customMessage?: string) {
     return new ErrorResponse(
-      customMessage || "تم حظر هذا الحساب. يرجى التواصل مع الإدارة",
-      403,
+      customMessage ?? CONFLICT_MESSAGES[field] ?? "حدث تعارض في البيانات",
+      409
     );
-  }
+  },
 
-  static Unauthorized(message: string = "يرجى تسجيل الدخول أولاً") {
+  Forbidden(message = "غير مسموح لك بالوصول") {
+    return new ErrorResponse(message, 403);
+  },
+
+  AccountBlocked(message = "تم حظر هذا الحساب. يرجى التواصل مع الإدارة") {
+    return new ErrorResponse(message, 403);
+  },
+
+  Unauthorized(message = "يرجى تسجيل الدخول أولاً") {
     return new ErrorResponse(message, 401);
-  }
+  },
 
-  static ValidationError(message: string = "بيانات خاطئة أو غير كاملة") {
+  ValidationError(message = "بيانات غير صحيحة") {
     return new ErrorResponse(message, 422);
-  }
+  },
 
-  static BadRequest(message: string) {
+  BadRequest(message: string) {
     return new ErrorResponse(message, 400);
-  }
+  },
 
-  static Inactive(
+  Inactive(
     model: "Course" | "Captain" | "Car" | "Area",
-    customMessage?: string,
+    message?: string
   ) {
-    const messages: Record<"Course" | "Captain" | "Car" | "Area", string> = {
+    const messages: Record<typeof model, string> = {
       Course: "هذا الكورس غير مفعل حالياً",
       Captain: "هذا الكابتن غير مفعل حالياً",
       Car: "هذه السيارة غير مفعلة حالياً",
       Area: "هذه المنطقة غير مفعلة حالياً",
     };
-    const message =
-      customMessage || messages[model] || "هذا العنصر غير نشط حالياً";
-    return new ErrorResponse(message, 400);
-  }
 
-  static Internal(message?: string) {
-    return new ErrorResponse(message || "حدث خطأ غير متوقع في الخادم", 500);
-  }
-}
+    return new ErrorResponse(message ?? messages[model], 400);
+  },
+
+  Internal(message = "حدث خطأ غير متوقع في الخادم") {
+    return new ErrorResponse(message, 500);
+  },
+
+  passwordChangeRequired(message = "يجب عليك تغيير كلمة المرور الافتراضية أولاً قبل استخدام النظام") {
+    return new ErrorResponse(message, 403);
+  },
+
+  InvalidCredentials(data?: { password: boolean }) {
+    let message = "رقم الهاتف أو كلمة المرور غير صحيحة"
+    if (data?.password) {
+      message = "كلمة المرور الحاليه غير صحيحة"
+    }
+    return new ErrorResponse(message, 401);
+  },
+};
 
 export default ApiError;

@@ -2,22 +2,30 @@ import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 
 import type { Secretary } from "@/types/secretary";
-import type { UpdateSecretaryDto } from "@/DTOs/secretary.dto";
 
 import { updateSecretary } from "@/service/secretary.service";
 import { UpdateSecretarySchema } from "@/validations/secretary.validation";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { useDialogState } from "@/store/DialogState";
+import type { UpdateDto } from "@/DTOs/secretary.dto";
 
 export default function UpdateSecretary({
   item,
 }: {
-  item: Pick<Secretary, "id" | "baseSalary" | "bonusAmount" | "targetCount">;
+  item: Pick<
+    Secretary,
+    "academyId" | "baseSalary" | "bonusAmount" | "id" | "targetCount"
+  >;
 }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<UpdateSecretaryDto, Secretary> = {
+  const params: UpdateDto["params"] = {
+    academyId: item.academyId,
+    secretaryId: item.id,
+  };
+
+  const config: FormProps<UpdateDto["body"], Secretary> = {
     inputs: [
       {
         name: "baseSalary",
@@ -42,20 +50,19 @@ export default function UpdateSecretary({
     ],
 
     defaultValues: {
-      secretaryId: item.id,
       baseSalary: item.baseSalary,
       targetCount: item.targetCount,
       bonusAmount: item.bonusAmount,
     },
 
-    schema: UpdateSecretarySchema,
+    schema: UpdateSecretarySchema.body,
 
     submitButton: {
       text: "حفظ التعديلات",
       loadingText: "جاري الحفظ...",
     },
 
-    service: (data) => updateSecretary(data),
+    service: (data) => updateSecretary({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["secretaries"] });

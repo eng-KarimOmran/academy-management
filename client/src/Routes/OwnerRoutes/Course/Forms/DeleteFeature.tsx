@@ -6,8 +6,9 @@ import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
 
-import { DeleteCourseFeatures } from "@/service/course.service";
 import type { Course, CourseFeatures } from "@/types/course";
+import type { DeleteFeaturesDto } from "@/DTOs/course.dto";
+import { deleteCourseFeatures } from "@/service/course.service";
 
 export default function DeleteFeature({
   item,
@@ -20,6 +21,12 @@ export default function DeleteFeature({
 }) {
   const { setConfigDialog } = useDialogState();
 
+  const params: DeleteFeaturesDto["params"] = {
+    courseId,
+    academyId,
+    featureId: item.id,
+  };
+
   const config: FormProps<{ text: string }, Course> = {
     inputs: [
       {
@@ -30,10 +37,6 @@ export default function DeleteFeature({
       },
     ],
 
-    defaultValues: {
-      text: "",
-    },
-
     schema: matchSchema("text", "الميزة", item.text),
 
     submitButton: {
@@ -42,8 +45,7 @@ export default function DeleteFeature({
       variant: "destructive",
     },
 
-    service: async () =>
-      DeleteCourseFeatures({ academyId, courseId, featureId: item.id }),
+    service: async () => deleteCourseFeatures({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

@@ -44,16 +44,14 @@ export const columns: Header<Course>[] = [
     display: (data) => <span>{data.totalSessions}</span>,
   },
   {
-    key: "practicalSessions",
-    header: "حصص نظري",
-    display: (data) => (
-      <span>{data.totalSessions - data.practicalSessions}</span>
-    ),
+    key: "sessionsBeforeFullPayment",
+    header: "حصص قبل السداد",
+    display: (data) => <span>{data.sessionsBeforeFullPayment}</span>,
   },
   {
-    key: "practicalSessions",
-    header: "حصص عملي",
-    display: (data) => <span>{data.practicalSessions}</span>,
+    key: "requiredInitialDeposit",
+    header: "الحد الأدنى للديبوزت",
+    display: (data) => <span>{data.requiredInitialDeposit}</span>,
   },
 
   {

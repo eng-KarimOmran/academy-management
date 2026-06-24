@@ -1,19 +1,24 @@
 import z from "zod";
 
-import {
-  CreateUserSchema,
-  UpdateUserSchema,
-  DeleteUserSchema,
-  GetUserDetailsSchema,
-  GetAllUsersSchema,
-} from "@/validations/user.validation";
+import * as Schema from "@/validations/user.validation";
 
-export type CreateUserDto = z.infer<typeof CreateUserSchema>;
+export type CreateUserDto = {
+  body: z.infer<typeof Schema.CreateUserSchema.body>;
+};
 
-export type UpdateUserDto = z.infer<typeof UpdateUserSchema>;
+export type UpdateUserDto = {
+  params: z.infer<typeof Schema.UpdateUserSchema.params>;
+  body: z.infer<typeof Schema.UpdateUserSchema.body>;
+};
 
-export type DeleteUserDto = z.infer<typeof DeleteUserSchema>;
+export type DeleteUserDto = {
+  params: z.infer<typeof Schema.DeleteUserSchema.params>;
+};
 
-export type GetUserDetailsDto = z.infer<typeof GetUserDetailsSchema>;
+export type GetAllUsersDto = {
+  query: z.infer<typeof Schema.GetAllUsersSchema.query>;
+};
 
-export type GetAllUsersDto = z.infer<typeof GetAllUsersSchema>;
+export type GetUserDetailsDto = {
+  params: z.infer<typeof Schema.GetUserDetailsSchema.params>;
+};

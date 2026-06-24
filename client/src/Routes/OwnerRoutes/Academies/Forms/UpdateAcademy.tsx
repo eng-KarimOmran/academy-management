@@ -10,8 +10,9 @@ import { toast } from "sonner";
 
 export default function UpdateAcademy({ item }: { item: Academy }) {
   const { setConfigDialog } = useDialogState();
+  const params: UpdateAcademyDto["params"] = { academyId: item.id };
 
-  const config: FormProps<UpdateAcademyDto, Academy> = {
+  const config: FormProps<UpdateAcademyDto["body"], Academy> = {
     inputs: [
       {
         name: "name",
@@ -40,21 +41,20 @@ export default function UpdateAcademy({ item }: { item: Academy }) {
     ],
 
     defaultValues: {
-      academyId: item.id,
       name: item.name,
       address: item.address,
       paymentLink: item.paymentLink,
       phone: item.phone,
     },
 
-    schema: UpdateAcademySchema,
+    schema: UpdateAcademySchema.body,
 
     submitButton: {
       text: "تعديل بيانات الأكاديمية",
       loadingText: "جاري تعديل بيانات الأكاديمية",
     },
 
-    service: (data) => updateAcademy(data),
+    service: (data) => updateAcademy({ body: data, params }),
 
     onSuccess: () => {
       toast.success("تم تعديل بيانات الأكاديمية بنجاح");

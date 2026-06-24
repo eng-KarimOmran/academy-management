@@ -1,4 +1,4 @@
-import type { Role, TrainingSupport } from "./enums";
+import type { Role, SupportType } from "./enums";
 
 export interface User {
   id: string;
@@ -18,8 +18,10 @@ export interface UserProfile extends User {
     id: string;
     captainLessonPrice: number;
     isActive: boolean;
-    trainingType: TrainingSupport;
-    createdAt:string
+    supportType: SupportType;
+    createdAt: string
+    academyId: string;
+    baseSalary: string,
   } | null;
   secretaryProfile: {
     id: string;
@@ -27,5 +29,6 @@ export interface UserProfile extends User {
     targetCount: number;
     bonusAmount: number;
     createdAt: string;
+    academyId: string;
   } | null;
 }

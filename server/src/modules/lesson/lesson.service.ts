@@ -1,238 +1,199 @@
+import { CaptainBaseSelect } from './../captain/captain.selectors';
+import { areaBaseSelect } from './../area/area.selectors';
+import { carBaseSelect } from './../car/car.selectors';
 import * as DTO from "./lesson.dto";
 import ApiError from "../../shared/utils/ApiError";
 import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
-import { LessonCreateInput, LessonUpdateInput, PaymentTransactionCreateInput, PaymentTransactionWhereInput } from "../../../prisma/generated/models";
+import { Prisma, Lesson } from "../../../prisma/generated/client";
 import { prisma } from "../../lib/prisma";
-import { buildLessonWhere, calculateLessonTime, subscriptionErrors } from "./lesson.utils";
+import { buildLessonWhere, calculateLessonTime, getBookingError, validateTimeSlotConflict } from "./lesson.utils";
+import { subscriptionDetailsSelect } from '../subscription/subscription.selectors';
+import { TransactionClient } from '../../../prisma/generated/internal/prismaNamespace';
+import { lessonBaseSelect } from './lesson.selectors';
+import LedgerTransactionService from '../ledgerTransaction/ledgerTransaction.service';
+import { CreateLedgerTransactionDto } from '../ledgerTransaction/ledgerTransaction.dto';
 
-import LessonRepository from "./lesson.repository";
-import LedgerRepository from "../ledger/ledger.repository";
-import CaptainRepository from "../captain/captain.repository";
-import CarRepository from "../car/car.repository";
-import AreaRepository from "../area/area.repository";
-import SubscriptionRepository from "../subscription/subscription.repository";
-import PaymentTransactionRepository from "../paymentTransaction/paymentTransaction.repository";
+interface ILessonService {
+  create: (data: { dataSafe: DTO.CreateLessonDto; tx?: TransactionClient }) => Promise<Lesson>;
+  getAll: (data: { dataSafe: DTO.GetAllLessonsDto; tx?: TransactionClient }) => Promise<{ items: Lesson[]; pagination: { limit: number; page: number; totalPages: number; total: number } }>;
+  getDetails: (data: { dataSafe: DTO.GetLessonDetailsDto; tx?: TransactionClient }) => Promise<Lesson>;
+  changeLessonState: (data: { dataSafe: DTO.ChangeLessonStateDto; userId: string; tx?: TransactionClient }) => Promise<Lesson>;
+  update: (data: { dataSafe: DTO.UpdateLessonDto; tx?: TransactionClient }) => Promise<Lesson>;
+}
 
-const LessonService = {
-  async create(dataSafe: DTO.CreateLessonDto) {
+const LessonService: ILessonService = {
+  async create({ dataSafe, tx }) {
     const { body, params } = dataSafe;
     const { academyId } = params;
     const { areaId, captainId, carId, subscriptionId, expectedAmount, transmission } = body;
 
-    const subscription = await SubscriptionRepository.findById({ id: subscriptionId });
-    if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
-    if (subscription.status !== "ACTIVE") {
-      throw ApiError.BadRequest(subscriptionErrors[subscription.status]);
-    }
+    const run = async (tx: TransactionClient) => {
+      const [subscription, car, area, captain] = await Promise.all([
+        tx.subscription.findUnique({ where: { id: subscriptionId }, select: subscriptionDetailsSelect }),
+        tx.car.findUnique({ where: { id: carId }, select: carBaseSelect }),
+        tx.area.findUnique({ where: { id: areaId }, select: areaBaseSelect }),
+        tx.captain.findUnique({ where: { id: captainId }, select: CaptainBaseSelect })
+      ]);
 
-    const captain = await CaptainRepository.findById({ captainId });
-    if (!captain) throw ApiError.NotFound({ model: "Captain" });
-    if (!captain.isActive) throw ApiError.Inactive("Captain");
+      if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
+      if (!captain) throw ApiError.NotFound({ model: "Captain" });
+      if (!car) throw ApiError.NotFound({ model: "Car" });
+      if (!area) throw ApiError.NotFound({ model: "Area" });
 
-    const car = await CarRepository.findById({ carId });
-    if (!car) throw ApiError.NotFound({ model: "Car" });
-    if (!car.isActive) throw ApiError.Inactive("Car");
+      if (!car.isActive) throw ApiError.Inactive("Car");
+      if (!area.isActive) throw ApiError.Inactive("Area");
+      if (!captain.isActive) throw ApiError.Inactive("Captain");
 
-    const area = await AreaRepository.findById({ areaId });
-    if (!area) throw ApiError.NotFound({ model: "Area" });
-    if (!area.isActive) throw ApiError.Inactive("Area");
+      getBookingError(subscription.status, subscription.lessons, subscription.sessionsBeforeFullPayment);
 
-    const { startTime, endTime } = calculateLessonTime(body.startTime, subscription.sessionDurationMinutes);
+      const { startTime, endTime } = calculateLessonTime(body.startTime, subscription.sessionDurationMinutes);
 
-    const lessonConflict = await LessonRepository.validateLessonConflict({
-      captainId,
-      carId,
-      clientId: subscription.clientId,
-      startTime,
-      endTime,
-    });
+      await validateTimeSlotConflict({ captainId, carId, startTime, endTime, clientId: subscription.client.id, tx });
 
-    if (lessonConflict) {
-      if (lessonConflict.captainId === captainId) throw ApiError.Conflict("CaptainTimeConflict");
-      if (lessonConflict.carId === carId) throw ApiError.Conflict("CarTimeConflict");
-      throw ApiError.Conflict("ClientTimeConflict");
-    }
+      const data: Prisma.LessonCreateInput = {
+        expectedAmount,
+        transmission,
+        status: "SCHEDULED",
+        captainLessonPrice: captain.captainLessonPrice,
+        carSessionPrice: car.carSessionPrice,
+        startTime,
+        endTime,
+        area: { connect: { id: areaId } },
+        car: { connect: { id: carId } },
+        captain: { connect: { id: captainId } },
+        subscription: { connect: { id: subscriptionId } },
+        academy: { connect: { id: academyId } },
+        client: { connect: { id: subscription.client.id } },
+      };
 
-    const data: LessonCreateInput = {
-      expectedAmount,
-      transmission,
-      status: "SCHEDULED",
-      captainLessonPrice: captain.captainLessonPrice,
-      carSessionPrice: car.carSessionPrice,
-      startTime,
-      endTime,
-      isPaid: false,
-      area: { connect: { id: areaId } },
-      car: { connect: { id: carId } },
-      captain: { connect: { id: captainId } },
-      subscription: { connect: { id: subscriptionId } },
-      academy: { connect: { id: academyId } },
-      client: { connect: { id: subscription.client.id } },
+      return await tx.lesson.create({ data, select: lessonBaseSelect });
     };
 
-    const lesson = await LessonRepository.create({ data });
-    await SubscriptionRepository.recalculateSubscriptionStatus({ id: subscriptionId });
-
-    return lesson;
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async getAll(dataSafe: DTO.GetAllLessonsDto) {
+  async getAll({ dataSafe, tx }) {
     const { query, params } = dataSafe;
     const { academyId } = params;
     const { limit, page, status, transmission, search } = query;
 
-    const where = buildLessonWhere({ search, academyId, status, transmission });
-    const { take, skip } = getPagination({ page, limit });
+    const run = async (tx: TransactionClient) => {
+      const where = buildLessonWhere({ search, academyId, status, transmission });
+      const { take, skip } = getPagination({ page, limit });
 
-    const { lessons, count } = await LessonRepository.findMany({
-      where,
-      take,
-      skip,
-      orderBy: { startTime: "asc" },
-    });
+      const [lessons, count] = await Promise.all([
+        tx.lesson.findMany({
+          where,
+          take,
+          skip,
+          orderBy: { startTime: "asc" },
+          select: lessonBaseSelect
+        }),
+        tx.lesson.count({ where })
+      ]);
 
-    const totalPages = getTotalPages({ limit, count });
-    const pagination = { limit, page, totalPages, total: count };
+      const totalPages = getTotalPages({ limit, count });
+      const pagination = { limit, page, totalPages, total: count };
 
-    return { items: lessons, pagination };
+      return { items: lessons, pagination };
+    };
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async getDetails(dataSafe: DTO.GetLessonDetailsDto) {
+  async getDetails({ dataSafe, tx }) {
     const { lessonId } = dataSafe.params;
 
-    const lesson = await LessonRepository.findById({ id: lessonId });
-    if (!lesson) throw ApiError.NotFound({ model: "Lesson" });
+    const run = async (tx: TransactionClient) => {
+      const lesson = await tx.lesson.findUnique({ where: { id: lessonId }, select: lessonBaseSelect });
+      if (!lesson) throw ApiError.NotFound({ model: "Lesson" });
+      return lesson;
+    };
 
-    return lesson;
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async changeLessonState({ dataSafe, userId, proofOfPaymentImageId }: { dataSafe: DTO.ChangeLessonStateDto; userId: string; proofOfPaymentImageId?: string }) {
+  async changeLessonState({ dataSafe, userId, tx }) {
     const { body, params } = dataSafe;
     const { lessonId } = params;
-    const { status, amount, paymentMethod = "CASH" } = body;
+    const { status, amount } = body;
 
-    const lessonEx = await LessonRepository.findById({ id: lessonId });
-    if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
+    const run = async (tx: TransactionClient) => {
 
-    const lesson = await prisma.$transaction(async (tx) => {
-      const isSettledStatus = ["COMPLETED", "CANCELED_CHARGED"].includes(status);
+      const lessonEx = await tx.lesson.findUnique({
+        where: { id: lessonId },
+        select: lessonBaseSelect
+      });
 
-      if (!isSettledStatus && lessonEx.isPaid) {
-        await tx.ledgerTransaction.deleteMany({
-          where: { referenceId: lessonEx.id, referenceCategory: "lessonId" }
-        });
-        await LessonRepository.update({
-          id: lessonEx.id,
-          data: { status, isPaid: false },
-          tx,
-        });
-      }
-      else if (isSettledStatus && !lessonEx.isPaid) {
-        await LessonRepository.update({
-          id: lessonEx.id,
-          data: { status, isPaid: true },
-          tx,
-        });
+      if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
 
-        await LedgerRepository.create({
-          data: {
-            amount: lessonEx.captainLessonPrice,
-            category: "TO_USER",
-            notes: `مستحق حصة رقم: ${lessonEx.id}`,
-            referenceId: lessonEx.id,
-            referenceCategory: "lessonId",
-            academy: { connect: { id: lessonEx.academy.id } },
-            user: { connect: { id: lessonEx.captain.userId } },
-          },
-          tx,
-        });
-      }
-      else {
-        await LessonRepository.update({ id: lessonEx.id, data: { status }, tx });
-      }
+      const updatedLesson = await tx.lesson.update({
+        where: { id: lessonId },
+        data: { status },
+        select: lessonBaseSelect
+      });
 
       if (amount) {
-        const data: PaymentTransactionCreateInput = {
-          amount,
-          paymentMethod,
-          status: paymentMethod === "CASH" ? "COMPLETED" : "PENDING",
-          type: "PAYMENT",
-          ...(proofOfPaymentImageId && {
-            proofOfPaymentImage: { connect: { id: proofOfPaymentImageId } },
-          }),
-          academy: { connect: { id: lessonEx.academy.id } },
-          client: { connect: { id: lessonEx.client.id } },
-          receiver: { connect: { id: userId } },
-          subscription: { connect: { id: lessonEx.subscriptionId } },
+        const dataSafe: CreateLedgerTransactionDto = {
+          params: { academyId: updatedLesson.academy.id },
+          body: { amount, paymentMethod: "CASH", transactionType: "PAYMENT", senderType: "SUBSCRIPTION", senderId: updatedLesson.subscriptionId, receiverType: "USER", receiverId: userId }
         }
-        await PaymentTransactionRepository.create({ data, tx });
+
+        await LedgerTransactionService.create({ dataSafe, tx })
       }
 
-      return await LessonRepository.findById({ id: lessonEx.id, tx });
-    });
+      return updatedLesson;
+    };
 
-    await SubscriptionRepository.recalculateSubscriptionStatus({ id: lessonEx.subscriptionId });
-    return lesson;
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async update(dataSafe: DTO.UpdateLessonDto) {
+  async update({ dataSafe, tx }) {
     const { body, params } = dataSafe;
     const { lessonId } = params;
     const { areaId, captainId, carId, expectedAmount, transmission } = body;
 
-    const lessonEx = await LessonRepository.findById({ id: lessonId });
-    if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
+    const run = async (tx: TransactionClient) => {
+      const lessonEx = await tx.lesson.findUnique({ where: { id: lessonId } });
+      if (!lessonEx) throw ApiError.NotFound({ model: "Lesson" });
 
-    const lockedStatuses = ["COMPLETED", "CANCELED_CHARGED"];
-    if (lockedStatuses.includes(lessonEx.status)) {
-      throw ApiError.BadRequest(
-        "لا يمكن تعديل بيانات هذه الحصة لأنها في حالة مغلقة ماليًا (مكتملة أو ملغية برسوم). التعامل المالي يتم فقط عبر تغيير الحالة."
-      );
-    }
+      const [subscription, captain, car, area] = await Promise.all([
+        tx.subscription.findUnique({ where: { id: lessonEx.subscriptionId } }),
+        tx.captain.findUnique({ where: { id: captainId } }),
+        tx.car.findUnique({ where: { id: carId } }),
+        tx.area.findUnique({ where: { id: areaId } })
+      ]);
 
-    const subscription = await SubscriptionRepository.findById({ id: lessonEx.subscriptionId });
-    if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
+      if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
 
-    const captain = await CaptainRepository.findById({ captainId });
-    if (!captain) throw ApiError.NotFound({ model: "Captain" });
-    if (!captain.isActive) throw ApiError.Inactive("Captain");
+      if (!captain) throw ApiError.NotFound({ model: "Captain" });
+      if (!captain.isActive) throw ApiError.Inactive("Captain");
 
-    const car = await CarRepository.findById({ carId });
-    if (!car) throw ApiError.NotFound({ model: "Car" });
-    if (!car.isActive) throw ApiError.Inactive("Car");
+      if (!car) throw ApiError.NotFound({ model: "Car" });
+      if (!car.isActive) throw ApiError.Inactive("Car");
 
-    const area = await AreaRepository.findById({ areaId });
-    if (!area) throw ApiError.NotFound({ model: "Area" });
-    if (!area.isActive) throw ApiError.Inactive("Area");
+      if (!area) throw ApiError.NotFound({ model: "Area" });
+      if (!area.isActive) throw ApiError.Inactive("Area");
 
-    const { startTime, endTime } = calculateLessonTime(body.startTime, subscription.sessionDurationMinutes);
+      const { startTime, endTime } = calculateLessonTime(body.startTime, subscription.sessionDurationMinutes);
 
-    const lessonConflict = await LessonRepository.validateLessonConflict({
-      captainId,
-      carId,
-      clientId: subscription.clientId,
-      startTime,
-      endTime,
-    });
+      await validateTimeSlotConflict({ captainId, carId, clientId: subscription.clientId, startTime, endTime, id: lessonEx.id, tx });
 
-    if (lessonConflict) {
-      if (lessonConflict.captainId === captainId) throw ApiError.Conflict("CaptainTimeConflict");
-      if (lessonConflict.carId === carId) throw ApiError.Conflict("CarTimeConflict");
-      throw ApiError.Conflict("ClientTimeConflict");
-    }
+      const data: Prisma.LessonUpdateInput = {
+        expectedAmount,
+        transmission,
+        startTime,
+        endTime,
+        car: { connect: { id: carId } },
+        captain: { connect: { id: captainId } },
+        area: { connect: { id: areaId } },
+      };
 
-    const data: LessonUpdateInput = {
-      expectedAmount,
-      transmission,
-      startTime,
-      endTime,
-      car: { connect: { id: carId } },
-      captain: { connect: { id: captainId } },
-      area: { connect: { id: areaId } },
+      return await tx.lesson.update({ where: { id: lessonEx.id }, data });
     };
 
-    return await LessonRepository.update({ id: lessonEx.id, data });
+    return tx ? await run(tx) : await prisma.$transaction(run);
   }
-}
+};
 
 export default LessonService;

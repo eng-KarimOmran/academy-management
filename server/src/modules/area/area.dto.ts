@@ -1,21 +1,25 @@
 import z from "zod";
-import * as Schema from "./area.schema";
+import { AreaSchema } from "./area.schema";
 
-export type CreateDto = { body: z.infer<typeof Schema.CreateAreaSchema.body> };
-
-export type UpdateDto = {
-  params: z.infer<typeof Schema.UpdateAreaSchema.params>;
-  body: z.infer<typeof Schema.UpdateAreaSchema.body>;
+export type CreateAreaDto = {
+  params: z.infer<typeof AreaSchema.create.params>;
+  body: z.infer<typeof AreaSchema.create.body>;
 };
 
-export type GetAllDto = {
-  query: z.infer<typeof Schema.GetAllAreasSchema.query>;
+export type UpdateAreaDto = {
+  params: z.infer<typeof AreaSchema.update.params>;
+  body: z.infer<typeof AreaSchema.update.body>;
 };
 
-export type GetDetailsDto = {
-  params: z.infer<typeof Schema.GetAreaDetailsSchema.params>;
+export type DeleteAreaDto = {
+  params: z.infer<typeof AreaSchema.delete.params>;
 };
 
-export type DeleteDto = {
-  params: z.infer<typeof Schema.DeleteAreaSchema.params>;
+export type GetAreaDto = {
+  params: z.infer<typeof AreaSchema.get.params>;
+};
+
+export type GetAllAreasDto = {
+  params: z.infer<typeof AreaSchema.getAll.params>;
+  query: z.infer<typeof AreaSchema.getAll.query>;
 };

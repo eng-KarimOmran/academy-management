@@ -14,8 +14,12 @@ export default function ChangeLessonStateByCaptainForm({
   lesson: LessonBase;
 }) {
   const { setConfigDialog } = useDialogState();
+  const params: ChangeLessonStateDto["params"] = {
+    lessonId: lesson.id,
+    academyId: lesson.academy.id,
+  };
 
-  const config: FormProps<ChangeLessonStateDto, LessonBase> = {
+  const config: FormProps<ChangeLessonStateDto["body"], LessonBase> = {
     inputs: lesson.expectedAmount
       ? [
           {
@@ -28,21 +32,18 @@ export default function ChangeLessonStateByCaptainForm({
       : [],
 
     defaultValues: {
-      lessonId: lesson.id,
-      academyId: lesson.academy.id,
-      status: "COMPLETED",
-      paymentMethod: "CASH",
       amount: lesson.expectedAmount,
+      status: "COMPLETED",
     },
 
-    schema: ChangeLessonStateSchema,
+    schema: ChangeLessonStateSchema.body,
 
     submitButton: {
       text: "اكملت الحصة",
       loadingText: "جاري تحديث حالة الحصة",
     },
 
-    service: (data) => changeLessonState(data),
+    service: (data) => changeLessonState({ body: data, params }),
 
     onSuccess: () => {
       toast.success("تم اكمال الحصة بنجاح");

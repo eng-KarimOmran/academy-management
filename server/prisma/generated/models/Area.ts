@@ -27,16 +27,18 @@ export type AggregateArea = {
 export type AreaMinAggregateOutputType = {
   id: string | null
   name: string | null
-  supportType: $Enums.TrainingSupport | null
+  supportType: $Enums.SupportType | null
   isActive: boolean | null
+  academyId: string | null
   createdAt: Date | null
 }
 
 export type AreaMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  supportType: $Enums.TrainingSupport | null
+  supportType: $Enums.SupportType | null
   isActive: boolean | null
+  academyId: string | null
   createdAt: Date | null
 }
 
@@ -45,6 +47,7 @@ export type AreaCountAggregateOutputType = {
   name: number
   supportType: number
   isActive: number
+  academyId: number
   createdAt: number
   _all: number
 }
@@ -55,6 +58,7 @@ export type AreaMinAggregateInputType = {
   name?: true
   supportType?: true
   isActive?: true
+  academyId?: true
   createdAt?: true
 }
 
@@ -63,6 +67,7 @@ export type AreaMaxAggregateInputType = {
   name?: true
   supportType?: true
   isActive?: true
+  academyId?: true
   createdAt?: true
 }
 
@@ -71,6 +76,7 @@ export type AreaCountAggregateInputType = {
   name?: true
   supportType?: true
   isActive?: true
+  academyId?: true
   createdAt?: true
   _all?: true
 }
@@ -150,8 +156,9 @@ export type AreaGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type AreaGroupByOutputType = {
   id: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive: boolean
+  academyId: string
   createdAt: Date
   _count: AreaCountAggregateOutputType | null
   _min: AreaMinAggregateOutputType | null
@@ -179,11 +186,12 @@ export type AreaWhereInput = {
   NOT?: Prisma.AreaWhereInput | Prisma.AreaWhereInput[]
   id?: Prisma.StringFilter<"Area"> | string
   name?: Prisma.StringFilter<"Area"> | string
-  supportType?: Prisma.EnumTrainingSupportFilter<"Area"> | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFilter<"Area"> | $Enums.SupportType
   isActive?: Prisma.BoolFilter<"Area"> | boolean
+  academyId?: Prisma.StringFilter<"Area"> | string
   createdAt?: Prisma.DateTimeFilter<"Area"> | Date | string
   lessons?: Prisma.LessonListRelationFilter
-  subscriptions?: Prisma.SubscriptionListRelationFilter
+  academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
 }
 
 export type AreaOrderByWithRelationInput = {
@@ -191,29 +199,33 @@ export type AreaOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lessons?: Prisma.LessonOrderByRelationAggregateInput
-  subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
+  academy?: Prisma.AcademyOrderByWithRelationInput
 }
 
 export type AreaWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  name?: string
+  name_academyId?: Prisma.AreaNameAcademyIdCompoundUniqueInput
   AND?: Prisma.AreaWhereInput | Prisma.AreaWhereInput[]
   OR?: Prisma.AreaWhereInput[]
   NOT?: Prisma.AreaWhereInput | Prisma.AreaWhereInput[]
-  supportType?: Prisma.EnumTrainingSupportFilter<"Area"> | $Enums.TrainingSupport
+  name?: Prisma.StringFilter<"Area"> | string
+  supportType?: Prisma.EnumSupportTypeFilter<"Area"> | $Enums.SupportType
   isActive?: Prisma.BoolFilter<"Area"> | boolean
+  academyId?: Prisma.StringFilter<"Area"> | string
   createdAt?: Prisma.DateTimeFilter<"Area"> | Date | string
   lessons?: Prisma.LessonListRelationFilter
-  subscriptions?: Prisma.SubscriptionListRelationFilter
-}, "id" | "name">
+  academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
+}, "id" | "name_academyId">
 
 export type AreaOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AreaCountOrderByAggregateInput
   _max?: Prisma.AreaMaxOrderByAggregateInput
@@ -226,63 +238,65 @@ export type AreaScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AreaScalarWhereWithAggregatesInput | Prisma.AreaScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Area"> | string
   name?: Prisma.StringWithAggregatesFilter<"Area"> | string
-  supportType?: Prisma.EnumTrainingSupportWithAggregatesFilter<"Area"> | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeWithAggregatesFilter<"Area"> | $Enums.SupportType
   isActive?: Prisma.BoolWithAggregatesFilter<"Area"> | boolean
+  academyId?: Prisma.StringWithAggregatesFilter<"Area"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Area"> | Date | string
 }
 
 export type AreaCreateInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
   createdAt?: Date | string
   lessons?: Prisma.LessonCreateNestedManyWithoutAreaInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAreaInput
+  academy: Prisma.AcademyCreateNestedOneWithoutAreasInput
 }
 
 export type AreaUncheckedCreateInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
+  academyId: string
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAreaInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAreaInput
 }
 
 export type AreaUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUpdateManyWithoutAreaNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAreaNestedInput
+  academy?: Prisma.AcademyUpdateOneRequiredWithoutAreasNestedInput
 }
 
 export type AreaUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutAreaNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAreaNestedInput
 }
 
 export type AreaCreateManyInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
+  academyId: string
   createdAt?: Date | string
 }
 
 export type AreaUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -290,9 +304,25 @@ export type AreaUpdateManyMutationInput = {
 export type AreaUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AreaListRelationFilter = {
+  every?: Prisma.AreaWhereInput
+  some?: Prisma.AreaWhereInput
+  none?: Prisma.AreaWhereInput
+}
+
+export type AreaOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type AreaNameAcademyIdCompoundUniqueInput = {
+  name: string
+  academyId: string
 }
 
 export type AreaCountOrderByAggregateInput = {
@@ -300,6 +330,7 @@ export type AreaCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -308,6 +339,7 @@ export type AreaMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -316,6 +348,7 @@ export type AreaMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   supportType?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -324,18 +357,46 @@ export type AreaScalarRelationFilter = {
   isNot?: Prisma.AreaWhereInput
 }
 
-export type AreaCreateNestedOneWithoutSubscriptionsInput = {
-  create?: Prisma.XOR<Prisma.AreaCreateWithoutSubscriptionsInput, Prisma.AreaUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.AreaCreateOrConnectWithoutSubscriptionsInput
-  connect?: Prisma.AreaWhereUniqueInput
+export type AreaCreateNestedManyWithoutAcademyInput = {
+  create?: Prisma.XOR<Prisma.AreaCreateWithoutAcademyInput, Prisma.AreaUncheckedCreateWithoutAcademyInput> | Prisma.AreaCreateWithoutAcademyInput[] | Prisma.AreaUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.AreaCreateOrConnectWithoutAcademyInput | Prisma.AreaCreateOrConnectWithoutAcademyInput[]
+  createMany?: Prisma.AreaCreateManyAcademyInputEnvelope
+  connect?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
 }
 
-export type AreaUpdateOneRequiredWithoutSubscriptionsNestedInput = {
-  create?: Prisma.XOR<Prisma.AreaCreateWithoutSubscriptionsInput, Prisma.AreaUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.AreaCreateOrConnectWithoutSubscriptionsInput
-  upsert?: Prisma.AreaUpsertWithoutSubscriptionsInput
-  connect?: Prisma.AreaWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AreaUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.AreaUpdateWithoutSubscriptionsInput>, Prisma.AreaUncheckedUpdateWithoutSubscriptionsInput>
+export type AreaUncheckedCreateNestedManyWithoutAcademyInput = {
+  create?: Prisma.XOR<Prisma.AreaCreateWithoutAcademyInput, Prisma.AreaUncheckedCreateWithoutAcademyInput> | Prisma.AreaCreateWithoutAcademyInput[] | Prisma.AreaUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.AreaCreateOrConnectWithoutAcademyInput | Prisma.AreaCreateOrConnectWithoutAcademyInput[]
+  createMany?: Prisma.AreaCreateManyAcademyInputEnvelope
+  connect?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+}
+
+export type AreaUpdateManyWithoutAcademyNestedInput = {
+  create?: Prisma.XOR<Prisma.AreaCreateWithoutAcademyInput, Prisma.AreaUncheckedCreateWithoutAcademyInput> | Prisma.AreaCreateWithoutAcademyInput[] | Prisma.AreaUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.AreaCreateOrConnectWithoutAcademyInput | Prisma.AreaCreateOrConnectWithoutAcademyInput[]
+  upsert?: Prisma.AreaUpsertWithWhereUniqueWithoutAcademyInput | Prisma.AreaUpsertWithWhereUniqueWithoutAcademyInput[]
+  createMany?: Prisma.AreaCreateManyAcademyInputEnvelope
+  set?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  disconnect?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  delete?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  connect?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  update?: Prisma.AreaUpdateWithWhereUniqueWithoutAcademyInput | Prisma.AreaUpdateWithWhereUniqueWithoutAcademyInput[]
+  updateMany?: Prisma.AreaUpdateManyWithWhereWithoutAcademyInput | Prisma.AreaUpdateManyWithWhereWithoutAcademyInput[]
+  deleteMany?: Prisma.AreaScalarWhereInput | Prisma.AreaScalarWhereInput[]
+}
+
+export type AreaUncheckedUpdateManyWithoutAcademyNestedInput = {
+  create?: Prisma.XOR<Prisma.AreaCreateWithoutAcademyInput, Prisma.AreaUncheckedCreateWithoutAcademyInput> | Prisma.AreaCreateWithoutAcademyInput[] | Prisma.AreaUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.AreaCreateOrConnectWithoutAcademyInput | Prisma.AreaCreateOrConnectWithoutAcademyInput[]
+  upsert?: Prisma.AreaUpsertWithWhereUniqueWithoutAcademyInput | Prisma.AreaUpsertWithWhereUniqueWithoutAcademyInput[]
+  createMany?: Prisma.AreaCreateManyAcademyInputEnvelope
+  set?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  disconnect?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  delete?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  connect?: Prisma.AreaWhereUniqueInput | Prisma.AreaWhereUniqueInput[]
+  update?: Prisma.AreaUpdateWithWhereUniqueWithoutAcademyInput | Prisma.AreaUpdateWithWhereUniqueWithoutAcademyInput[]
+  updateMany?: Prisma.AreaUpdateManyWithWhereWithoutAcademyInput | Prisma.AreaUpdateManyWithWhereWithoutAcademyInput[]
+  deleteMany?: Prisma.AreaScalarWhereInput | Prisma.AreaScalarWhereInput[]
 }
 
 export type AreaCreateNestedOneWithoutLessonsInput = {
@@ -352,74 +413,78 @@ export type AreaUpdateOneRequiredWithoutLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AreaUpdateToOneWithWhereWithoutLessonsInput, Prisma.AreaUpdateWithoutLessonsInput>, Prisma.AreaUncheckedUpdateWithoutLessonsInput>
 }
 
-export type AreaCreateWithoutSubscriptionsInput = {
+export type AreaCreateWithoutAcademyInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
   createdAt?: Date | string
   lessons?: Prisma.LessonCreateNestedManyWithoutAreaInput
 }
 
-export type AreaUncheckedCreateWithoutSubscriptionsInput = {
+export type AreaUncheckedCreateWithoutAcademyInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAreaInput
 }
 
-export type AreaCreateOrConnectWithoutSubscriptionsInput = {
+export type AreaCreateOrConnectWithoutAcademyInput = {
   where: Prisma.AreaWhereUniqueInput
-  create: Prisma.XOR<Prisma.AreaCreateWithoutSubscriptionsInput, Prisma.AreaUncheckedCreateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.AreaCreateWithoutAcademyInput, Prisma.AreaUncheckedCreateWithoutAcademyInput>
 }
 
-export type AreaUpsertWithoutSubscriptionsInput = {
-  update: Prisma.XOR<Prisma.AreaUpdateWithoutSubscriptionsInput, Prisma.AreaUncheckedUpdateWithoutSubscriptionsInput>
-  create: Prisma.XOR<Prisma.AreaCreateWithoutSubscriptionsInput, Prisma.AreaUncheckedCreateWithoutSubscriptionsInput>
-  where?: Prisma.AreaWhereInput
+export type AreaCreateManyAcademyInputEnvelope = {
+  data: Prisma.AreaCreateManyAcademyInput | Prisma.AreaCreateManyAcademyInput[]
+  skipDuplicates?: boolean
 }
 
-export type AreaUpdateToOneWithWhereWithoutSubscriptionsInput = {
-  where?: Prisma.AreaWhereInput
-  data: Prisma.XOR<Prisma.AreaUpdateWithoutSubscriptionsInput, Prisma.AreaUncheckedUpdateWithoutSubscriptionsInput>
+export type AreaUpsertWithWhereUniqueWithoutAcademyInput = {
+  where: Prisma.AreaWhereUniqueInput
+  update: Prisma.XOR<Prisma.AreaUpdateWithoutAcademyInput, Prisma.AreaUncheckedUpdateWithoutAcademyInput>
+  create: Prisma.XOR<Prisma.AreaCreateWithoutAcademyInput, Prisma.AreaUncheckedCreateWithoutAcademyInput>
 }
 
-export type AreaUpdateWithoutSubscriptionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lessons?: Prisma.LessonUpdateManyWithoutAreaNestedInput
+export type AreaUpdateWithWhereUniqueWithoutAcademyInput = {
+  where: Prisma.AreaWhereUniqueInput
+  data: Prisma.XOR<Prisma.AreaUpdateWithoutAcademyInput, Prisma.AreaUncheckedUpdateWithoutAcademyInput>
 }
 
-export type AreaUncheckedUpdateWithoutSubscriptionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAreaNestedInput
+export type AreaUpdateManyWithWhereWithoutAcademyInput = {
+  where: Prisma.AreaScalarWhereInput
+  data: Prisma.XOR<Prisma.AreaUpdateManyMutationInput, Prisma.AreaUncheckedUpdateManyWithoutAcademyInput>
+}
+
+export type AreaScalarWhereInput = {
+  AND?: Prisma.AreaScalarWhereInput | Prisma.AreaScalarWhereInput[]
+  OR?: Prisma.AreaScalarWhereInput[]
+  NOT?: Prisma.AreaScalarWhereInput | Prisma.AreaScalarWhereInput[]
+  id?: Prisma.StringFilter<"Area"> | string
+  name?: Prisma.StringFilter<"Area"> | string
+  supportType?: Prisma.EnumSupportTypeFilter<"Area"> | $Enums.SupportType
+  isActive?: Prisma.BoolFilter<"Area"> | boolean
+  academyId?: Prisma.StringFilter<"Area"> | string
+  createdAt?: Prisma.DateTimeFilter<"Area"> | Date | string
 }
 
 export type AreaCreateWithoutLessonsInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
   createdAt?: Date | string
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAreaInput
+  academy: Prisma.AcademyCreateNestedOneWithoutAreasInput
 }
 
 export type AreaUncheckedCreateWithoutLessonsInput = {
   id?: string
   name: string
-  supportType: $Enums.TrainingSupport
+  supportType: $Enums.SupportType
   isActive?: boolean
+  academyId: string
   createdAt?: Date | string
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAreaInput
 }
 
 export type AreaCreateOrConnectWithoutLessonsInput = {
@@ -441,19 +506,53 @@ export type AreaUpdateToOneWithWhereWithoutLessonsInput = {
 export type AreaUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAreaNestedInput
+  academy?: Prisma.AcademyUpdateOneRequiredWithoutAreasNestedInput
 }
 
 export type AreaUncheckedUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  supportType?: Prisma.EnumTrainingSupportFieldUpdateOperationsInput | $Enums.TrainingSupport
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AreaCreateManyAcademyInput = {
+  id?: string
+  name: string
+  supportType: $Enums.SupportType
+  isActive?: boolean
+  createdAt?: Date | string
+}
+
+export type AreaUpdateWithoutAcademyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAreaNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAreaNestedInput
+}
+
+export type AreaUncheckedUpdateWithoutAcademyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAreaNestedInput
+}
+
+export type AreaUncheckedUpdateManyWithoutAcademyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  supportType?: Prisma.EnumSupportTypeFieldUpdateOperationsInput | $Enums.SupportType
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -463,12 +562,10 @@ export type AreaUncheckedUpdateWithoutLessonsInput = {
 
 export type AreaCountOutputType = {
   lessons: number
-  subscriptions: number
 }
 
 export type AreaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessons?: boolean | AreaCountOutputTypeCountLessonsArgs
-  subscriptions?: boolean | AreaCountOutputTypeCountSubscriptionsArgs
 }
 
 /**
@@ -488,22 +585,16 @@ export type AreaCountOutputTypeCountLessonsArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.LessonWhereInput
 }
 
-/**
- * AreaCountOutputType without action
- */
-export type AreaCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SubscriptionWhereInput
-}
-
 
 export type AreaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   supportType?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
   lessons?: boolean | Prisma.Area$lessonsArgs<ExtArgs>
-  subscriptions?: boolean | Prisma.Area$subscriptionsArgs<ExtArgs>
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.AreaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["area"]>
 
@@ -512,7 +603,9 @@ export type AreaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   supportType?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["area"]>
 
 export type AreaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -520,7 +613,9 @@ export type AreaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   supportType?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["area"]>
 
 export type AreaSelectScalar = {
@@ -528,29 +623,35 @@ export type AreaSelectScalar = {
   name?: boolean
   supportType?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
 }
 
-export type AreaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "supportType" | "isActive" | "createdAt", ExtArgs["result"]["area"]>
+export type AreaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "supportType" | "isActive" | "academyId" | "createdAt", ExtArgs["result"]["area"]>
 export type AreaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessons?: boolean | Prisma.Area$lessonsArgs<ExtArgs>
-  subscriptions?: boolean | Prisma.Area$subscriptionsArgs<ExtArgs>
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.AreaCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type AreaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type AreaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type AreaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
+}
+export type AreaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
+}
 
 export type $AreaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Area"
   objects: {
     lessons: Prisma.$LessonPayload<ExtArgs>[]
-    subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
+    academy: Prisma.$AcademyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    supportType: $Enums.TrainingSupport
+    supportType: $Enums.SupportType
     isActive: boolean
+    academyId: string
     createdAt: Date
   }, ExtArgs["result"]["area"]>
   composites: {}
@@ -947,7 +1048,7 @@ readonly fields: AreaFieldRefs;
 export interface Prisma__AreaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   lessons<T extends Prisma.Area$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Area$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  subscriptions<T extends Prisma.Area$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Area$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -979,8 +1080,9 @@ export interface Prisma__AreaClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface AreaFieldRefs {
   readonly id: Prisma.FieldRef<"Area", 'String'>
   readonly name: Prisma.FieldRef<"Area", 'String'>
-  readonly supportType: Prisma.FieldRef<"Area", 'TrainingSupport'>
+  readonly supportType: Prisma.FieldRef<"Area", 'SupportType'>
   readonly isActive: Prisma.FieldRef<"Area", 'Boolean'>
+  readonly academyId: Prisma.FieldRef<"Area", 'String'>
   readonly createdAt: Prisma.FieldRef<"Area", 'DateTime'>
 }
     
@@ -1236,6 +1338,10 @@ export type AreaCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.AreaCreateManyInput | Prisma.AreaCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AreaIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1306,6 +1412,10 @@ export type AreaUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Areas to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AreaIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1396,30 +1506,6 @@ export type Area$lessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.LessonScalarFieldEnum | Prisma.LessonScalarFieldEnum[]
-}
-
-/**
- * Area.subscriptions
- */
-export type Area$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Subscription
-   */
-  select?: Prisma.SubscriptionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Subscription
-   */
-  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SubscriptionInclude<ExtArgs> | null
-  where?: Prisma.SubscriptionWhereInput
-  orderBy?: Prisma.SubscriptionOrderByWithRelationInput | Prisma.SubscriptionOrderByWithRelationInput[]
-  cursor?: Prisma.SubscriptionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
 }
 
 /**

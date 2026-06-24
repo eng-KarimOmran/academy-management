@@ -1,29 +1,23 @@
 import z from "zod";
-import {
-  CreateCarSchema,
-  UpdateCarSchema,
-  GetAllCarsSchema,
-  GetCarDetailsSchema,
-  DeleteCarSchema,
-} from "./car.schema";
+import * as Schema from "./car.schema";
 
 export type CreateDto = {
-  body: z.infer<typeof CreateCarSchema.body>;
+  body: z.infer<typeof Schema.CreateCarSchema.body>;
 };
 
 export type UpdateDto = {
-  params: z.infer<typeof UpdateCarSchema.params>;
-  body: z.infer<typeof UpdateCarSchema.body>;
+  params: z.infer<typeof Schema.UpdateCarSchema.params>;
+  body: z.infer<typeof Schema.UpdateCarSchema.body>;
 };
 
 export type GetAllDto = {
-  query: z.infer<typeof GetAllCarsSchema.query>;
+  query: z.infer<typeof Schema.GetAllCarsSchema.query>;
 };
 
 export type GetDetailsDto = {
-  params: z.infer<typeof GetCarDetailsSchema.params>;
+  params: z.infer<typeof Schema.GetCarDetailsSchema.params>;
 };
 
 export type DeleteDto = {
-  params: z.infer<typeof DeleteCarSchema.params>;
+  params: z.infer<typeof Schema.DeleteCarSchema.params>;
 };

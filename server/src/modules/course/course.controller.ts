@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./course.dto";
 import sendSuccess from "../../shared/utils/successResponse";
 import CourseService from "./course.service";
@@ -9,7 +9,7 @@ const CourseController = {
   createCourse: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateDto;
 
-    const course = await CourseService.create(dataSafe);
+    const course = await CourseService.create({dataSafe});
 
     return sendSuccess({
       res,
@@ -22,7 +22,7 @@ const CourseController = {
   updateCourse: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.UpdateDto;
 
-    const updatedCourse = await CourseService.update(dataSafe);
+    const updatedCourse = await CourseService.update({dataSafe});
 
     return sendSuccess({
       res,
@@ -34,7 +34,7 @@ const CourseController = {
   getAllCourses: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllDto;
 
-    const data = await CourseService.getAll(dataSafe);
+    const data = await CourseService.getAll({dataSafe});
 
     return sendSuccess({
       res,
@@ -45,7 +45,7 @@ const CourseController = {
   getDetailsCourse: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetDetailsDto;
 
-    const course = await CourseService.getDetails(dataSafe);
+    const course = await CourseService.getDetails({dataSafe});
 
     return sendSuccess({ res, data: course });
   },
@@ -53,7 +53,7 @@ const CourseController = {
   deleteCourse: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.DeleteDto;
 
-    await CourseService.deleteCourse(dataSafe);
+    await CourseService.deleteCourse({dataSafe});
 
     return sendSuccess({ res, message: "تم حذف البرنامج نهائياً" });
   },

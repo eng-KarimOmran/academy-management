@@ -26,19 +26,19 @@ export type AggregateTrainingDetails = {
 
 export type TrainingDetailsMinAggregateOutputType = {
   id: string | null
-  text: string | null
+  feature: string | null
   courseId: string | null
 }
 
 export type TrainingDetailsMaxAggregateOutputType = {
   id: string | null
-  text: string | null
+  feature: string | null
   courseId: string | null
 }
 
 export type TrainingDetailsCountAggregateOutputType = {
   id: number
-  text: number
+  feature: number
   courseId: number
   _all: number
 }
@@ -46,19 +46,19 @@ export type TrainingDetailsCountAggregateOutputType = {
 
 export type TrainingDetailsMinAggregateInputType = {
   id?: true
-  text?: true
+  feature?: true
   courseId?: true
 }
 
 export type TrainingDetailsMaxAggregateInputType = {
   id?: true
-  text?: true
+  feature?: true
   courseId?: true
 }
 
 export type TrainingDetailsCountAggregateInputType = {
   id?: true
-  text?: true
+  feature?: true
   courseId?: true
   _all?: true
 }
@@ -137,8 +137,8 @@ export type TrainingDetailsGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 
 export type TrainingDetailsGroupByOutputType = {
   id: string
-  text: string
-  courseId: string | null
+  feature: string
+  courseId: string
   _count: TrainingDetailsCountAggregateOutputType | null
   _min: TrainingDetailsMinAggregateOutputType | null
   _max: TrainingDetailsMaxAggregateOutputType | null
@@ -164,15 +164,15 @@ export type TrainingDetailsWhereInput = {
   OR?: Prisma.TrainingDetailsWhereInput[]
   NOT?: Prisma.TrainingDetailsWhereInput | Prisma.TrainingDetailsWhereInput[]
   id?: Prisma.StringFilter<"TrainingDetails"> | string
-  text?: Prisma.StringFilter<"TrainingDetails"> | string
-  courseId?: Prisma.StringNullableFilter<"TrainingDetails"> | string | null
-  course?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  feature?: Prisma.StringFilter<"TrainingDetails"> | string
+  courseId?: Prisma.StringFilter<"TrainingDetails"> | string
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }
 
 export type TrainingDetailsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
-  courseId?: Prisma.SortOrderInput | Prisma.SortOrder
+  feature?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
 }
 
@@ -181,15 +181,15 @@ export type TrainingDetailsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TrainingDetailsWhereInput | Prisma.TrainingDetailsWhereInput[]
   OR?: Prisma.TrainingDetailsWhereInput[]
   NOT?: Prisma.TrainingDetailsWhereInput | Prisma.TrainingDetailsWhereInput[]
-  text?: Prisma.StringFilter<"TrainingDetails"> | string
-  courseId?: Prisma.StringNullableFilter<"TrainingDetails"> | string | null
-  course?: Prisma.XOR<Prisma.CourseNullableScalarRelationFilter, Prisma.CourseWhereInput> | null
+  feature?: Prisma.StringFilter<"TrainingDetails"> | string
+  courseId?: Prisma.StringFilter<"TrainingDetails"> | string
+  course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
 }, "id">
 
 export type TrainingDetailsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
-  courseId?: Prisma.SortOrderInput | Prisma.SortOrder
+  feature?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
   _count?: Prisma.TrainingDetailsCountOrderByAggregateInput
   _max?: Prisma.TrainingDetailsMaxOrderByAggregateInput
   _min?: Prisma.TrainingDetailsMinOrderByAggregateInput
@@ -200,67 +200,49 @@ export type TrainingDetailsScalarWhereWithAggregatesInput = {
   OR?: Prisma.TrainingDetailsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TrainingDetailsScalarWhereWithAggregatesInput | Prisma.TrainingDetailsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"TrainingDetails"> | string
-  text?: Prisma.StringWithAggregatesFilter<"TrainingDetails"> | string
-  courseId?: Prisma.StringNullableWithAggregatesFilter<"TrainingDetails"> | string | null
+  feature?: Prisma.StringWithAggregatesFilter<"TrainingDetails"> | string
+  courseId?: Prisma.StringWithAggregatesFilter<"TrainingDetails"> | string
 }
 
 export type TrainingDetailsCreateInput = {
   id?: string
-  text: string
-  course?: Prisma.CourseCreateNestedOneWithoutCourseFeaturesInput
+  feature: string
+  course: Prisma.CourseCreateNestedOneWithoutFeaturesInput
 }
 
 export type TrainingDetailsUncheckedCreateInput = {
   id?: string
-  text: string
-  courseId?: string | null
+  feature: string
+  courseId: string
 }
 
 export type TrainingDetailsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.CourseUpdateOneWithoutCourseFeaturesNestedInput
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
+  course?: Prisma.CourseUpdateOneRequiredWithoutFeaturesNestedInput
 }
 
 export type TrainingDetailsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
-  courseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDetailsCreateManyInput = {
   id?: string
-  text: string
-  courseId?: string | null
+  feature: string
+  courseId: string
 }
 
 export type TrainingDetailsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDetailsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
-  courseId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-}
-
-export type TrainingDetailsCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
-}
-
-export type TrainingDetailsMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
-}
-
-export type TrainingDetailsMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  text?: Prisma.SortOrder
-  courseId?: Prisma.SortOrder
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
+  courseId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDetailsListRelationFilter = {
@@ -271,6 +253,24 @@ export type TrainingDetailsListRelationFilter = {
 
 export type TrainingDetailsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type TrainingDetailsCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  feature?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
+}
+
+export type TrainingDetailsMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  feature?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
+}
+
+export type TrainingDetailsMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  feature?: Prisma.SortOrder
+  courseId?: Prisma.SortOrder
 }
 
 export type TrainingDetailsCreateNestedManyWithoutCourseInput = {
@@ -317,12 +317,12 @@ export type TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput = {
 
 export type TrainingDetailsCreateWithoutCourseInput = {
   id?: string
-  text: string
+  feature: string
 }
 
 export type TrainingDetailsUncheckedCreateWithoutCourseInput = {
   id?: string
-  text: string
+  feature: string
 }
 
 export type TrainingDetailsCreateOrConnectWithoutCourseInput = {
@@ -356,79 +356,79 @@ export type TrainingDetailsScalarWhereInput = {
   OR?: Prisma.TrainingDetailsScalarWhereInput[]
   NOT?: Prisma.TrainingDetailsScalarWhereInput | Prisma.TrainingDetailsScalarWhereInput[]
   id?: Prisma.StringFilter<"TrainingDetails"> | string
-  text?: Prisma.StringFilter<"TrainingDetails"> | string
-  courseId?: Prisma.StringNullableFilter<"TrainingDetails"> | string | null
+  feature?: Prisma.StringFilter<"TrainingDetails"> | string
+  courseId?: Prisma.StringFilter<"TrainingDetails"> | string
 }
 
 export type TrainingDetailsCreateManyCourseInput = {
   id?: string
-  text: string
+  feature: string
 }
 
 export type TrainingDetailsUpdateWithoutCourseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDetailsUncheckedUpdateWithoutCourseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type TrainingDetailsUncheckedUpdateManyWithoutCourseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  text?: Prisma.StringFieldUpdateOperationsInput | string
+  feature?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
 
 export type TrainingDetailsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  text?: boolean
+  feature?: boolean
   courseId?: boolean
-  course?: boolean | Prisma.TrainingDetails$courseArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trainingDetails"]>
 
 export type TrainingDetailsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  text?: boolean
+  feature?: boolean
   courseId?: boolean
-  course?: boolean | Prisma.TrainingDetails$courseArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trainingDetails"]>
 
 export type TrainingDetailsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  text?: boolean
+  feature?: boolean
   courseId?: boolean
-  course?: boolean | Prisma.TrainingDetails$courseArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trainingDetails"]>
 
 export type TrainingDetailsSelectScalar = {
   id?: boolean
-  text?: boolean
+  feature?: boolean
   courseId?: boolean
 }
 
-export type TrainingDetailsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "text" | "courseId", ExtArgs["result"]["trainingDetails"]>
+export type TrainingDetailsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "feature" | "courseId", ExtArgs["result"]["trainingDetails"]>
 export type TrainingDetailsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  course?: boolean | Prisma.TrainingDetails$courseArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 export type TrainingDetailsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  course?: boolean | Prisma.TrainingDetails$courseArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 export type TrainingDetailsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  course?: boolean | Prisma.TrainingDetails$courseArgs<ExtArgs>
+  course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
 }
 
 export type $TrainingDetailsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TrainingDetails"
   objects: {
-    course: Prisma.$CoursePayload<ExtArgs> | null
+    course: Prisma.$CoursePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    text: string
-    courseId: string | null
+    feature: string
+    courseId: string
   }, ExtArgs["result"]["trainingDetails"]>
   composites: {}
 }
@@ -823,7 +823,7 @@ readonly fields: TrainingDetailsFieldRefs;
  */
 export interface Prisma__TrainingDetailsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  course<T extends Prisma.TrainingDetails$courseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TrainingDetails$courseArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -854,7 +854,7 @@ export interface Prisma__TrainingDetailsClient<T, Null = never, ExtArgs extends 
  */
 export interface TrainingDetailsFieldRefs {
   readonly id: Prisma.FieldRef<"TrainingDetails", 'String'>
-  readonly text: Prisma.FieldRef<"TrainingDetails", 'String'>
+  readonly feature: Prisma.FieldRef<"TrainingDetails", 'String'>
   readonly courseId: Prisma.FieldRef<"TrainingDetails", 'String'>
 }
     
@@ -1254,25 +1254,6 @@ export type TrainingDetailsDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many TrainingDetails to delete.
    */
   limit?: number
-}
-
-/**
- * TrainingDetails.course
- */
-export type TrainingDetails$courseArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Course
-   */
-  select?: Prisma.CourseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Course
-   */
-  omit?: Prisma.CourseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CourseInclude<ExtArgs> | null
-  where?: Prisma.CourseWhereInput
 }
 
 /**

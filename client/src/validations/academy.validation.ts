@@ -10,46 +10,58 @@ import {
   entityName,
 } from "./common.validation";
 
-export const CreateAcademySchema = z.object({
-  name: entityName,
-  phone,
-  address,
-  paymentLink: url.optional(),
-  owner: phone,
-});
+export const CreateAcademySchema = {
+  body: z.object({
+    name: entityName,
+    phone,
+    address,
+    paymentLink: url,
+    ownerId: id,
+  }),
+};
 
-export const UpdateAcademySchema = z.object({
-  academyId: id,
-  name: entityName.optional(),
-  phone: phone.optional(),
-  address: address.optional(),
-  paymentLink: url.optional(),
-});
+export const UpdateAcademySchema = {
+  params: z.object({ academyId: id }),
+  body: z.object({
+    name: entityName.optional(),
+    phone: phone.optional(),
+    address: address.optional(),
+    paymentLink: url.optional(),
+  }),
+};
 
-export const DeleteAcademySchema = z.object({ academyId: id });
+export const DeleteAcademySchema = {
+  params: z.object({ academyId: id }),
+};
 
-export const GetAcademySchema = z.object({ academyId: id });
+export const GetAcademySchema = {
+  params: z.object({ academyId: id }),
+};
 
-export const GetAllAcademiesSchema = z.object({
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(50),
-  search: z.string().optional(),
-});
+export const GetAllAcademiesSchema = {
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit.optional().default(50),
+    search: z.string().optional(),
+  }),
+};
 
-export const AddSocialMediaSchema = z.object({
-  academyId: id,
-  platform,
-  url,
-});
+export const AddSocialMediaSchema = {
+  params: z.object({ academyId: id }),
+  body: z.object({
+    platform,
+    url,
+  }),
+};
 
-export const DeleteSocialMediaSchema = z.object({
-  academyId: id,
-  platformId: id,
-});
+export const DeleteSocialMediaSchema = {
+  params: z.object({ academyId: id, platformId: id }),
+};
 
-export const AddOwnerSchema = z.object({
-  academyId: id,
-  phone,
-});
+export const AddOwnerSchema = {
+  params: z.object({ academyId: id, userId: id }),
+};
 
-export const DeleteOwnerSchema = z.object({ academyId: id, ownerId: id });
+export const DeleteOwnerSchema = {
+  params: z.object({ academyId: id, userId: id }),
+};

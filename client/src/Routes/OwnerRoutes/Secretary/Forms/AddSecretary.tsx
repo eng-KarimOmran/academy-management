@@ -1,7 +1,6 @@
 import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 
-import type { CreateSecretaryDto } from "@/DTOs/secretary.dto";
 import { CreateSecretarySchema } from "@/validations/secretary.validation";
 
 import { createSecretary } from "@/service/secretary.service";
@@ -9,20 +8,64 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import type { Secretary } from "@/types/secretary";
 import { useDialogState } from "@/store/DialogState";
+import type { CreateDto } from "@/DTOs/secretary.dto";
+import { useActiveAcademyState } from "@/store/ActiveAcademyState";
+import { useQuery } from "@tanstack/react-query";
+import { getAllUsers } from "@/service/user.service";
+import { useEffect } from "react";
 
-export default function AddSecretary({ phone }: { phone?: string }) {
+export default function AddSecretary({
+  user,
+}: {
+  user?: { userId: string; name: string; phone: string };
+}) {
   const { setConfigDialog } = useDialogState();
+  const { activeAcademy } = useActiveAcademyState();
+  const academyId = activeAcademy?.id ?? "";
 
-  const config: FormProps<CreateSecretaryDto, Secretary> = {
+  const params: CreateDto["params"] = { academyId };
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      getAllUsers({
+        query: {
+          page: 1,
+          limit: 50,
+        },
+      }),
+    enabled: !user,
+    select: (res) => res.data.data,
+  });
+
+  const users = data?.items.filter((u) => !u.roles.includes("SECRETARY")) ?? [];
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error?.message ?? "خطأ في تحميل المستخدمين");
+    }
+  }, [error]);
+
+  const config: FormProps<CreateDto["body"], Secretary> = {
     inputs: [
       {
-        name: "phone",
-        type: "text",
-        label: "رقم الهاتف",
-        placeholder: "01xxxxxxxxx",
-        disabled: !!phone,
+        name: "userId",
+        type: "select",
+        label: "المستخدم",
+        placeholder: isLoading ? "جاري تحميل المستخدمين" : "اختار المستخدم",
+        options: user
+          ? [
+              {
+                label: `${user.name}-${user.phone}`,
+                value: user.userId,
+              },
+            ]
+          : users.map((u) => ({
+              label: `${u.name}-${u.phone}`,
+              value: u.id,
+            })),
+        disabled: !!user || isLoading,
       },
-
       {
         name: "baseSalary",
         type: "number",
@@ -49,20 +92,18 @@ export default function AddSecretary({ phone }: { phone?: string }) {
     ],
 
     defaultValues: {
-      phone: phone ?? "",
-      baseSalary: 0,
-      targetCount: 0,
-      bonusAmount: 0,
+      userId: user?.userId ?? "",
     },
 
-    schema: CreateSecretarySchema,
+    schema: CreateSecretarySchema.body,
 
     submitButton: {
       text: "إضافة سكرتير",
       loadingText: "جاري الإضافة...",
+      disabled: !!academyId,
     },
 
-    service: (data) => createSecretary(data),
+    service: (data) => createSecretary({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["secretaries"] });

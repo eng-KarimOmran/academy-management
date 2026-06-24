@@ -14,7 +14,9 @@ import { useDialogState } from "@/store/DialogState";
 export default function UpdateUser({ item }: { item: User }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<UpdateUserDto, User> = {
+  const params: UpdateUserDto["params"] = { userId: item.id };
+
+  const config: FormProps<UpdateUserDto["body"], User> = {
     inputs: [
       {
         name: "isActive",
@@ -38,20 +40,19 @@ export default function UpdateUser({ item }: { item: User }) {
     ],
 
     defaultValues: {
-      userId: item.id,
       name: item.name,
       phone: item.phone,
       isActive: item.isActive,
     },
 
-    schema: UpdateUserSchema,
+    schema: UpdateUserSchema.body,
 
     submitButton: {
       text: "حفظ التعديلات",
       loadingText: "جاري الحفظ...",
     },
 
-    service: (data) => updateUser(data),
+    service: (data) => updateUser({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });

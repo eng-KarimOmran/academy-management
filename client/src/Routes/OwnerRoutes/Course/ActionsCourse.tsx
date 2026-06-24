@@ -11,7 +11,6 @@ import type { Course } from "@/types/course";
 import UpdateCourse from "./Forms/UpdateCourse";
 import DeleteCourse from "./Forms/DeleteCourse";
 import { useNavigate } from "react-router-dom";
-import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import { useDialogState } from "@/store/DialogState";
 
 type ActionType = "update" | "delete" | "details";
@@ -32,7 +31,6 @@ export default function ActionsCourse({
   const { setConfigDialog } = useDialogState();
 
   const navigate = useNavigate();
-  const { activeAcademy } = useActiveAcademyState();
 
   const actions: Action[] = [
     { title: "التفاصيل", icon: RiExternalLinkLine, type: "details" },
@@ -43,9 +41,7 @@ export default function ActionsCourse({
   const handleAction = (type: ActionType) => {
     switch (type) {
       case "details":
-        navigate(
-          `/dashboard/course/${item.id}?academyId=${activeAcademy?.id ?? ""}`,
-        );
+        navigate(`/dashboard/course/${item.id}?academyId=${item.academyId}`);
         break;
       case "update":
         setConfigDialog({

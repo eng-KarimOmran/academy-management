@@ -29,11 +29,11 @@ export type UserMinAggregateOutputType = {
   name: string | null
   phone: string | null
   password: string | null
-  isPasswordChanged: boolean | null
   isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  email: string | null
   logoutAt: Date | null
+  isPasswordChanged: boolean | null
+  createdAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -41,11 +41,11 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   phone: string | null
   password: string | null
-  isPasswordChanged: boolean | null
   isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  email: string | null
   logoutAt: Date | null
+  isPasswordChanged: boolean | null
+  createdAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -53,12 +53,11 @@ export type UserCountAggregateOutputType = {
   name: number
   phone: number
   password: number
-  isPasswordChanged: number
-  roles: number
   isActive: number
-  createdAt: number
-  updatedAt: number
+  email: number
   logoutAt: number
+  isPasswordChanged: number
+  createdAt: number
   _all: number
 }
 
@@ -68,11 +67,11 @@ export type UserMinAggregateInputType = {
   name?: true
   phone?: true
   password?: true
-  isPasswordChanged?: true
   isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  email?: true
   logoutAt?: true
+  isPasswordChanged?: true
+  createdAt?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -80,11 +79,11 @@ export type UserMaxAggregateInputType = {
   name?: true
   phone?: true
   password?: true
-  isPasswordChanged?: true
   isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  email?: true
   logoutAt?: true
+  isPasswordChanged?: true
+  createdAt?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -92,12 +91,11 @@ export type UserCountAggregateInputType = {
   name?: true
   phone?: true
   password?: true
-  isPasswordChanged?: true
-  roles?: true
   isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  email?: true
   logoutAt?: true
+  isPasswordChanged?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -178,12 +176,11 @@ export type UserGroupByOutputType = {
   name: string
   phone: string
   password: string
-  isPasswordChanged: boolean
-  roles: $Enums.Role[]
   isActive: boolean
+  email: string | null
+  logoutAt: Date
+  isPasswordChanged: boolean
   createdAt: Date
-  updatedAt: Date
-  logoutAt: Date | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -212,18 +209,13 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
-  isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
-  roles?: Prisma.EnumRoleNullableListFilter<"User">
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  email?: Prisma.StringNullableFilter<"User"> | string | null
+  logoutAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  logoutAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  captainProfile?: Prisma.XOR<Prisma.CaptainNullableScalarRelationFilter, Prisma.CaptainWhereInput> | null
-  secretaryProfile?: Prisma.XOR<Prisma.SecretaryNullableScalarRelationFilter, Prisma.SecretaryWhereInput> | null
+  jobProfile?: Prisma.JobProfileListRelationFilter
   academies?: Prisma.AcademyListRelationFilter
-  receivedPayments?: Prisma.PaymentTransactionListRelationFilter
-  subscriptions?: Prisma.SubscriptionListRelationFilter
-  userLedgerTransactions?: Prisma.LedgerTransactionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -231,53 +223,42 @@ export type UserOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  isPasswordChanged?: Prisma.SortOrder
-  roles?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoutAt?: Prisma.SortOrder
+  isPasswordChanged?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  logoutAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  captainProfile?: Prisma.CaptainOrderByWithRelationInput
-  secretaryProfile?: Prisma.SecretaryOrderByWithRelationInput
+  jobProfile?: Prisma.JobProfileOrderByRelationAggregateInput
   academies?: Prisma.AcademyOrderByRelationAggregateInput
-  receivedPayments?: Prisma.PaymentTransactionOrderByRelationAggregateInput
-  subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
-  userLedgerTransactions?: Prisma.LedgerTransactionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   phone?: string
+  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
-  isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
-  roles?: Prisma.EnumRoleNullableListFilter<"User">
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  logoutAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  logoutAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  captainProfile?: Prisma.XOR<Prisma.CaptainNullableScalarRelationFilter, Prisma.CaptainWhereInput> | null
-  secretaryProfile?: Prisma.XOR<Prisma.SecretaryNullableScalarRelationFilter, Prisma.SecretaryWhereInput> | null
+  jobProfile?: Prisma.JobProfileListRelationFilter
   academies?: Prisma.AcademyListRelationFilter
-  receivedPayments?: Prisma.PaymentTransactionListRelationFilter
-  subscriptions?: Prisma.SubscriptionListRelationFilter
-  userLedgerTransactions?: Prisma.LedgerTransactionListRelationFilter
-}, "id" | "phone">
+}, "id" | "phone" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
-  isPasswordChanged?: Prisma.SortOrder
-  roles?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoutAt?: Prisma.SortOrder
+  isPasswordChanged?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  logoutAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -291,12 +272,11 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   phone?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
-  isPasswordChanged?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  roles?: Prisma.EnumRoleNullableListFilter<"User">
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  logoutAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  isPasswordChanged?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  logoutAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
@@ -304,18 +284,13 @@ export type UserCreateInput = {
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryCreateNestedOneWithoutUserInput
+  jobProfile?: Prisma.JobProfileCreateNestedManyWithoutUserInput
   academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -323,18 +298,13 @@ export type UserUncheckedCreateInput = {
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryUncheckedCreateNestedOneWithoutUserInput
+  jobProfile?: Prisma.JobProfileUncheckedCreateNestedManyWithoutUserInput
   academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -342,18 +312,13 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUpdateOneWithoutUserNestedInput
+  jobProfile?: Prisma.JobProfileUpdateManyWithoutUserNestedInput
   academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -361,18 +326,13 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUncheckedUpdateOneWithoutUserNestedInput
+  jobProfile?: Prisma.JobProfileUncheckedUpdateManyWithoutUserNestedInput
   academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -380,12 +340,11 @@ export type UserCreateManyInput = {
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -393,12 +352,11 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -406,57 +364,11 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-}
-
-export type EnumRoleNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.Role[] | Prisma.ListEnumRoleFieldRefInput<$PrismaModel> | null
-  has?: $Enums.Role | Prisma.EnumRoleFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.Role[] | Prisma.ListEnumRoleFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.Role[] | Prisma.ListEnumRoleFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
-export type UserCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  password?: Prisma.SortOrder
-  isPasswordChanged?: Prisma.SortOrder
-  roles?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  logoutAt?: Prisma.SortOrder
-}
-
-export type UserMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  password?: Prisma.SortOrder
-  isPasswordChanged?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  logoutAt?: Prisma.SortOrder
-}
-
-export type UserMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  password?: Prisma.SortOrder
-  isPasswordChanged?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  logoutAt?: Prisma.SortOrder
 }
 
 export type UserListRelationFilter = {
@@ -474,34 +386,40 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
+export type UserCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  logoutAt?: Prisma.SortOrder
+  isPasswordChanged?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type UserCreaterolesInput = {
-  set: $Enums.Role[]
+export type UserMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  logoutAt?: Prisma.SortOrder
+  isPasswordChanged?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type UserUpdaterolesInput = {
-  set?: $Enums.Role[]
-  push?: $Enums.Role | $Enums.Role[]
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
+export type UserMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  logoutAt?: Prisma.SortOrder
+  isPasswordChanged?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type UserCreateNestedManyWithoutAcademiesInput = {
@@ -542,76 +460,18 @@ export type UserUncheckedUpdateManyWithoutAcademiesNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
-export type UserCreateNestedOneWithoutSecretaryProfileInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSecretaryProfileInput, Prisma.UserUncheckedCreateWithoutSecretaryProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSecretaryProfileInput
+export type UserCreateNestedOneWithoutJobProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobProfileInput, Prisma.UserUncheckedCreateWithoutJobProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobProfileInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutSecretaryProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSecretaryProfileInput, Prisma.UserUncheckedCreateWithoutSecretaryProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSecretaryProfileInput
-  upsert?: Prisma.UserUpsertWithoutSecretaryProfileInput
+export type UserUpdateOneRequiredWithoutJobProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutJobProfileInput, Prisma.UserUncheckedCreateWithoutJobProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutJobProfileInput
+  upsert?: Prisma.UserUpsertWithoutJobProfileInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSecretaryProfileInput, Prisma.UserUpdateWithoutSecretaryProfileInput>, Prisma.UserUncheckedUpdateWithoutSecretaryProfileInput>
-}
-
-export type UserCreateNestedOneWithoutCaptainProfileInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCaptainProfileInput, Prisma.UserUncheckedCreateWithoutCaptainProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCaptainProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutCaptainProfileNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCaptainProfileInput, Prisma.UserUncheckedCreateWithoutCaptainProfileInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCaptainProfileInput
-  upsert?: Prisma.UserUpsertWithoutCaptainProfileInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCaptainProfileInput, Prisma.UserUpdateWithoutCaptainProfileInput>, Prisma.UserUncheckedUpdateWithoutCaptainProfileInput>
-}
-
-export type UserCreateNestedOneWithoutSubscriptionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneWithoutSubscriptionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubscriptionsInput
-  upsert?: Prisma.UserUpsertWithoutSubscriptionsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.UserUpdateWithoutSubscriptionsInput>, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
-}
-
-export type UserCreateNestedOneWithoutReceivedPaymentsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedPaymentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedPaymentsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutReceivedPaymentsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedPaymentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedPaymentsInput
-  upsert?: Prisma.UserUpsertWithoutReceivedPaymentsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedPaymentsInput, Prisma.UserUpdateWithoutReceivedPaymentsInput>, Prisma.UserUncheckedUpdateWithoutReceivedPaymentsInput>
-}
-
-export type UserCreateNestedOneWithoutUserLedgerTransactionsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserLedgerTransactionsInput, Prisma.UserUncheckedCreateWithoutUserLedgerTransactionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserLedgerTransactionsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutUserLedgerTransactionsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserLedgerTransactionsInput, Prisma.UserUncheckedCreateWithoutUserLedgerTransactionsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserLedgerTransactionsInput
-  upsert?: Prisma.UserUpsertWithoutUserLedgerTransactionsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserLedgerTransactionsInput, Prisma.UserUpdateWithoutUserLedgerTransactionsInput>, Prisma.UserUncheckedUpdateWithoutUserLedgerTransactionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutJobProfileInput, Prisma.UserUpdateWithoutJobProfileInput>, Prisma.UserUncheckedUpdateWithoutJobProfileInput>
 }
 
 export type UserCreateWithoutAcademiesInput = {
@@ -619,17 +479,12 @@ export type UserCreateWithoutAcademiesInput = {
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryCreateNestedOneWithoutUserInput
-  receivedPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutUserInput
+  jobProfile?: Prisma.JobProfileCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAcademiesInput = {
@@ -637,17 +492,12 @@ export type UserUncheckedCreateWithoutAcademiesInput = {
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryUncheckedCreateNestedOneWithoutUserInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutUserInput
+  jobProfile?: Prisma.JobProfileUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAcademiesInput = {
@@ -679,452 +529,79 @@ export type UserScalarWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
-  isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
-  roles?: Prisma.EnumRoleNullableListFilter<"User">
   isActive?: Prisma.BoolFilter<"User"> | boolean
+  email?: Prisma.StringNullableFilter<"User"> | string | null
+  logoutAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  isPasswordChanged?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  logoutAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
 }
 
-export type UserCreateWithoutSecretaryProfileInput = {
+export type UserCreateWithoutJobProfileInput = {
   id?: string
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainCreateNestedOneWithoutUserInput
   academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutSecretaryProfileInput = {
+export type UserUncheckedCreateWithoutJobProfileInput = {
   id?: string
   name: string
   phone: string
   password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
   isActive?: boolean
+  email?: string | null
+  logoutAt?: Date | string
+  isPasswordChanged?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedCreateNestedOneWithoutUserInput
   academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutSecretaryProfileInput = {
+export type UserCreateOrConnectWithoutJobProfileInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSecretaryProfileInput, Prisma.UserUncheckedCreateWithoutSecretaryProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutJobProfileInput, Prisma.UserUncheckedCreateWithoutJobProfileInput>
 }
 
-export type UserUpsertWithoutSecretaryProfileInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSecretaryProfileInput, Prisma.UserUncheckedUpdateWithoutSecretaryProfileInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSecretaryProfileInput, Prisma.UserUncheckedCreateWithoutSecretaryProfileInput>
+export type UserUpsertWithoutJobProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutJobProfileInput, Prisma.UserUncheckedUpdateWithoutJobProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutJobProfileInput, Prisma.UserUncheckedCreateWithoutJobProfileInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutSecretaryProfileInput = {
+export type UserUpdateToOneWithWhereWithoutJobProfileInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSecretaryProfileInput, Prisma.UserUncheckedUpdateWithoutSecretaryProfileInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutJobProfileInput, Prisma.UserUncheckedUpdateWithoutJobProfileInput>
 }
 
-export type UserUpdateWithoutSecretaryProfileInput = {
+export type UserUpdateWithoutJobProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUpdateOneWithoutUserNestedInput
   academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutSecretaryProfileInput = {
+export type UserUncheckedUpdateWithoutJobProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedUpdateOneWithoutUserNestedInput
   academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutCaptainProfileInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  secretaryProfile?: Prisma.SecretaryCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutCaptainProfileInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  secretaryProfile?: Prisma.SecretaryUncheckedCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutCaptainProfileInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCaptainProfileInput, Prisma.UserUncheckedCreateWithoutCaptainProfileInput>
-}
-
-export type UserUpsertWithoutCaptainProfileInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCaptainProfileInput, Prisma.UserUncheckedUpdateWithoutCaptainProfileInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCaptainProfileInput, Prisma.UserUncheckedCreateWithoutCaptainProfileInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutCaptainProfileInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCaptainProfileInput, Prisma.UserUncheckedUpdateWithoutCaptainProfileInput>
-}
-
-export type UserUpdateWithoutCaptainProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  secretaryProfile?: Prisma.SecretaryUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutCaptainProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  secretaryProfile?: Prisma.SecretaryUncheckedUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutSubscriptionsInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutReceiverInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutSubscriptionsInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryUncheckedCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutReceiverInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutSubscriptionsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-}
-
-export type UserUpsertWithoutSubscriptionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSubscriptionsInput, Prisma.UserUncheckedCreateWithoutSubscriptionsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutSubscriptionsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSubscriptionsInput, Prisma.UserUncheckedUpdateWithoutSubscriptionsInput>
-}
-
-export type UserUpdateWithoutSubscriptionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUpdateManyWithoutReceiverNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutSubscriptionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUncheckedUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutReceiverNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutReceivedPaymentsInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutReceivedPaymentsInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryUncheckedCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCreatedByInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutReceivedPaymentsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedPaymentsInput>
-}
-
-export type UserUpsertWithoutReceivedPaymentsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedPaymentsInput, Prisma.UserUncheckedUpdateWithoutReceivedPaymentsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedPaymentsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutReceivedPaymentsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedPaymentsInput, Prisma.UserUncheckedUpdateWithoutReceivedPaymentsInput>
-}
-
-export type UserUpdateWithoutReceivedPaymentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutReceivedPaymentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUncheckedUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutUserLedgerTransactionsInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCreatedByInput
-}
-
-export type UserUncheckedCreateWithoutUserLedgerTransactionsInput = {
-  id?: string
-  name: string
-  phone: string
-  password: string
-  isPasswordChanged?: boolean
-  roles?: Prisma.UserCreaterolesInput | $Enums.Role[]
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  logoutAt?: Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedCreateNestedOneWithoutUserInput
-  secretaryProfile?: Prisma.SecretaryUncheckedCreateNestedOneWithoutUserInput
-  academies?: Prisma.AcademyUncheckedCreateNestedManyWithoutOwnersInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutReceiverInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type UserCreateOrConnectWithoutUserLedgerTransactionsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserLedgerTransactionsInput, Prisma.UserUncheckedCreateWithoutUserLedgerTransactionsInput>
-}
-
-export type UserUpsertWithoutUserLedgerTransactionsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutUserLedgerTransactionsInput, Prisma.UserUncheckedUpdateWithoutUserLedgerTransactionsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserLedgerTransactionsInput, Prisma.UserUncheckedCreateWithoutUserLedgerTransactionsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutUserLedgerTransactionsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutUserLedgerTransactionsInput, Prisma.UserUncheckedUpdateWithoutUserLedgerTransactionsInput>
-}
-
-export type UserUpdateWithoutUserLedgerTransactionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCreatedByNestedInput
-}
-
-export type UserUncheckedUpdateWithoutUserLedgerTransactionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUncheckedUpdateOneWithoutUserNestedInput
-  academies?: Prisma.AcademyUncheckedUpdateManyWithoutOwnersNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserUpdateWithoutAcademiesInput = {
@@ -1132,17 +609,12 @@ export type UserUpdateWithoutAcademiesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUpdateOneWithoutUserNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutUserNestedInput
+  jobProfile?: Prisma.JobProfileUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAcademiesInput = {
@@ -1150,17 +622,12 @@ export type UserUncheckedUpdateWithoutAcademiesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  captainProfile?: Prisma.CaptainUncheckedUpdateOneWithoutUserNestedInput
-  secretaryProfile?: Prisma.SecretaryUncheckedUpdateOneWithoutUserNestedInput
-  receivedPayments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutReceiverNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCreatedByNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutUserNestedInput
+  jobProfile?: Prisma.JobProfileUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutAcademiesInput = {
@@ -1168,12 +635,11 @@ export type UserUncheckedUpdateManyWithoutAcademiesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
-  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  roles?: Prisma.UserUpdaterolesInput | $Enums.Role[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoutAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isPasswordChanged?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logoutAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1182,17 +648,13 @@ export type UserUncheckedUpdateManyWithoutAcademiesInput = {
  */
 
 export type UserCountOutputType = {
+  jobProfile: number
   academies: number
-  receivedPayments: number
-  subscriptions: number
-  userLedgerTransactions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  jobProfile?: boolean | UserCountOutputTypeCountJobProfileArgs
   academies?: boolean | UserCountOutputTypeCountAcademiesArgs
-  receivedPayments?: boolean | UserCountOutputTypeCountReceivedPaymentsArgs
-  subscriptions?: boolean | UserCountOutputTypeCountSubscriptionsArgs
-  userLedgerTransactions?: boolean | UserCountOutputTypeCountUserLedgerTransactionsArgs
 }
 
 /**
@@ -1208,29 +670,15 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountJobProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobProfileWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountAcademiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AcademyWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountReceivedPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PaymentTransactionWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SubscriptionWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountUserLedgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LedgerTransactionWhereInput
 }
 
 
@@ -1239,18 +687,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   phone?: boolean
   password?: boolean
-  isPasswordChanged?: boolean
-  roles?: boolean
   isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  email?: boolean
   logoutAt?: boolean
-  captainProfile?: boolean | Prisma.User$captainProfileArgs<ExtArgs>
-  secretaryProfile?: boolean | Prisma.User$secretaryProfileArgs<ExtArgs>
+  isPasswordChanged?: boolean
+  createdAt?: boolean
+  jobProfile?: boolean | Prisma.User$jobProfileArgs<ExtArgs>
   academies?: boolean | Prisma.User$academiesArgs<ExtArgs>
-  receivedPayments?: boolean | Prisma.User$receivedPaymentsArgs<ExtArgs>
-  subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
-  userLedgerTransactions?: boolean | Prisma.User$userLedgerTransactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1259,12 +702,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   phone?: boolean
   password?: boolean
-  isPasswordChanged?: boolean
-  roles?: boolean
   isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  email?: boolean
   logoutAt?: boolean
+  isPasswordChanged?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1272,12 +714,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   phone?: boolean
   password?: boolean
-  isPasswordChanged?: boolean
-  roles?: boolean
   isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  email?: boolean
   logoutAt?: boolean
+  isPasswordChanged?: boolean
+  createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1285,22 +726,17 @@ export type UserSelectScalar = {
   name?: boolean
   phone?: boolean
   password?: boolean
-  isPasswordChanged?: boolean
-  roles?: boolean
   isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  email?: boolean
   logoutAt?: boolean
+  isPasswordChanged?: boolean
+  createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "password" | "isPasswordChanged" | "roles" | "isActive" | "createdAt" | "updatedAt" | "logoutAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "password" | "isActive" | "email" | "logoutAt" | "isPasswordChanged" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  captainProfile?: boolean | Prisma.User$captainProfileArgs<ExtArgs>
-  secretaryProfile?: boolean | Prisma.User$secretaryProfileArgs<ExtArgs>
+  jobProfile?: boolean | Prisma.User$jobProfileArgs<ExtArgs>
   academies?: boolean | Prisma.User$academiesArgs<ExtArgs>
-  receivedPayments?: boolean | Prisma.User$receivedPaymentsArgs<ExtArgs>
-  subscriptions?: boolean | Prisma.User$subscriptionsArgs<ExtArgs>
-  userLedgerTransactions?: boolean | Prisma.User$userLedgerTransactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1309,24 +745,19 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    captainProfile: Prisma.$CaptainPayload<ExtArgs> | null
-    secretaryProfile: Prisma.$SecretaryPayload<ExtArgs> | null
+    jobProfile: Prisma.$JobProfilePayload<ExtArgs>[]
     academies: Prisma.$AcademyPayload<ExtArgs>[]
-    receivedPayments: Prisma.$PaymentTransactionPayload<ExtArgs>[]
-    subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
-    userLedgerTransactions: Prisma.$LedgerTransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     phone: string
     password: string
-    isPasswordChanged: boolean
-    roles: $Enums.Role[]
     isActive: boolean
+    email: string | null
+    logoutAt: Date
+    isPasswordChanged: boolean
     createdAt: Date
-    updatedAt: Date
-    logoutAt: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1721,12 +1152,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  captainProfile<T extends Prisma.User$captainProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$captainProfileArgs<ExtArgs>>): Prisma.Prisma__CaptainClient<runtime.Types.Result.GetResult<Prisma.$CaptainPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  secretaryProfile<T extends Prisma.User$secretaryProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$secretaryProfileArgs<ExtArgs>>): Prisma.Prisma__SecretaryClient<runtime.Types.Result.GetResult<Prisma.$SecretaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  jobProfile<T extends Prisma.User$jobProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobProfileArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   academies<T extends Prisma.User$academiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$academiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  receivedPayments<T extends Prisma.User$receivedPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  subscriptions<T extends Prisma.User$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  userLedgerTransactions<T extends Prisma.User$userLedgerTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userLedgerTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1760,12 +1187,11 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
-  readonly isPasswordChanged: Prisma.FieldRef<"User", 'Boolean'>
-  readonly roles: Prisma.FieldRef<"User", 'Role[]'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
-  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly logoutAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly isPasswordChanged: Prisma.FieldRef<"User", 'Boolean'>
+  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -2159,41 +1585,27 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.captainProfile
+ * User.jobProfile
  */
-export type User$captainProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$jobProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Captain
+   * Select specific fields to fetch from the JobProfile
    */
-  select?: Prisma.CaptainSelect<ExtArgs> | null
+  select?: Prisma.JobProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Captain
+   * Omit specific fields from the JobProfile
    */
-  omit?: Prisma.CaptainOmit<ExtArgs> | null
+  omit?: Prisma.JobProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.CaptainInclude<ExtArgs> | null
-  where?: Prisma.CaptainWhereInput
-}
-
-/**
- * User.secretaryProfile
- */
-export type User$secretaryProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Secretary
-   */
-  select?: Prisma.SecretarySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Secretary
-   */
-  omit?: Prisma.SecretaryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SecretaryInclude<ExtArgs> | null
-  where?: Prisma.SecretaryWhereInput
+  include?: Prisma.JobProfileInclude<ExtArgs> | null
+  where?: Prisma.JobProfileWhereInput
+  orderBy?: Prisma.JobProfileOrderByWithRelationInput | Prisma.JobProfileOrderByWithRelationInput[]
+  cursor?: Prisma.JobProfileWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobProfileScalarFieldEnum | Prisma.JobProfileScalarFieldEnum[]
 }
 
 /**
@@ -2218,78 +1630,6 @@ export type User$academiesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.AcademyScalarFieldEnum | Prisma.AcademyScalarFieldEnum[]
-}
-
-/**
- * User.receivedPayments
- */
-export type User$receivedPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PaymentTransaction
-   */
-  select?: Prisma.PaymentTransactionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PaymentTransaction
-   */
-  omit?: Prisma.PaymentTransactionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PaymentTransactionInclude<ExtArgs> | null
-  where?: Prisma.PaymentTransactionWhereInput
-  orderBy?: Prisma.PaymentTransactionOrderByWithRelationInput | Prisma.PaymentTransactionOrderByWithRelationInput[]
-  cursor?: Prisma.PaymentTransactionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PaymentTransactionScalarFieldEnum | Prisma.PaymentTransactionScalarFieldEnum[]
-}
-
-/**
- * User.subscriptions
- */
-export type User$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Subscription
-   */
-  select?: Prisma.SubscriptionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Subscription
-   */
-  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SubscriptionInclude<ExtArgs> | null
-  where?: Prisma.SubscriptionWhereInput
-  orderBy?: Prisma.SubscriptionOrderByWithRelationInput | Prisma.SubscriptionOrderByWithRelationInput[]
-  cursor?: Prisma.SubscriptionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
-}
-
-/**
- * User.userLedgerTransactions
- */
-export type User$userLedgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LedgerTransaction
-   */
-  select?: Prisma.LedgerTransactionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LedgerTransaction
-   */
-  omit?: Prisma.LedgerTransactionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LedgerTransactionInclude<ExtArgs> | null
-  where?: Prisma.LedgerTransactionWhereInput
-  orderBy?: Prisma.LedgerTransactionOrderByWithRelationInput | Prisma.LedgerTransactionOrderByWithRelationInput[]
-  cursor?: Prisma.LedgerTransactionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LedgerTransactionScalarFieldEnum | Prisma.LedgerTransactionScalarFieldEnum[]
 }
 
 /**

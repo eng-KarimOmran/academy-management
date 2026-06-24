@@ -11,7 +11,7 @@ export default function UserDetailsPage() {
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["users", userId],
-    queryFn: () => getUserDetails({ userId: userId! }),
+    queryFn: () => getUserDetails({ params: { userId: userId! } }),
     select: (res) => res.data.data,
     enabled: !!userId,
   });

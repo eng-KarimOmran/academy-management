@@ -6,15 +6,13 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
-
-interface DeleteDto {
-  name: string;
-}
+import type { DeleteAcademyDto } from "@/DTOs/academy.dto";
 
 export default function DeleteAcademy({ item }: { item: Academy }) {
   const { setConfigDialog } = useDialogState();
+  const params: DeleteAcademyDto["params"] = { academyId: item.id };
 
-  const config: FormProps<DeleteDto, null> = {
+  const config: FormProps<{ name: string }, Academy> = {
     inputs: [
       {
         name: "name",
@@ -24,10 +22,6 @@ export default function DeleteAcademy({ item }: { item: Academy }) {
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "اسم الأكاديمية", item.name),
 
     submitButton: {
@@ -36,7 +30,7 @@ export default function DeleteAcademy({ item }: { item: Academy }) {
       variant: "destructive",
     },
 
-    service: async () => deleteAcademy({ academyId: item.id }),
+    service: () => deleteAcademy({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["academies"] });

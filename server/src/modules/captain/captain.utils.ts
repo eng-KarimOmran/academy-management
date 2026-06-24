@@ -1,16 +1,18 @@
-import { TrainingSupport } from "../../../prisma/generated/enums";
+import { SupportType } from "../../../prisma/generated/enums";
 import { CaptainWhereInput } from "../../../prisma/generated/models";
 
 export const buildCaptainWhere = ({
   search,
   isActive,
-  trainingType,
+  supportType,
+  academyId
 }: {
   search?: string;
   isActive?: boolean;
-  trainingType?: TrainingSupport;
+  supportType?: SupportType;
+  academyId: string
 }): CaptainWhereInput => {
-  const where: CaptainWhereInput = {};
+  const where: CaptainWhereInput = { academyId };
 
   if (search) {
     where.OR = [
@@ -19,8 +21,8 @@ export const buildCaptainWhere = ({
     ];
   }
 
-  if (trainingType) {
-    where.trainingType = { in: ["BOTH", trainingType] };
+  if (supportType) {
+    where.supportType = { in: ["BOTH", supportType] };
   }
 
   if (typeof isActive !== "undefined") {

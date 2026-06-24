@@ -4,7 +4,6 @@ import {
   id,
   limit,
   positiveNumber,
-  phone,
   transmission,
   subscriptionStatus,
 } from "../../shared/utils/common.validation";
@@ -14,7 +13,7 @@ export const CreateSubscriptionSchema = {
     academyId: id,
   }),
   body: z.object({
-    phone: phone,
+    clientId: id,
     courseId: id,
     areaId: id,
     trainingTypeAtRegistration: transmission,

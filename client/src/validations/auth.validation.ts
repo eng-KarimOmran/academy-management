@@ -1,23 +1,25 @@
 import { z } from "zod";
 
-import { boolean, password, phone } from "./common.validation";
+import { booleanQuery, id, password, phone } from "./common.validation";
 
-export const LoginSchema = z.object({
-  phone,
-  password,
-});
+export const LoginSchema = {
+  body: z.object({ phone, password }),
+};
 
-export const LogoutSchema = z.object({
-  allDevices: boolean,
-});
+export const LogoutSchema = {
+  query: z.object({ allDevices: booleanQuery.optional().default(false) }),
+};
 
-export const ChangePasswordSchema = z
-  .object({
+export const changePasswordSchema = {
+  body: z.object({
     password,
     newPassword: password,
-    confirmNewPassword: password,
-  })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    message: "كلمة السر وتأكيدها لازم يكونوا متطابقين",
-    path: ["confirmPassword"],
-  });
+  }),
+};
+
+export const newPasswordSchema = {
+  params: z.object({ userId: id }),
+  body: z.object({
+    newPassword: password,
+  }),
+};

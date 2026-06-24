@@ -1,19 +1,21 @@
 import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
-import type { UpdateAreaDto } from "@/DTOs/area.dto";
 import { UpdateAreaSchema } from "@/validations/area.validation";
 import { updateArea } from "@/service/area.service";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
-import { TrainingSupport } from "@/types/enums";
 import { enumTranslations } from "@/lib/enumTranslations";
 import type { Area } from "@/types/area";
 import { useDialogState } from "@/store/DialogState";
+import type { UpdateDto } from "@/DTOs/area.dto";
+import { SupportType } from "@/types/enums";
 
 export default function UpdateArea({ item }: { item: Area }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<UpdateAreaDto, Area> = {
+  const params: UpdateDto["params"] = { areaId: item.id };
+
+  const config: FormProps<UpdateDto["body"], Area> = {
     inputs: [
       {
         name: "isActive",
@@ -31,7 +33,7 @@ export default function UpdateArea({ item }: { item: Area }) {
         type: "select",
         label: "نوع الدعم",
         placeholder: "اختر نوع الدعم",
-        options: TrainingSupport.map((t) => ({
+        options: SupportType.map((t) => ({
           label: enumTranslations[t] || t,
           value: t,
         })),
@@ -44,14 +46,14 @@ export default function UpdateArea({ item }: { item: Area }) {
       isActive: item.isActive,
     },
 
-    schema: UpdateAreaSchema,
+    schema: UpdateAreaSchema.body,
 
     submitButton: {
       text: "حفظ التعديلات",
       loadingText: "جاري الحفظ...",
     },
 
-    service: (data) => updateArea(item.id, data),
+    service: (data) => updateArea({ body: data, params }),
 
     onSuccess: () => {
       toast.success("تم تعديل المنطقة بنجاح");

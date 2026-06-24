@@ -1,87 +1,97 @@
 import { Response } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
 import * as DTO from "./auth.dto";
 import AuthService from "./auth.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestValidation } from "../../middlewares/validation.middleware";
+import { RequestValidation } from "../../shared/middlewares/validation.middleware";
 import { CreateUserDto } from "../user/user.dto";
-import { cookieAccess, cookieRefresh } from "../../shared/utils/cookie";
+import { cookieAccess, cookieRefresh } from "./auth.utils";
+import { RequestAuth } from "./auth.type";
 
 const AuthController = {
   login: async (req: RequestValidation, res: Response) => {
     const dataSafe = req.dataSafe as DTO.LoginDto;
+    const { body } = dataSafe
 
-    const { tokens, user } = await AuthService.login(dataSafe);
+    const { access, refresh, userId } = await AuthService.login(body);
 
-    res.cookie("access", tokens.access, cookieAccess);
+    res.cookie("access", access, cookieAccess);
 
-    res.cookie("refresh", tokens.refresh, cookieRefresh);
+    res.cookie("refresh", refresh, cookieRefresh);
 
     return sendSuccess({
       res,
-      data: user,
+      data: { access, refresh, userId },
       message: "تم تسجيل الدخول بنجاح",
     });
   },
 
   refresh: async (req: RequestAuth, res: Response) => {
-    const userLogin = req.userLogin!;
-    const tokenPayload = req.tokenPayload!;
+    const userId = req.userLogin!.id
+    const jti = req.tokenPayload!.jti
 
-    const { access, user } = await AuthService.refresh({ userLogin, tokenPayload });
+    const { access } = AuthService.refresh({ userId, jti });
 
     res.cookie("access", access, cookieAccess);
 
 
     return sendSuccess({
       res,
-      data: user,
+      data: { access },
       message: "تم تجديد صلاحية الدخول بنجاح",
     });
   },
 
   logout: async (req: RequestAuth, res: Response) => {
-    const userLogin = req.userLogin!;
-    const tokenPayload = req.tokenPayload!;
     const dataSafe = req.dataSafe as DTO.LogoutDto;
+    const { allDevices } = dataSafe.query
+    const userId = req.userLogin!.id
+    const { jti, exp } = req.tokenPayload!
 
-    await AuthService.logout({ userLogin, tokenPayload, dataSafe });
+    await AuthService.logout({ allDevices, exp, jti, userId });
 
     res.clearCookie("access", cookieAccess);
     res.clearCookie("refresh", cookieRefresh);
 
     return sendSuccess({
       res,
+      data: true,
       message: "تم تسجيل الخروج بنجاح",
     });
   },
 
   changePassword: async (req: RequestAuth, res: Response) => {
-    const userLogin = req.userLogin!;
+    const { password, id } = req.userLogin!;
     const dataSafe = req.dataSafe as DTO.ChangePasswordDto;
+    const { body } = dataSafe
 
-    await AuthService.changePassword({ userLogin, dataSafe });
+
+    await AuthService.changePassword({ ...body, password, userId: id });
 
     res.clearCookie("access", cookieAccess);
     res.clearCookie("refresh", cookieRefresh);
 
     return sendSuccess({
       res,
+      data: true,
       message: "تم تغيير كلمة المرور بنجاح",
     });
   },
 
 
-  createFirstOwner: async (req: RequestValidation, res: Response) => {
+  createFirstUser: async (req: RequestValidation, res: Response) => {
     const dataSafe = req.dataSafe as CreateUserDto
+    const body = dataSafe.body
 
-    const user = await AuthService.createFirstOwner(dataSafe);
+    const user = await AuthService.createFirstUser(body);
+
+    res.clearCookie("access", cookieAccess);
+    res.clearCookie("refresh", cookieRefresh);
 
     return sendSuccess({
       res,
       statusCode: 201,
-      data: user,
-      message: "تم إنشاء المستخدم المالك بنجاح",
+      data: true,
+      message: "تم إنشاء المستخدم بنجاح",
     });
   },
 };

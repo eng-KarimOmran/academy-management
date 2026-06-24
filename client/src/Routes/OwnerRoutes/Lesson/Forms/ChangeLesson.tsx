@@ -13,7 +13,12 @@ import { useDialogState } from "@/store/DialogState";
 export default function ChangeLesson({ item }: { item: LessonBase }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<ChangeLessonStateDto, LessonBase> = {
+  const params: ChangeLessonStateDto["params"] = {
+    academyId: item.academy.id,
+    lessonId: item.id,
+  };
+
+  const config: FormProps<ChangeLessonStateDto["body"], LessonBase> = {
     inputs: [
       {
         name: "status",
@@ -28,19 +33,14 @@ export default function ChangeLesson({ item }: { item: LessonBase }) {
       },
     ],
 
-    defaultValues: {
-      academyId: item.academy.id,
-      lessonId: item.id,
-    },
-
-    schema: ChangeLessonStateSchema,
+    schema: ChangeLessonStateSchema.body,
 
     submitButton: {
       text: "تغير حالة الحصة",
       loadingText: "جاري التغير...",
     },
 
-    service: (data) => changeLessonState(data),
+    service: (data) => changeLessonState({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lessons"] });

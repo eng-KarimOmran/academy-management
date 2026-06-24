@@ -1,27 +1,42 @@
+import { auth } from './auth.middleware';
 import { Router } from "express";
-import validation from "../../middlewares/validation.middleware";
-import auth from "../../middlewares/auth.middleware";
-import { TokenType } from "../../shared/utils/Token";
+import validation from "../../shared/middlewares/validation.middleware";
 import * as Schema from "./auth.schema";
 import AuthController from "./auth.controller";
-import { CreateUserSchema } from "../user/user.schema";
+import { TokenType } from './auth.type';
 
 const router = Router();
 
-router.post("/login", validation(Schema.LoginSchema), AuthController.login);
+router.post(
+  "/login",
+  validation(Schema.LoginSchema),
+  AuthController.login
+);
 
-router.get("/refresh", auth(TokenType.REFRESH), AuthController.refresh);
+router.post(
+  "/first-user",
+  validation(Schema.createFirstUserSchema),
+  AuthController.createFirstUser
+);
 
-router.post("/sign-up-first-user", validation(CreateUserSchema), AuthController.createFirstOwner);
+router.post(
+  "/logout",
+  validation(Schema.LogoutSchema),
+  auth(TokenType.REFRESH),
+  AuthController.logout
+);
 
-router.use(auth(TokenType.ACCESS));
-
-router.post("/logout", validation(Schema.LogoutSchema), AuthController.logout);
+router.get(
+  "/refresh",
+  auth(TokenType.REFRESH),
+  AuthController.refresh
+);
 
 router.patch(
   "/change-password",
   validation(Schema.changePasswordSchema),
+  auth(TokenType.ACCESS),
   AuthController.changePassword,
 );
 
-export default router;
+export default router

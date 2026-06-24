@@ -6,6 +6,7 @@ export const userBaseSelect: UserSelect = {
   phone: true,
   roles: true,
   isActive: true,
+  createdAt: true,
 };
 
 export const userAuthSelect: UserSelect = {
@@ -17,17 +18,15 @@ export const userAuthSelect: UserSelect = {
 
 export const userDetailsSelect: UserSelect = {
   ...userBaseSelect,
-  createdAt: true,
   captainProfile: {
     select: {
       id: true,
       captainLessonPrice: true,
       isActive: true,
-      trainingType: true,
+      supportType: true,
       createdAt: true,
-      _count: {
-        select: { lessons: true }
-      },
+      baseSalary: true,
+      academyId: true
     },
   },
   secretaryProfile: {
@@ -37,6 +36,7 @@ export const userDetailsSelect: UserSelect = {
       bonusAmount: true,
       targetCount: true,
       createdAt: true,
+      academyId: true
     },
   },
 };

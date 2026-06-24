@@ -7,13 +7,19 @@ import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import type { Secretary } from "@/types/secretary";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteDto } from "@/DTOs/secretary.dto";
 
 export default function DeleteSecretary({
   item,
 }: {
-  item: Pick<Secretary, "id">;
+  item: Pick<Secretary, "id" | "academyId">;
 }) {
   const { setConfigDialog } = useDialogState();
+
+  const params: DeleteDto["params"] = {
+    academyId: item.academyId,
+    secretaryId: item.id,
+  };
 
   const config: FormProps<{ name: string }, null> = {
     inputs: [
@@ -25,10 +31,6 @@ export default function DeleteSecretary({
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "كلمة التأكيد", "حذف"),
 
     submitButton: {
@@ -37,10 +39,7 @@ export default function DeleteSecretary({
       variant: "destructive",
     },
 
-    service: async () =>
-      deleteSecretary({
-        secretaryId: item.id,
-      }),
+    service: async () => deleteSecretary({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["secretaries"] });

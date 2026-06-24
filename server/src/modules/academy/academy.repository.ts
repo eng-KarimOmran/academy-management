@@ -1,66 +1,186 @@
 import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import {
-  AcademyCreateInput,
-  AcademyOrderByWithRelationInput,
-  AcademySelect,
-  AcademyUpdateInput,
-  AcademyWhereInput,
-} from "../../../prisma/generated/models";
-import { academyBaseSelect } from "./academy.selector";
-import getClient from "../../shared/utils/getClient"
+    AcademyCreateInput,
+    AcademyUpdateInput,
+    AcademyWhereInput,
+} from "../../../prisma/generated/models/Academy";
+import getClient from "../../shared/utils/getClient";
+
 
 const AcademyRepository = {
-  async create({ data, select, tx }: { data: AcademyCreateInput; select?: AcademySelect; tx?: TransactionClient }) {
-    return getClient(tx).academy.create({
-      data,
-      select: select ?? academyBaseSelect,
-    });
-  },
+    create: (data: AcademyCreateInput, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.create({ data });
+    },
 
-  async update({ academyId, data, select, tx }: { academyId: string; data: AcademyUpdateInput; select?: AcademySelect; tx?: TransactionClient }) {
-    return getClient(tx).academy.update({
-      where: { id: academyId },
-      data,
-      select: select ?? academyBaseSelect,
-    });
-  },
+    update: (academyId: string, data: AcademyUpdateInput, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data,
+        });
+    },
 
-  async delete({ academyId, select, tx }: { academyId: string; select?: AcademySelect; tx?: TransactionClient }) {
-    return getClient(tx).academy.delete({
-      where: { id: academyId },
-      select: select ?? academyBaseSelect,
-    });
-  },
+    delete: (academyId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.delete({
+            where: { id: academyId },
+        });
+    },
 
-  async findById({ academyId, select, tx }: { academyId: string; select?: AcademySelect; tx?: TransactionClient }) {
-    return getClient(tx).academy.findUnique({
-      where: { id: academyId },
-      select: select ?? academyBaseSelect,
-    });
-  },
+    findById: (academyId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.findUnique({
+            where: { id: academyId },
+        });
+    },
 
-  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: AcademyWhereInput; orderBy?: AcademyOrderByWithRelationInput; select?: AcademySelect; tx?: TransactionClient }) {
-    const client = getClient(tx);
-    const [academies, count] = await Promise.all([
-      client.academy.findMany({ where, skip, take, orderBy, select: select ?? academyBaseSelect }),
-      client.academy.count({ where })
-    ]);
-    return { academies, count };
-  },
+    getAcademyDetails: (academyId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.findUnique({
+            where: { id: academyId },
+            include: {
+                owners: true,
+                phones: true,
+                addresses: true,
+                paymentLinks: true,
+                socialMedia: true,
+            }
+        });
+    },
 
-  async findByNameOrPhone({ academyId, name, phone, select, tx }: { name?: string, phone?: string, academyId?: string, select?: AcademySelect; tx?: TransactionClient }) {
-    const where: AcademyWhereInput = {};
-    const OR: AcademyWhereInput[] = [];
-    if (name) OR.push({ name });
-    if (phone) OR.push({ phone });
-    if (academyId) where.NOT = { id: academyId };
-    if (OR.length > 0) where.OR = OR;
+    findByName: (name: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.findUnique({
+            where: { name },
+        });
+    },
+    findByPhone: async (phone: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        const academy = await client.academyPhone.findUnique({
+            where: { phone },
+            include: { academy: true }
+        });
+        return academy?.academy
+    }
+    ,
+    findAll: (
+        params: {
+            where?: AcademyWhereInput;
+            skip?: number;
+            take?: number;
+        },
+        tx?: TransactionClient
+    ) => {
+        const client = getClient(tx);
+        return client.academy.findMany({ ...params, orderBy: { createdAt: "desc" } });
+    },
 
-    return getClient(tx).academy.findFirst({
-      where,
-      select: select ?? academyBaseSelect
-    });
-  }
+    count: (where?: AcademyWhereInput, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.count({ where });
+    },
+
+    addOwner: (academyId: string, userId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                owners: {
+                    connect: {
+                        id: userId
+                    }
+                }
+            },
+        });
+    },
+
+    removeOwner: (academyId: string, userId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                owners: {
+                    disconnect: { id: userId },
+                },
+            },
+        });
+    },
+
+    addPhone: (academyId: string, phone: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                phones: {
+                    create: { phone },
+                },
+            },
+        });
+    },
+
+    deletePhone: (academyId: string, phoneId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                phones: {
+                    delete: { id: phoneId },
+                },
+            },
+        });
+    },
+
+    addAddress: (academyId: string, address: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                addresses: {
+                    create: { address },
+                },
+            },
+        });
+    },
+
+    deleteAddress: (academyId: string, addressId: string, tx?: TransactionClient
+    ) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                addresses: {
+                    delete: { id: addressId },
+                },
+            },
+        });
+    },
+
+    addSocialMedia: (academyId: string, data: { platform: string; url: string }, tx?: TransactionClient
+    ) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                socialMedia: {
+                    create: data,
+                },
+            },
+        });
+    },
+
+    deleteSocialMedia: (academyId: string, socialMediaId: string, tx?: TransactionClient
+    ) => {
+        const client = getClient(tx);
+        return client.academy.update({
+            where: { id: academyId },
+            data: {
+                socialMedia: {
+                    delete: { id: socialMediaId },
+                },
+            },
+        });
+    },
 };
 
-export default AcademyRepository;
+export default AcademyRepository

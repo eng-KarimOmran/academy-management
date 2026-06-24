@@ -1,50 +1,32 @@
+import { AcademyWithFullRelations } from './academy.type';
 import { Response, NextFunction } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
-import AcademyRepository from "./academy.repository";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import ApiError from "../../shared/utils/ApiError";
-import { Academy } from "../../../prisma/generated/client";
-import { academyWithOwnersSelect } from "./academy.selector";
-
-export type AcademyWithOwners = Academy & { owners: { id: string }[] };
+import AcademyRepository from './academy.repository';
 
 export interface RequestAcademy extends RequestAuth {
-  academy?: AcademyWithOwners;
+  academy?: AcademyWithFullRelations;
 }
 
-export const checkAcademyExists = async (
-  req: RequestAcademy,
-  res: Response,
-  next: NextFunction,
-) => {
-  const academyId = req.params.academyId as string;
+export const checkAcademyExists = ({ isAcademyOwner = false }: { isAcademyOwner?: boolean } = {}) => {
+  return async (req: RequestAcademy, res: Response, next: NextFunction) => {
+    const userId = req.userLogin?.id
+    if (!userId) throw ApiError.Unauthorized()
+    const academyId = req.params?.academyId
 
-  const academy = await AcademyRepository.findById({ academyId, select: academyWithOwnersSelect });
-  if (!academy) throw ApiError.NotFound({ model: "Academy" });
+    if (!academyId || typeof academyId !== "string") throw ApiError.ValidationError("معرف الأكادمية مطلوب")
 
-  req.academy = academy;
-  next();
-};
+    const academy = req.academy ?? await AcademyRepository.getAcademyDetails(academyId)
 
-export const isAcademyOwnerMiddleware = async (
-  req: RequestAcademy,
-  res: Response,
-  next: NextFunction,
-) => {
-  const userId = req.userLogin?.id;
-  const academyId = req.academy?.id
+    if (!academy) throw ApiError.NotFound("Academy");
 
-  if (!userId || !academyId) throw ApiError.ValidationError();
+    if (isAcademyOwner) {
+      const isOwner = academy.owners.some((o) => o.id === userId);
+      if (!isOwner) throw ApiError.Forbidden();
+    }
 
-  const academy = await AcademyRepository.findById({
-    academyId,
-    select: academyWithOwnersSelect
-  });
+    req.academy = academy
 
-  if (!academy) throw ApiError.NotFound({ model: "Academy" });
-
-  const isAcademyOwner = academy.owners.some((o) => o.id === userId);
-  if (!isAcademyOwner) throw ApiError.Forbidden();
-
-  req.academy = academy as AcademyWithOwners;
-  next();
+    next();
+  }
 };

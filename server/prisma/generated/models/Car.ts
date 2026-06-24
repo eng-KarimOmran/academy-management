@@ -41,6 +41,7 @@ export type CarMinAggregateOutputType = {
   gearType: $Enums.Transmission | null
   carSessionPrice: number | null
   isActive: boolean | null
+  academyId: string | null
   createdAt: Date | null
 }
 
@@ -51,6 +52,7 @@ export type CarMaxAggregateOutputType = {
   gearType: $Enums.Transmission | null
   carSessionPrice: number | null
   isActive: boolean | null
+  academyId: string | null
   createdAt: Date | null
 }
 
@@ -61,6 +63,7 @@ export type CarCountAggregateOutputType = {
   gearType: number
   carSessionPrice: number
   isActive: number
+  academyId: number
   createdAt: number
   _all: number
 }
@@ -81,6 +84,7 @@ export type CarMinAggregateInputType = {
   gearType?: true
   carSessionPrice?: true
   isActive?: true
+  academyId?: true
   createdAt?: true
 }
 
@@ -91,6 +95,7 @@ export type CarMaxAggregateInputType = {
   gearType?: true
   carSessionPrice?: true
   isActive?: true
+  academyId?: true
   createdAt?: true
 }
 
@@ -101,6 +106,7 @@ export type CarCountAggregateInputType = {
   gearType?: true
   carSessionPrice?: true
   isActive?: true
+  academyId?: true
   createdAt?: true
   _all?: true
 }
@@ -198,6 +204,7 @@ export type CarGroupByOutputType = {
   gearType: $Enums.Transmission
   carSessionPrice: number
   isActive: boolean
+  academyId: string
   createdAt: Date
   _count: CarCountAggregateOutputType | null
   _avg: CarAvgAggregateOutputType | null
@@ -231,8 +238,10 @@ export type CarWhereInput = {
   gearType?: Prisma.EnumTransmissionFilter<"Car"> | $Enums.Transmission
   carSessionPrice?: Prisma.FloatFilter<"Car"> | number
   isActive?: Prisma.BoolFilter<"Car"> | boolean
+  academyId?: Prisma.StringFilter<"Car"> | string
   createdAt?: Prisma.DateTimeFilter<"Car"> | Date | string
   lessons?: Prisma.LessonListRelationFilter
+  academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
 }
 
 export type CarOrderByWithRelationInput = {
@@ -242,23 +251,28 @@ export type CarOrderByWithRelationInput = {
   gearType?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   lessons?: Prisma.LessonOrderByRelationAggregateInput
+  academy?: Prisma.AcademyOrderByWithRelationInput
 }
 
 export type CarWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  plateNumber?: string
+  plateNumber_academyId?: Prisma.CarPlateNumberAcademyIdCompoundUniqueInput
   AND?: Prisma.CarWhereInput | Prisma.CarWhereInput[]
   OR?: Prisma.CarWhereInput[]
   NOT?: Prisma.CarWhereInput | Prisma.CarWhereInput[]
   modelName?: Prisma.StringFilter<"Car"> | string
+  plateNumber?: Prisma.StringFilter<"Car"> | string
   gearType?: Prisma.EnumTransmissionFilter<"Car"> | $Enums.Transmission
   carSessionPrice?: Prisma.FloatFilter<"Car"> | number
   isActive?: Prisma.BoolFilter<"Car"> | boolean
+  academyId?: Prisma.StringFilter<"Car"> | string
   createdAt?: Prisma.DateTimeFilter<"Car"> | Date | string
   lessons?: Prisma.LessonListRelationFilter
-}, "id" | "plateNumber">
+  academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
+}, "id" | "plateNumber_academyId">
 
 export type CarOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -267,6 +281,7 @@ export type CarOrderByWithAggregationInput = {
   gearType?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.CarCountOrderByAggregateInput
   _avg?: Prisma.CarAvgOrderByAggregateInput
@@ -285,6 +300,7 @@ export type CarScalarWhereWithAggregatesInput = {
   gearType?: Prisma.EnumTransmissionWithAggregatesFilter<"Car"> | $Enums.Transmission
   carSessionPrice?: Prisma.FloatWithAggregatesFilter<"Car"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Car"> | boolean
+  academyId?: Prisma.StringWithAggregatesFilter<"Car"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Car"> | Date | string
 }
 
@@ -293,10 +309,11 @@ export type CarCreateInput = {
   modelName: string
   plateNumber: string
   gearType: $Enums.Transmission
-  carSessionPrice?: number
+  carSessionPrice: number
   isActive?: boolean
   createdAt?: Date | string
   lessons?: Prisma.LessonCreateNestedManyWithoutCarInput
+  academy: Prisma.AcademyCreateNestedOneWithoutCarsInput
 }
 
 export type CarUncheckedCreateInput = {
@@ -304,8 +321,9 @@ export type CarUncheckedCreateInput = {
   modelName: string
   plateNumber: string
   gearType: $Enums.Transmission
-  carSessionPrice?: number
+  carSessionPrice: number
   isActive?: boolean
+  academyId: string
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCarInput
 }
@@ -319,6 +337,7 @@ export type CarUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUpdateManyWithoutCarNestedInput
+  academy?: Prisma.AcademyUpdateOneRequiredWithoutCarsNestedInput
 }
 
 export type CarUncheckedUpdateInput = {
@@ -328,6 +347,7 @@ export type CarUncheckedUpdateInput = {
   gearType?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutCarNestedInput
 }
@@ -337,8 +357,9 @@ export type CarCreateManyInput = {
   modelName: string
   plateNumber: string
   gearType: $Enums.Transmission
-  carSessionPrice?: number
+  carSessionPrice: number
   isActive?: boolean
+  academyId: string
   createdAt?: Date | string
 }
 
@@ -359,7 +380,23 @@ export type CarUncheckedUpdateManyInput = {
   gearType?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CarListRelationFilter = {
+  every?: Prisma.CarWhereInput
+  some?: Prisma.CarWhereInput
+  none?: Prisma.CarWhereInput
+}
+
+export type CarOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
+export type CarPlateNumberAcademyIdCompoundUniqueInput = {
+  plateNumber: string
+  academyId: string
 }
 
 export type CarCountOrderByAggregateInput = {
@@ -369,6 +406,7 @@ export type CarCountOrderByAggregateInput = {
   gearType?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -383,6 +421,7 @@ export type CarMaxOrderByAggregateInput = {
   gearType?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -393,6 +432,7 @@ export type CarMinOrderByAggregateInput = {
   gearType?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
+  academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -405,8 +445,46 @@ export type CarScalarRelationFilter = {
   isNot?: Prisma.CarWhereInput
 }
 
-export type EnumTransmissionFieldUpdateOperationsInput = {
-  set?: $Enums.Transmission
+export type CarCreateNestedManyWithoutAcademyInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutAcademyInput, Prisma.CarUncheckedCreateWithoutAcademyInput> | Prisma.CarCreateWithoutAcademyInput[] | Prisma.CarUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutAcademyInput | Prisma.CarCreateOrConnectWithoutAcademyInput[]
+  createMany?: Prisma.CarCreateManyAcademyInputEnvelope
+  connect?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+}
+
+export type CarUncheckedCreateNestedManyWithoutAcademyInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutAcademyInput, Prisma.CarUncheckedCreateWithoutAcademyInput> | Prisma.CarCreateWithoutAcademyInput[] | Prisma.CarUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutAcademyInput | Prisma.CarCreateOrConnectWithoutAcademyInput[]
+  createMany?: Prisma.CarCreateManyAcademyInputEnvelope
+  connect?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+}
+
+export type CarUpdateManyWithoutAcademyNestedInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutAcademyInput, Prisma.CarUncheckedCreateWithoutAcademyInput> | Prisma.CarCreateWithoutAcademyInput[] | Prisma.CarUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutAcademyInput | Prisma.CarCreateOrConnectWithoutAcademyInput[]
+  upsert?: Prisma.CarUpsertWithWhereUniqueWithoutAcademyInput | Prisma.CarUpsertWithWhereUniqueWithoutAcademyInput[]
+  createMany?: Prisma.CarCreateManyAcademyInputEnvelope
+  set?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  disconnect?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  delete?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  connect?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  update?: Prisma.CarUpdateWithWhereUniqueWithoutAcademyInput | Prisma.CarUpdateWithWhereUniqueWithoutAcademyInput[]
+  updateMany?: Prisma.CarUpdateManyWithWhereWithoutAcademyInput | Prisma.CarUpdateManyWithWhereWithoutAcademyInput[]
+  deleteMany?: Prisma.CarScalarWhereInput | Prisma.CarScalarWhereInput[]
+}
+
+export type CarUncheckedUpdateManyWithoutAcademyNestedInput = {
+  create?: Prisma.XOR<Prisma.CarCreateWithoutAcademyInput, Prisma.CarUncheckedCreateWithoutAcademyInput> | Prisma.CarCreateWithoutAcademyInput[] | Prisma.CarUncheckedCreateWithoutAcademyInput[]
+  connectOrCreate?: Prisma.CarCreateOrConnectWithoutAcademyInput | Prisma.CarCreateOrConnectWithoutAcademyInput[]
+  upsert?: Prisma.CarUpsertWithWhereUniqueWithoutAcademyInput | Prisma.CarUpsertWithWhereUniqueWithoutAcademyInput[]
+  createMany?: Prisma.CarCreateManyAcademyInputEnvelope
+  set?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  disconnect?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  delete?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  connect?: Prisma.CarWhereUniqueInput | Prisma.CarWhereUniqueInput[]
+  update?: Prisma.CarUpdateWithWhereUniqueWithoutAcademyInput | Prisma.CarUpdateWithWhereUniqueWithoutAcademyInput[]
+  updateMany?: Prisma.CarUpdateManyWithWhereWithoutAcademyInput | Prisma.CarUpdateManyWithWhereWithoutAcademyInput[]
+  deleteMany?: Prisma.CarScalarWhereInput | Prisma.CarScalarWhereInput[]
 }
 
 export type CarCreateNestedOneWithoutLessonsInput = {
@@ -423,14 +501,77 @@ export type CarUpdateOneRequiredWithoutLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CarUpdateToOneWithWhereWithoutLessonsInput, Prisma.CarUpdateWithoutLessonsInput>, Prisma.CarUncheckedUpdateWithoutLessonsInput>
 }
 
+export type CarCreateWithoutAcademyInput = {
+  id?: string
+  modelName: string
+  plateNumber: string
+  gearType: $Enums.Transmission
+  carSessionPrice: number
+  isActive?: boolean
+  createdAt?: Date | string
+  lessons?: Prisma.LessonCreateNestedManyWithoutCarInput
+}
+
+export type CarUncheckedCreateWithoutAcademyInput = {
+  id?: string
+  modelName: string
+  plateNumber: string
+  gearType: $Enums.Transmission
+  carSessionPrice: number
+  isActive?: boolean
+  createdAt?: Date | string
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutCarInput
+}
+
+export type CarCreateOrConnectWithoutAcademyInput = {
+  where: Prisma.CarWhereUniqueInput
+  create: Prisma.XOR<Prisma.CarCreateWithoutAcademyInput, Prisma.CarUncheckedCreateWithoutAcademyInput>
+}
+
+export type CarCreateManyAcademyInputEnvelope = {
+  data: Prisma.CarCreateManyAcademyInput | Prisma.CarCreateManyAcademyInput[]
+  skipDuplicates?: boolean
+}
+
+export type CarUpsertWithWhereUniqueWithoutAcademyInput = {
+  where: Prisma.CarWhereUniqueInput
+  update: Prisma.XOR<Prisma.CarUpdateWithoutAcademyInput, Prisma.CarUncheckedUpdateWithoutAcademyInput>
+  create: Prisma.XOR<Prisma.CarCreateWithoutAcademyInput, Prisma.CarUncheckedCreateWithoutAcademyInput>
+}
+
+export type CarUpdateWithWhereUniqueWithoutAcademyInput = {
+  where: Prisma.CarWhereUniqueInput
+  data: Prisma.XOR<Prisma.CarUpdateWithoutAcademyInput, Prisma.CarUncheckedUpdateWithoutAcademyInput>
+}
+
+export type CarUpdateManyWithWhereWithoutAcademyInput = {
+  where: Prisma.CarScalarWhereInput
+  data: Prisma.XOR<Prisma.CarUpdateManyMutationInput, Prisma.CarUncheckedUpdateManyWithoutAcademyInput>
+}
+
+export type CarScalarWhereInput = {
+  AND?: Prisma.CarScalarWhereInput | Prisma.CarScalarWhereInput[]
+  OR?: Prisma.CarScalarWhereInput[]
+  NOT?: Prisma.CarScalarWhereInput | Prisma.CarScalarWhereInput[]
+  id?: Prisma.StringFilter<"Car"> | string
+  modelName?: Prisma.StringFilter<"Car"> | string
+  plateNumber?: Prisma.StringFilter<"Car"> | string
+  gearType?: Prisma.EnumTransmissionFilter<"Car"> | $Enums.Transmission
+  carSessionPrice?: Prisma.FloatFilter<"Car"> | number
+  isActive?: Prisma.BoolFilter<"Car"> | boolean
+  academyId?: Prisma.StringFilter<"Car"> | string
+  createdAt?: Prisma.DateTimeFilter<"Car"> | Date | string
+}
+
 export type CarCreateWithoutLessonsInput = {
   id?: string
   modelName: string
   plateNumber: string
   gearType: $Enums.Transmission
-  carSessionPrice?: number
+  carSessionPrice: number
   isActive?: boolean
   createdAt?: Date | string
+  academy: Prisma.AcademyCreateNestedOneWithoutCarsInput
 }
 
 export type CarUncheckedCreateWithoutLessonsInput = {
@@ -438,8 +579,9 @@ export type CarUncheckedCreateWithoutLessonsInput = {
   modelName: string
   plateNumber: string
   gearType: $Enums.Transmission
-  carSessionPrice?: number
+  carSessionPrice: number
   isActive?: boolean
+  academyId: string
   createdAt?: Date | string
 }
 
@@ -467,9 +609,53 @@ export type CarUpdateWithoutLessonsInput = {
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  academy?: Prisma.AcademyUpdateOneRequiredWithoutCarsNestedInput
 }
 
 export type CarUncheckedUpdateWithoutLessonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  plateNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gearType?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CarCreateManyAcademyInput = {
+  id?: string
+  modelName: string
+  plateNumber: string
+  gearType: $Enums.Transmission
+  carSessionPrice: number
+  isActive?: boolean
+  createdAt?: Date | string
+}
+
+export type CarUpdateWithoutAcademyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  plateNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gearType?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUpdateManyWithoutCarNestedInput
+}
+
+export type CarUncheckedUpdateWithoutAcademyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  modelName?: Prisma.StringFieldUpdateOperationsInput | string
+  plateNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  gearType?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutCarNestedInput
+}
+
+export type CarUncheckedUpdateManyWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   modelName?: Prisma.StringFieldUpdateOperationsInput | string
   plateNumber?: Prisma.StringFieldUpdateOperationsInput | string
@@ -517,8 +703,10 @@ export type CarSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   gearType?: boolean
   carSessionPrice?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
   lessons?: boolean | Prisma.Car$lessonsArgs<ExtArgs>
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.CarCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["car"]>
 
@@ -529,7 +717,9 @@ export type CarSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   gearType?: boolean
   carSessionPrice?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["car"]>
 
 export type CarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -539,7 +729,9 @@ export type CarSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   gearType?: boolean
   carSessionPrice?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["car"]>
 
 export type CarSelectScalar = {
@@ -549,21 +741,28 @@ export type CarSelectScalar = {
   gearType?: boolean
   carSessionPrice?: boolean
   isActive?: boolean
+  academyId?: boolean
   createdAt?: boolean
 }
 
-export type CarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "modelName" | "plateNumber" | "gearType" | "carSessionPrice" | "isActive" | "createdAt", ExtArgs["result"]["car"]>
+export type CarOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "modelName" | "plateNumber" | "gearType" | "carSessionPrice" | "isActive" | "academyId" | "createdAt", ExtArgs["result"]["car"]>
 export type CarInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessons?: boolean | Prisma.Car$lessonsArgs<ExtArgs>
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.CarCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type CarIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type CarIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type CarIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
+}
+export type CarIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
+}
 
 export type $CarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Car"
   objects: {
     lessons: Prisma.$LessonPayload<ExtArgs>[]
+    academy: Prisma.$AcademyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -572,6 +771,7 @@ export type $CarPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     gearType: $Enums.Transmission
     carSessionPrice: number
     isActive: boolean
+    academyId: string
     createdAt: Date
   }, ExtArgs["result"]["car"]>
   composites: {}
@@ -968,6 +1168,7 @@ readonly fields: CarFieldRefs;
 export interface Prisma__CarClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   lessons<T extends Prisma.Car$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Car$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1003,6 +1204,7 @@ export interface CarFieldRefs {
   readonly gearType: Prisma.FieldRef<"Car", 'Transmission'>
   readonly carSessionPrice: Prisma.FieldRef<"Car", 'Float'>
   readonly isActive: Prisma.FieldRef<"Car", 'Boolean'>
+  readonly academyId: Prisma.FieldRef<"Car", 'String'>
   readonly createdAt: Prisma.FieldRef<"Car", 'DateTime'>
 }
     
@@ -1258,6 +1460,10 @@ export type CarCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.
    */
   data: Prisma.CarCreateManyInput | Prisma.CarCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1328,6 +1534,10 @@ export type CarUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many Cars to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

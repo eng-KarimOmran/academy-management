@@ -4,10 +4,10 @@ import Form from "@/components/Form/Form";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { useDialogState } from "@/store/DialogState";
-import type { AddCourseFeaturesDto } from "@/DTOs/course.dto";
 import type { Course } from "@/types/course";
 import { AddCourseFeaturesSchema } from "@/validations/course.validation";
-import { AddCourseFeatures } from "@/service/course.service";
+import type { AddFeaturesDto } from "@/DTOs/course.dto";
+import { addCourseFeatures } from "@/service/course.service";
 
 export default function AddFeature({
   academyId,
@@ -17,8 +17,9 @@ export default function AddFeature({
   courseId: string;
 }) {
   const { setConfigDialog } = useDialogState();
+  const params: AddFeaturesDto["params"] = { academyId, courseId };
 
-  const config: FormProps<AddCourseFeaturesDto, Course> = {
+  const config: FormProps<AddFeaturesDto["body"], Course> = {
     inputs: [
       {
         name: "text",
@@ -28,20 +29,14 @@ export default function AddFeature({
       },
     ],
 
-    defaultValues: {
-      academyId,
-      courseId,
-      text: "",
-    },
-
-    schema: AddCourseFeaturesSchema,
+    schema: AddCourseFeaturesSchema.body,
 
     submitButton: {
       text: "إضافة الميزة",
       loadingText: "جاري الإضافة...",
     },
 
-    service: (data) => AddCourseFeatures(data),
+    service: (data) => addCourseFeatures({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

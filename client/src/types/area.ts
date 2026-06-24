@@ -1,9 +1,9 @@
-import type { TrainingSupport } from "./enums";
+import type { SupportType } from "./enums";
 
 export interface Area {
   id: string;
   name: string;
-  supportType: TrainingSupport;
+  supportType: SupportType;
   isActive: boolean;
   createdAt: string;
 }

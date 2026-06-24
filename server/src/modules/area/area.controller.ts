@@ -1,14 +1,13 @@
 import { Response } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
 import * as DTO from "./area.dto";
 import AreaService from "./area.service";
 import sendSuccess from "../../shared/utils/successResponse";
+import { RequestAcademy } from "../academy/academy.middleware";
 
 const AreaController = {
-  createArea: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.CreateDto;
-
-    const area = await AreaService.create(dataSafe.body);
+  createArea: async (req: RequestAcademy, res: Response) => {
+    const dataSafe = req.dataSafe as DTO.CreateAreaDto;
+    const area = await AreaService.create(dataSafe);
 
     return sendSuccess({
       res,
@@ -18,14 +17,9 @@ const AreaController = {
     });
   },
 
-  updateArea: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.UpdateDto;
-    const { areaId } = dataSafe.params;
-
-    const updatedArea = await AreaService.update({
-      areaId,
-      ...dataSafe.body,
-    });
+  updateArea: async (req: RequestAcademy, res: Response) => {
+    const dataSafe = req.dataSafe as DTO.UpdateAreaDto;
+    const updatedArea = await AreaService.update(dataSafe);
 
     return sendSuccess({
       res,
@@ -34,11 +28,9 @@ const AreaController = {
     });
   },
 
-  deleteArea: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.DeleteDto;
-    const { areaId } = dataSafe.params;
-
-    await AreaService.delete({ areaId });
+  deleteArea: async (req: RequestAcademy, res: Response) => {
+    const dataSafe = req.dataSafe as DTO.DeleteAreaDto;
+    await AreaService.delete(dataSafe);
 
     return sendSuccess({
       res,
@@ -46,19 +38,16 @@ const AreaController = {
     });
   },
 
-  getAllAreas: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetAllDto;
-
-    const data = await AreaService.getAll(dataSafe.query);
+  getAllAreas: async (req: RequestAcademy, res: Response) => {
+    const dataSafe = req.dataSafe as DTO.GetAllAreasDto;
+    const data = await AreaService.getAll(dataSafe);
 
     return sendSuccess({ res, data });
   },
 
-  getDetailsArea: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetDetailsDto;
-    const { areaId } = dataSafe.params;
-
-    const area = await AreaService.getDetails({ areaId });
+  getDetailsArea: async (req: RequestAcademy, res: Response) => {
+    const dataSafe = req.dataSafe as DTO.GetAreaDto;
+    const area = await AreaService.getDetails(dataSafe);
 
     return sendSuccess({ res, data: area });
   },

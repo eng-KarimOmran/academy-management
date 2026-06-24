@@ -25,18 +25,26 @@ export default function ClientsPage() {
   const search = searchParams.get("search") ?? "";
 
   const [debouncedSearch] = useDebounce(search, 500);
+  const runSearch = debouncedSearch.length > 2;
   const [limit] = useState(10);
 
   const academyId = activeAcademy?.id;
 
   const { data, isLoading, isFetching, error } = useQuery({
-    queryKey: ["clients", academyId, debouncedSearch, page],
+    queryKey: [
+      "clients",
+      academyId,
+      ...[runSearch ? debouncedSearch : undefined],
+      page,
+    ],
     queryFn: () =>
       getAllClients({
-        academyId: academyId!,
-        page,
-        limit,
-        search: debouncedSearch,
+        query: {
+          page,
+          limit,
+          search: runSearch ? debouncedSearch : undefined,
+        },
+        params: { academyId: academyId! },
       }),
     select: (res) => res.data.data,
     placeholderData: keepPreviousData,
@@ -61,7 +69,7 @@ export default function ClientsPage() {
     configDialogAdd: {
       title: "إضافة عميل جديد",
       description: "قم بإدخال بيانات العميل الجديد.",
-      children: <AddClient academyId={academyId!} />,
+      children: <AddClient />,
     },
   };
 

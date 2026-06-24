@@ -8,7 +8,7 @@ export const lessonBaseSelect: LessonSelect = {
   transmission: true,
   expectedAmount: true,
   subscriptionId: true,
-  isPaid: true,
+  payout: { select: { id: true, totalAmount: true, createdAt: true } },
   captainLessonPrice: true,
   carSessionPrice: true,
   car: {

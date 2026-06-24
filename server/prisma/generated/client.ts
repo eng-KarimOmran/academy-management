@@ -31,8 +31,8 @@ export * from "./enums.ts"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more ProofOfPaymentImages
+ * const proofOfPaymentImages = await prisma.proofOfPaymentImage.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,35 +42,80 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model User
+ * Model ProofOfPaymentImage
  * 
  */
-export type User = Prisma.UserModel
+export type ProofOfPaymentImage = Prisma.ProofOfPaymentImageModel
 /**
- * Model BlacklistedToken
+ * Model AcademyPhone
  * 
  */
-export type BlacklistedToken = Prisma.BlacklistedTokenModel
+export type AcademyPhone = Prisma.AcademyPhoneModel
 /**
- * Model Academy
+ * Model ClientPhone
  * 
  */
-export type Academy = Prisma.AcademyModel
+export type ClientPhone = Prisma.ClientPhoneModel
+/**
+ * Model FinancialAccount
+ * 
+ */
+export type FinancialAccount = Prisma.FinancialAccountModel
+/**
+ * Model Address
+ * 
+ */
+export type Address = Prisma.AddressModel
+/**
+ * Model PaymentLink
+ * 
+ */
+export type PaymentLink = Prisma.PaymentLinkModel
 /**
  * Model SocialMedia
  * 
  */
 export type SocialMedia = Prisma.SocialMediaModel
 /**
- * Model Secretary
+ * Model Academy
  * 
  */
-export type Secretary = Prisma.SecretaryModel
+export type Academy = Prisma.AcademyModel
 /**
- * Model Captain
+ * Model BlacklistedToken
  * 
  */
-export type Captain = Prisma.CaptainModel
+export type BlacklistedToken = Prisma.BlacklistedTokenModel
+/**
+ * Model Client
+ * 
+ */
+export type Client = Prisma.ClientModel
+/**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model JobProfile
+ * 
+ */
+export type JobProfile = Prisma.JobProfileModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model TrainingDetails
+ * 
+ */
+export type TrainingDetails = Prisma.TrainingDetailsModel
 /**
  * Model Car
  * 
@@ -82,47 +127,17 @@ export type Car = Prisma.CarModel
  */
 export type Area = Prisma.AreaModel
 /**
- * Model Client
- * 
- */
-export type Client = Prisma.ClientModel
-/**
- * Model Subscription
- * 
- */
-export type Subscription = Prisma.SubscriptionModel
-/**
- * Model ProofOfPaymentImage
- * 
- */
-export type ProofOfPaymentImage = Prisma.ProofOfPaymentImageModel
-/**
- * Model PaymentTransaction
- * 
- */
-export type PaymentTransaction = Prisma.PaymentTransactionModel
-/**
  * Model Lesson
  * 
  */
 export type Lesson = Prisma.LessonModel
 /**
- * Model TrainingDetails
- * 
- */
-export type TrainingDetails = Prisma.TrainingDetailsModel
-/**
- * Model Course
- * 
- */
-export type Course = Prisma.CourseModel
-/**
- * Model Expense
- * 
- */
-export type Expense = Prisma.ExpenseModel
-/**
  * Model LedgerTransaction
  * 
  */
 export type LedgerTransaction = Prisma.LedgerTransactionModel
+/**
+ * Model Payroll
+ * 
+ */
+export type Payroll = Prisma.PayrollModel

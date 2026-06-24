@@ -1,55 +1,60 @@
-import type {
-  CreateCarDto,
-  DeleteCarDto,
-  GetAllCarsDto,
-  UpdateCarDto,
-  GetCarDetailsDto,
-} from "@/DTOs/car.dto";
+import * as Dto from "@/DTOs/car.dto";
 
 import { axiosClient } from "@/lib/axios";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { Car } from "@/types/car";
-import type { Transmission } from "@/types/enums";
 
-const baseUrl = "/cars";
+type Entity = Car;
 
-/* ===================== GET ALL ===================== */
-export const getAllCars = (data: GetAllCarsDto) => {
-  return axiosClient.get<PaginatedResponse<Car>>(baseUrl, {
-    params: {
-      page: data.page ?? 1,
-      limit: data.limit ?? 10,
-      search: data.search ?? "",
-    },
+const carsUrl = {
+  base: "/cars",
+
+  byId: (carId: string) => `/cars/${carId}`,
+
+  details: (carId: string) => `/cars/details/${carId}`,
+};
+
+export const getAllCars = (data: Dto.GetAllDto) => {
+  const { query } = data;
+
+  return axiosClient.get<PaginatedResponse<Entity>>(carsUrl.base, {
+    params: query,
   });
 };
 
-/* ===================== GET ONE ===================== */
-export const getCar = (data: GetCarDetailsDto) =>
-  axiosClient.get<SuccessfulResponse<Car>>(`${baseUrl}/details/${data.carId}`);
+export const getCar = (data: Dto.GetDetailsDto) => {
+  const { params } = data;
+  const { carId } = params;
 
-/* ===================== CREATE ===================== */
-export const createCar = (data: CreateCarDto) =>
-  axiosClient.post<SuccessfulResponse<Car>>(baseUrl, data);
-
-/* ===================== UPDATE ===================== */
-export const updateCar = (data: UpdateCarDto) => {
-  const { carId, ...body } = data;
-  console.log({ body });
-  return axiosClient.patch<SuccessfulResponse<Car>>(
-    `${baseUrl}/${carId}`,
-    body,
+  return axiosClient.get<SuccessfulResponse<Entity>>(
+    carsUrl.details(carId)
   );
 };
 
-/* ===================== DELETE ===================== */
-export const deleteCar = (data: DeleteCarDto) =>
-  axiosClient.delete<SuccessfulResponse<null>>(`${baseUrl}/${data.carId}`);
+export const createCar = (data: Dto.CreateDto) => {
+  const { body } = data;
 
-export const getActiveCar = ({ gearType }: { gearType: Transmission }) =>
-  axiosClient.get<PaginatedResponse<Car>>(baseUrl, {
-    params: {
-      gearType,
-      isActive: true,
-    },
-  });
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    carsUrl.base,
+    body
+  );
+};
+
+export const updateCar = (data: Dto.UpdateDto) => {
+  const { params, body } = data;
+  const { carId } = params;
+
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    carsUrl.byId(carId),
+    body
+  );
+};
+
+export const deleteCar = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { carId } = params;
+
+  return axiosClient.delete<SuccessfulResponse<null>>(
+    carsUrl.byId(carId)
+  );
+};

@@ -8,8 +8,9 @@ import {
 } from "../../shared/utils/common.validation";
 
 export const CreateSecretarySchema = {
+  params: z.object({ academyId: id }),
   body: z.object({
-    phone: phone,
+    userId:id,
     baseSalary: price,
     targetCount: price,
     bonusAmount: price,
@@ -17,7 +18,7 @@ export const CreateSecretarySchema = {
 };
 
 export const UpdateSecretarySchema = {
-  params: z.object({ secretaryId: id }),
+  params: z.object({ secretaryId: id, academyId: id }),
   body: z.object({
     baseSalary: price.optional(),
     targetCount: price.optional(),
@@ -26,6 +27,7 @@ export const UpdateSecretarySchema = {
 };
 
 export const GetAllSecretariesSchema = {
+  params: z.object({ academyId: id }),
   query: z.object({
     page: positiveNumber.optional().default(1),
     limit: limit,
@@ -34,9 +36,9 @@ export const GetAllSecretariesSchema = {
 };
 
 export const GetSecretaryDetailsSchema = {
-  params: z.object({ secretaryId: id }),
+  params: z.object({ secretaryId: id, academyId: id }),
 };
 
 export const DeleteSecretarySchema = {
-  params: z.object({ secretaryId: id }),
+  params: z.object({ secretaryId: id, academyId: id }),
 };

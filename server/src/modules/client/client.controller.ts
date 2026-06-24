@@ -1,6 +1,6 @@
 import { Response } from "express";
 import * as DTO from "./client.dto";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import ClientService from "./client.service";
 import sendSuccess from "../../shared/utils/successResponse";
 import { RequestAcademy } from "../academy/academy.middleware";
@@ -9,7 +9,7 @@ const ClientController = {
   createClient: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateClientDto;
 
-    const client = await ClientService.create(dataSafe);
+    const client = await ClientService.create({ dataSafe });
 
     return sendSuccess({
       res,
@@ -22,7 +22,7 @@ const ClientController = {
   getAllClients: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllClientsDto;
 
-    const data = await ClientService.getAll(dataSafe);
+    const data = await ClientService.getAll({ dataSafe });
 
     return sendSuccess({
       res,
@@ -33,7 +33,7 @@ const ClientController = {
   getDetailsClient: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.ClientDetailsDto;
 
-    const clientData = await ClientService.getDetails(dataSafe);
+    const clientData = await ClientService.getDetails({ dataSafe });
 
     return sendSuccess({
       res,
@@ -44,7 +44,7 @@ const ClientController = {
   updateClient: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.UpdateClientDto;
 
-    const updatedClient = await ClientService.update(dataSafe);
+    const updatedClient = await ClientService.update({ dataSafe });
 
     return sendSuccess({
       res,
@@ -56,7 +56,7 @@ const ClientController = {
   deleteClient: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.DeleteClientDto;
 
-    await ClientService.remove(dataSafe);
+    await ClientService.delete({ dataSafe });
 
     return sendSuccess({
       res,
@@ -67,7 +67,7 @@ const ClientController = {
   getDetailsClientByPhone: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetClientByPhoneDto;
 
-    const clientData = await ClientService.getClientByPhone(dataSafe);
+    const clientData = await ClientService.getClientByPhone({ dataSafe });
 
     return sendSuccess({
       res,

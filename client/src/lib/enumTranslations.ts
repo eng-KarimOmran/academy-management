@@ -6,7 +6,7 @@ export const enumTranslations = {
   OWNER: "المالك",
   SECRETARY: "سكرتير",
   CAPTAIN: "مدرب",
-  USER: "مستخدم",
+  MANAGER: "مدير",
 
   MANUAL: "مانيوال",
   AUTOMATIC: "أوتوماتيك",
@@ -30,10 +30,6 @@ export const enumTranslations = {
   REFUND: "استرجاع",
 
   ACTIVE: "نشط",
-  BANNED: "محظور",
-  PAUSED: "موقوف",
-  POSTPONED: "مؤجل",
-  FULLYBOOKED: "نشط و تم حجز كل الحصص",
 
   FACEBOOK: "فيسبوك",
   INSTAGRAM: "إنستجرام",
@@ -44,11 +40,28 @@ export const enumTranslations = {
   GMAIL: "جيميل",
 
   PENDING: "قيد الانتظار",
-  REJECTED: "مرفوض",
 
-  PENDING_PAYMENT: "في انتظار الدفع",
+  PENDING_DEPOSIT: "في انتظار دفع الديبوزت",
   PAID_WAITING_BOOKING: "تم الدفع وفي انتظار الحجز",
   BOOKED_NOT_STARTED: "تم الحجز ولم يبدأ",
   OFFICE: "المكتب",
   PLATFORM: "المنصة",
+
+  FROM_CUSTOMER: "استلام من عميل",
+  TO_CUSTOMER: "رد فلوس لعميل",
+
+  TO_USER: "مستحق للموظف",
+  FROM_ACADEMY: "استلام راتب",
+  TO_ACADEMY: "سدد للأكاديمية",
+
+  BONUS: "عمولة / مكافأة",
+  PENALTY: "خصم",
+
+  ACADEMY: 'الأكادمية',
+  USER: 'موظف',
+  SUBSCRIPTION: 'اشتراك عميل',
+
+  TRANSFER: 'تحويل',
+
+  ACTIVE_LIMITED: "في انتظار اكمال مبلغ الأشتراك"
 } as const;

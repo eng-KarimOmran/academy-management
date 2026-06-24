@@ -1,64 +1,75 @@
 import { axiosClient } from "@/lib/axios";
+import * as Dto from "@/DTOs/subscription.dto";
 
-import type {
-  CreateSubscriptionDto,
-  GetAllSubscriptionsDto,
-  GetSubscriptionDetailsDto,
-  DeleteSubscriptionDto,
-  CancelSubscriptionDto,
-} from "@/DTOs/subscription.dto";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type {
   SubscriptionDetails,
   SubscriptionBase,
 } from "@/types/subscription";
 
-const baseUrl = (academyId: string) => `/academies/${academyId}/subscriptions`;
+type Entity = SubscriptionBase;
+type EntityDetails = SubscriptionDetails;
 
-export const createSubscription = (data: CreateSubscriptionDto) => {
-  const { academyId, ...body } = data;
+const subscriptionsUrl = {
+  base: (academyId: string) =>
+    `/academies/${academyId}/subscriptions`,
 
-  return axiosClient.post<SuccessfulResponse<SubscriptionBase>>(
-    baseUrl(academyId),
-    body,
+  byId: (academyId: string, subscriptionId: string) =>
+    `/academies/${academyId}/subscriptions/${subscriptionId}`,
+
+  cancel: (academyId: string, subscriptionId: string) =>
+    `/academies/${academyId}/subscriptions/${subscriptionId}/cancel`,
+};
+
+export const createSubscription = (data: Dto.CreateSubscriptionDto) => {
+  const { params, body } = data;
+  const { academyId } = params;
+
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    subscriptionsUrl.base(academyId),
+    body
   );
 };
 
-export const getAllSubscriptions = (data: GetAllSubscriptionsDto) => {
-  const { academyId } = data;
+export const getAllSubscriptions = (data: Dto.GetAllSubscriptionsDto) => {
+  const { params, query } = data;
+  const { academyId } = params;
 
-  return axiosClient.get<PaginatedResponse<SubscriptionBase>>(
-    baseUrl(academyId),
+  return axiosClient.get<PaginatedResponse<Entity>>(
+    subscriptionsUrl.base(academyId),
     {
-      params: {
-        page: data.page ?? 1,
-        limit: data.limit ?? 10,
-        search: data.search ?? "",
-      },
-    },
+      params: query,
+    }
   );
 };
 
-export const getSubscriptionDetails = (params: GetSubscriptionDetailsDto) => {
+export const getSubscriptionDetails = (
+  data: Dto.GetSubscriptionDetailsDto
+) => {
+  const { params } = data;
   const { academyId, subscriptionId } = params;
 
-  return axiosClient.get<SuccessfulResponse<SubscriptionDetails>>(
-    `${baseUrl(academyId)}/${subscriptionId}`,
+  return axiosClient.get<SuccessfulResponse<EntityDetails>>(
+    subscriptionsUrl.byId(academyId, subscriptionId)
   );
 };
 
-export const deleteSubscription = (data: DeleteSubscriptionDto) => {
-  const { academyId, subscriptionId } = data;
+export const deleteSubscription = (
+  data: Dto.DeleteSubscriptionDto
+) => {
+  const { params } = data;
+  const { academyId, subscriptionId } = params;
+
   return axiosClient.delete<SuccessfulResponse<null>>(
-    `${baseUrl(academyId)}/${subscriptionId}`,
+    subscriptionsUrl.byId(academyId, subscriptionId)
   );
 };
 
-export const cancelSubscription = (data: CancelSubscriptionDto) => {
-  const { academyId, subscriptionId, ...body } = data;
+export const cancelSubscription = (
+  data: Dto.CancelSubscriptionDto
+) => {
+  const { params } = data;
+  const { academyId, subscriptionId } = params;
 
-  return axiosClient.post<SuccessfulResponse<SubscriptionBase>>(
-    `${baseUrl(academyId)}/${subscriptionId}/cancel`,
-    body,
-  );
+  return axiosClient.post<SuccessfulResponse<Entity>>(subscriptionsUrl.cancel(academyId, subscriptionId));
 };

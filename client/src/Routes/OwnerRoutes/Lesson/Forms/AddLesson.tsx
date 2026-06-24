@@ -9,37 +9,50 @@ import type { LessonBase } from "@/types/lesson";
 import { Transmission } from "@/types/enums";
 import { enumTranslations } from "@/lib/enumTranslations";
 import { useQuery } from "@tanstack/react-query";
-import { getActiveCaptain } from "@/service/captain.service";
-import { getActiveCar } from "@/service/car.service";
-import { getActiveAreas } from "@/service/area.service";
 import { CreateLessonSchema } from "@/validations/lesson.validation";
 import dayjs from "dayjs";
 import { useDialogState } from "@/store/DialogState";
 import type { SubscriptionDetails } from "@/types/subscription";
 import { calculatePaymentSummary } from "@/lib/calculatePaymentSummary";
+import { getAllCaptains } from "@/service/captain.service";
+import { getAllCars } from "@/service/car.service";
+import { getAllAreas } from "@/service/area.service";
 
 export default function AddLesson({
   academyId,
-  subscription,
+  data,
 }: {
   academyId: string;
-  subscription?: SubscriptionDetails;
+  data?: SubscriptionDetails;
 }) {
   const { setConfigDialog } = useDialogState();
 
+  const params: CreateLessonDto["params"] = { academyId };
+
   const [selectedTransmission, setSelectedTransmission] =
     useState<Transmission>(
-      subscription?.trainingTypeAtRegistration ?? "AUTOMATIC",
+      data?.subscription.trainingTypeAtRegistration ?? "AUTOMATIC",
     );
 
   const queryConfig = {
     staleTime: Infinity,
-    gcTime: 1000 * 60 * 60 * 24,
+    gcTime: Infinity,
   };
 
   const { data: captains = [], isLoading: isLoadingCaptains } = useQuery({
     queryKey: ["captains", academyId, "active", selectedTransmission],
-    queryFn: () => getActiveCaptain({ trainingType: selectedTransmission }),
+    queryFn: () =>
+      getAllCaptains({
+        params: {
+          academyId,
+        },
+        query: {
+          supportType: selectedTransmission,
+          isActive: true,
+          limit: 50,
+          page: 1,
+        },
+      }),
     select: (res) => res.data.data.items,
     enabled: !!academyId,
     ...queryConfig,
@@ -47,24 +60,40 @@ export default function AddLesson({
 
   const { data: cars = [], isLoading: isLoadingCar } = useQuery({
     queryKey: ["cars", "active", selectedTransmission],
-    queryFn: () => getActiveCar({ gearType: selectedTransmission }),
+    queryFn: () =>
+      getAllCars({
+        query: {
+          gearType: selectedTransmission,
+          limit: 50,
+          page: 1,
+          isActive: true,
+        },
+      }),
     select: (res) => res.data.data.items,
     ...queryConfig,
   });
 
   const { data: areas = [], isLoading: isLoadingArea } = useQuery({
     queryKey: ["areas", "active", selectedTransmission],
-    queryFn: () => getActiveAreas({ type: selectedTransmission }),
+    queryFn: () =>
+      getAllAreas({
+        query: {
+          supportType: selectedTransmission,
+          limit: 50,
+          page: 1,
+          isActive: true,
+        },
+      }),
     select: (res) => res.data.data.items,
     ...queryConfig,
   });
 
   const { isFullyPaid } = calculatePaymentSummary({
-    payments: subscription?.payments ?? [],
-    totalRequiredAmount: subscription?.priceAtBooking ?? 0,
+    payments: data?.ledgerTransactions ?? [],
+    totalRequiredAmount: data?.subscription.priceAtBooking ?? 0,
   });
 
-  const config: FormProps<CreateLessonDto, LessonBase> = {
+  const config: FormProps<CreateLessonDto["body"], LessonBase> = {
     inputs: [
       {
         name: "transmission",
@@ -88,12 +117,13 @@ export default function AddLesson({
         type: "number",
         label: "المبلغ المتوقع",
         col: "half",
-        disabled: subscription && isFullyPaid,
+        disabled: data && isFullyPaid,
       },
       {
         name: "captainId",
         type: "select",
         label: "المدرب (الكابتن)",
+        placeholder: captains.length ? "اختار الكابتن" : "لا يوجد كباتن",
         options: captains.map((captain) => ({
           label: `${captain.user.name} - ${captain.user.phone}`,
           value: captain.id,
@@ -105,6 +135,7 @@ export default function AddLesson({
         name: "carId",
         type: "select",
         label: "السيارة",
+        placeholder: cars.length ? "اختار السيارة" : "لا يوجد سيارات",
         options: cars.map((car) => ({
           label: `${car.modelName} - ${car.plateNumber}`,
           value: car.id,
@@ -116,6 +147,7 @@ export default function AddLesson({
         name: "areaId",
         type: "select",
         label: "المنطقة",
+        placeholder: areas.length ? "اختار المنطقة" : "لا يوجد مناطق",
         options: areas.map((area) => ({
           label: area.name,
           value: area.id,
@@ -128,22 +160,21 @@ export default function AddLesson({
         type: "text",
         label: "رقم الاشتراك",
         col: "half",
-        disabled: !!subscription,
+        disabled: !!data,
       },
     ],
 
     defaultValues: {
-      academyId,
-      startTime: String(dayjs().add(1, "day").toDate()),
+      startTime: dayjs().add(1, "day").toDate(),
       transmission: selectedTransmission,
-      captainId: "",
-      carId: "",
-      areaId: subscription?.area.id ?? "",
-      subscriptionId: subscription?.id ?? "",
+      areaId: data?.subscription?.area.id ?? "",
+      subscriptionId: data?.subscription?.id ?? "",
       expectedAmount: 0,
+      captainId: captains[0]?.id ?? "",
+      carId: cars[0]?.id ?? "",
     },
 
-    schema: CreateLessonSchema,
+    schema: CreateLessonSchema.body,
 
     submitButton: {
       text: "إضافة الحصة",
@@ -151,8 +182,7 @@ export default function AddLesson({
     },
 
     service: (data) => {
-      data.subscriptionId = data.subscriptionId.trim().toLowerCase();
-      return createLesson(data);
+      return createLesson({ body: data, params });
     },
 
     onSuccess: () => {

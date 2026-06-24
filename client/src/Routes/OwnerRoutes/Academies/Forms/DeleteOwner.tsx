@@ -1,4 +1,5 @@
 import Form, { type FormProps } from "@/components/Form/Form";
+import type { DeleteOwnerDto } from "@/DTOs/academy.dto";
 import { matchSchema } from "@/lib/matchSchema";
 import { queryClient } from "@/lib/queryClient";
 import { deleteOwner } from "@/service/academy.service";
@@ -16,6 +17,7 @@ export default function DeleteOwner({
   ownerId: string;
 }) {
   const { setConfigDialog } = useDialogState();
+  const params: DeleteOwnerDto["params"] = { academyId, userId: ownerId };
 
   const config: FormProps<{ phone: string }, Academy> = {
     inputs: [
@@ -27,10 +29,6 @@ export default function DeleteOwner({
       },
     ],
 
-    defaultValues: {
-      phone: "",
-    },
-
     schema: matchSchema("phone", "رقم المالك", phone),
 
     submitButton: {
@@ -39,7 +37,7 @@ export default function DeleteOwner({
       variant: "destructive",
     },
 
-    service: async () => deleteOwner({ academyId, ownerId }),
+    service: async () => deleteOwner({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["academies"] });

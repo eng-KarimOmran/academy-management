@@ -18,8 +18,10 @@ export default function SubscriptionDetailsPage() {
     queryKey: ["subscriptions", academyId, subscriptionId],
     queryFn: () =>
       getSubscriptionDetails({
-        academyId: academyId!,
-        subscriptionId: subscriptionId!,
+        params: {
+          academyId: academyId!,
+          subscriptionId: subscriptionId!,
+        },
       }),
     select: (res) => res.data.data,
     enabled: !!academyId && !!subscriptionId,
@@ -51,21 +53,26 @@ export default function SubscriptionDetailsPage() {
     );
   }
 
+  console.log(data)
+
   const paymentSummary = calculatePaymentSummary({
-    payments: data.payments,
-    totalRequiredAmount: data.priceAtBooking,
+    payments: data.ledgerTransactions,
+    totalRequiredAmount: data.subscription.priceAtBooking,
   });
 
   return (
     <main className="space-y-12">
-      <BasicInfoSection data={data} paymentSummary={paymentSummary} />
+      <BasicInfoSection
+        data={data.subscription}
+        paymentSummary={paymentSummary}
+      />
 
-      <ClientInfoSection client={data.client} />
+      <ClientInfoSection subscription={data.subscription} />
 
       <PaymentHistorySection
-        academyId={data.academy.id}
-        subscriptionId={data.id}
-        payments={data.payments}
+        academyId={data.subscription.academy.id}
+        subscriptionId={data.subscription.id}
+        payments={data.ledgerTransactions}
       />
 
       <LessonsScheduleSection data={data} />

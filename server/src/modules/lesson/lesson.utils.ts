@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
-import { LessonStatus, Transmission } from "../../../prisma/generated/enums";
+import { LessonStatus, SubscriptionStatus, Transmission } from "../../../prisma/generated/enums";
 import { LessonWhereInput } from "../../../prisma/generated/models";
+import ApiError from "../../shared/utils/ApiError";
+import { Lesson } from "../../../prisma/generated/client";
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 
 export const calculateLessonTime = (
   startTime: Date | string,
@@ -15,15 +18,6 @@ export const calculateLessonTime = (
     endTime: end.toDate(),
   };
 };
-
-export const subscriptionErrors = {
-  FULLYBOOKED:
-    "لا يمكن جدولة حصة جديدة، لقد تم حجز جميع الحصص المتاحة في هذا الاشتراك.",
-  PAUSED:
-    "لا يمكن جدولة حصة جديدة لأن الاشتراك موقوف حالياً. يرجى مراجعة المدفوعات أو التواصل مع الإدارة.",
-  COMPLETED: "لا يمكن جدولة حصة جديدة لأن جميع حصص الاشتراك قد اكتملت.",
-  CANCELED: "لا يمكن جدولة حصة جديدة لأن هذا الاشتراك تم إلغاؤه.",
-} as const;
 
 export const buildLessonWhere = ({
   search,
@@ -54,4 +48,68 @@ export const buildLessonWhere = ({
   }
 
   return where;
+};
+
+export const getBookingError = (
+  status: SubscriptionStatus,
+  lessons: Lesson[],
+  sessionsBeforeFullPayment: number
+): void => {
+
+  switch (status) {
+    case "PENDING_DEPOSIT":
+      throw ApiError.BadRequest("لا يمكن جدولة حصة جديدة؛ يرجى إتمام عملية الدفع المطلوبة لتفعيل الاشتراك.");
+
+    case "CANCELED":
+      throw ApiError.BadRequest("لا يمكن جدولة حصة جديدة؛ هذا الاشتراك تم إلغاؤه مسبقاً.");
+
+    case "COMPLETED":
+      throw ApiError.BadRequest("لا يمكن جدولة حصة جديدة؛ لقد اكتملت جميع الحصص الخاصة بهذا الاشتراك.");
+  }
+
+  if (status === "ACTIVE_LIMITED") {
+    const activeLessonsCount = lessons.filter((l) => l.status !== "CANCELED").length;
+
+    if (activeLessonsCount >= sessionsBeforeFullPayment) {
+      throw ApiError.BadRequest("لا يمكن جدولة حصة جديدة؛ لقد استنفدت عدد الحصص المسموح بها قبل إكمال مبلغ الاشتراك.");
+    }
+  }
+};
+
+export const validateTimeSlotConflict = async ({
+  id,
+  tx,
+  startTime,
+  endTime,
+  clientId,
+  carId,
+  captainId,
+}: {
+  captainId: string;
+  carId: string;
+  clientId: string;
+  startTime: Date;
+  endTime: Date;
+  id?: string;
+  tx: TransactionClient
+}) => {
+  const conflictingLesson = await tx.lesson.findFirst({
+    where: {
+      status: "SCHEDULED",
+      startTime: { lt: endTime },
+      endTime: { gt: startTime },
+      OR: [
+        { captainId: captainId },
+        { carId: carId },
+        { clientId: clientId }
+      ],
+      ...(id && { id: { not: id } }),
+    },
+  });
+
+  if (conflictingLesson) {
+    if (conflictingLesson.captainId === captainId) throw ApiError.Conflict("CaptainTimeConflict");
+    if (conflictingLesson.carId === carId) throw ApiError.Conflict("CarTimeConflict");
+    throw ApiError.Conflict("ClientTimeConflict");
+  }
 };

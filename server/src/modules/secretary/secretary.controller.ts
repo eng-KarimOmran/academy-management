@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./secretary.dto";
 import SecretaryService from "./secretary.service";
 import sendSuccess from "../../shared/utils/successResponse";
@@ -8,7 +8,7 @@ const SecretaryController = {
   createSecretary: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateDto;
 
-    const secretary = await SecretaryService.create(dataSafe);
+    const secretary = await SecretaryService.create({dataSafe});
 
     return sendSuccess({
       res,
@@ -21,7 +21,7 @@ const SecretaryController = {
   updateSecretary: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.UpdateDto;
 
-    const secretaryUpdate = await SecretaryService.update(dataSafe);
+    const secretaryUpdate = await SecretaryService.update({dataSafe});
 
     return sendSuccess({
       res,
@@ -33,7 +33,7 @@ const SecretaryController = {
   getAllSecretary: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllDto;
 
-    const data = await SecretaryService.getAll(dataSafe);
+    const data = await SecretaryService.getAll({dataSafe});
 
     return sendSuccess({ res, data });
   },
@@ -41,7 +41,7 @@ const SecretaryController = {
   getDetailsSecretary: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetDetailsDto;
 
-    const secretary = await SecretaryService.getDetails(dataSafe);
+    const secretary = await SecretaryService.getDetails({dataSafe});
 
     return sendSuccess({ res, data: secretary });
   },
@@ -49,7 +49,7 @@ const SecretaryController = {
   deleteSecretary: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.DeleteDto;
 
-    await SecretaryService.remove(dataSafe);
+    await SecretaryService.delete({dataSafe});
 
     return sendSuccess({
       res,

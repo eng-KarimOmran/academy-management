@@ -1,59 +1,58 @@
 import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
-import {
-  AreaCreateInput,
-  AreaOrderByWithRelationInput,
-  AreaSelect,
-  AreaUpdateInput,
-  AreaWhereInput,
-} from "../../../prisma/generated/models";
-import { areaBaseSelect } from "./area.selectors";
-import getClient from "../../shared/utils/getClient"
+import { AreaCreateInput, AreaUpdateInput, AreaWhereInput } from "../../../prisma/generated/models/Area";
+import getClient from "../../shared/utils/getClient";
 
 const AreaRepository = {
-  async create({ data, select, tx }: { data: AreaCreateInput; select?: AreaSelect; tx?: TransactionClient }) {
-    return getClient(tx).area.create({
-      data,
-      select: select ?? areaBaseSelect,
-    });
-  },
+    create: (data: AreaCreateInput, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.area.create({ data });
+    },
 
-  async update({ areaId, data, select, tx }: { areaId: string; data: AreaUpdateInput; select?: AreaSelect; tx?: TransactionClient }) {
-    return getClient(tx).area.update({
-      where: { id: areaId },
-      data,
-      select: select ?? areaBaseSelect,
-    });
-  },
+    update: (areaId: string, data: AreaUpdateInput, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.area.update({
+            where: { id: areaId },
+            data,
+        });
+    },
 
-  async delete({ areaId, select, tx }: { areaId: string; select?: AreaSelect; tx?: TransactionClient }) {
-    return getClient(tx).area.delete({
-      where: { id: areaId },
-      select: select ?? areaBaseSelect,
-    });
-  },
+    delete: (areaId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.area.delete({
+            where: { id: areaId },
+        });
+    },
 
-  async findById({ areaId, select, tx }: { areaId: string; select?: AreaSelect; tx?: TransactionClient }) {
-    return getClient(tx).area.findUnique({
-      where: { id: areaId },
-      select: select ?? areaBaseSelect,
-    });
-  },
+    findById: (areaId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.area.findUnique({
+            where: { id: areaId },
+        });
+    },
 
-  async findByName({ name, select, tx }: { name: string; select?: AreaSelect; tx?: TransactionClient }) {
-    return getClient(tx).area.findUnique({
-      where: { name },
-      select: select ?? areaBaseSelect,
-    });
-  },
+    findByNameAndAcademy: (name: string, academyId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.area.findUnique({
+            where: { name_academyId: { academyId, name } }
+        });
+    },
 
-  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: AreaWhereInput; orderBy?: AreaOrderByWithRelationInput; select?: AreaSelect; tx?: TransactionClient }) {
-    const client = getClient(tx);
-    const [areas, count] = await Promise.all([
-      client.area.findMany({ where, skip, take, orderBy, select: select ?? areaBaseSelect }),
-      client.area.count({ where })
-    ]);
-    return { areas, count };
-  },
+    findAll: (
+        params: {
+            where?: AreaWhereInput;
+            skip?: number;
+            take?: number;
+        },
+        tx?: TransactionClient
+    ) => {
+        const client = getClient(tx);
+        return client.area.findMany({ ...params, orderBy: { createdAt: "desc" } });
+    },
+
+    count: (where?: AreaWhereInput, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.area.count({ where });
+    },
 };
 
 export default AreaRepository;

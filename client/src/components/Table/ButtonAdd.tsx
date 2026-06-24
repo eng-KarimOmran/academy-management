@@ -4,21 +4,22 @@ import { useDialogState, type ConfigDialog } from "@/store/DialogState";
 
 export default function ButtonAdd({
   configDialogAdd,
+  textBtn,
 }: {
   configDialogAdd: ConfigDialog;
+  textBtn?: string;
 }) {
   const { setConfigDialog } = useDialogState();
 
   return (
     <>
       <Button
-        className="text-lg w-full md:w-auto ms-auto"
         onClick={() => {
           setConfigDialog(configDialogAdd);
         }}
       >
         <RiAddLine />
-        إضافة
+        {textBtn ? textBtn : "إضافة"}
       </Button>
     </>
   );

@@ -1,55 +1,73 @@
-import { useState, useEffect } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useDebounce } from "use-debounce";
-import { useSearchParams } from "react-router-dom";
-
 import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
 import PageHeader from "@/components/PageHeader/PageHeader";
-
-import type { User } from "@/types/user";
-
-import { getAllUsers } from "@/service/user.service";
-
 import { columns } from "./columns";
 import ActionsUser from "./ActionsUser";
 import AddUser from "./Forms/AddUser";
 
+import type { User } from "@/types/user";
+import { getAllUsers } from "@/service/user.service";
+import useAppQuery from "@/hooks/useAppQuery";
+import type { GetAllUsersDto } from "@/DTOs/user.dto";
+
 export default function UserPage() {
-  const [searchParams] = useSearchParams();
-
-  const page = Math.max(1, Number(searchParams.get("page")) || 1);
-  const search = searchParams.get("search") ?? "";
-
-  const [debouncedSearch] = useDebounce(search, 500);
-  const [limit] = useState<number>(10);
-
-  const { data, isLoading, isFetching, error } = useQuery({
-    queryKey: ["users", debouncedSearch, page],
-    queryFn: () =>
-      getAllUsers({
-        page,
-        limit,
-        search: debouncedSearch,
-      }),
-    select: (res) => res.data.data,
-    placeholderData: keepPreviousData,
+  const { data, isFetching, isLoading } = useAppQuery<GetAllUsersDto, User>({
+    queryFn: getAllUsers,
+    queryKey: ["users"],
+    keepPrevious: true,
+    filters: ["isActive", "role"],
   });
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message || "خطأ في تحميل المستخدمين");
-    }
-  }, [error]);
+  const filters = [
+    {
+      group: "حالة المستخدم",
+      option: [
+        {
+          key: "isActive",
+          label: "نشط",
+          val: "true",
+        },
+        {
+          key: "isActive",
+          label: "غير نشط",
+          val: "false",
+        },
+      ],
+    },
+    {
+      group: "الدور الوظيفي",
+      option: [
+        {
+          key: "role",
+          label: "مدير",
+          val: "MANAGER",
+        },
+        {
+          key: "role",
+          label: "كابتن",
+          val: "CAPTAIN",
+        },
+        {
+          key: "role",
+          label: "سكرتير",
+          val: "SECRETARY",
+        },
+        {
+          key: "role",
+          label: "مالك النظام",
+          val: "OWNER",
+        },
+      ],
+    },
+  ];
 
   const configTable: DataTableProps<User> = {
-    data: data?.items || [],
+    data: data?.items ?? [],
     maxPage: data?.pagination?.totalPages ?? 1,
     isLoading,
     isFetching,
     headers: columns,
     actions: (item) => <ActionsUser item={item} />,
-
+    filters,
     configDialogAdd: {
       title: "إضافة مستخدم جديد",
       description: "قم بإدخال بيانات المستخدم الجديد.",
@@ -63,7 +81,6 @@ export default function UserPage() {
         title="إدارة المستخدمين"
         description="عرض وإدارة جميع المستخدمين المسجلين."
       />
-
       <TableUi {...configTable} />
     </section>
   );

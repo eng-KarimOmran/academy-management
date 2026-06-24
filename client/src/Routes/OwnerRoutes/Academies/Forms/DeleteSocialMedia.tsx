@@ -1,5 +1,6 @@
 import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
+import type { DeleteSocialMediaDto } from "@/DTOs/academy.dto";
 import { matchSchema } from "@/lib/matchSchema";
 import { queryClient } from "@/lib/queryClient";
 import { deleteSocialMedia } from "@/service/academy.service";
@@ -15,6 +16,7 @@ export default function DeleteSocialMedia({
   platformId: string;
 }) {
   const { setConfigDialog } = useDialogState();
+  const params: DeleteSocialMediaDto["params"] = { academyId, platformId };
 
   const config: FormProps<{ text: string }, Academy> = {
     inputs: [
@@ -26,10 +28,6 @@ export default function DeleteSocialMedia({
       },
     ],
 
-    defaultValues: {
-      text: "",
-    },
-
     schema: matchSchema("text", "كلمة التأكيد", "حذف"),
 
     submitButton: {
@@ -38,7 +36,7 @@ export default function DeleteSocialMedia({
       variant: "destructive",
     },
 
-    service: async () => deleteSocialMedia({ academyId, platformId }),
+    service: async () => deleteSocialMedia({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["academies"] });

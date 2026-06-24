@@ -4,6 +4,7 @@ export const clientBaseSelect: ClientSelect = {
   id: true,
   name: true,
   phone: true,
+  clientSource: true,
   createdAt: true,
   academyId: true,
 };

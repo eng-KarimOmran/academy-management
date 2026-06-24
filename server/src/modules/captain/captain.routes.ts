@@ -1,50 +1,46 @@
+import { checkAcademyExists } from './../academy/academy.middleware';
 import { Router } from "express";
-import validation from "../../middlewares/validation.middleware";
+import validation from "../../shared/middlewares/validation.middleware";
 import * as Schema from "./captain.schema";
 import CaptainController from "./captain.controller";
-import checkRole from "../../middlewares/role.middleware";
+import checkRole from "../../shared/middlewares/role.middleware";
 
-const router = Router();
+
+const router = Router({ mergeParams: true });
+
 
 router.get(
   "/",
   validation(Schema.GetAllCaptainsSchema),
-  checkRole(["OWNER", "SECRETARY"]),
+  checkRole(["OWNER", "MANAGER", "SECRETARY"]),
   CaptainController.getAllCaptains,
-);
-
-router.get(
-  "/:userId/lessons",
-  validation(Schema.GetLessonCaptainSchema),
-  checkRole(["OWNER", "CAPTAIN"]),
-  CaptainController.getLessonsCaptain,
 );
 
 router.post(
   "/",
   validation(Schema.CreateCaptainSchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   CaptainController.createCaptain,
 );
 
 router.get(
   "/:captainId",
   validation(Schema.GetCaptainDetailsSchema),
-  checkRole(["OWNER", "CAPTAIN"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   CaptainController.getDetailsCaptain,
 );
 
 router.patch(
   "/:captainId",
   validation(Schema.UpdateCaptainSchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   CaptainController.updateCaptain,
 );
 
 router.delete(
   "/:captainId",
   validation(Schema.DeleteCaptainSchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   CaptainController.deleteCaptain,
 );
 

@@ -15,7 +15,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { setUser } = useAuthState();
 
-  const config: FormProps<LoginDto, UserAuth> = {
+  const config: FormProps<LoginDto["body"], UserAuth> = {
     inputs: [
       {
         name: "phone",
@@ -30,19 +30,14 @@ export default function Login() {
       },
     ],
 
-    defaultValues: {
-      phone: "",
-      password: "",
-    },
-
-    schema: LoginSchema,
+    schema: LoginSchema.body,
 
     submitButton: {
       text: "تسجيل الدخول",
       loadingText: "جاري تسجيل الدخول...",
     },
 
-    service: (data) => login(data),
+    service: (data) => login({ body: data }),
 
     onSuccess: (res) => {
       if ("data" in res) {

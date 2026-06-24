@@ -1,22 +1,30 @@
 import z from "zod";
 import * as Schema from "../validations/captain.validation";
 
-export type CreateCaptainDto = z.infer<typeof Schema.CreateCaptainSchema>;
+export type CreateDto = {
+  params: z.infer<typeof Schema.CreateCaptainSchema.params>;
+  body: z.infer<typeof Schema.CreateCaptainSchema.body>;
+};
 
-export type UpdateCaptainDto = z.infer<typeof Schema.UpdateCaptainSchema>;
+export type UpdateDto = {
+  params: z.infer<typeof Schema.UpdateCaptainSchema.params>;
+  body: z.infer<typeof Schema.UpdateCaptainSchema.body>;
+};
 
-export type GetAllCaptainsDto = z.infer<typeof Schema.GetAllCaptainsSchema>;
+export type GetAllDto = {
+  params: z.infer<typeof Schema.GetAllCaptainsSchema.params>;
+  query: z.infer<typeof Schema.GetAllCaptainsSchema.query>;
+};
 
-export type GetCaptainDetailsDto = z.infer<
-  typeof Schema.GetCaptainDetailsSchema
->;
+export type GetDetailsDto = {
+  params: z.infer<typeof Schema.GetCaptainDetailsSchema.params>;
+};
 
-export type DeleteCaptainDto = z.infer<typeof Schema.DeleteCaptainSchema>;
+export type DeleteDto = {
+  params: z.infer<typeof Schema.DeleteCaptainSchema.params>;
+};
 
-export type FilterCaptainsDto = z.infer<typeof Schema.FilterCaptainsSchema>;
-
-export type GetCaptainScheduleDto = z.infer<
-  typeof Schema.GetCaptainScheduleSchema
->;
-
-export type GetLessonCaptainDto = z.infer<typeof Schema.GetLessonCaptainSchema>;
+export type GetLessonCaptainDto = {
+  params: z.infer<typeof Schema.GetLessonCaptainSchema.params>;
+  query: z.infer<typeof Schema.GetLessonCaptainSchema.query>;
+};

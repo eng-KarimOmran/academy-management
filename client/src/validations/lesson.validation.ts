@@ -8,40 +8,62 @@ import {
   lessonStatus,
   transmission,
   price,
-  paymentMethod,
 } from "@/validations/common.validation";
 
-// ================== CREATE ==================
-export const CreateLessonSchema = z.object({
-  academyId: id,
-  startTime: futureDate,
-  transmission: transmission,
-  captainId: id,
-  carId: id,
-  areaId: id,
-  subscriptionId: id,
-  expectedAmount: price,
-});
+export const CreateLessonSchema = {
+  params: z.object({
+    academyId: id,
+  }),
+  body: z.object({
+    startTime: futureDate,
+    transmission: transmission,
+    expectedAmount: price,
+    captainId: id,
+    carId: id,
+    areaId: id,
+    subscriptionId: id,
+  }),
+};
 
-// ================== GET ALL ==================
-export const GetAllLessonsSchema = z.object({
-  academyId: id,
-  page: positiveNumber.optional().default(1),
-  limit: limit,
-  search: z.string().optional(),
-});
+export const GetAllLessonsSchema = {
+  params: z.object({
+    academyId: id,
+  }),
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit,
+    transmission: transmission.optional(),
+    status: lessonStatus.optional(),
+    search: z.string().optional(),
+  }),
+};
 
-// ================== DETAILS ==================
-export const GetLessonDetailsSchema = z.object({
-  academyId: id,
-  lessonId: id,
-});
+export const GetLessonDetailsSchema = {
+  params: z.object({
+    academyId: id,
+    lessonId: id,
+  }),
+};
 
-// ================== CHANGE STATUS ==================
-export const ChangeLessonStateSchema = z.object({
-  academyId: id,
-  lessonId: id,
-  status: lessonStatus,
-  paymentMethod: paymentMethod.optional(),
-  amount: price.optional(),
-});
+export const ChangeLessonStateSchema = {
+  params: z.object({ lessonId: id, academyId: id }),
+  body: z.object({
+    status: lessonStatus,
+    amount: price.optional(),
+  }),
+};
+
+export const UpdateLessonSchema = {
+  params: z.object({
+    academyId: id,
+    lessonId: id,
+  }),
+  body: z.object({
+    startTime: futureDate,
+    transmission: transmission,
+    expectedAmount: price,
+    captainId: id,
+    carId: id,
+    areaId: id,
+  }),
+};

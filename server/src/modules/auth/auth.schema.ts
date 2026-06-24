@@ -1,10 +1,11 @@
 import z from "zod";
 
 import {
-  boolean,
   booleanQuery,
+  id,
   password,
   phone,
+  personName
 } from "../../shared/utils/common.validation";
 
 export const LoginSchema = {
@@ -17,7 +18,22 @@ export const LogoutSchema = {
 
 export const changePasswordSchema = {
   body: z.object({
-    password,
+    currentPassword: password,
     newPassword: password,
+  }),
+};
+
+export const newPasswordSchema = {
+  params: z.object({ userId: id }),
+  body: z.object({
+    newPassword: password,
+  }),
+};
+
+
+export const createFirstUserSchema = {
+  body: z.object({
+    name: personName,
+    phone,
   }),
 };

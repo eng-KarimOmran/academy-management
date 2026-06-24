@@ -52,3 +52,7 @@ export function getDateRange(day?: "today" | "tomorrow") {
 
   return { gte, lte };
 }
+
+export function createDataWithKeys(num: number = 1): string[] {
+  return Array.from({ length: num }, (_, i) => `key-${i}`);
+}

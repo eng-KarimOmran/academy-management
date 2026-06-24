@@ -4,7 +4,7 @@ import {
   id,
   limit,
   positiveNumber,
-  trainingSupport,
+  supportType,
   boolean,
   phone,
   price,
@@ -13,38 +13,41 @@ import {
 } from "../../shared/utils/common.validation";
 
 export const CreateCaptainSchema = {
+  params: z.object({ academyId: id }),
   body: z.object({
-    phone: phone,
+    userId: id,
     captainLessonPrice: price,
-    trainingType: trainingSupport.default("BOTH"),
+    supportType: supportType.default("BOTH"),
+    baseSalary: price,
   }),
 };
 
 export const UpdateCaptainSchema = {
-  params: z.object({ captainId: id }),
+  params: z.object({ academyId: id, captainId: id }),
   body: z.object({
     captainLessonPrice: price.optional(),
-    trainingType: trainingSupport.optional(),
+    supportType: supportType.optional(),
     isActive: boolean.optional(),
   }),
 };
 
 export const GetAllCaptainsSchema = {
+  params: z.object({ academyId: id }),
   query: z.object({
     page: positiveNumber.optional().default(1),
     limit: limit,
     search: z.string().optional(),
     isActive: booleanQuery.optional(),
-    trainingType: trainingSupport.optional(),
+    supportType: supportType.optional(),
   }),
 };
 
 export const GetCaptainDetailsSchema = {
-  params: z.object({ captainId: id }),
+  params: z.object({ captainId: id, academyId: id }),
 };
 
 export const DeleteCaptainSchema = {
-  params: z.object({ captainId: id }),
+  params: z.object({ captainId: id, academyId: id }),
 };
 
 export const GetLessonCaptainSchema = {

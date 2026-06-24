@@ -1,42 +1,57 @@
-import type {
-  CreateAreaDto,
-  DeleteAreaDto,
-  GetAllAreasDto,
-  UpdateAreaDto,
-  GetAreaActiveDto,
-} from "@/DTOs/area.dto";
+import * as Dto from "@/DTOs/area.dto";
 import { axiosClient } from "@/lib/axios";
+
 import type { Area } from "@/types/area";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 
-const baseUrl = "/areas";
+type Entity = Area;
 
-export const getAllAreas = (data: GetAllAreasDto) => {
-  return axiosClient.get<PaginatedResponse<Area>>(baseUrl, {
-    params: {
-      page: data.page ?? 1,
-      limit: data.limit ?? 10,
-      search: data.search ?? "",
-    },
+const areasUrl = {
+  base: "/areas",
+  byId: (id: string) => `/areas/${id}`,
+};
+
+export const getAllAreas = (data: Dto.GetAllDto) => {
+  const { query } = data;
+
+  return axiosClient.get<PaginatedResponse<Entity>>(areasUrl.base, {
+    params: query,
   });
 };
 
-export const deleteArea = (data: DeleteAreaDto) =>
-  axiosClient.delete<SuccessfulResponse<null>>(`${baseUrl}/${data.id}`);
+export const deleteArea = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { areaId } = params
 
-export const createArea = (data: CreateAreaDto) =>
-  axiosClient.post<SuccessfulResponse<Area>>(baseUrl, data);
+  return axiosClient.delete<SuccessfulResponse<null>>(
+    areasUrl.byId(areaId)
+  );
+};
 
-export const updateArea = (id: string, data: UpdateAreaDto) =>
-  axiosClient.patch<SuccessfulResponse<Area>>(`${baseUrl}/${id}`, data);
+export const createArea = (data: Dto.CreateDto) => {
+  const { body } = data;
 
-export const getArea = (id: string) =>
-  axiosClient.get<SuccessfulResponse<Area>>(`${baseUrl}/${id}`);
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    areasUrl.base,
+    body
+  );
+};
 
-export const getActiveAreas = (data: GetAreaActiveDto) =>
-  axiosClient.get<PaginatedResponse<Area>>(baseUrl, {
-    params: {
-      supportType: data.type,
-      isActive: true,
-    },
-  });
+export const updateArea = (data: Dto.UpdateDto) => {
+  const { params, body } = data;
+  const { areaId } = params
+
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    areasUrl.byId(areaId),
+    body
+  );
+};
+
+export const getArea = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { areaId } = params
+
+  return axiosClient.get<SuccessfulResponse<Entity>>(
+    areasUrl.byId(areaId)
+  );
+};

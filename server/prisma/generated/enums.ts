@@ -9,44 +9,24 @@
 * 🟢 You can import this file directly.
 */
 
-export const LedgerCategory = {
-  FROM_CUSTOMER: 'FROM_CUSTOMER',
-  TO_CUSTOMER: 'TO_CUSTOMER',
-  TO_USER: 'TO_USER',
-  FROM_ACADEMY: 'FROM_ACADEMY',
-  TO_ACADEMY: 'TO_ACADEMY',
-  BONUS: 'BONUS',
-  PENALTY: 'PENALTY'
+export const ClientSource = {
+  PLATFORM: 'PLATFORM',
+  OFFICE: 'OFFICE'
 } as const
 
-export type LedgerCategory = (typeof LedgerCategory)[keyof typeof LedgerCategory]
+export type ClientSource = (typeof ClientSource)[keyof typeof ClientSource]
 
 
-export const LedgerEffect = {
-  CREDIT: 'CREDIT',
-  DEBIT: 'DEBIT'
+export const SubscriptionStatus = {
+  PENDING_DEPOSIT: 'PENDING_DEPOSIT',
+  PENDING_FIRST_SESSION: 'PENDING_FIRST_SESSION',
+  ACTIVE_LIMITED: 'ACTIVE_LIMITED',
+  ACTIVE: 'ACTIVE',
+  CANCELED: 'CANCELED',
+  COMPLETED: 'COMPLETED'
 } as const
 
-export type LedgerEffect = (typeof LedgerEffect)[keyof typeof LedgerEffect]
-
-
-export const ReferenceCategory = {
-  lessonId: 'lessonId',
-  paymentId: 'paymentId',
-  ledgerId: 'ledgerId',
-  subscriptionId: 'subscriptionId'
-} as const
-
-export type ReferenceCategory = (typeof ReferenceCategory)[keyof typeof ReferenceCategory]
-
-
-export const Role = {
-  OWNER: 'OWNER',
-  SECRETARY: 'SECRETARY',
-  CAPTAIN: 'CAPTAIN'
-} as const
-
-export type Role = (typeof Role)[keyof typeof Role]
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
 
 
 export const Transmission = {
@@ -57,13 +37,22 @@ export const Transmission = {
 export type Transmission = (typeof Transmission)[keyof typeof Transmission]
 
 
-export const TrainingSupport = {
+export const JobProfileType = {
+  trainer: 'trainer',
+  secretary: 'secretary',
+  manager: 'manager'
+} as const
+
+export type JobProfileType = (typeof JobProfileType)[keyof typeof JobProfileType]
+
+
+export const SupportType = {
   MANUAL: 'MANUAL',
   AUTOMATIC: 'AUTOMATIC',
   BOTH: 'BOTH'
 } as const
 
-export type TrainingSupport = (typeof TrainingSupport)[keyof typeof TrainingSupport]
+export type SupportType = (typeof SupportType)[keyof typeof SupportType]
 
 
 export const LessonStatus = {
@@ -76,69 +65,20 @@ export const LessonStatus = {
 export type LessonStatus = (typeof LessonStatus)[keyof typeof LessonStatus]
 
 
-export const ExpenseType = {
-  MARKETING: 'MARKETING',
-  MAINTENANCE: 'MAINTENANCE',
-  UTILITIES: 'UTILITIES',
-  RENT: 'RENT',
-  GENERAL: 'GENERAL'
-} as const
-
-export type ExpenseType = (typeof ExpenseType)[keyof typeof ExpenseType]
-
-
 export const PaymentMethod = {
-  CASH: 'CASH',
-  ELECTRONIC_WALLET: 'ELECTRONIC_WALLET'
+  MONETARY: 'MONETARY',
+  ELECTRONIC: 'ELECTRONIC'
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 
 
 export const TransactionType = {
-  PAYMENT: 'PAYMENT',
-  REFUND: 'REFUND'
+  CUSTOMER_PAYMENT: 'CUSTOMER_PAYMENT',
+  CUSTOMER_REFUND: 'CUSTOMER_REFUND',
+  EMPLOYEE_TRANSFER_TO_EMPLOYEE: 'EMPLOYEE_TRANSFER_TO_EMPLOYEE',
+  EMPLOYEE_TRANSFER_TO_ACADEMY: 'EMPLOYEE_TRANSFER_TO_ACADEMY',
+  ACADEMY_TRANSFER_TO_EMPLOYEE: 'ACADEMY_TRANSFER_TO_EMPLOYEE'
 } as const
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
-
-
-export const Platform = {
-  FACEBOOK: 'FACEBOOK',
-  INSTAGRAM: 'INSTAGRAM',
-  TIKTOK: 'TIKTOK',
-  YOUTUBE: 'YOUTUBE',
-  WHATSAPP: 'WHATSAPP',
-  WEBSITE: 'WEBSITE',
-  GMAIL: 'GMAIL'
-} as const
-
-export type Platform = (typeof Platform)[keyof typeof Platform]
-
-
-export const Status = {
-  PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
-  REJECTED: 'REJECTED'
-} as const
-
-export type Status = (typeof Status)[keyof typeof Status]
-
-
-export const SubscriptionStatus = {
-  ACTIVE: 'ACTIVE',
-  FULLYBOOKED: 'FULLYBOOKED',
-  PAUSED: 'PAUSED',
-  COMPLETED: 'COMPLETED',
-  CANCELED: 'CANCELED'
-} as const
-
-export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
-
-
-export const ClientSource = {
-  PLATFORM: 'PLATFORM',
-  OFFICE: 'OFFICE'
-} as const
-
-export type ClientSource = (typeof ClientSource)[keyof typeof ClientSource]

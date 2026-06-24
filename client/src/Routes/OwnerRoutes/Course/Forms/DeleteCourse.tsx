@@ -7,6 +7,7 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteDto } from "@/DTOs/course.dto";
 
 export default function DeleteCourse({
   item,
@@ -16,6 +17,7 @@ export default function DeleteCourse({
   academyId: string;
 }) {
   const { setConfigDialog } = useDialogState();
+  const params: DeleteDto["params"] = { courseId: item.id, academyId };
 
   const config: FormProps<{ name: string }, null> = {
     inputs: [
@@ -27,10 +29,6 @@ export default function DeleteCourse({
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "الكورس", item.name),
 
     submitButton: {
@@ -39,11 +37,7 @@ export default function DeleteCourse({
       variant: "destructive",
     },
 
-    service: async () =>
-      deleteCourse({
-        academyId,
-        courseId: item.id,
-      }),
+    service: async () => deleteCourse({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });

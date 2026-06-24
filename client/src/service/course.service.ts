@@ -1,89 +1,91 @@
 import { axiosClient } from "@/lib/axios";
-
-import type {
-  CreateCourseDto,
-  UpdateCourseDto,
-  DeleteCourseDto,
-  GetAllCoursesDto,
-  GetCourseDetailsDto,
-  AddCourseFeaturesDto,
-  DeleteCourseFeaturesDto,
-} from "@/DTOs/course.dto";
+import * as Dto from "@/DTOs/course.dto";
 
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
-
 import type { Course, CourseDetails } from "@/types/course";
 
-const baseUrl = (academyId: string) => `/academies/${academyId}/courses`;
+type Entity = Course;
+type EntityDetails = CourseDetails;
 
-export const createCourse = (data: CreateCourseDto) => {
-  const { academyId, ...body } = data;
+const coursesUrl = {
+  base: (academyId: string) =>
+    `/academies/${academyId}/courses`,
 
-  return axiosClient.post<SuccessfulResponse<Course>>(baseUrl(academyId), body);
+  byId: (academyId: string, courseId: string) =>
+    `/academies/${academyId}/courses/${courseId}`,
+
+  feature: (academyId: string, courseId: string) =>
+    `/academies/${academyId}/courses/${courseId}/feature`,
+
+  featureById: (academyId: string, courseId: string, featureId: string) =>
+    `/academies/${academyId}/courses/${courseId}/feature/${featureId}`,
 };
 
-export const updateCourse = (data: UpdateCourseDto) => {
-  const { academyId, courseId, ...body } = data;
+export const createCourse = (data: Dto.CreateDto) => {
+  const { params, body } = data;
+  const { academyId } = params;
 
-  return axiosClient.patch<SuccessfulResponse<Course>>(
-    `${baseUrl(academyId)}/${courseId}`,
-    body,
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    coursesUrl.base(academyId),
+    body
   );
 };
 
-export const deleteCourse = (data: DeleteCourseDto) => {
-  const { academyId, courseId } = data;
-
-  return axiosClient.delete<SuccessfulResponse<null>>(
-    `${baseUrl(academyId)}/${courseId}`,
-  );
-};
-
-export const getAllCourses = (data: GetAllCoursesDto) => {
-  const { academyId } = data;
-
-  return axiosClient.get<PaginatedResponse<Course>>(baseUrl(academyId), {
-    params: {
-      page: data.page ?? 1,
-      limit: data.limit ?? 10,
-      search: data.search ?? "",
-    },
-  });
-};
-
-export const getCourseDetails = (params: GetCourseDetailsDto) => {
+export const updateCourse = (data: Dto.UpdateDto) => {
+  const { params, body } = data;
   const { academyId, courseId } = params;
 
-  return axiosClient.get<SuccessfulResponse<CourseDetails>>(
-    `${baseUrl(academyId)}/${courseId}`,
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    coursesUrl.byId(academyId, courseId),
+    body
   );
 };
 
-export const getCourseActive = ({ academyId }: { academyId: string }) => {
-  return axiosClient.get<PaginatedResponse<Course>>(baseUrl(academyId), {
-    params: {
-      isActive: true,
-    },
-  });
-};
+export const deleteCourse = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { academyId, courseId } = params;
 
-export const AddCourseFeatures = (data: AddCourseFeaturesDto) => {
-  const { academyId, courseId, text } = data;
-  return axiosClient.post<SuccessfulResponse<Course>>(
-    `${baseUrl(academyId)}/${courseId}/feature`,
-    { text },
+  return axiosClient.delete<SuccessfulResponse<null>>(
+    coursesUrl.byId(academyId, courseId)
   );
 };
 
-export const DeleteCourseFeatures = (data: DeleteCourseFeaturesDto) => {
-  const { academyId, courseId, featureId } = data;
+export const getAllCourses = (data: Dto.GetAllDto) => {
+  const { params, query } = data;
+  const { academyId } = params;
 
-  return axiosClient.delete<SuccessfulResponse<Course>>(
-    `${baseUrl(academyId)}/${courseId}/feature/${featureId}`,
+  return axiosClient.get<PaginatedResponse<Entity>>(
+    coursesUrl.base(academyId),
     {
-      params: {
-        isActive: true,
-      },
-    },
+      params: query,
+    }
+  );
+};
+
+export const getDetailsCourse = (data: Dto.GetDetailsDto) => {
+  const { params } = data;
+  const { academyId, courseId } = params;
+
+  return axiosClient.get<SuccessfulResponse<EntityDetails>>(
+    coursesUrl.byId(academyId, courseId)
+  );
+};
+
+export const addCourseFeatures = (data: Dto.AddFeaturesDto) => {
+  const { params, body } = data;
+  const { academyId, courseId } = params;
+
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    coursesUrl.feature(academyId, courseId),
+    body
+  );
+};
+
+export const deleteCourseFeatures = (data: Dto.DeleteFeaturesDto) => {
+  const { params } = data;
+  const { academyId, courseId, featureId } = params;
+
+  return axiosClient.delete<SuccessfulResponse<Entity>>(
+    coursesUrl.featureById(academyId, courseId, featureId)
   );
 };

@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { GetDashboardAnalyticsSchema } from "./dashboard.schema";
+import * as Schema from "./dashboard.schema";
 
 export type GetDashboardAnalyticsDto = {
-    params: z.infer<typeof GetDashboardAnalyticsSchema.params>
-    query: z.infer<typeof GetDashboardAnalyticsSchema.query>
+    params: z.infer<typeof Schema.GetDashboardAnalyticsSchema.params>
+    query: z.infer<typeof Schema.GetDashboardAnalyticsSchema.query>
 }

@@ -2,10 +2,12 @@ import { SecretaryWhereInput } from "../../../prisma/generated/models";
 
 export const buildSecretaryWhere = ({
   search,
+  academyId
 }: {
   search?: string;
+  academyId: string
 }): SecretaryWhereInput => {
-  const where: SecretaryWhereInput = {};
+  const where: SecretaryWhereInput = { academyId };
 
   if (search) {
     where.OR = [

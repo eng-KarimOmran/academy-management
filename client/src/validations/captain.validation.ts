@@ -3,51 +3,52 @@ import {
   id,
   limit,
   positiveNumber,
-  trainingSupport,
   boolean,
-  phone,
-  transmission,
   date,
   price,
+  supportType,
+  booleanQuery,
 } from "@/validations/common.validation";
 
-export const CreateCaptainSchema = z.object({
-  phone: phone,
-  captainLessonPrice: price,
-  trainingType: trainingSupport,
-});
+export const CreateCaptainSchema = {
+  params: z.object({ academyId: id }),
+  body: z.object({
+    userId: id,
+    captainLessonPrice: price,
+    supportType: supportType,
+    baseSalary: price,
+  }),
+};
 
-export const UpdateCaptainSchema = z.object({
-  captainLessonPrice: price.optional(),
-  trainingType: trainingSupport.optional(),
-  isActive: boolean.optional(),
-});
+export const UpdateCaptainSchema = {
+  params: z.object({ academyId: id, captainId: id }),
+  body: z.object({
+    captainLessonPrice: price.optional(),
+    supportType: supportType.optional(),
+    isActive: boolean.optional(),
+  }),
+};
 
-export const GetAllCaptainsSchema = z.object({
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
-  search: z.string().optional(),
-});
+export const GetAllCaptainsSchema = {
+  params: z.object({ academyId: id }),
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit,
+    search: z.string().optional(),
+    isActive: booleanQuery.optional(),
+    supportType: supportType.optional(),
+  }),
+};
 
-export const GetCaptainDetailsSchema = z.object({
-  id,
-});
+export const GetCaptainDetailsSchema = {
+  params: z.object({ captainId: id, academyId: id }),
+};
 
-export const DeleteCaptainSchema = z.object({
-  id,
-});
+export const DeleteCaptainSchema = {
+  params: z.object({ captainId: id, academyId: id }),
+};
 
-export const FilterCaptainsSchema = z.object({
-  type: transmission.optional(),
-});
-
-export const GetCaptainScheduleSchema = z.object({
-  id,
-  date,
-});
-
-export const GetLessonCaptainSchema = z.object({
-  userId: id,
-  gte: z.string().optional(),
-  lte: z.string().optional(),
-});
+export const GetLessonCaptainSchema = {
+  params: z.object({ userId: id }),
+  query: z.object({ gte: date.optional(), lte: date.optional() }),
+};

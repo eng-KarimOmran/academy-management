@@ -2,71 +2,65 @@ import z from "zod";
 import {
   LessonStatus,
   PaymentMethod,
-  Platform,
-  Role,
-  TrainingSupport,
   Transmission,
   SubscriptionStatus,
-  TransactionType,
-  Status,
-  ExpenseType,
   ClientSource,
-  LedgerCategory,
-  LedgerEffect
+  SupportType,
+  TransactionType,
+  JobProfileType
 } from "./../../../prisma/generated/enums";
 
 import dayjs from "dayjs";
 
-// --- Basic Types ---
 
-export const id = z.cuid("Invalid unique identifier");
+export const id = z.string().transform((val) => val.toLowerCase()).pipe(z.cuid2({ message: "معرف غير صالح" }));
 
 export const personName = z
-  .string("Name is required")
+  .string("الاسم مطلوب")
   .trim()
-  .min(2, "Name must be at least 2 characters")
-  .max(50, "Name is too long (max 50)")
-  .regex(/^[\u0621-\u064Aa-zA-Z\s]+$/, "Name must contain only letters");
+  .min(2, "يجب أن يتكون الاسم من حرفين على الأقل")
+  .max(50, "الاسم طويل جدًا (الحد الأقصى 50 حرفًا)")
+  .regex(/^[\u0621-\u064Aa-zA-Z\s]+$/, "يجب أن يحتوي الاسم على حروف فقط");
 
 export const entityName = z
-  .string("Name is required")
+  .string("الاسم مطلوب")
   .trim()
-  .min(2, "Name must be at least 2 characters")
-  .max(50, "Name is too long (max 50)")
+  .min(2, "يجب أن يتكون الاسم من حرفين على الأقل")
+  .max(50, "الاسم طويل جدًا (الحد الأقصى 50 حرفًا)")
   .regex(
     /^[\u0621-\u064Aa-zA-Z0-9\s]+$/,
-    "Name must contain only letters and numbers",
+    "يجب أن يحتوي الاسم على حروف وأرقام فقط",
   );
 
 export const phone = z
-  .string("Phone number is required")
-  .regex(/^01[0125]\d{8}$/, "Invalid Egyptian phone number");
+  .string("رقم الهاتف مطلوب")
+  .regex(/^01[0125]\d{8}$/, "رقم هاتف مصري غير صالح");
 
 export const password = z
-  .string("Password is required")
-  .min(8, "Password must be at least 8 characters")
-  .max(32, "Password is too long");
+  .string("كلمة المرور مطلوبة")
+  .min(8, "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل")
+  .max(32, "كلمة المرور طويلة جدًا");
 
 export const address = z
-  .string("Address is required")
+  .string("العنوان مطلوب")
   .trim()
-  .min(5, "Address must be at least 5 characters")
-  .max(150, "Address is too long");
+  .min(5, "يجب أن يتكون العنوان من 5 أحرف على الأقل")
+  .max(150, "العنوان طويل جدًا");
 
-export const url = z.string("URL is required").url("Invalid URL format");
+export const url = z.string("الرابط مطلوب").url("صيغة الرابط غير صالحة");
 
 // --- Numbers & Finance ---
 
 export const positiveNumber = z.coerce
   .number()
-  .positive("Must be a positive number");
+  .positive("يجب أن يكون رقمًا موجبًا");
 
-export const price = z.coerce.number().min(0, "Price cannot be negative");
+export const price = z.coerce.number().min(0, "لا يمكن أن يكون السعر سالبًا");
 
 export const count = z.coerce
   .number()
-  .int("Must be an integer")
-  .min(1, "Count must be at least 1");
+  .int("يجب أن يكون رقمًا صحيحًا")
+  .min(1, "يجب أن يكون العدد 1 على الأقل");
 
 export const limit = z.coerce.number().int().min(1).max(100).default(50);
 
@@ -77,35 +71,24 @@ export const date = z.coerce.date();
 export const futureDate = z.coerce
   .date()
   .refine((val) => dayjs(val).isAfter(dayjs().subtract(1, "minute")), {
-    message: "Date must be in the present or future",
+    message: "يجب أن يكون التاريخ في الحاضر أو المستقبل",
   });
 
 // --- Enums Validation ---
 
-export const userRole = z.enum(Role);
-export const trainingSupport = z.enum(TrainingSupport);
+export const supportType = z.enum(SupportType);
 export const transmission = z.enum(Transmission);
-export const platform = z.enum(Platform);
 export const paymentMethod = z.enum(PaymentMethod);
 export const lessonStatus = z.enum(LessonStatus);
 export const subscriptionStatus = z.enum(SubscriptionStatus);
-export const transactionType = z.enum(TransactionType);
-export const transactionStatus = z.enum(Status);
-export const expenseType = z.enum(ExpenseType);
 export const clientSource = z.enum(ClientSource);
-export const ledgerCategory = z.enum(LedgerCategory);
-export const ledgerEffect = z.enum(LedgerEffect);
-
-
-// --- Specialized Helpers ---
-
-export const booleanQuery = z
-  .enum(["true", "false"])
-  .transform((value) => value === "true");
+export const jobProfileType = z.enum(JobProfileType);
+export const transactionType = z.enum(TransactionType);
+export const booleanQuery = z.enum(["true", "false"]).transform((value) => value === "true");
 
 export const boolean = z.boolean();
 
 export const plateNumber = z
-  .string("Plate number is required")
-  .min(3, "Invalid plate number")
-  .max(10, "Plate number too long");
+  .string("رقم اللوحة مطلوب")
+  .min(3, "رقم لوحة غير صالح")
+  .max(10, "رقم اللوحة طويل جدًا");

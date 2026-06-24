@@ -1,22 +1,24 @@
 import z from "zod";
 
-import {
-  CreateCarSchema,
-  UpdateCarSchema,
-  GetAllCarsSchema,
-  GetCarDetailsSchema,
-  DeleteCarSchema,
-  FilterByTypeSchema,
-} from "../validations/car.validation";
+import * as Schema from "../validations/car.validation";
 
-export type CreateCarDto = z.infer<typeof CreateCarSchema>;
+export type CreateDto = {
+  body: z.infer<typeof Schema.CreateCarSchema.body>;
+};
 
-export type UpdateCarDto = z.infer<typeof UpdateCarSchema>;
+export type UpdateDto = {
+  params: z.infer<typeof Schema.UpdateCarSchema.params>;
+  body: z.infer<typeof Schema.UpdateCarSchema.body>;
+};
 
-export type GetAllCarsDto = z.infer<typeof GetAllCarsSchema>;
+export type GetAllDto = {
+  query: z.infer<typeof Schema.GetAllCarsSchema.query>;
+};
 
-export type GetCarDetailsDto = z.infer<typeof GetCarDetailsSchema>;
+export type GetDetailsDto = {
+  params: z.infer<typeof Schema.GetCarDetailsSchema.params>;
+};
 
-export type DeleteCarDto = z.infer<typeof DeleteCarSchema>;
-
-export type FilterByTypeDto = z.infer<typeof FilterByTypeSchema>;
+export type DeleteDto = {
+  params: z.infer<typeof Schema.DeleteCarSchema.params>;
+};

@@ -1,44 +1,67 @@
 import { axiosClient } from "@/lib/axios";
-
-import type {
-  CreateLessonDto,
-  ChangeLessonStateDto,
-  GetAllLessonsDto,
-  GetLessonDetailsDto,
-} from "@/DTOs/lesson.dto";
+import * as Dto from "@/DTOs/lesson.dto";
 
 import type { LessonBase } from "@/types/lesson";
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 
-const baseUrl = (academyId: string) => `/academies/${academyId}/lessons`;
+type Entity = LessonBase;
 
-export const getAllLessons = async (data: GetAllLessonsDto) => {
-  const { academyId } = data;
-  return axiosClient.get<PaginatedResponse<LessonBase>>(baseUrl(academyId), {
-    params: {
-      page: data.page ?? 1,
-      limit: data.limit ?? 10,
-      search: data.search ?? "",
-    },
-  });
+const lessonsUrl = {
+  base: (academyId: string) =>
+    `/academies/${academyId}/lessons`,
+
+  byId: (academyId: string, lessonId: string) =>
+    `/academies/${academyId}/lessons/${lessonId}`,
+
+  status: (academyId: string, lessonId: string) =>
+    `/academies/${academyId}/lessons/${lessonId}/status`,
 };
 
-export const getLessonDetails = async (data: GetLessonDetailsDto) => {
-  const { academyId, lessonId } = data;
-  return axiosClient.get<SuccessfulResponse<LessonBase>>(
-    `${baseUrl(academyId)}/${lessonId}`,
+export const getAllLessons = (data: Dto.GetAllLessonsDto) => {
+  const { params, query } = data;
+  const { academyId } = params;
+
+  return axiosClient.get<PaginatedResponse<Entity>>(
+    lessonsUrl.base(academyId),
+    { params: query }
   );
 };
 
-export const createLesson = async (data: CreateLessonDto) => {
-  const { academyId, ...body } = data;
-  return axiosClient.post<SuccessfulResponse<LessonBase>>(
-    baseUrl(academyId),
-    body,
+export const getLessonDetails = (data: Dto.GetLessonDetailsDto) => {
+  const { params } = data;
+  const { academyId, lessonId } = params;
+
+  return axiosClient.get<SuccessfulResponse<Entity>>(
+    lessonsUrl.byId(academyId, lessonId)
   );
 };
 
-export const changeLessonState = async (data: ChangeLessonStateDto) => {
-  const { academyId, lessonId, ...body } = data;
-  return axiosClient.patch(`${baseUrl(academyId)}/${lessonId}/status`, body);
+export const createLesson = (data: Dto.CreateLessonDto) => {
+  const { params, body } = data;
+  const { academyId } = params;
+
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    lessonsUrl.base(academyId),
+    body
+  );
+};
+
+export const changeLessonState = (data: Dto.ChangeLessonStateDto) => {
+  const { params, body } = data;
+  const { academyId, lessonId } = params;
+
+  return axiosClient.patch(
+    lessonsUrl.status(academyId, lessonId),
+    body
+  );
+};
+
+export const updateLesson = (data: Dto.UpdateLessonDto) => {
+  const { params, body } = data;
+  const { academyId, lessonId } = params;
+
+  return axiosClient.patch(
+    lessonsUrl.byId(academyId, lessonId),
+    body
+  );
 };

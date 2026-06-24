@@ -1,45 +1,63 @@
-import type {
-  CreateSecretaryDto,
-  UpdateSecretaryDto,
-  DeleteSecretaryDto,
-  GetAllSecretariesDto,
-  GetSecretaryParamsDto,
-} from "@/DTOs/secretary.dto";
-
 import { axiosClient } from "@/lib/axios";
+import * as Dto from "@/DTOs/secretary.dto";
+
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { Secretary } from "@/types/secretary";
 
-const baseUrl = "/secretaries";
+type Entity = Secretary;
 
-export const createSecretary = (data: CreateSecretaryDto) => {
-  return axiosClient.post<SuccessfulResponse<Secretary>>(baseUrl, data);
+const secretariesUrl = {
+  base: (academyId: string) => `/academies/${academyId}/secretaries`,
+
+  byId: (academyId: string, secretaryId: string) => `/academies/${academyId}/secretaries/${secretaryId}`,
 };
 
-export const updateSecretary = (data: UpdateSecretaryDto) => {
-  const { secretaryId, ...body } = data;
-  return axiosClient.patch<SuccessfulResponse<Secretary>>(
-    `${baseUrl}/${secretaryId}`,
-    body,
+export const createSecretary = (data: Dto.CreateDto) => {
+  const { body, params } = data;
+  const { academyId } = params
+
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    secretariesUrl.base(academyId),
+    body
   );
 };
 
-export const deleteSecretary = (data: DeleteSecretaryDto) => {
+export const updateSecretary = (data: Dto.UpdateDto) => {
+  const { params, body } = data;
+  const { secretaryId, academyId } = params;
+
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    secretariesUrl.byId(academyId, secretaryId),
+    body
+  );
+};
+
+export const deleteSecretary = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { secretaryId, academyId } = params;
+
   return axiosClient.delete<SuccessfulResponse<null>>(
-    `${baseUrl}/${data.secretaryId}`,
+    secretariesUrl.byId(academyId, secretaryId)
   );
 };
 
-export const getSecretary = (data: GetSecretaryParamsDto) => {
-  return axiosClient.get<SuccessfulResponse<Secretary>>(
-    `${baseUrl}/${data.secretaryId}`,
+export const getSecretary = (data: Dto.GetDetailsDto) => {
+  const { params } = data;
+  const { secretaryId, academyId } = params;
+
+  return axiosClient.get<SuccessfulResponse<Entity>>(
+    secretariesUrl.byId(academyId, secretaryId)
   );
 };
 
-export const getAllSecretaries = (data: GetAllSecretariesDto) => {
-  return axiosClient.get<PaginatedResponse<Secretary>>(baseUrl, {
-    params: {
-      ...data,
-    },
-  });
+export const getAllSecretaries = (data: Dto.GetAllDto) => {
+  const { query, params } = data;
+  const { academyId } = params;
+
+  return axiosClient.get<PaginatedResponse<Entity>>(
+    secretariesUrl.base(academyId),
+    {
+      params: query,
+    }
+  );
 };

@@ -5,7 +5,6 @@ import type { CreateSubscriptionDto } from "@/DTOs/subscription.dto";
 import { CreateSubscriptionSchema } from "@/validations/subscription.validation";
 
 import { createSubscription } from "@/service/subscription.service";
-import { getCourseActive } from "@/service/course.service";
 
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
@@ -17,48 +16,73 @@ import { Transmission } from "@/types/enums";
 import { enumTranslations } from "@/lib/enumTranslations";
 import { useNavigate } from "react-router-dom";
 import { useDialogState } from "@/store/DialogState";
-import { getActiveAreas } from "@/service/area.service";
 import { useState } from "react";
+import { useActiveAcademyState } from "@/store/ActiveAcademyState";
+import { getAllAreas } from "@/service/area.service";
+import { getAllCourses } from "@/service/course.service";
 
 export default function AddSubscription({
+  clientId,
   academyId,
-  phone,
 }: {
+  clientId?: string;
   academyId?: string;
-  phone?: string;
 }) {
   const navigate = useNavigate();
   const { setConfigDialog } = useDialogState();
-  const [trainingType, setTrainingType] = useState<Transmission>("AUTOMATIC");
+  const [selectedTransmission, setSelectedTransmission] =
+    useState<Transmission>("AUTOMATIC");
+  const { activeAcademy } = useActiveAcademyState();
+  const selectedAcademyId = academyId ?? activeAcademy?.id ?? "";
+
+  const params: CreateSubscriptionDto["params"] = {
+    academyId: selectedAcademyId,
+  };
 
   const { data: courses = [] } = useQuery({
-    queryKey: ["courses", academyId, "active-courses"],
-    queryFn: () => getCourseActive({ academyId: academyId! }),
+    queryKey: ["courses", selectedAcademyId],
+    queryFn: () =>
+      getAllCourses({
+        query: {
+          limit: 50,
+          page: 1,
+          isActive: true,
+        },
+        params: { academyId: selectedAcademyId! },
+      }),
     select: (res) => res.data.data.items,
-    enabled: !!academyId,
+    enabled: !!selectedAcademyId,
   });
 
-  const { data: areas = [], isLoading } = useQuery({
-    queryKey: ["areas", academyId, "active-areas"],
-    queryFn: () => getActiveAreas({ type: trainingType }),
+  const { data: areas = [] } = useQuery({
+    queryKey: ["areas", "active", selectedTransmission],
+    queryFn: () =>
+      getAllAreas({
+        query: {
+          supportType: selectedTransmission,
+          limit: 50,
+          page: 1,
+          isActive: true,
+        },
+      }),
     select: (res) => res.data.data.items,
-    enabled: !!academyId,
   });
 
-  const config: FormProps<CreateSubscriptionDto, SubscriptionBase> = {
+  const config: FormProps<CreateSubscriptionDto["body"], SubscriptionBase> = {
     inputs: [
       {
-        name: "phone",
+        name: "clientId",
         type: "text",
-        label: "رقم الهاتف",
-        placeholder: "أدخل رقم العميل",
-        disabled: !!phone,
+        label: "معرف العميل",
+        placeholder: "أدخل معرف العميل",
+        disabled: !!clientId,
       },
 
       {
         name: "courseId",
         type: "select",
-        label: "الكورس",
+        label: "البرنامج",
+        placeholder: courses.length ? "اختار البرنامج" : "لا يوجد برامج",
         options: courses.map((course: Course) => ({
           label: course.name,
           value: course.id,
@@ -74,38 +98,34 @@ export default function AddSubscription({
           value: t,
         })),
         onChange: (trainingType) => {
-          setTrainingType(trainingType as Transmission);
+          setSelectedTransmission(trainingType as Transmission);
         },
-        disabled: isLoading,
       },
       {
         name: "areaId",
         type: "select",
         label: "منطقة التدريب",
+        placeholder: areas.length ? "اختار المنطقة" : "لا يوجد مناطق",
         options: areas.map((t) => ({
           label: t.name,
           value: t.id,
         })),
-        disabled: isLoading,
       },
     ],
 
     defaultValues: {
-      academyId,
-      phone: phone ?? "",
-      courseId: "",
       trainingTypeAtRegistration: "AUTOMATIC",
-      areaId: "",
+      clientId: clientId ?? "",
     },
 
-    schema: CreateSubscriptionSchema,
+    schema: CreateSubscriptionSchema.body,
 
     submitButton: {
       text: "إضافة اشتراك",
       loadingText: "جاري الإضافة...",
     },
 
-    service: (data) => createSubscription(data),
+    service: (data) => createSubscription({ body: data, params }),
 
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["clients", academyId] });

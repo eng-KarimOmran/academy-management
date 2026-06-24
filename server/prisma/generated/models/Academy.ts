@@ -26,64 +26,34 @@ export type AggregateAcademy = {
 
 export type AcademyMinAggregateOutputType = {
   id: string | null
-  name: string | null
-  phone: string | null
-  address: string | null
-  paymentLink: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type AcademyMaxAggregateOutputType = {
   id: string | null
-  name: string | null
-  phone: string | null
-  address: string | null
-  paymentLink: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type AcademyCountAggregateOutputType = {
   id: number
-  name: number
-  phone: number
-  address: number
-  paymentLink: number
   createdAt: number
-  updatedAt: number
   _all: number
 }
 
 
 export type AcademyMinAggregateInputType = {
   id?: true
-  name?: true
-  phone?: true
-  address?: true
-  paymentLink?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type AcademyMaxAggregateInputType = {
   id?: true
-  name?: true
-  phone?: true
-  address?: true
-  paymentLink?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type AcademyCountAggregateInputType = {
   id?: true
-  name?: true
-  phone?: true
-  address?: true
-  paymentLink?: true
   createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -161,12 +131,7 @@ export type AcademyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type AcademyGroupByOutputType = {
   id: string
-  name: string
-  phone: string
-  address: string
-  paymentLink: string | null
   createdAt: Date
-  updatedAt: Date
   _count: AcademyCountAggregateOutputType | null
   _min: AcademyMinAggregateOutputType | null
   _max: AcademyMaxAggregateOutputType | null
@@ -192,72 +157,73 @@ export type AcademyWhereInput = {
   OR?: Prisma.AcademyWhereInput[]
   NOT?: Prisma.AcademyWhereInput | Prisma.AcademyWhereInput[]
   id?: Prisma.StringFilter<"Academy"> | string
-  name?: Prisma.StringFilter<"Academy"> | string
-  phone?: Prisma.StringFilter<"Academy"> | string
-  address?: Prisma.StringFilter<"Academy"> | string
-  paymentLink?: Prisma.StringNullableFilter<"Academy"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Academy"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Academy"> | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaListRelationFilter
-  owners?: Prisma.UserListRelationFilter
+  addresses?: Prisma.AddressListRelationFilter
+  paymentLinks?: Prisma.PaymentLinkListRelationFilter
+  socialMedia?: Prisma.SocialMediaListRelationFilter
   courses?: Prisma.CourseListRelationFilter
-  subscriptions?: Prisma.SubscriptionListRelationFilter
-  expenses?: Prisma.ExpenseListRelationFilter
   clients?: Prisma.ClientListRelationFilter
-  Lessons?: Prisma.LessonListRelationFilter
-  payments?: Prisma.PaymentTransactionListRelationFilter
-  userLedgerTransactions?: Prisma.LedgerTransactionListRelationFilter
+  subscriptions?: Prisma.SubscriptionListRelationFilter
+  lessons?: Prisma.LessonListRelationFilter
+  owners?: Prisma.UserListRelationFilter
+  jobProfiles?: Prisma.JobProfileListRelationFilter
+  cars?: Prisma.CarListRelationFilter
+  areas?: Prisma.AreaListRelationFilter
+  ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
+  academyPhones?: Prisma.AcademyPhoneListRelationFilter
+  clientPhones?: Prisma.ClientPhoneListRelationFilter
+  financialAccount?: Prisma.XOR<Prisma.FinancialAccountNullableScalarRelationFilter, Prisma.FinancialAccountWhereInput> | null
+  payrolls?: Prisma.PayrollListRelationFilter
 }
 
 export type AcademyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  paymentLink?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  socialMediaPlatforms?: Prisma.SocialMediaOrderByRelationAggregateInput
-  owners?: Prisma.UserOrderByRelationAggregateInput
+  addresses?: Prisma.AddressOrderByRelationAggregateInput
+  paymentLinks?: Prisma.PaymentLinkOrderByRelationAggregateInput
+  socialMedia?: Prisma.SocialMediaOrderByRelationAggregateInput
   courses?: Prisma.CourseOrderByRelationAggregateInput
-  subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
-  expenses?: Prisma.ExpenseOrderByRelationAggregateInput
   clients?: Prisma.ClientOrderByRelationAggregateInput
-  Lessons?: Prisma.LessonOrderByRelationAggregateInput
-  payments?: Prisma.PaymentTransactionOrderByRelationAggregateInput
-  userLedgerTransactions?: Prisma.LedgerTransactionOrderByRelationAggregateInput
+  subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
+  lessons?: Prisma.LessonOrderByRelationAggregateInput
+  owners?: Prisma.UserOrderByRelationAggregateInput
+  jobProfiles?: Prisma.JobProfileOrderByRelationAggregateInput
+  cars?: Prisma.CarOrderByRelationAggregateInput
+  areas?: Prisma.AreaOrderByRelationAggregateInput
+  ledgerTransactions?: Prisma.LedgerTransactionOrderByRelationAggregateInput
+  academyPhones?: Prisma.AcademyPhoneOrderByRelationAggregateInput
+  clientPhones?: Prisma.ClientPhoneOrderByRelationAggregateInput
+  financialAccount?: Prisma.FinancialAccountOrderByWithRelationInput
+  payrolls?: Prisma.PayrollOrderByRelationAggregateInput
 }
 
 export type AcademyWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  name?: string
-  phone?: string
   AND?: Prisma.AcademyWhereInput | Prisma.AcademyWhereInput[]
   OR?: Prisma.AcademyWhereInput[]
   NOT?: Prisma.AcademyWhereInput | Prisma.AcademyWhereInput[]
-  address?: Prisma.StringFilter<"Academy"> | string
-  paymentLink?: Prisma.StringNullableFilter<"Academy"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Academy"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Academy"> | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaListRelationFilter
-  owners?: Prisma.UserListRelationFilter
+  addresses?: Prisma.AddressListRelationFilter
+  paymentLinks?: Prisma.PaymentLinkListRelationFilter
+  socialMedia?: Prisma.SocialMediaListRelationFilter
   courses?: Prisma.CourseListRelationFilter
-  subscriptions?: Prisma.SubscriptionListRelationFilter
-  expenses?: Prisma.ExpenseListRelationFilter
   clients?: Prisma.ClientListRelationFilter
-  Lessons?: Prisma.LessonListRelationFilter
-  payments?: Prisma.PaymentTransactionListRelationFilter
-  userLedgerTransactions?: Prisma.LedgerTransactionListRelationFilter
-}, "id" | "name" | "phone">
+  subscriptions?: Prisma.SubscriptionListRelationFilter
+  lessons?: Prisma.LessonListRelationFilter
+  owners?: Prisma.UserListRelationFilter
+  jobProfiles?: Prisma.JobProfileListRelationFilter
+  cars?: Prisma.CarListRelationFilter
+  areas?: Prisma.AreaListRelationFilter
+  ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
+  academyPhones?: Prisma.AcademyPhoneListRelationFilter
+  clientPhones?: Prisma.ClientPhoneListRelationFilter
+  financialAccount?: Prisma.XOR<Prisma.FinancialAccountNullableScalarRelationFilter, Prisma.FinancialAccountWhereInput> | null
+  payrolls?: Prisma.PayrollListRelationFilter
+}, "id">
 
 export type AcademyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  paymentLink?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.AcademyCountOrderByAggregateInput
   _max?: Prisma.AcademyMaxOrderByAggregateInput
   _min?: Prisma.AcademyMinOrderByAggregateInput
@@ -268,118 +234,131 @@ export type AcademyScalarWhereWithAggregatesInput = {
   OR?: Prisma.AcademyScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AcademyScalarWhereWithAggregatesInput | Prisma.AcademyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Academy"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Academy"> | string
-  phone?: Prisma.StringWithAggregatesFilter<"Academy"> | string
-  address?: Prisma.StringWithAggregatesFilter<"Academy"> | string
-  paymentLink?: Prisma.StringNullableWithAggregatesFilter<"Academy"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Academy"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Academy"> | Date | string
 }
 
 export type AcademyCreateInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
 export type AcademyUncheckedCreateInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
 export type AcademyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyCreateManyInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type AcademyUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AcademyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AcademyScalarRelationFilter = {
+  is?: Prisma.AcademyWhereInput
+  isNot?: Prisma.AcademyWhereInput
+}
+
+export type AcademyNullableScalarRelationFilter = {
+  is?: Prisma.AcademyWhereInput | null
+  isNot?: Prisma.AcademyWhereInput | null
+}
+
+export type AcademyCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type AcademyMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type AcademyMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type AcademyListRelationFilter = {
@@ -392,39 +371,150 @@ export type AcademyOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type AcademyCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  paymentLink?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+export type AcademyCreateNestedOneWithoutAcademyPhonesInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutAcademyPhonesInput, Prisma.AcademyUncheckedCreateWithoutAcademyPhonesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutAcademyPhonesInput
+  connect?: Prisma.AcademyWhereUniqueInput
 }
 
-export type AcademyMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  paymentLink?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+export type AcademyUpdateOneRequiredWithoutAcademyPhonesNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutAcademyPhonesInput, Prisma.AcademyUncheckedCreateWithoutAcademyPhonesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutAcademyPhonesInput
+  upsert?: Prisma.AcademyUpsertWithoutAcademyPhonesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutAcademyPhonesInput, Prisma.AcademyUpdateWithoutAcademyPhonesInput>, Prisma.AcademyUncheckedUpdateWithoutAcademyPhonesInput>
 }
 
-export type AcademyMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  paymentLink?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+export type AcademyCreateNestedOneWithoutClientPhonesInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientPhonesInput
+  connect?: Prisma.AcademyWhereUniqueInput
 }
 
-export type AcademyScalarRelationFilter = {
-  is?: Prisma.AcademyWhereInput
-  isNot?: Prisma.AcademyWhereInput
+export type AcademyUpdateOneRequiredWithoutClientPhonesNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientPhonesInput
+  upsert?: Prisma.AcademyUpsertWithoutClientPhonesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutClientPhonesInput, Prisma.AcademyUpdateWithoutClientPhonesInput>, Prisma.AcademyUncheckedUpdateWithoutClientPhonesInput>
+}
+
+export type AcademyCreateNestedOneWithoutFinancialAccountInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutFinancialAccountInput, Prisma.AcademyUncheckedCreateWithoutFinancialAccountInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutFinancialAccountInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneWithoutFinancialAccountNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutFinancialAccountInput, Prisma.AcademyUncheckedCreateWithoutFinancialAccountInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutFinancialAccountInput
+  upsert?: Prisma.AcademyUpsertWithoutFinancialAccountInput
+  disconnect?: Prisma.AcademyWhereInput | boolean
+  delete?: Prisma.AcademyWhereInput | boolean
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutFinancialAccountInput, Prisma.AcademyUpdateWithoutFinancialAccountInput>, Prisma.AcademyUncheckedUpdateWithoutFinancialAccountInput>
+}
+
+export type AcademyCreateNestedOneWithoutAddressesInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutAddressesInput, Prisma.AcademyUncheckedCreateWithoutAddressesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutAddressesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutAddressesNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutAddressesInput, Prisma.AcademyUncheckedCreateWithoutAddressesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutAddressesInput
+  upsert?: Prisma.AcademyUpsertWithoutAddressesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutAddressesInput, Prisma.AcademyUpdateWithoutAddressesInput>, Prisma.AcademyUncheckedUpdateWithoutAddressesInput>
+}
+
+export type AcademyCreateNestedOneWithoutPaymentLinksInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentLinksInput, Prisma.AcademyUncheckedCreateWithoutPaymentLinksInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutPaymentLinksInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutPaymentLinksNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentLinksInput, Prisma.AcademyUncheckedCreateWithoutPaymentLinksInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutPaymentLinksInput
+  upsert?: Prisma.AcademyUpsertWithoutPaymentLinksInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutPaymentLinksInput, Prisma.AcademyUpdateWithoutPaymentLinksInput>, Prisma.AcademyUncheckedUpdateWithoutPaymentLinksInput>
+}
+
+export type AcademyCreateNestedOneWithoutSocialMediaInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSocialMediaInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutSocialMediaNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSocialMediaInput
+  upsert?: Prisma.AcademyUpsertWithoutSocialMediaInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutSocialMediaInput, Prisma.AcademyUpdateWithoutSocialMediaInput>, Prisma.AcademyUncheckedUpdateWithoutSocialMediaInput>
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
+export type AcademyCreateNestedOneWithoutClientsInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientsInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutClientsNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientsInput
+  upsert?: Prisma.AcademyUpsertWithoutClientsInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutClientsInput, Prisma.AcademyUpdateWithoutClientsInput>, Prisma.AcademyUncheckedUpdateWithoutClientsInput>
+}
+
+export type AcademyCreateNestedOneWithoutCoursesInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutCoursesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutCoursesNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutCoursesInput
+  upsert?: Prisma.AcademyUpsertWithoutCoursesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutCoursesInput, Prisma.AcademyUpdateWithoutCoursesInput>, Prisma.AcademyUncheckedUpdateWithoutCoursesInput>
+}
+
+export type AcademyCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSubscriptionsInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.AcademyUpsertWithoutSubscriptionsInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.AcademyUpdateWithoutSubscriptionsInput>, Prisma.AcademyUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type AcademyCreateNestedOneWithoutJobProfilesInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutJobProfilesInput, Prisma.AcademyUncheckedCreateWithoutJobProfilesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutJobProfilesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+}
+
+export type AcademyUpdateOneRequiredWithoutJobProfilesNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutJobProfilesInput, Prisma.AcademyUncheckedCreateWithoutJobProfilesInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutJobProfilesInput
+  upsert?: Prisma.AcademyUpsertWithoutJobProfilesInput
+  connect?: Prisma.AcademyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutJobProfilesInput, Prisma.AcademyUpdateWithoutJobProfilesInput>, Prisma.AcademyUncheckedUpdateWithoutJobProfilesInput>
 }
 
 export type AcademyCreateNestedManyWithoutOwnersInput = {
@@ -465,64 +555,32 @@ export type AcademyUncheckedUpdateManyWithoutOwnersNestedInput = {
   deleteMany?: Prisma.AcademyScalarWhereInput | Prisma.AcademyScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type AcademyCreateNestedOneWithoutSocialMediaPlatformsInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaPlatformsInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaPlatformsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSocialMediaPlatformsInput
+export type AcademyCreateNestedOneWithoutCarsInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutCarsInput, Prisma.AcademyUncheckedCreateWithoutCarsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutCarsInput
   connect?: Prisma.AcademyWhereUniqueInput
 }
 
-export type AcademyUpdateOneRequiredWithoutSocialMediaPlatformsNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaPlatformsInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaPlatformsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSocialMediaPlatformsInput
-  upsert?: Prisma.AcademyUpsertWithoutSocialMediaPlatformsInput
+export type AcademyUpdateOneRequiredWithoutCarsNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutCarsInput, Prisma.AcademyUncheckedCreateWithoutCarsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutCarsInput
+  upsert?: Prisma.AcademyUpsertWithoutCarsInput
   connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutSocialMediaPlatformsInput, Prisma.AcademyUpdateWithoutSocialMediaPlatformsInput>, Prisma.AcademyUncheckedUpdateWithoutSocialMediaPlatformsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutCarsInput, Prisma.AcademyUpdateWithoutCarsInput>, Prisma.AcademyUncheckedUpdateWithoutCarsInput>
 }
 
-export type AcademyCreateNestedOneWithoutClientsInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientsInput
-  connect?: Prisma.AcademyWhereUniqueInput
-}
-
-export type AcademyUpdateOneRequiredWithoutClientsNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientsInput
-  upsert?: Prisma.AcademyUpsertWithoutClientsInput
-  connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutClientsInput, Prisma.AcademyUpdateWithoutClientsInput>, Prisma.AcademyUncheckedUpdateWithoutClientsInput>
-}
-
-export type AcademyCreateNestedOneWithoutSubscriptionsInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSubscriptionsInput
+export type AcademyCreateNestedOneWithoutAreasInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutAreasInput, Prisma.AcademyUncheckedCreateWithoutAreasInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutAreasInput
   connect?: Prisma.AcademyWhereUniqueInput
 }
 
-export type AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutSubscriptionsInput
-  upsert?: Prisma.AcademyUpsertWithoutSubscriptionsInput
+export type AcademyUpdateOneRequiredWithoutAreasNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutAreasInput, Prisma.AcademyUncheckedCreateWithoutAreasInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutAreasInput
+  upsert?: Prisma.AcademyUpsertWithoutAreasInput
   connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.AcademyUpdateWithoutSubscriptionsInput>, Prisma.AcademyUncheckedUpdateWithoutSubscriptionsInput>
-}
-
-export type AcademyCreateNestedOneWithoutPaymentsInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentsInput, Prisma.AcademyUncheckedCreateWithoutPaymentsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutPaymentsInput
-  connect?: Prisma.AcademyWhereUniqueInput
-}
-
-export type AcademyUpdateOneRequiredWithoutPaymentsNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentsInput, Prisma.AcademyUncheckedCreateWithoutPaymentsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutPaymentsInput
-  upsert?: Prisma.AcademyUpsertWithoutPaymentsInput
-  connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutPaymentsInput, Prisma.AcademyUpdateWithoutPaymentsInput>, Prisma.AcademyUncheckedUpdateWithoutPaymentsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutAreasInput, Prisma.AcademyUpdateWithoutAreasInput>, Prisma.AcademyUncheckedUpdateWithoutAreasInput>
 }
 
 export type AcademyCreateNestedOneWithoutLessonsInput = {
@@ -539,82 +597,1032 @@ export type AcademyUpdateOneRequiredWithoutLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutLessonsInput, Prisma.AcademyUpdateWithoutLessonsInput>, Prisma.AcademyUncheckedUpdateWithoutLessonsInput>
 }
 
-export type AcademyCreateNestedOneWithoutCoursesInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutCoursesInput
+export type AcademyCreateNestedOneWithoutLedgerTransactionsInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutLedgerTransactionsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutLedgerTransactionsInput
   connect?: Prisma.AcademyWhereUniqueInput
 }
 
-export type AcademyUpdateOneRequiredWithoutCoursesNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutCoursesInput
-  upsert?: Prisma.AcademyUpsertWithoutCoursesInput
+export type AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutLedgerTransactionsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutLedgerTransactionsInput
+  upsert?: Prisma.AcademyUpsertWithoutLedgerTransactionsInput
   connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutCoursesInput, Prisma.AcademyUpdateWithoutCoursesInput>, Prisma.AcademyUncheckedUpdateWithoutCoursesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutLedgerTransactionsInput, Prisma.AcademyUpdateWithoutLedgerTransactionsInput>, Prisma.AcademyUncheckedUpdateWithoutLedgerTransactionsInput>
 }
 
-export type AcademyCreateNestedOneWithoutExpensesInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutExpensesInput, Prisma.AcademyUncheckedCreateWithoutExpensesInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutExpensesInput
-  connect?: Prisma.AcademyWhereUniqueInput
-}
-
-export type AcademyUpdateOneRequiredWithoutExpensesNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutExpensesInput, Prisma.AcademyUncheckedCreateWithoutExpensesInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutExpensesInput
-  upsert?: Prisma.AcademyUpsertWithoutExpensesInput
-  connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutExpensesInput, Prisma.AcademyUpdateWithoutExpensesInput>, Prisma.AcademyUncheckedUpdateWithoutExpensesInput>
-}
-
-export type AcademyCreateNestedOneWithoutUserLedgerTransactionsInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutUserLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutUserLedgerTransactionsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutUserLedgerTransactionsInput
+export type AcademyCreateNestedOneWithoutPayrollsInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutPayrollsInput, Prisma.AcademyUncheckedCreateWithoutPayrollsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutPayrollsInput
   connect?: Prisma.AcademyWhereUniqueInput
 }
 
-export type AcademyUpdateOneRequiredWithoutUserLedgerTransactionsNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutUserLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutUserLedgerTransactionsInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutUserLedgerTransactionsInput
-  upsert?: Prisma.AcademyUpsertWithoutUserLedgerTransactionsInput
+export type AcademyUpdateOneRequiredWithoutPayrollsNestedInput = {
+  create?: Prisma.XOR<Prisma.AcademyCreateWithoutPayrollsInput, Prisma.AcademyUncheckedCreateWithoutPayrollsInput>
+  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutPayrollsInput
+  upsert?: Prisma.AcademyUpsertWithoutPayrollsInput
   connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutUserLedgerTransactionsInput, Prisma.AcademyUpdateWithoutUserLedgerTransactionsInput>, Prisma.AcademyUncheckedUpdateWithoutUserLedgerTransactionsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutPayrollsInput, Prisma.AcademyUpdateWithoutPayrollsInput>, Prisma.AcademyUncheckedUpdateWithoutPayrollsInput>
+}
+
+export type AcademyCreateWithoutAcademyPhonesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutAcademyPhonesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutAcademyPhonesInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutAcademyPhonesInput, Prisma.AcademyUncheckedCreateWithoutAcademyPhonesInput>
+}
+
+export type AcademyUpsertWithoutAcademyPhonesInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutAcademyPhonesInput, Prisma.AcademyUncheckedUpdateWithoutAcademyPhonesInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutAcademyPhonesInput, Prisma.AcademyUncheckedCreateWithoutAcademyPhonesInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutAcademyPhonesInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutAcademyPhonesInput, Prisma.AcademyUncheckedUpdateWithoutAcademyPhonesInput>
+}
+
+export type AcademyUpdateWithoutAcademyPhonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutAcademyPhonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutClientPhonesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutClientPhonesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutClientPhonesInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
+}
+
+export type AcademyUpsertWithoutClientPhonesInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutClientPhonesInput, Prisma.AcademyUncheckedUpdateWithoutClientPhonesInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutClientPhonesInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutClientPhonesInput, Prisma.AcademyUncheckedUpdateWithoutClientPhonesInput>
+}
+
+export type AcademyUpdateWithoutClientPhonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutClientPhonesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutFinancialAccountInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutFinancialAccountInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutFinancialAccountInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutFinancialAccountInput, Prisma.AcademyUncheckedCreateWithoutFinancialAccountInput>
+}
+
+export type AcademyUpsertWithoutFinancialAccountInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutFinancialAccountInput, Prisma.AcademyUncheckedUpdateWithoutFinancialAccountInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutFinancialAccountInput, Prisma.AcademyUncheckedCreateWithoutFinancialAccountInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutFinancialAccountInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutFinancialAccountInput, Prisma.AcademyUncheckedUpdateWithoutFinancialAccountInput>
+}
+
+export type AcademyUpdateWithoutFinancialAccountInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutFinancialAccountInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutAddressesInput = {
+  id?: string
+  createdAt?: Date | string
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutAddressesInput = {
+  id?: string
+  createdAt?: Date | string
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutAddressesInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutAddressesInput, Prisma.AcademyUncheckedCreateWithoutAddressesInput>
+}
+
+export type AcademyUpsertWithoutAddressesInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutAddressesInput, Prisma.AcademyUncheckedUpdateWithoutAddressesInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutAddressesInput, Prisma.AcademyUncheckedCreateWithoutAddressesInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutAddressesInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutAddressesInput, Prisma.AcademyUncheckedUpdateWithoutAddressesInput>
+}
+
+export type AcademyUpdateWithoutAddressesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutAddressesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutPaymentLinksInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutPaymentLinksInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutPaymentLinksInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentLinksInput, Prisma.AcademyUncheckedCreateWithoutPaymentLinksInput>
+}
+
+export type AcademyUpsertWithoutPaymentLinksInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutPaymentLinksInput, Prisma.AcademyUncheckedUpdateWithoutPaymentLinksInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentLinksInput, Prisma.AcademyUncheckedCreateWithoutPaymentLinksInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutPaymentLinksInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutPaymentLinksInput, Prisma.AcademyUncheckedUpdateWithoutPaymentLinksInput>
+}
+
+export type AcademyUpdateWithoutPaymentLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutPaymentLinksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutSocialMediaInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutSocialMediaInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutSocialMediaInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaInput>
+}
+
+export type AcademyUpsertWithoutSocialMediaInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutSocialMediaInput, Prisma.AcademyUncheckedUpdateWithoutSocialMediaInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutSocialMediaInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutSocialMediaInput, Prisma.AcademyUncheckedUpdateWithoutSocialMediaInput>
+}
+
+export type AcademyUpdateWithoutSocialMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutSocialMediaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutClientsInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutClientsInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutClientsInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
+}
+
+export type AcademyUpsertWithoutClientsInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutClientsInput, Prisma.AcademyUncheckedUpdateWithoutClientsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutClientsInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutClientsInput, Prisma.AcademyUncheckedUpdateWithoutClientsInput>
+}
+
+export type AcademyUpdateWithoutClientsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutClientsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutCoursesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutCoursesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutCoursesInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
+}
+
+export type AcademyUpsertWithoutCoursesInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutCoursesInput, Prisma.AcademyUncheckedUpdateWithoutCoursesInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutCoursesInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutCoursesInput, Prisma.AcademyUncheckedUpdateWithoutCoursesInput>
+}
+
+export type AcademyUpdateWithoutCoursesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutCoursesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutSubscriptionsInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutSubscriptionsInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutSubscriptionsInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
+}
+
+export type AcademyUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutSubscriptionsInput, Prisma.AcademyUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutSubscriptionsInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutSubscriptionsInput, Prisma.AcademyUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type AcademyUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutJobProfilesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutJobProfilesInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutJobProfilesInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutJobProfilesInput, Prisma.AcademyUncheckedCreateWithoutJobProfilesInput>
+}
+
+export type AcademyUpsertWithoutJobProfilesInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutJobProfilesInput, Prisma.AcademyUncheckedUpdateWithoutJobProfilesInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutJobProfilesInput, Prisma.AcademyUncheckedCreateWithoutJobProfilesInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutJobProfilesInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutJobProfilesInput, Prisma.AcademyUncheckedUpdateWithoutJobProfilesInput>
+}
+
+export type AcademyUpdateWithoutJobProfilesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutJobProfilesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyCreateWithoutOwnersInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
 export type AcademyUncheckedCreateWithoutOwnersInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
 export type AcademyCreateOrConnectWithoutOwnersInput = {
@@ -643,400 +1651,239 @@ export type AcademyScalarWhereInput = {
   OR?: Prisma.AcademyScalarWhereInput[]
   NOT?: Prisma.AcademyScalarWhereInput | Prisma.AcademyScalarWhereInput[]
   id?: Prisma.StringFilter<"Academy"> | string
-  name?: Prisma.StringFilter<"Academy"> | string
-  phone?: Prisma.StringFilter<"Academy"> | string
-  address?: Prisma.StringFilter<"Academy"> | string
-  paymentLink?: Prisma.StringNullableFilter<"Academy"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Academy"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Academy"> | Date | string
 }
 
-export type AcademyCreateWithoutSocialMediaPlatformsInput = {
+export type AcademyCreateWithoutCarsInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyUncheckedCreateWithoutSocialMediaPlatformsInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
-  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyCreateOrConnectWithoutSocialMediaPlatformsInput = {
-  where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaPlatformsInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaPlatformsInput>
-}
-
-export type AcademyUpsertWithoutSocialMediaPlatformsInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutSocialMediaPlatformsInput, Prisma.AcademyUncheckedUpdateWithoutSocialMediaPlatformsInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutSocialMediaPlatformsInput, Prisma.AcademyUncheckedCreateWithoutSocialMediaPlatformsInput>
-  where?: Prisma.AcademyWhereInput
-}
-
-export type AcademyUpdateToOneWithWhereWithoutSocialMediaPlatformsInput = {
-  where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutSocialMediaPlatformsInput, Prisma.AcademyUncheckedUpdateWithoutSocialMediaPlatformsInput>
-}
-
-export type AcademyUpdateWithoutSocialMediaPlatformsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
-  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyUncheckedUpdateWithoutSocialMediaPlatformsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
-  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyCreateWithoutClientsInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
-  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyUncheckedCreateWithoutClientsInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
-  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyCreateOrConnectWithoutClientsInput = {
-  where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
-}
-
-export type AcademyUpsertWithoutClientsInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutClientsInput, Prisma.AcademyUncheckedUpdateWithoutClientsInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientsInput, Prisma.AcademyUncheckedCreateWithoutClientsInput>
-  where?: Prisma.AcademyWhereInput
-}
-
-export type AcademyUpdateToOneWithWhereWithoutClientsInput = {
-  where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutClientsInput, Prisma.AcademyUncheckedUpdateWithoutClientsInput>
-}
-
-export type AcademyUpdateWithoutClientsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
-  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyUncheckedUpdateWithoutClientsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
-  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyCreateWithoutSubscriptionsInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
   owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
-  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
-export type AcademyUncheckedCreateWithoutSubscriptionsInput = {
+export type AcademyUncheckedCreateWithoutCarsInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
-export type AcademyCreateOrConnectWithoutSubscriptionsInput = {
+export type AcademyCreateOrConnectWithoutCarsInput = {
   where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutCarsInput, Prisma.AcademyUncheckedCreateWithoutCarsInput>
 }
 
-export type AcademyUpsertWithoutSubscriptionsInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutSubscriptionsInput, Prisma.AcademyUncheckedUpdateWithoutSubscriptionsInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutSubscriptionsInput, Prisma.AcademyUncheckedCreateWithoutSubscriptionsInput>
+export type AcademyUpsertWithoutCarsInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutCarsInput, Prisma.AcademyUncheckedUpdateWithoutCarsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutCarsInput, Prisma.AcademyUncheckedCreateWithoutCarsInput>
   where?: Prisma.AcademyWhereInput
 }
 
-export type AcademyUpdateToOneWithWhereWithoutSubscriptionsInput = {
+export type AcademyUpdateToOneWithWhereWithoutCarsInput = {
   where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutSubscriptionsInput, Prisma.AcademyUncheckedUpdateWithoutSubscriptionsInput>
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutCarsInput, Prisma.AcademyUncheckedUpdateWithoutCarsInput>
 }
 
-export type AcademyUpdateWithoutSubscriptionsInput = {
+export type AcademyUpdateWithoutCarsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
-export type AcademyUncheckedUpdateWithoutSubscriptionsInput = {
+export type AcademyUncheckedUpdateWithoutCarsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
-export type AcademyCreateWithoutPaymentsInput = {
+export type AcademyCreateWithoutAreasInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
-export type AcademyUncheckedCreateWithoutPaymentsInput = {
+export type AcademyUncheckedCreateWithoutAreasInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
-export type AcademyCreateOrConnectWithoutPaymentsInput = {
+export type AcademyCreateOrConnectWithoutAreasInput = {
   where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentsInput, Prisma.AcademyUncheckedCreateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutAreasInput, Prisma.AcademyUncheckedCreateWithoutAreasInput>
 }
 
-export type AcademyUpsertWithoutPaymentsInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutPaymentsInput, Prisma.AcademyUncheckedUpdateWithoutPaymentsInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutPaymentsInput, Prisma.AcademyUncheckedCreateWithoutPaymentsInput>
+export type AcademyUpsertWithoutAreasInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutAreasInput, Prisma.AcademyUncheckedUpdateWithoutAreasInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutAreasInput, Prisma.AcademyUncheckedCreateWithoutAreasInput>
   where?: Prisma.AcademyWhereInput
 }
 
-export type AcademyUpdateToOneWithWhereWithoutPaymentsInput = {
+export type AcademyUpdateToOneWithWhereWithoutAreasInput = {
   where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutPaymentsInput, Prisma.AcademyUncheckedUpdateWithoutPaymentsInput>
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutAreasInput, Prisma.AcademyUncheckedUpdateWithoutAreasInput>
 }
 
-export type AcademyUpdateWithoutPaymentsInput = {
+export type AcademyUpdateWithoutAreasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
-export type AcademyUncheckedUpdateWithoutPaymentsInput = {
+export type AcademyUncheckedUpdateWithoutAreasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyCreateWithoutLessonsInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
 export type AcademyUncheckedCreateWithoutLessonsInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
 export type AcademyCreateOrConnectWithoutLessonsInput = {
@@ -1057,348 +1904,279 @@ export type AcademyUpdateToOneWithWhereWithoutLessonsInput = {
 
 export type AcademyUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyUncheckedUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyCreateWithoutCoursesInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyUncheckedCreateWithoutCoursesInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyCreateOrConnectWithoutCoursesInput = {
-  where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
-}
-
-export type AcademyUpsertWithoutCoursesInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutCoursesInput, Prisma.AcademyUncheckedUpdateWithoutCoursesInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutCoursesInput, Prisma.AcademyUncheckedCreateWithoutCoursesInput>
-  where?: Prisma.AcademyWhereInput
-}
-
-export type AcademyUpdateToOneWithWhereWithoutCoursesInput = {
-  where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutCoursesInput, Prisma.AcademyUncheckedUpdateWithoutCoursesInput>
-}
-
-export type AcademyUpdateWithoutCoursesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyUncheckedUpdateWithoutCoursesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
   owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
-export type AcademyCreateWithoutExpensesInput = {
+export type AcademyCreateWithoutLedgerTransactionsInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyUncheckedCreateWithoutExpensesInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
-  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyCreateOrConnectWithoutExpensesInput = {
-  where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutExpensesInput, Prisma.AcademyUncheckedCreateWithoutExpensesInput>
-}
-
-export type AcademyUpsertWithoutExpensesInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutExpensesInput, Prisma.AcademyUncheckedUpdateWithoutExpensesInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutExpensesInput, Prisma.AcademyUncheckedCreateWithoutExpensesInput>
-  where?: Prisma.AcademyWhereInput
-}
-
-export type AcademyUpdateToOneWithWhereWithoutExpensesInput = {
-  where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutExpensesInput, Prisma.AcademyUncheckedUpdateWithoutExpensesInput>
-}
-
-export type AcademyUpdateWithoutExpensesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
-  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyUncheckedUpdateWithoutExpensesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
-  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyCreateWithoutUserLedgerTransactionsInput = {
-  id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
   owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
-  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionCreateNestedManyWithoutAcademyInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
-export type AcademyUncheckedCreateWithoutUserLedgerTransactionsInput = {
+export type AcademyUncheckedCreateWithoutLedgerTransactionsInput = {
   id?: string
-  name: string
-  phone: string
-  address: string
-  paymentLink?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
   courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  expenses?: Prisma.ExpenseUncheckedCreateNestedManyWithoutAcademyInput
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  Lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  payments?: Prisma.PaymentTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
-export type AcademyCreateOrConnectWithoutUserLedgerTransactionsInput = {
+export type AcademyCreateOrConnectWithoutLedgerTransactionsInput = {
   where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutUserLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutUserLedgerTransactionsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutLedgerTransactionsInput>
 }
 
-export type AcademyUpsertWithoutUserLedgerTransactionsInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutUserLedgerTransactionsInput, Prisma.AcademyUncheckedUpdateWithoutUserLedgerTransactionsInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutUserLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutUserLedgerTransactionsInput>
+export type AcademyUpsertWithoutLedgerTransactionsInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutLedgerTransactionsInput, Prisma.AcademyUncheckedUpdateWithoutLedgerTransactionsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutLedgerTransactionsInput, Prisma.AcademyUncheckedCreateWithoutLedgerTransactionsInput>
   where?: Prisma.AcademyWhereInput
 }
 
-export type AcademyUpdateToOneWithWhereWithoutUserLedgerTransactionsInput = {
+export type AcademyUpdateToOneWithWhereWithoutLedgerTransactionsInput = {
   where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutUserLedgerTransactionsInput, Prisma.AcademyUncheckedUpdateWithoutUserLedgerTransactionsInput>
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutLedgerTransactionsInput, Prisma.AcademyUncheckedUpdateWithoutLedgerTransactionsInput>
 }
 
-export type AcademyUpdateWithoutUserLedgerTransactionsInput = {
+export type AcademyUpdateWithoutLedgerTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
-export type AcademyUncheckedUpdateWithoutUserLedgerTransactionsInput = {
+export type AcademyUncheckedUpdateWithoutLedgerTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
+}
+
+export type AcademyCreateWithoutPayrollsInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
+}
+
+export type AcademyUncheckedCreateWithoutPayrollsInput = {
+  id?: string
+  createdAt?: Date | string
+  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
+  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
+  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
+  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
+  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
+  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
+  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
+  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
+  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
+}
+
+export type AcademyCreateOrConnectWithoutPayrollsInput = {
+  where: Prisma.AcademyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutPayrollsInput, Prisma.AcademyUncheckedCreateWithoutPayrollsInput>
+}
+
+export type AcademyUpsertWithoutPayrollsInput = {
+  update: Prisma.XOR<Prisma.AcademyUpdateWithoutPayrollsInput, Prisma.AcademyUncheckedUpdateWithoutPayrollsInput>
+  create: Prisma.XOR<Prisma.AcademyCreateWithoutPayrollsInput, Prisma.AcademyUncheckedCreateWithoutPayrollsInput>
+  where?: Prisma.AcademyWhereInput
+}
+
+export type AcademyUpdateToOneWithWhereWithoutPayrollsInput = {
+  where?: Prisma.AcademyWhereInput
+  data: Prisma.XOR<Prisma.AcademyUpdateWithoutPayrollsInput, Prisma.AcademyUncheckedUpdateWithoutPayrollsInput>
+}
+
+export type AcademyUpdateWithoutPayrollsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+}
+
+export type AcademyUncheckedUpdateWithoutPayrollsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
+  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
 }
 
 export type AcademyUpdateWithoutOwnersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
+  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
+  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyUncheckedUpdateWithoutOwnersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  socialMediaPlatforms?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
+  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
+  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
+  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
   courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  expenses?: Prisma.ExpenseUncheckedUpdateManyWithoutAcademyNestedInput
   clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  Lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  payments?: Prisma.PaymentTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  userLedgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
+  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
+  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
+  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
+  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
+  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
+  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
 export type AcademyUncheckedUpdateManyWithoutOwnersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  paymentLink?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1407,27 +2185,39 @@ export type AcademyUncheckedUpdateManyWithoutOwnersInput = {
  */
 
 export type AcademyCountOutputType = {
-  socialMediaPlatforms: number
-  owners: number
+  addresses: number
+  paymentLinks: number
+  socialMedia: number
   courses: number
-  subscriptions: number
-  expenses: number
   clients: number
-  Lessons: number
-  payments: number
-  userLedgerTransactions: number
+  subscriptions: number
+  lessons: number
+  owners: number
+  jobProfiles: number
+  cars: number
+  areas: number
+  ledgerTransactions: number
+  academyPhones: number
+  clientPhones: number
+  payrolls: number
 }
 
 export type AcademyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  socialMediaPlatforms?: boolean | AcademyCountOutputTypeCountSocialMediaPlatformsArgs
-  owners?: boolean | AcademyCountOutputTypeCountOwnersArgs
+  addresses?: boolean | AcademyCountOutputTypeCountAddressesArgs
+  paymentLinks?: boolean | AcademyCountOutputTypeCountPaymentLinksArgs
+  socialMedia?: boolean | AcademyCountOutputTypeCountSocialMediaArgs
   courses?: boolean | AcademyCountOutputTypeCountCoursesArgs
-  subscriptions?: boolean | AcademyCountOutputTypeCountSubscriptionsArgs
-  expenses?: boolean | AcademyCountOutputTypeCountExpensesArgs
   clients?: boolean | AcademyCountOutputTypeCountClientsArgs
-  Lessons?: boolean | AcademyCountOutputTypeCountLessonsArgs
-  payments?: boolean | AcademyCountOutputTypeCountPaymentsArgs
-  userLedgerTransactions?: boolean | AcademyCountOutputTypeCountUserLedgerTransactionsArgs
+  subscriptions?: boolean | AcademyCountOutputTypeCountSubscriptionsArgs
+  lessons?: boolean | AcademyCountOutputTypeCountLessonsArgs
+  owners?: boolean | AcademyCountOutputTypeCountOwnersArgs
+  jobProfiles?: boolean | AcademyCountOutputTypeCountJobProfilesArgs
+  cars?: boolean | AcademyCountOutputTypeCountCarsArgs
+  areas?: boolean | AcademyCountOutputTypeCountAreasArgs
+  ledgerTransactions?: boolean | AcademyCountOutputTypeCountLedgerTransactionsArgs
+  academyPhones?: boolean | AcademyCountOutputTypeCountAcademyPhonesArgs
+  clientPhones?: boolean | AcademyCountOutputTypeCountClientPhonesArgs
+  payrolls?: boolean | AcademyCountOutputTypeCountPayrollsArgs
 }
 
 /**
@@ -1443,15 +2233,22 @@ export type AcademyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * AcademyCountOutputType without action
  */
-export type AcademyCountOutputTypeCountSocialMediaPlatformsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SocialMediaWhereInput
+export type AcademyCountOutputTypeCountAddressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AddressWhereInput
 }
 
 /**
  * AcademyCountOutputType without action
  */
-export type AcademyCountOutputTypeCountOwnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserWhereInput
+export type AcademyCountOutputTypeCountPaymentLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentLinkWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountSocialMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SocialMediaWhereInput
 }
 
 /**
@@ -1464,22 +2261,15 @@ export type AcademyCountOutputTypeCountCoursesArgs<ExtArgs extends runtime.Types
 /**
  * AcademyCountOutputType without action
  */
-export type AcademyCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SubscriptionWhereInput
-}
-
-/**
- * AcademyCountOutputType without action
- */
-export type AcademyCountOutputTypeCountExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ExpenseWhereInput
-}
-
-/**
- * AcademyCountOutputType without action
- */
 export type AcademyCountOutputTypeCountClientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ClientWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubscriptionWhereInput
 }
 
 /**
@@ -1492,79 +2282,115 @@ export type AcademyCountOutputTypeCountLessonsArgs<ExtArgs extends runtime.Types
 /**
  * AcademyCountOutputType without action
  */
-export type AcademyCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PaymentTransactionWhereInput
+export type AcademyCountOutputTypeCountOwnersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
 }
 
 /**
  * AcademyCountOutputType without action
  */
-export type AcademyCountOutputTypeCountUserLedgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type AcademyCountOutputTypeCountJobProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.JobProfileWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountCarsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CarWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountAreasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AreaWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountLedgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LedgerTransactionWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountAcademyPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AcademyPhoneWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountClientPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClientPhoneWhereInput
+}
+
+/**
+ * AcademyCountOutputType without action
+ */
+export type AcademyCountOutputTypeCountPayrollsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PayrollWhereInput
 }
 
 
 export type AcademySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  phone?: boolean
-  address?: boolean
-  paymentLink?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
-  socialMediaPlatforms?: boolean | Prisma.Academy$socialMediaPlatformsArgs<ExtArgs>
-  owners?: boolean | Prisma.Academy$ownersArgs<ExtArgs>
+  addresses?: boolean | Prisma.Academy$addressesArgs<ExtArgs>
+  paymentLinks?: boolean | Prisma.Academy$paymentLinksArgs<ExtArgs>
+  socialMedia?: boolean | Prisma.Academy$socialMediaArgs<ExtArgs>
   courses?: boolean | Prisma.Academy$coursesArgs<ExtArgs>
-  subscriptions?: boolean | Prisma.Academy$subscriptionsArgs<ExtArgs>
-  expenses?: boolean | Prisma.Academy$expensesArgs<ExtArgs>
   clients?: boolean | Prisma.Academy$clientsArgs<ExtArgs>
-  Lessons?: boolean | Prisma.Academy$LessonsArgs<ExtArgs>
-  payments?: boolean | Prisma.Academy$paymentsArgs<ExtArgs>
-  userLedgerTransactions?: boolean | Prisma.Academy$userLedgerTransactionsArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.Academy$subscriptionsArgs<ExtArgs>
+  lessons?: boolean | Prisma.Academy$lessonsArgs<ExtArgs>
+  owners?: boolean | Prisma.Academy$ownersArgs<ExtArgs>
+  jobProfiles?: boolean | Prisma.Academy$jobProfilesArgs<ExtArgs>
+  cars?: boolean | Prisma.Academy$carsArgs<ExtArgs>
+  areas?: boolean | Prisma.Academy$areasArgs<ExtArgs>
+  ledgerTransactions?: boolean | Prisma.Academy$ledgerTransactionsArgs<ExtArgs>
+  academyPhones?: boolean | Prisma.Academy$academyPhonesArgs<ExtArgs>
+  clientPhones?: boolean | Prisma.Academy$clientPhonesArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.Academy$financialAccountArgs<ExtArgs>
+  payrolls?: boolean | Prisma.Academy$payrollsArgs<ExtArgs>
   _count?: boolean | Prisma.AcademyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["academy"]>
 
 export type AcademySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  phone?: boolean
-  address?: boolean
-  paymentLink?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }, ExtArgs["result"]["academy"]>
 
 export type AcademySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  phone?: boolean
-  address?: boolean
-  paymentLink?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }, ExtArgs["result"]["academy"]>
 
 export type AcademySelectScalar = {
   id?: boolean
-  name?: boolean
-  phone?: boolean
-  address?: boolean
-  paymentLink?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type AcademyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "address" | "paymentLink" | "createdAt" | "updatedAt", ExtArgs["result"]["academy"]>
+export type AcademyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "createdAt", ExtArgs["result"]["academy"]>
 export type AcademyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  socialMediaPlatforms?: boolean | Prisma.Academy$socialMediaPlatformsArgs<ExtArgs>
-  owners?: boolean | Prisma.Academy$ownersArgs<ExtArgs>
+  addresses?: boolean | Prisma.Academy$addressesArgs<ExtArgs>
+  paymentLinks?: boolean | Prisma.Academy$paymentLinksArgs<ExtArgs>
+  socialMedia?: boolean | Prisma.Academy$socialMediaArgs<ExtArgs>
   courses?: boolean | Prisma.Academy$coursesArgs<ExtArgs>
-  subscriptions?: boolean | Prisma.Academy$subscriptionsArgs<ExtArgs>
-  expenses?: boolean | Prisma.Academy$expensesArgs<ExtArgs>
   clients?: boolean | Prisma.Academy$clientsArgs<ExtArgs>
-  Lessons?: boolean | Prisma.Academy$LessonsArgs<ExtArgs>
-  payments?: boolean | Prisma.Academy$paymentsArgs<ExtArgs>
-  userLedgerTransactions?: boolean | Prisma.Academy$userLedgerTransactionsArgs<ExtArgs>
+  subscriptions?: boolean | Prisma.Academy$subscriptionsArgs<ExtArgs>
+  lessons?: boolean | Prisma.Academy$lessonsArgs<ExtArgs>
+  owners?: boolean | Prisma.Academy$ownersArgs<ExtArgs>
+  jobProfiles?: boolean | Prisma.Academy$jobProfilesArgs<ExtArgs>
+  cars?: boolean | Prisma.Academy$carsArgs<ExtArgs>
+  areas?: boolean | Prisma.Academy$areasArgs<ExtArgs>
+  ledgerTransactions?: boolean | Prisma.Academy$ledgerTransactionsArgs<ExtArgs>
+  academyPhones?: boolean | Prisma.Academy$academyPhonesArgs<ExtArgs>
+  clientPhones?: boolean | Prisma.Academy$clientPhonesArgs<ExtArgs>
+  financialAccount?: boolean | Prisma.Academy$financialAccountArgs<ExtArgs>
+  payrolls?: boolean | Prisma.Academy$payrollsArgs<ExtArgs>
   _count?: boolean | Prisma.AcademyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AcademyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1573,24 +2399,26 @@ export type AcademyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $AcademyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Academy"
   objects: {
-    socialMediaPlatforms: Prisma.$SocialMediaPayload<ExtArgs>[]
-    owners: Prisma.$UserPayload<ExtArgs>[]
+    addresses: Prisma.$AddressPayload<ExtArgs>[]
+    paymentLinks: Prisma.$PaymentLinkPayload<ExtArgs>[]
+    socialMedia: Prisma.$SocialMediaPayload<ExtArgs>[]
     courses: Prisma.$CoursePayload<ExtArgs>[]
-    subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
-    expenses: Prisma.$ExpensePayload<ExtArgs>[]
     clients: Prisma.$ClientPayload<ExtArgs>[]
-    Lessons: Prisma.$LessonPayload<ExtArgs>[]
-    payments: Prisma.$PaymentTransactionPayload<ExtArgs>[]
-    userLedgerTransactions: Prisma.$LedgerTransactionPayload<ExtArgs>[]
+    subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
+    lessons: Prisma.$LessonPayload<ExtArgs>[]
+    owners: Prisma.$UserPayload<ExtArgs>[]
+    jobProfiles: Prisma.$JobProfilePayload<ExtArgs>[]
+    cars: Prisma.$CarPayload<ExtArgs>[]
+    areas: Prisma.$AreaPayload<ExtArgs>[]
+    ledgerTransactions: Prisma.$LedgerTransactionPayload<ExtArgs>[]
+    academyPhones: Prisma.$AcademyPhonePayload<ExtArgs>[]
+    clientPhones: Prisma.$ClientPhonePayload<ExtArgs>[]
+    financialAccount: Prisma.$FinancialAccountPayload<ExtArgs> | null
+    payrolls: Prisma.$PayrollPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string
-    phone: string
-    address: string
-    paymentLink: string | null
     createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["academy"]>
   composites: {}
 }
@@ -1985,15 +2813,22 @@ readonly fields: AcademyFieldRefs;
  */
 export interface Prisma__AcademyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  socialMediaPlatforms<T extends Prisma.Academy$socialMediaPlatformsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$socialMediaPlatformsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  owners<T extends Prisma.Academy$ownersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$ownersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  addresses<T extends Prisma.Academy$addressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  paymentLinks<T extends Prisma.Academy$paymentLinksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$paymentLinksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  socialMedia<T extends Prisma.Academy$socialMediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$socialMediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   courses<T extends Prisma.Academy$coursesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  subscriptions<T extends Prisma.Academy$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  expenses<T extends Prisma.Academy$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clients<T extends Prisma.Academy$clientsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$clientsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Lessons<T extends Prisma.Academy$LessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$LessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  payments<T extends Prisma.Academy$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  userLedgerTransactions<T extends Prisma.Academy$userLedgerTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$userLedgerTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subscriptions<T extends Prisma.Academy$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lessons<T extends Prisma.Academy$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  owners<T extends Prisma.Academy$ownersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$ownersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  jobProfiles<T extends Prisma.Academy$jobProfilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$jobProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cars<T extends Prisma.Academy$carsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$carsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CarPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  areas<T extends Prisma.Academy$areasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$areasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ledgerTransactions<T extends Prisma.Academy$ledgerTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$ledgerTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  academyPhones<T extends Prisma.Academy$academyPhonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$academyPhonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademyPhonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clientPhones<T extends Prisma.Academy$clientPhonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$clientPhonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPhonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  financialAccount<T extends Prisma.Academy$financialAccountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$financialAccountArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  payrolls<T extends Prisma.Academy$payrollsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$payrollsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2024,12 +2859,7 @@ export interface Prisma__AcademyClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface AcademyFieldRefs {
   readonly id: Prisma.FieldRef<"Academy", 'String'>
-  readonly name: Prisma.FieldRef<"Academy", 'String'>
-  readonly phone: Prisma.FieldRef<"Academy", 'String'>
-  readonly address: Prisma.FieldRef<"Academy", 'String'>
-  readonly paymentLink: Prisma.FieldRef<"Academy", 'String'>
   readonly createdAt: Prisma.FieldRef<"Academy", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Academy", 'DateTime'>
 }
     
 
@@ -2253,7 +3083,7 @@ export type AcademyCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * The data needed to create a Academy.
    */
-  data: Prisma.XOR<Prisma.AcademyCreateInput, Prisma.AcademyUncheckedCreateInput>
+  data?: Prisma.XOR<Prisma.AcademyCreateInput, Prisma.AcademyUncheckedCreateInput>
 }
 
 /**
@@ -2423,9 +3253,57 @@ export type AcademyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Academy.socialMediaPlatforms
+ * Academy.addresses
  */
-export type Academy$socialMediaPlatformsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Academy$addressesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Address
+   */
+  select?: Prisma.AddressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Address
+   */
+  omit?: Prisma.AddressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AddressInclude<ExtArgs> | null
+  where?: Prisma.AddressWhereInput
+  orderBy?: Prisma.AddressOrderByWithRelationInput | Prisma.AddressOrderByWithRelationInput[]
+  cursor?: Prisma.AddressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AddressScalarFieldEnum | Prisma.AddressScalarFieldEnum[]
+}
+
+/**
+ * Academy.paymentLinks
+ */
+export type Academy$paymentLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PaymentLink
+   */
+  select?: Prisma.PaymentLinkSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PaymentLink
+   */
+  omit?: Prisma.PaymentLinkOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentLinkInclude<ExtArgs> | null
+  where?: Prisma.PaymentLinkWhereInput
+  orderBy?: Prisma.PaymentLinkOrderByWithRelationInput | Prisma.PaymentLinkOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentLinkWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentLinkScalarFieldEnum | Prisma.PaymentLinkScalarFieldEnum[]
+}
+
+/**
+ * Academy.socialMedia
+ */
+export type Academy$socialMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the SocialMedia
    */
@@ -2444,30 +3322,6 @@ export type Academy$socialMediaPlatformsArgs<ExtArgs extends runtime.Types.Exten
   take?: number
   skip?: number
   distinct?: Prisma.SocialMediaScalarFieldEnum | Prisma.SocialMediaScalarFieldEnum[]
-}
-
-/**
- * Academy.owners
- */
-export type Academy$ownersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
-  cursor?: Prisma.UserWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**
@@ -2495,54 +3349,6 @@ export type Academy$coursesArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Academy.subscriptions
- */
-export type Academy$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Subscription
-   */
-  select?: Prisma.SubscriptionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Subscription
-   */
-  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SubscriptionInclude<ExtArgs> | null
-  where?: Prisma.SubscriptionWhereInput
-  orderBy?: Prisma.SubscriptionOrderByWithRelationInput | Prisma.SubscriptionOrderByWithRelationInput[]
-  cursor?: Prisma.SubscriptionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
-}
-
-/**
- * Academy.expenses
- */
-export type Academy$expensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Expense
-   */
-  select?: Prisma.ExpenseSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Expense
-   */
-  omit?: Prisma.ExpenseOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ExpenseInclude<ExtArgs> | null
-  where?: Prisma.ExpenseWhereInput
-  orderBy?: Prisma.ExpenseOrderByWithRelationInput | Prisma.ExpenseOrderByWithRelationInput[]
-  cursor?: Prisma.ExpenseWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ExpenseScalarFieldEnum | Prisma.ExpenseScalarFieldEnum[]
-}
-
-/**
  * Academy.clients
  */
 export type Academy$clientsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2567,9 +3373,33 @@ export type Academy$clientsArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Academy.Lessons
+ * Academy.subscriptions
  */
-export type Academy$LessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Academy$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subscription
+   */
+  select?: Prisma.SubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subscription
+   */
+  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubscriptionInclude<ExtArgs> | null
+  where?: Prisma.SubscriptionWhereInput
+  orderBy?: Prisma.SubscriptionOrderByWithRelationInput | Prisma.SubscriptionOrderByWithRelationInput[]
+  cursor?: Prisma.SubscriptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
+}
+
+/**
+ * Academy.lessons
+ */
+export type Academy$lessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Lesson
    */
@@ -2591,33 +3421,105 @@ export type Academy$LessonsArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Academy.payments
+ * Academy.owners
  */
-export type Academy$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Academy$ownersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the PaymentTransaction
+   * Select specific fields to fetch from the User
    */
-  select?: Prisma.PaymentTransactionSelect<ExtArgs> | null
+  select?: Prisma.UserSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the PaymentTransaction
+   * Omit specific fields from the User
    */
-  omit?: Prisma.PaymentTransactionOmit<ExtArgs> | null
+  omit?: Prisma.UserOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PaymentTransactionInclude<ExtArgs> | null
-  where?: Prisma.PaymentTransactionWhereInput
-  orderBy?: Prisma.PaymentTransactionOrderByWithRelationInput | Prisma.PaymentTransactionOrderByWithRelationInput[]
-  cursor?: Prisma.PaymentTransactionWhereUniqueInput
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.PaymentTransactionScalarFieldEnum | Prisma.PaymentTransactionScalarFieldEnum[]
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**
- * Academy.userLedgerTransactions
+ * Academy.jobProfiles
  */
-export type Academy$userLedgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Academy$jobProfilesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the JobProfile
+   */
+  select?: Prisma.JobProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the JobProfile
+   */
+  omit?: Prisma.JobProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.JobProfileInclude<ExtArgs> | null
+  where?: Prisma.JobProfileWhereInput
+  orderBy?: Prisma.JobProfileOrderByWithRelationInput | Prisma.JobProfileOrderByWithRelationInput[]
+  cursor?: Prisma.JobProfileWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JobProfileScalarFieldEnum | Prisma.JobProfileScalarFieldEnum[]
+}
+
+/**
+ * Academy.cars
+ */
+export type Academy$carsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Car
+   */
+  select?: Prisma.CarSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Car
+   */
+  omit?: Prisma.CarOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarInclude<ExtArgs> | null
+  where?: Prisma.CarWhereInput
+  orderBy?: Prisma.CarOrderByWithRelationInput | Prisma.CarOrderByWithRelationInput[]
+  cursor?: Prisma.CarWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CarScalarFieldEnum | Prisma.CarScalarFieldEnum[]
+}
+
+/**
+ * Academy.areas
+ */
+export type Academy$areasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Area
+   */
+  select?: Prisma.AreaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Area
+   */
+  omit?: Prisma.AreaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AreaInclude<ExtArgs> | null
+  where?: Prisma.AreaWhereInput
+  orderBy?: Prisma.AreaOrderByWithRelationInput | Prisma.AreaOrderByWithRelationInput[]
+  cursor?: Prisma.AreaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AreaScalarFieldEnum | Prisma.AreaScalarFieldEnum[]
+}
+
+/**
+ * Academy.ledgerTransactions
+ */
+export type Academy$ledgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the LedgerTransaction
    */
@@ -2636,6 +3538,97 @@ export type Academy$userLedgerTransactionsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.LedgerTransactionScalarFieldEnum | Prisma.LedgerTransactionScalarFieldEnum[]
+}
+
+/**
+ * Academy.academyPhones
+ */
+export type Academy$academyPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AcademyPhone
+   */
+  select?: Prisma.AcademyPhoneSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AcademyPhone
+   */
+  omit?: Prisma.AcademyPhoneOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AcademyPhoneInclude<ExtArgs> | null
+  where?: Prisma.AcademyPhoneWhereInput
+  orderBy?: Prisma.AcademyPhoneOrderByWithRelationInput | Prisma.AcademyPhoneOrderByWithRelationInput[]
+  cursor?: Prisma.AcademyPhoneWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AcademyPhoneScalarFieldEnum | Prisma.AcademyPhoneScalarFieldEnum[]
+}
+
+/**
+ * Academy.clientPhones
+ */
+export type Academy$clientPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClientPhone
+   */
+  select?: Prisma.ClientPhoneSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClientPhone
+   */
+  omit?: Prisma.ClientPhoneOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClientPhoneInclude<ExtArgs> | null
+  where?: Prisma.ClientPhoneWhereInput
+  orderBy?: Prisma.ClientPhoneOrderByWithRelationInput | Prisma.ClientPhoneOrderByWithRelationInput[]
+  cursor?: Prisma.ClientPhoneWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClientPhoneScalarFieldEnum | Prisma.ClientPhoneScalarFieldEnum[]
+}
+
+/**
+ * Academy.financialAccount
+ */
+export type Academy$financialAccountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FinancialAccount
+   */
+  select?: Prisma.FinancialAccountSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FinancialAccount
+   */
+  omit?: Prisma.FinancialAccountOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FinancialAccountInclude<ExtArgs> | null
+  where?: Prisma.FinancialAccountWhereInput
+}
+
+/**
+ * Academy.payrolls
+ */
+export type Academy$payrollsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payroll
+   */
+  select?: Prisma.PayrollSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payroll
+   */
+  omit?: Prisma.PayrollOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayrollInclude<ExtArgs> | null
+  where?: Prisma.PayrollWhereInput
+  orderBy?: Prisma.PayrollOrderByWithRelationInput | Prisma.PayrollOrderByWithRelationInput[]
+  cursor?: Prisma.PayrollWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PayrollScalarFieldEnum | Prisma.PayrollScalarFieldEnum[]
 }
 
 /**

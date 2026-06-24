@@ -13,11 +13,34 @@ import { enumTranslations } from "@/lib/enumTranslations";
 import type { Client } from "@/types/client";
 import { useNavigate } from "react-router-dom";
 import { useDialogState } from "@/store/DialogState";
+import { useEffect } from "react";
+import { getAllAcademies } from "@/service/academy.service";
+import { useQuery } from "@tanstack/react-query";
 
-export default function AddClient({ academyId }: { academyId: string }) {
+export default function AddClient() {
   const navigate = useNavigate();
   const { setConfigDialog } = useDialogState();
-  const config: FormProps<CreateClientDto, Client> = {
+
+  const {
+    isLoading,
+    error,
+    data = [],
+  } = useQuery({
+    queryKey: ["academies"],
+    queryFn: () => getAllAcademies({ query: { limit: 50, page: 1 } }),
+    select: (res) => {
+      return res.data.data.items;
+    },
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message || "خطأ في تحميل بيانات الأكادميات");
+    }
+  }, [error]);
+
+  const config: FormProps<CreateClientDto["body"], Client> = {
     inputs: [
       {
         name: "name",
@@ -41,33 +64,39 @@ export default function AddClient({ academyId }: { academyId: string }) {
           value: s,
         })),
       },
+      {
+        name: "academyId",
+        type: "select",
+        label: "الاكادمية",
+        placeholder: data.length ? "اختار الأكاديمية" : "لا يوجد أكاديميات",
+        options: data.map((s) => ({
+          label: s.name,
+          value: s.id,
+        })),
+        disabled: isLoading || !!error,
+      },
     ],
 
     defaultValues: {
-      academyId,
-      name: "",
-      phone: "",
       clientSource: "OFFICE",
     },
 
-    schema: CreateClientSchema,
+    schema: CreateClientSchema.body,
 
     submitButton: {
       text: "إضافة عميل",
       loadingText: "جاري الإضافة...",
     },
 
-    service: (data) => createClient(data),
+    service: (data) => createClient({ body: data }),
 
     onSuccess: (res) => {
-      if (academyId) {
-        queryClient.invalidateQueries({
-          queryKey: ["clients", academyId],
-        });
-      }
-      toast.success("تم إضافة العميل بنجاح");
-      setConfigDialog(null);
       if ("data" in res) {
+        queryClient.invalidateQueries({
+          queryKey: ["clients", res.data.academyId],
+        });
+        toast.success("تم إضافة العميل بنجاح");
+        setConfigDialog(null);
         navigate(
           `/dashboard/client/${res.data.id}?academyId=${res.data.academyId}`,
         );

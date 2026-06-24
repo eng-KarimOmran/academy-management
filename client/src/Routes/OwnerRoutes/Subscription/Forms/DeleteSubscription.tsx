@@ -8,6 +8,7 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteSubscriptionDto } from "@/DTOs/subscription.dto";
 
 export default function DeleteSubscription({
   item,
@@ -15,6 +16,11 @@ export default function DeleteSubscription({
   item: SubscriptionBase;
 }) {
   const { setConfigDialog } = useDialogState();
+
+  const params: DeleteSubscriptionDto["params"] = {
+    academyId: item.academy.id,
+    subscriptionId: item.id,
+  };
 
   const clientName = item.client.name;
 
@@ -28,10 +34,6 @@ export default function DeleteSubscription({
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "اسم العميل", clientName),
 
     submitButton: {
@@ -40,11 +42,7 @@ export default function DeleteSubscription({
       variant: "destructive",
     },
 
-    service: async () =>
-      deleteSubscription({
-        academyId: item.academy.id,
-        subscriptionId: item.id,
-      }),
+    service: async () => deleteSubscription({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

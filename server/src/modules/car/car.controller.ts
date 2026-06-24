@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./car.dto";
 import CarService from "./car.service";
 import sendSuccess from "../../shared/utils/successResponse";
@@ -8,7 +8,7 @@ const CarController = {
   createCar: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateDto;
 
-    const car = await CarService.create(dataSafe);
+    const car = await CarService.create({ dataSafe });
 
     return sendSuccess({
       res,
@@ -21,7 +21,7 @@ const CarController = {
   updateCar: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.UpdateDto;
 
-    const carUpdate = await CarService.update(dataSafe);
+    const carUpdate = await CarService.update({ dataSafe });
 
     return sendSuccess({
       res,
@@ -33,7 +33,7 @@ const CarController = {
   getAllCars: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllDto;
 
-    const data = await CarService.getAll(dataSafe);
+    const data = await CarService.getAll({ dataSafe });
 
     return sendSuccess({ res, data });
   },
@@ -41,7 +41,7 @@ const CarController = {
   getDetailsCar: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetDetailsDto;
 
-    const car = await CarService.getDetails(dataSafe);
+    const car = await CarService.getDetails({ dataSafe });
 
     return sendSuccess({ res, data: car });
   },
@@ -49,7 +49,7 @@ const CarController = {
   deleteCar: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.DeleteDto;
 
-    await CarService.remove(dataSafe);
+    await CarService.delete({ dataSafe });
 
     return sendSuccess({
       res,

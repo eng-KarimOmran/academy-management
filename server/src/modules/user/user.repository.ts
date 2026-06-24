@@ -1,68 +1,60 @@
+import { Role } from "../../../prisma/generated/enums";
 import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
-import {
-  UserCreateInput,
-  UserUpdateInput,
-  UserWhereInput,
-  UserOrderByWithRelationInput,
-  UserSelect,
-} from "../../../prisma/generated/models";
-import { userBaseSelect } from './user.selectors';
-import getClient from "../../shared/utils/getClient"
-
+import ApiError from "../../shared/utils/ApiError";
+import getClient from "../../shared/utils/getClient";
 
 const UserRepository = {
-  async create({ data, select, tx }: { data: UserCreateInput; select?: UserSelect; tx?: TransactionClient }) {
-    return getClient(tx).user.create({
-      data,
-      select: select ?? userBaseSelect,
-    });
-  },
+    findById: (userId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
+        return client.user.findUnique({
+            where: { id: userId },
+        });
+    },
+    recalculateUserRole: async (userId: string, tx?: TransactionClient) => {
+        const client = getClient(tx);
 
-  async update({ userId, data, select, tx }: { userId: string; data: UserUpdateInput; select?: UserSelect; tx?: TransactionClient }) {
-    return getClient(tx).user.update({
-      where: { id: userId },
-      data,
-      select: select ?? userBaseSelect,
-    });
-  },
+        const user = await client.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                academies: { select: { id: true } },
+                employee: {
+                    select: {
+                        captainProfiles: { select: { id: true }, take: 1 },
+                        secretaryProfiles: { select: { id: true }, take: 1 }
+                    }
+                }
+            }
+        });
 
-  async delete({ userId, select, tx }: { userId: string; select?: UserSelect; tx?: TransactionClient }) {
-    return getClient(tx).user.delete({
-      where: { id: userId },
-      select: select ?? userBaseSelect,
-    });
-  },
+        if (!user) throw ApiError.NotFound("User");
 
-  async findById({ userId, select, tx }: { userId: string; select?: UserSelect; tx?: TransactionClient }) {
-    return getClient(tx).user.findUnique({
-      where: { id: userId },
-      select: select ?? userBaseSelect,
-    });
-  },
+        const roles = new Set<Role>();
 
-  async findByPhone({ phone, select, tx }: { phone: string; select?: UserSelect; tx?: TransactionClient }) {
-    return getClient(tx).user.findFirst({
-      where: { phone },
-      select: select ?? userBaseSelect,
-    });
-  },
+        if (user.academies.length > 0) {
+            roles.add("OWNER");
+        }
 
-  async findFirst({ where, select, tx }: { where: UserWhereInput; select?: UserSelect; tx?: TransactionClient }) {
-    return getClient(tx).user.findFirst({
-      where,
-      select: select ?? userBaseSelect,
-    });
-  },
+        if (user.employee) {
+            if (user.employee.captainProfiles.length > 0) {
+                roles.add("CAPTAIN");
+            }
+            if (user.employee.secretaryProfiles.length > 0) {
+                roles.add("SECRETARY");
+            }
+        }
 
-  async findMany({ where, skip, take, orderBy, select, tx }: { skip?: number; take?: number; where?: UserWhereInput; orderBy?: UserOrderByWithRelationInput; select?: UserSelect; tx?: TransactionClient }) {
-    const client = getClient(tx);
-    const [users, count] = await Promise.all([
-      client.user.findMany({ where, skip, take, orderBy, select: select ?? userBaseSelect }),
-      client.user.count({ where }),
-    ]);
+        const newRolesArray = Array.from(roles);
 
-    return { users, count };
-  }
-};
+        await client.user.update({
+            where: { id: userId },
+            data: {
+                role: newRolesArray
+            }
+        });
 
-export default UserRepository;
+        return newRolesArray;
+    }
+}
+
+export default UserRepository

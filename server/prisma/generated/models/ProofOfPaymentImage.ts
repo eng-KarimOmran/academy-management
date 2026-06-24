@@ -28,21 +28,18 @@ export type ProofOfPaymentImageMinAggregateOutputType = {
   id: string | null
   imageUrl: string | null
   publicId: string | null
-  transactionId: string | null
 }
 
 export type ProofOfPaymentImageMaxAggregateOutputType = {
   id: string | null
   imageUrl: string | null
   publicId: string | null
-  transactionId: string | null
 }
 
 export type ProofOfPaymentImageCountAggregateOutputType = {
   id: number
   imageUrl: number
   publicId: number
-  transactionId: number
   _all: number
 }
 
@@ -51,21 +48,18 @@ export type ProofOfPaymentImageMinAggregateInputType = {
   id?: true
   imageUrl?: true
   publicId?: true
-  transactionId?: true
 }
 
 export type ProofOfPaymentImageMaxAggregateInputType = {
   id?: true
   imageUrl?: true
   publicId?: true
-  transactionId?: true
 }
 
 export type ProofOfPaymentImageCountAggregateInputType = {
   id?: true
   imageUrl?: true
   publicId?: true
-  transactionId?: true
   _all?: true
 }
 
@@ -145,7 +139,6 @@ export type ProofOfPaymentImageGroupByOutputType = {
   id: string
   imageUrl: string
   publicId: string
-  transactionId: string
   _count: ProofOfPaymentImageCountAggregateOutputType | null
   _min: ProofOfPaymentImageMinAggregateOutputType | null
   _max: ProofOfPaymentImageMaxAggregateOutputType | null
@@ -173,34 +166,30 @@ export type ProofOfPaymentImageWhereInput = {
   id?: Prisma.StringFilter<"ProofOfPaymentImage"> | string
   imageUrl?: Prisma.StringFilter<"ProofOfPaymentImage"> | string
   publicId?: Prisma.StringFilter<"ProofOfPaymentImage"> | string
-  transactionId?: Prisma.StringFilter<"ProofOfPaymentImage"> | string
-  transaction?: Prisma.XOR<Prisma.PaymentTransactionNullableScalarRelationFilter, Prisma.PaymentTransactionWhereInput> | null
+  ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
 }
 
 export type ProofOfPaymentImageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   publicId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  transaction?: Prisma.PaymentTransactionOrderByWithRelationInput
+  ledgerTransactions?: Prisma.LedgerTransactionOrderByRelationAggregateInput
 }
 
 export type ProofOfPaymentImageWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  transactionId?: string
   AND?: Prisma.ProofOfPaymentImageWhereInput | Prisma.ProofOfPaymentImageWhereInput[]
   OR?: Prisma.ProofOfPaymentImageWhereInput[]
   NOT?: Prisma.ProofOfPaymentImageWhereInput | Prisma.ProofOfPaymentImageWhereInput[]
   imageUrl?: Prisma.StringFilter<"ProofOfPaymentImage"> | string
   publicId?: Prisma.StringFilter<"ProofOfPaymentImage"> | string
-  transaction?: Prisma.XOR<Prisma.PaymentTransactionNullableScalarRelationFilter, Prisma.PaymentTransactionWhereInput> | null
-}, "id" | "transactionId">
+  ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
+}, "id">
 
 export type ProofOfPaymentImageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   publicId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
   _count?: Prisma.ProofOfPaymentImageCountOrderByAggregateInput
   _max?: Prisma.ProofOfPaymentImageMaxOrderByAggregateInput
   _min?: Prisma.ProofOfPaymentImageMinOrderByAggregateInput
@@ -213,42 +202,40 @@ export type ProofOfPaymentImageScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ProofOfPaymentImage"> | string
   imageUrl?: Prisma.StringWithAggregatesFilter<"ProofOfPaymentImage"> | string
   publicId?: Prisma.StringWithAggregatesFilter<"ProofOfPaymentImage"> | string
-  transactionId?: Prisma.StringWithAggregatesFilter<"ProofOfPaymentImage"> | string
 }
 
 export type ProofOfPaymentImageCreateInput = {
   id?: string
   imageUrl: string
   publicId: string
-  transaction?: Prisma.PaymentTransactionCreateNestedOneWithoutProofOfPaymentImageInput
+  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutProofOfPaymentImageInput
 }
 
 export type ProofOfPaymentImageUncheckedCreateInput = {
   id?: string
   imageUrl: string
   publicId: string
-  transactionId: string
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutProofOfPaymentImageInput
 }
 
 export type ProofOfPaymentImageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
-  transaction?: Prisma.PaymentTransactionUpdateOneWithoutProofOfPaymentImageNestedInput
+  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutProofOfPaymentImageNestedInput
 }
 
 export type ProofOfPaymentImageUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
+  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutProofOfPaymentImageNestedInput
 }
 
 export type ProofOfPaymentImageCreateManyInput = {
   id?: string
   imageUrl: string
   publicId: string
-  transactionId: string
 }
 
 export type ProofOfPaymentImageUpdateManyMutationInput = {
@@ -261,28 +248,24 @@ export type ProofOfPaymentImageUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProofOfPaymentImageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   publicId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
 }
 
 export type ProofOfPaymentImageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   publicId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
 }
 
 export type ProofOfPaymentImageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
   publicId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
 }
 
 export type ProofOfPaymentImageNullableScalarRelationFilter = {
@@ -290,132 +273,140 @@ export type ProofOfPaymentImageNullableScalarRelationFilter = {
   isNot?: Prisma.ProofOfPaymentImageWhereInput | null
 }
 
-export type ProofOfPaymentImageCreateNestedOneWithoutTransactionInput = {
-  create?: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.ProofOfPaymentImageCreateOrConnectWithoutTransactionInput
+export type StringFieldUpdateOperationsInput = {
+  set?: string
+}
+
+export type ProofOfPaymentImageCreateNestedOneWithoutLedgerTransactionsInput = {
+  create?: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutLedgerTransactionsInput>
+  connectOrCreate?: Prisma.ProofOfPaymentImageCreateOrConnectWithoutLedgerTransactionsInput
   connect?: Prisma.ProofOfPaymentImageWhereUniqueInput
 }
 
-export type ProofOfPaymentImageUncheckedCreateNestedOneWithoutTransactionInput = {
-  create?: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.ProofOfPaymentImageCreateOrConnectWithoutTransactionInput
-  connect?: Prisma.ProofOfPaymentImageWhereUniqueInput
-}
-
-export type ProofOfPaymentImageUpdateOneWithoutTransactionNestedInput = {
-  create?: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.ProofOfPaymentImageCreateOrConnectWithoutTransactionInput
-  upsert?: Prisma.ProofOfPaymentImageUpsertWithoutTransactionInput
+export type ProofOfPaymentImageUpdateOneWithoutLedgerTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutLedgerTransactionsInput>
+  connectOrCreate?: Prisma.ProofOfPaymentImageCreateOrConnectWithoutLedgerTransactionsInput
+  upsert?: Prisma.ProofOfPaymentImageUpsertWithoutLedgerTransactionsInput
   disconnect?: Prisma.ProofOfPaymentImageWhereInput | boolean
   delete?: Prisma.ProofOfPaymentImageWhereInput | boolean
   connect?: Prisma.ProofOfPaymentImageWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProofOfPaymentImageUpdateToOneWithWhereWithoutTransactionInput, Prisma.ProofOfPaymentImageUpdateWithoutTransactionInput>, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutTransactionInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProofOfPaymentImageUpdateToOneWithWhereWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUpdateWithoutLedgerTransactionsInput>, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutLedgerTransactionsInput>
 }
 
-export type ProofOfPaymentImageUncheckedUpdateOneWithoutTransactionNestedInput = {
-  create?: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.ProofOfPaymentImageCreateOrConnectWithoutTransactionInput
-  upsert?: Prisma.ProofOfPaymentImageUpsertWithoutTransactionInput
-  disconnect?: Prisma.ProofOfPaymentImageWhereInput | boolean
-  delete?: Prisma.ProofOfPaymentImageWhereInput | boolean
-  connect?: Prisma.ProofOfPaymentImageWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ProofOfPaymentImageUpdateToOneWithWhereWithoutTransactionInput, Prisma.ProofOfPaymentImageUpdateWithoutTransactionInput>, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutTransactionInput>
-}
-
-export type ProofOfPaymentImageCreateWithoutTransactionInput = {
+export type ProofOfPaymentImageCreateWithoutLedgerTransactionsInput = {
   id?: string
   imageUrl: string
   publicId: string
 }
 
-export type ProofOfPaymentImageUncheckedCreateWithoutTransactionInput = {
+export type ProofOfPaymentImageUncheckedCreateWithoutLedgerTransactionsInput = {
   id?: string
   imageUrl: string
   publicId: string
 }
 
-export type ProofOfPaymentImageCreateOrConnectWithoutTransactionInput = {
+export type ProofOfPaymentImageCreateOrConnectWithoutLedgerTransactionsInput = {
   where: Prisma.ProofOfPaymentImageWhereUniqueInput
-  create: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutTransactionInput>
+  create: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutLedgerTransactionsInput>
 }
 
-export type ProofOfPaymentImageUpsertWithoutTransactionInput = {
-  update: Prisma.XOR<Prisma.ProofOfPaymentImageUpdateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutTransactionInput>
-  create: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutTransactionInput>
+export type ProofOfPaymentImageUpsertWithoutLedgerTransactionsInput = {
+  update: Prisma.XOR<Prisma.ProofOfPaymentImageUpdateWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutLedgerTransactionsInput>
+  create: Prisma.XOR<Prisma.ProofOfPaymentImageCreateWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUncheckedCreateWithoutLedgerTransactionsInput>
   where?: Prisma.ProofOfPaymentImageWhereInput
 }
 
-export type ProofOfPaymentImageUpdateToOneWithWhereWithoutTransactionInput = {
+export type ProofOfPaymentImageUpdateToOneWithWhereWithoutLedgerTransactionsInput = {
   where?: Prisma.ProofOfPaymentImageWhereInput
-  data: Prisma.XOR<Prisma.ProofOfPaymentImageUpdateWithoutTransactionInput, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutTransactionInput>
+  data: Prisma.XOR<Prisma.ProofOfPaymentImageUpdateWithoutLedgerTransactionsInput, Prisma.ProofOfPaymentImageUncheckedUpdateWithoutLedgerTransactionsInput>
 }
 
-export type ProofOfPaymentImageUpdateWithoutTransactionInput = {
+export type ProofOfPaymentImageUpdateWithoutLedgerTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
-export type ProofOfPaymentImageUncheckedUpdateWithoutTransactionInput = {
+export type ProofOfPaymentImageUncheckedUpdateWithoutLedgerTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.StringFieldUpdateOperationsInput | string
   publicId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
+
+/**
+ * Count Type ProofOfPaymentImageCountOutputType
+ */
+
+export type ProofOfPaymentImageCountOutputType = {
+  ledgerTransactions: number
+}
+
+export type ProofOfPaymentImageCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  ledgerTransactions?: boolean | ProofOfPaymentImageCountOutputTypeCountLedgerTransactionsArgs
+}
+
+/**
+ * ProofOfPaymentImageCountOutputType without action
+ */
+export type ProofOfPaymentImageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProofOfPaymentImageCountOutputType
+   */
+  select?: Prisma.ProofOfPaymentImageCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProofOfPaymentImageCountOutputType without action
+ */
+export type ProofOfPaymentImageCountOutputTypeCountLedgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LedgerTransactionWhereInput
+}
 
 
 export type ProofOfPaymentImageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   imageUrl?: boolean
   publicId?: boolean
-  transactionId?: boolean
-  transaction?: boolean | Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>
+  ledgerTransactions?: boolean | Prisma.ProofOfPaymentImage$ledgerTransactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProofOfPaymentImageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["proofOfPaymentImage"]>
 
 export type ProofOfPaymentImageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   imageUrl?: boolean
   publicId?: boolean
-  transactionId?: boolean
-  transaction?: boolean | Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>
 }, ExtArgs["result"]["proofOfPaymentImage"]>
 
 export type ProofOfPaymentImageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   imageUrl?: boolean
   publicId?: boolean
-  transactionId?: boolean
-  transaction?: boolean | Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>
 }, ExtArgs["result"]["proofOfPaymentImage"]>
 
 export type ProofOfPaymentImageSelectScalar = {
   id?: boolean
   imageUrl?: boolean
   publicId?: boolean
-  transactionId?: boolean
 }
 
-export type ProofOfPaymentImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "publicId" | "transactionId", ExtArgs["result"]["proofOfPaymentImage"]>
+export type ProofOfPaymentImageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "imageUrl" | "publicId", ExtArgs["result"]["proofOfPaymentImage"]>
 export type ProofOfPaymentImageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaction?: boolean | Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>
+  ledgerTransactions?: boolean | Prisma.ProofOfPaymentImage$ledgerTransactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProofOfPaymentImageCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ProofOfPaymentImageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaction?: boolean | Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>
-}
-export type ProofOfPaymentImageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaction?: boolean | Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>
-}
+export type ProofOfPaymentImageIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ProofOfPaymentImageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ProofOfPaymentImagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProofOfPaymentImage"
   objects: {
-    transaction: Prisma.$PaymentTransactionPayload<ExtArgs> | null
+    ledgerTransactions: Prisma.$LedgerTransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     imageUrl: string
     publicId: string
-    transactionId: string
   }, ExtArgs["result"]["proofOfPaymentImage"]>
   composites: {}
 }
@@ -810,7 +801,7 @@ readonly fields: ProofOfPaymentImageFieldRefs;
  */
 export interface Prisma__ProofOfPaymentImageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  transaction<T extends Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProofOfPaymentImage$transactionArgs<ExtArgs>>): Prisma.Prisma__PaymentTransactionClient<runtime.Types.Result.GetResult<Prisma.$PaymentTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  ledgerTransactions<T extends Prisma.ProofOfPaymentImage$ledgerTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProofOfPaymentImage$ledgerTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -843,7 +834,6 @@ export interface ProofOfPaymentImageFieldRefs {
   readonly id: Prisma.FieldRef<"ProofOfPaymentImage", 'String'>
   readonly imageUrl: Prisma.FieldRef<"ProofOfPaymentImage", 'String'>
   readonly publicId: Prisma.FieldRef<"ProofOfPaymentImage", 'String'>
-  readonly transactionId: Prisma.FieldRef<"ProofOfPaymentImage", 'String'>
 }
     
 
@@ -1098,10 +1088,6 @@ export type ProofOfPaymentImageCreateManyAndReturnArgs<ExtArgs extends runtime.T
    */
   data: Prisma.ProofOfPaymentImageCreateManyInput | Prisma.ProofOfPaymentImageCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProofOfPaymentImageIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1172,10 +1158,6 @@ export type ProofOfPaymentImageUpdateManyAndReturnArgs<ExtArgs extends runtime.T
    * Limit how many ProofOfPaymentImages to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProofOfPaymentImageIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1245,22 +1227,27 @@ export type ProofOfPaymentImageDeleteManyArgs<ExtArgs extends runtime.Types.Exte
 }
 
 /**
- * ProofOfPaymentImage.transaction
+ * ProofOfPaymentImage.ledgerTransactions
  */
-export type ProofOfPaymentImage$transactionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ProofOfPaymentImage$ledgerTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the PaymentTransaction
+   * Select specific fields to fetch from the LedgerTransaction
    */
-  select?: Prisma.PaymentTransactionSelect<ExtArgs> | null
+  select?: Prisma.LedgerTransactionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the PaymentTransaction
+   * Omit specific fields from the LedgerTransaction
    */
-  omit?: Prisma.PaymentTransactionOmit<ExtArgs> | null
+  omit?: Prisma.LedgerTransactionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PaymentTransactionInclude<ExtArgs> | null
-  where?: Prisma.PaymentTransactionWhereInput
+  include?: Prisma.LedgerTransactionInclude<ExtArgs> | null
+  where?: Prisma.LedgerTransactionWhereInput
+  orderBy?: Prisma.LedgerTransactionOrderByWithRelationInput | Prisma.LedgerTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.LedgerTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LedgerTransactionScalarFieldEnum | Prisma.LedgerTransactionScalarFieldEnum[]
 }
 
 /**

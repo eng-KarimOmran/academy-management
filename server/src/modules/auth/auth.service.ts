@@ -1,96 +1,65 @@
-import { User } from "../../../prisma/generated/client";
+import dayjs from "dayjs";
+import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
-import { omit } from "../../shared/utils/omit";
-import { ITokenPayload, Token } from "../../shared/utils/Token";
-import * as DTO from "./auth.dto";
-import UserRepository from "../user/user.repository"; // استدعاء الريبوزيتوري الموحد لليوزر
-import AuthRepository from "./auth.repository";
-import { userAuthSelect } from "../user/user.selectors";
-import HashHelper from "./auth.utils";
-import { CreateUserDto } from "../user/user.dto";
+import { IAuthService } from "./auth.type";
+import { HashHelper, Token } from "./auth.utils";
 
-const AuthService = {
-  async login(dataSafe: DTO.LoginDto) {
-    const { phone, password } = dataSafe.body;
-    const user = await UserRepository.findByPhone({ phone, select: userAuthSelect });
+const AuthService: IAuthService = {
+  async login({ phone, password }) {
 
-    if (!user || !user.isActive) {
-      throw ApiError.Unauthorized("رقم الهاتف أو كلمة المرور غير صحيحة");
-    }
+    const user = await prisma.user.findUnique({ where: { phone } });
 
-    const isPasswordValid = await HashHelper.compare({
-      plainPassword: password,
-      hashedPassword: user.password,
-    });
+    if (!user) throw ApiError.InvalidCredentials();
 
-    if (!isPasswordValid) {
-      throw ApiError.Unauthorized("رقم الهاتف أو كلمة المرور غير صحيحة");
-    }
+    if (!user.isActive) throw ApiError.AccountBlocked()
+
+    const isPasswordValid = await HashHelper.compare({ plainPassword: password, hashedPassword: user.password });
+    if (!isPasswordValid) throw ApiError.InvalidCredentials();
 
     const { access, refresh } = Token.generateTokens(user.id);
-    
-    const safeUser = omit(user, ["password", "logoutAt"]);
 
-    return {
-      user: safeUser,
-      tokens: { access, refresh },
-    };
+    return { userId: user.id, access, refresh };
   },
 
-  async refresh({ userLogin, tokenPayload }: { userLogin: User; tokenPayload: ITokenPayload }) {
-    const access = Token.generateAccessToken(userLogin.id, tokenPayload.jti!);
-    const safeUser = omit(userLogin, ["password", "logoutAt"]);
-
-    return { access, user: safeUser };
+  refresh({ userId, jti }) {
+    const access = Token.generateAccessToken(userId, jti);
+    return { access };
   },
 
-  async logout({ userLogin, tokenPayload, dataSafe }: { userLogin: User; tokenPayload: ITokenPayload; dataSafe: DTO.LogoutDto }) {
-    const { allDevices } = dataSafe.query;
-
+  async logout({ allDevices, exp, userId, jti }) {
+    const expiresAt = dayjs(exp).toDate();
     if (allDevices) {
-      await AuthRepository.logoutAllDevices({ userId: userLogin.id });
-      return true;
+      await prisma.user.update({ where: { id: userId }, data: { logoutAt: dayjs().toDate() } })
+      return true
     }
-
-    await AuthRepository.addTokenBlacklist({ jti: tokenPayload.jti! });
-    return true;
+    await prisma.blacklistedToken.create({ data: { jti, expiresAt } });
+    return true
   },
 
-  async changePassword({ userLogin, dataSafe }: { userLogin: User; dataSafe: DTO.ChangePasswordDto }) {
-    const { password, newPassword } = dataSafe.body;
-
-    const isPasswordValid = await HashHelper.compare({
-      plainPassword: password,
-      hashedPassword: userLogin.password,
-    });
-
-    if (!isPasswordValid) {
-      throw ApiError.Unauthorized("كلمة المرور غير صحيحة");
-    }
-
+  async changePassword({ userId, password, newPassword, currentPassword }) {
+    const isPasswordValid = await HashHelper.compare({ plainPassword: currentPassword, hashedPassword: password });
+    if (!isPasswordValid) throw ApiError.InvalidCredentials({ password: true });
     const hashPassword = await HashHelper.hash(newPassword);
 
-    await AuthRepository.changePasswordUser({
-      userId: userLogin.id,
-      hashPassword,
+    await prisma.user.update({
+      where: { id: userId },
+      data: { password: hashPassword, logoutAt: dayjs().toDate(), isPasswordChanged: true }
     });
 
-    return true;
+    return true
   },
 
-  async createFirstOwner(dataSafe: CreateUserDto) {
-    const { name, phone, password } = dataSafe.body;
-    const userExists = await UserRepository.findFirst({ where: { roles: { has: "OWNER" } } });
+  async createFirstUser({ name, phone }) {
+    const user = await prisma.user.findFirst();
 
-    if (userExists) {
-      throw ApiError.Conflict("OWNER_ALREADY_EXISTS");
-    }
+    if (user) throw ApiError.Conflict("USER_ALREADY_EXISTS");
 
-    const hashedPassword = await HashHelper.hash(password);
-    const user = await UserRepository.create({ data: { name, phone, password: hashedPassword, roles: ["OWNER"] } })
+    const hashPassword = await HashHelper.hash("12345678")
 
-    return omit(user, ["password", "logoutAt"]);
-  }
-};
+    const newUser = await prisma.user.create({ data: { name, phone, password: hashPassword } })
+
+    return { id: newUser.id, phone }
+  },
+}
 
 export default AuthService;

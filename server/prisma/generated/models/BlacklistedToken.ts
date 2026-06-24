@@ -25,19 +25,16 @@ export type AggregateBlacklistedToken = {
 }
 
 export type BlacklistedTokenMinAggregateOutputType = {
-  id: string | null
   jti: string | null
   expiresAt: Date | null
 }
 
 export type BlacklistedTokenMaxAggregateOutputType = {
-  id: string | null
   jti: string | null
   expiresAt: Date | null
 }
 
 export type BlacklistedTokenCountAggregateOutputType = {
-  id: number
   jti: number
   expiresAt: number
   _all: number
@@ -45,19 +42,16 @@ export type BlacklistedTokenCountAggregateOutputType = {
 
 
 export type BlacklistedTokenMinAggregateInputType = {
-  id?: true
   jti?: true
   expiresAt?: true
 }
 
 export type BlacklistedTokenMaxAggregateInputType = {
-  id?: true
   jti?: true
   expiresAt?: true
 }
 
 export type BlacklistedTokenCountAggregateInputType = {
-  id?: true
   jti?: true
   expiresAt?: true
   _all?: true
@@ -136,7 +130,6 @@ export type BlacklistedTokenGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type BlacklistedTokenGroupByOutputType = {
-  id: string
   jti: string
   expiresAt: Date
   _count: BlacklistedTokenCountAggregateOutputType | null
@@ -163,28 +156,24 @@ export type BlacklistedTokenWhereInput = {
   AND?: Prisma.BlacklistedTokenWhereInput | Prisma.BlacklistedTokenWhereInput[]
   OR?: Prisma.BlacklistedTokenWhereInput[]
   NOT?: Prisma.BlacklistedTokenWhereInput | Prisma.BlacklistedTokenWhereInput[]
-  id?: Prisma.StringFilter<"BlacklistedToken"> | string
   jti?: Prisma.StringFilter<"BlacklistedToken"> | string
   expiresAt?: Prisma.DateTimeFilter<"BlacklistedToken"> | Date | string
 }
 
 export type BlacklistedTokenOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   jti?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
 }
 
 export type BlacklistedTokenWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
   jti?: string
   AND?: Prisma.BlacklistedTokenWhereInput | Prisma.BlacklistedTokenWhereInput[]
   OR?: Prisma.BlacklistedTokenWhereInput[]
   NOT?: Prisma.BlacklistedTokenWhereInput | Prisma.BlacklistedTokenWhereInput[]
   expiresAt?: Prisma.DateTimeFilter<"BlacklistedToken"> | Date | string
-}, "id" | "jti">
+}, "jti">
 
 export type BlacklistedTokenOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   jti?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
   _count?: Prisma.BlacklistedTokenCountOrderByAggregateInput
@@ -196,67 +185,56 @@ export type BlacklistedTokenScalarWhereWithAggregatesInput = {
   AND?: Prisma.BlacklistedTokenScalarWhereWithAggregatesInput | Prisma.BlacklistedTokenScalarWhereWithAggregatesInput[]
   OR?: Prisma.BlacklistedTokenScalarWhereWithAggregatesInput[]
   NOT?: Prisma.BlacklistedTokenScalarWhereWithAggregatesInput | Prisma.BlacklistedTokenScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"BlacklistedToken"> | string
   jti?: Prisma.StringWithAggregatesFilter<"BlacklistedToken"> | string
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"BlacklistedToken"> | Date | string
 }
 
 export type BlacklistedTokenCreateInput = {
-  id?: string
   jti: string
   expiresAt: Date | string
 }
 
 export type BlacklistedTokenUncheckedCreateInput = {
-  id?: string
   jti: string
   expiresAt: Date | string
 }
 
 export type BlacklistedTokenUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   jti?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BlacklistedTokenUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   jti?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BlacklistedTokenCreateManyInput = {
-  id?: string
   jti: string
   expiresAt: Date | string
 }
 
 export type BlacklistedTokenUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   jti?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BlacklistedTokenUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   jti?: Prisma.StringFieldUpdateOperationsInput | string
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BlacklistedTokenCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   jti?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
 }
 
 export type BlacklistedTokenMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   jti?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
 }
 
 export type BlacklistedTokenMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   jti?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
 }
@@ -264,36 +242,31 @@ export type BlacklistedTokenMinOrderByAggregateInput = {
 
 
 export type BlacklistedTokenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   jti?: boolean
   expiresAt?: boolean
 }, ExtArgs["result"]["blacklistedToken"]>
 
 export type BlacklistedTokenSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   jti?: boolean
   expiresAt?: boolean
 }, ExtArgs["result"]["blacklistedToken"]>
 
 export type BlacklistedTokenSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   jti?: boolean
   expiresAt?: boolean
 }, ExtArgs["result"]["blacklistedToken"]>
 
 export type BlacklistedTokenSelectScalar = {
-  id?: boolean
   jti?: boolean
   expiresAt?: boolean
 }
 
-export type BlacklistedTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jti" | "expiresAt", ExtArgs["result"]["blacklistedToken"]>
+export type BlacklistedTokenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"jti" | "expiresAt", ExtArgs["result"]["blacklistedToken"]>
 
 export type $BlacklistedTokenPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "BlacklistedToken"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
     jti: string
     expiresAt: Date
   }, ExtArgs["result"]["blacklistedToken"]>
@@ -379,8 +352,8 @@ export interface BlacklistedTokenDelegate<ExtArgs extends runtime.Types.Extensio
    * // Get first 10 BlacklistedTokens
    * const blacklistedTokens = await prisma.blacklistedToken.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const blacklistedTokenWithIdOnly = await prisma.blacklistedToken.findMany({ select: { id: true } })
+   * // Only select the `jti`
+   * const blacklistedTokenWithJtiOnly = await prisma.blacklistedToken.findMany({ select: { jti: true } })
    * 
    */
   findMany<T extends BlacklistedTokenFindManyArgs>(args?: Prisma.SelectSubset<T, BlacklistedTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlacklistedTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -424,9 +397,9 @@ export interface BlacklistedTokenDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Create many BlacklistedTokens and only return the `id`
-   * const blacklistedTokenWithIdOnly = await prisma.blacklistedToken.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many BlacklistedTokens and only return the `jti`
+   * const blacklistedTokenWithJtiOnly = await prisma.blacklistedToken.createManyAndReturn({
+   *   select: { jti: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -515,9 +488,9 @@ export interface BlacklistedTokenDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Update zero or more BlacklistedTokens and only return the `id`
-   * const blacklistedTokenWithIdOnly = await prisma.blacklistedToken.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more BlacklistedTokens and only return the `jti`
+   * const blacklistedTokenWithJtiOnly = await prisma.blacklistedToken.updateManyAndReturn({
+   *   select: { jti: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -719,7 +692,6 @@ export interface Prisma__BlacklistedTokenClient<T, Null = never, ExtArgs extends
  * Fields of the BlacklistedToken model
  */
 export interface BlacklistedTokenFieldRefs {
-  readonly id: Prisma.FieldRef<"BlacklistedToken", 'String'>
   readonly jti: Prisma.FieldRef<"BlacklistedToken", 'String'>
   readonly expiresAt: Prisma.FieldRef<"BlacklistedToken", 'DateTime'>
 }

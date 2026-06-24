@@ -1,20 +1,34 @@
 import z from "zod";
 import * as Schema from "@/validations/course.validation";
 
-export type CreateCourseDto = z.infer<typeof Schema.CreateSchema>;
+export type CreateDto = {
+  params: z.infer<typeof Schema.CreateSchema.params>;
+  body: z.infer<typeof Schema.CreateSchema.body>;
+};
 
-export type UpdateCourseDto = z.infer<typeof Schema.UpdateSchema>;
+export type UpdateDto = {
+  params: z.infer<typeof Schema.UpdateSchema.params>;
+  body: z.infer<typeof Schema.UpdateSchema.body>;
+};
 
-export type DeleteCourseDto = z.infer<typeof Schema.DeleteSchema>;
+export type DeleteDto = {
+  params: z.infer<typeof Schema.DeleteSchema.params>;
+};
 
-export type GetAllCoursesDto = z.infer<typeof Schema.GetAllSchema>;
+export type GetAllDto = {
+  params: z.infer<typeof Schema.GetAllSchema.params>;
+  query: z.infer<typeof Schema.GetAllSchema.query>;
+};
 
-export type GetCourseDetailsDto = z.infer<typeof Schema.GetDetailsSchema>;
+export type GetDetailsDto = {
+  params: z.infer<typeof Schema.GetDetailsSchema.params>;
+};
 
-export type AddCourseFeaturesDto = z.infer<
-  typeof Schema.AddCourseFeaturesSchema
->;
+export type AddFeaturesDto = {
+  params: z.infer<typeof Schema.AddCourseFeaturesSchema.params>;
+  body: z.infer<typeof Schema.AddCourseFeaturesSchema.body>;
+};
 
-export type DeleteCourseFeaturesDto = z.infer<
-  typeof Schema.DeleteCourseFeaturesSchema
->;
+export type DeleteFeaturesDto = {
+  params: z.infer<typeof Schema.DeleteCourseFeaturesSchema.params>;
+};

@@ -6,11 +6,11 @@ import {
 export const subscriptionBaseSelect: SubscriptionSelect = {
   id: true,
   status: true,
+  createdAt: true,
   priceAtBooking: true,
   totalSessions: true,
   trainingTypeAtRegistration: true,
   sessionDurationMinutes: true,
-  createdAt: true,
   area: { select: { id: true, name: true } },
   client: { select: { id: true, name: true, phone: true, academyId: true } },
   course: { select: { id: true, name: true } },
@@ -19,6 +19,10 @@ export const subscriptionBaseSelect: SubscriptionSelect = {
 
 export const subscriptionDetailsSelect: SubscriptionSelect = {
   ...subscriptionBaseSelect,
+  requiredInitialDeposit: true,
+  sessionsBeforeFullPayment: true,
+  createdBy: { select: { id: true, name: true, phone: true } },
+
   lessons: {
     select: {
       id: true,
@@ -37,26 +41,5 @@ export const subscriptionDetailsSelect: SubscriptionSelect = {
         },
       },
     },
-  },
-  payments: {
-    select: {
-      id: true,
-      amount: true,
-      paymentMethod: true,
-      type: true,
-      status: true,
-      createdAt: true,
-      receiver: {
-        select: { id: true, name: true, phone: true },
-      },
-    },
-  },
+  }
 };
-
-export type SubscriptionBaseDTO = SubscriptionGetPayload<{
-  select: typeof subscriptionBaseSelect;
-}>;
-
-export type SubscriptionDetailsDTO = SubscriptionGetPayload<{
-  select: typeof subscriptionDetailsSelect;
-}>;

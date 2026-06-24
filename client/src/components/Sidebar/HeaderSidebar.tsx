@@ -20,34 +20,33 @@ import {
   RiStackFill,
 } from "@remixicon/react";
 import { useQuery } from "@tanstack/react-query";
-import { getAllAcademies } from "@/service/academy.service";
+import { getMyAcademics } from "@/service/academy.service";
 import { toast } from "sonner";
-import type { Academy } from "@/types/academy";
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import { useAuthState } from "@/store/AuthState";
+import type { Role } from "@/types/enums";
 
 export default function HeaderSidebar() {
   const { isMobile } = useSidebar();
   const { activeAcademy, setActiveAcademy } = useActiveAcademyState();
   const { user } = useAuthState();
 
-  const hasNoRoles = !!user && (!user.roles || user.roles.length === 0);
-  const isCaptainOnly =
-    !!user && user.roles?.length === 1 && user.roles.includes("CAPTAIN");
+  const isOwner = (roles?: Role[]): boolean => {
+    if (!roles) return false;
+    return roles.includes("OWNER");
+  };
 
-  const canFetchAcademies = !!user && !isCaptainOnly && !hasNoRoles;
+  const canFetchAcademies = isOwner(user?.roles);
 
   const {
     isLoading,
     error,
     data: academies = [],
-  } = useQuery<Academy[]>({
-    queryKey: ["academies"],
-    queryFn: async () => {
-      const res = await getAllAcademies({ limit: 50, page: 1 });
-      return res.data.data.items;
-    },
-    staleTime: 1000 * 60 * 5,
+  } = useQuery({
+    queryKey: ["academies", "my-academies"],
+    queryFn: () => getMyAcademics(),
+    select: (res) => res.data.data,
+    staleTime: Infinity,
     enabled: canFetchAcademies,
   });
 
@@ -72,7 +71,7 @@ export default function HeaderSidebar() {
     }
   }, [academies, activeAcademy, setActiveAcademy]);
 
-  if (isCaptainOnly || hasNoRoles) {
+  if (!canFetchAcademies) {
     return (
       <SidebarHeader>
         <SidebarMenu>
@@ -98,6 +97,7 @@ export default function HeaderSidebar() {
       </SidebarHeader>
     );
   }
+
   return (
     <SidebarHeader>
       <SidebarMenu>

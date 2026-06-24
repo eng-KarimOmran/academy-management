@@ -16,11 +16,18 @@ export const CreateSchema = {
     description: z.string(),
     priceOriginal: price,
     priceDiscounted: price,
-    totalSessions: positiveNumber,
-    practicalSessions: positiveNumber,
+    requiredInitialDeposit: price.default(50),
+    sessionsBeforeFullPayment: price,
     sessionDurationMinutes: positiveNumber.default(50),
+    totalSessions: positiveNumber,
     featuredReason: z.string().optional(),
-  }),
+  }).refine(
+    (data) => data.priceOriginal >= data.priceDiscounted,
+    {
+      message: "السعر بعد الخصم يجب أن يكون أقل من أو يساوي السعر الأصلي",
+      path: ["priceDiscounted"],
+    }
+  ),
 };
 
 export const UpdateSchema = {
@@ -30,12 +37,24 @@ export const UpdateSchema = {
     description: z.string().optional(),
     priceOriginal: price.optional(),
     priceDiscounted: price.optional(),
+    requiredInitialDeposit: price.default(50),
+    sessionsBeforeFullPayment: price,
     totalSessions: positiveNumber.optional(),
-    practicalSessions: positiveNumber.optional(),
     sessionDurationMinutes: positiveNumber.optional(),
     featuredReason: z.string().optional(),
     isActive: boolean.optional(),
-  }),
+  }).refine(
+    (data) => {
+      if (data.priceOriginal !== undefined && data.priceDiscounted !== undefined) {
+        return data.priceOriginal >= data.priceDiscounted;
+      }
+      return true;
+    },
+    {
+      message: "السعر بعد الخصم يجب أن يكون أقل من أو يساوي السعر الأصلي",
+      path: ["priceDiscounted"],
+    }
+  ),
 };
 
 export const DeleteSchema = {

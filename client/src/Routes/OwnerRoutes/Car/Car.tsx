@@ -1,55 +1,65 @@
-import { useState, useEffect } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useDebounce } from "use-debounce";
-import { useSearchParams } from "react-router-dom";
-
-import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
 import PageHeader from "@/components/PageHeader/PageHeader";
-
-import type { Car } from "@/types/car";
+import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
 
 import { getAllCars } from "@/service/car.service";
 
-import { columns } from "./columns";
+import type { Car } from "@/types/car";
+
 import AddCar from "./Forms/AddCar";
 import ActionsCar from "./ActionsCar";
+import { columns } from "./columns";
+import type { GetAllDto } from "@/DTOs/car.dto";
+import useAppQuery from "@/hooks/useAppQuery";
 
 export default function CarPage() {
-  const [searchParams] = useSearchParams();
-
-  const page = Math.max(1, Number(searchParams.get("page")) || 1);
-  const search = searchParams.get("search") ?? "";
-
-  const [debouncedSearch] = useDebounce(search, 500);
-  const [limit] = useState<number>(10);
-
-  const { isLoading, isFetching, error, data } = useQuery({
-    queryKey: ["cars", debouncedSearch, page],
-    queryFn: () =>
-      getAllCars({
-        limit,
-        page,
-        search: debouncedSearch,
-      }),
-    select: (res) => res.data.data,
-    placeholderData: keepPreviousData,
+  const { data, isLoading, isFetching } = useAppQuery<GetAllDto, Car>({
+    queryFn: getAllCars,
+    queryKey: ["cars"],
+    keepPrevious: true,
+    filters: ["gearType", "isActive"],
   });
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message || "خطأ في تحميل السيارات");
-    }
-  }, [error]);
+  const filters = [
+    {
+      group: "حالة السيارة",
+      option: [
+        {
+          key: "isActive",
+          label: "نشطة",
+          val: "true",
+        },
+        {
+          key: "isActive",
+          label: "غير نشطة",
+          val: "false",
+        },
+      ],
+    },
+    {
+      group: "ناقل الحركة",
+      option: [
+        {
+          key: "supportType",
+          label: "مانول",
+          val: "MANUAL",
+        },
+        {
+          key: "supportType",
+          label: "أتوماتك",
+          val: "AUTOMATIC",
+        },
+      ],
+    },
+  ];
 
   const configTable: DataTableProps<Car> = {
-    data: data?.items || [],
+    data: data?.items ?? [],
     maxPage: data?.pagination?.totalPages ?? 1,
     isLoading,
     isFetching,
     headers: columns,
     actions: (item) => <ActionsCar item={item} />,
-
+    filters,
     configDialogAdd: {
       title: "إضافة سيارة جديدة",
       description: "قم بإدخال بيانات السيارة الجديدة.",

@@ -1,7 +1,7 @@
 import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 
-import type { CreateCarDto } from "@/DTOs/car.dto";
+import type { CreateDto } from "@/DTOs/car.dto";
 import { CreateCarSchema } from "@/validations/car.validation";
 import { createCar } from "@/service/car.service";
 
@@ -16,7 +16,7 @@ import { useDialogState } from "@/store/DialogState";
 export default function AddCar() {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<CreateCarDto, Car> = {
+  const config: FormProps<CreateDto["body"], Car> = {
     inputs: [
       {
         name: "modelName",
@@ -51,20 +51,17 @@ export default function AddCar() {
     ],
 
     defaultValues: {
-      modelName: "",
-      plateNumber: "",
       gearType: "AUTOMATIC",
-      carSessionPrice: 0,
     },
 
-    schema: CreateCarSchema,
+    schema: CreateCarSchema.body,
 
     submitButton: {
       text: "إضافة السيارة الجديدة",
       loadingText: "جاري الإضافة...",
     },
 
-    service: (data) => createCar(data),
+    service: (data) => createCar({ body: data }),
 
     onSuccess: () => {
       toast.success("تم إضافة السيارة بنجاح");

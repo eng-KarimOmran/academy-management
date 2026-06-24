@@ -10,7 +10,7 @@ import type { UserProfile } from "@/types/user";
 type UserActionType = "addCaptain" | "addSecretary";
 
 export default function JobProfile({ user }: { user: UserProfile }) {
-  const { captainProfile, secretaryProfile, phone } = user;
+  const { id, name, captainProfile, secretaryProfile, phone } = user;
   const { setConfigDialog } = useDialogState();
 
   const handleUserAction = (type: UserActionType) => {
@@ -27,7 +27,7 @@ export default function JobProfile({ user }: { user: UserProfile }) {
         setConfigDialog({
           title: "إضافة سكرتير جديد",
           description: "قم بإدخال بيانات السكرتير الجديد.",
-          children: <AddSecretary phone={phone} />,
+          children: <AddSecretary user={{ name, phone, userId: id }} />,
         });
         break;
     }
@@ -45,7 +45,8 @@ export default function JobProfile({ user }: { user: UserProfile }) {
         <div className="space-y-1">
           <h4 className="font-bold text-lg text-foreground">إضافة ملف وظيفي</h4>
           <p className="text-sm text-muted-foreground max-w-sm">
-            هذا المستخدم لا يملك ملفاً وظيفياً حالياً. يمكنك تعيين دور له ككابتن أو سكرتارية.
+            هذا المستخدم لا يملك ملفاً وظيفياً حالياً. يمكنك تعيين دور له ككابتن
+            أو سكرتارية.
           </p>
         </div>
 
@@ -82,15 +83,17 @@ export default function JobProfile({ user }: { user: UserProfile }) {
             <RiCarLine size={24} />
           </div>
           <div className="space-y-1">
-            <h5 className="font-semibold text-sm text-foreground">ملف كابتن غير معين</h5>
+            <h5 className="font-semibold text-sm text-foreground">
+              ملف كابتن غير معين
+            </h5>
             <p className="text-xs text-muted-foreground max-w-50">
               هذا المستخدم لا يمتلك صلاحيات أو ملف كابتن قيادة حالياً.
             </p>
           </div>
-          <Button 
-            size="sm" 
-            variant="outline" 
-            onClick={() => handleUserAction("addCaptain")} 
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => handleUserAction("addCaptain")}
             className="gap-1.5 text-xs"
           >
             <RiCarLine size={14} />
@@ -107,15 +110,17 @@ export default function JobProfile({ user }: { user: UserProfile }) {
             <RiUserStarFill size={24} />
           </div>
           <div className="space-y-1">
-            <h5 className="font-semibold text-sm text-foreground">ملف سكرتارية غير معين</h5>
+            <h5 className="font-semibold text-sm text-foreground">
+              ملف سكرتارية غير معين
+            </h5>
             <p className="text-xs text-muted-foreground max-w-50">
               هذا المستخدم لا يمتلك صلاحيات أو ملف سكرتارية حالياً.
             </p>
           </div>
-          <Button 
-            size="sm" 
-            variant="outline" 
-            onClick={() => handleUserAction("addSecretary")} 
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => handleUserAction("addSecretary")}
             className="gap-1.5 text-xs"
           >
             <RiUserStarFill size={14} />

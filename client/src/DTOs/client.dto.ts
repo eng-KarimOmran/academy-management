@@ -1,21 +1,28 @@
 import type z from "zod";
-import {
-  CreateClientSchema,
-  UpdateClientSchema,
-  DeleteClientSchema,
-  GetAllClientsSchema,
-  GetClientDetailsSchema,
-  GetClientByPhoneSchema,
-} from "@/validations/client.validation";
+import * as Schema from "@/validations/client.validation";
 
-export type CreateClientDto = z.infer<typeof CreateClientSchema>;
+export type CreateClientDto = {
+  body: z.infer<typeof Schema.CreateClientSchema.body>;
+};
 
-export type UpdateClientDto = z.infer<typeof UpdateClientSchema>;
+export type UpdateClientDto = {
+  params: z.infer<typeof Schema.UpdateClientSchema.params>;
+  body: z.infer<typeof Schema.UpdateClientSchema.body>;
+};
 
-export type DeleteClientDto = z.infer<typeof DeleteClientSchema>;
+export type GetAllClientsDto = {
+  params: z.infer<typeof Schema.GetAllClientsSchema.params>;
+  query: z.infer<typeof Schema.GetAllClientsSchema.query>;
+};
 
-export type GetAllClientsDto = z.infer<typeof GetAllClientsSchema>;
+export type ClientDetailsDto = {
+  params: z.infer<typeof Schema.GetClientDetailsSchema.params>;
+};
 
-export type GetClientDetailsDto = z.infer<typeof GetClientDetailsSchema>;
+export type DeleteClientDto = {
+  params: z.infer<typeof Schema.DeleteClientSchema.params>;
+};
 
-export type GetClientByPhoneDto = z.infer<typeof GetClientByPhoneSchema>;
+export type GetClientByPhoneDto = {
+  params: z.infer<typeof Schema.GetClientByPhoneSchema.params>;
+};

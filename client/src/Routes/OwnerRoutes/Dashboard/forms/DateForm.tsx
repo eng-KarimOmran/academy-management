@@ -1,7 +1,7 @@
 import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 import { useDialogState } from "@/store/DialogState";
-import { AnalyticsSchema } from "@/validations/statistics.validation";
+import { GetDashboardAnalyticsSchema } from "@/validations/statistics.validation";
 import dayjs from "dayjs";
 
 export interface DateFormProps {
@@ -10,7 +10,7 @@ export interface DateFormProps {
 }
 
 interface Props {
-  date: DateFormProps | null;
+  date: DateFormProps;
   setDate: (data: DateFormProps) => void;
 }
 
@@ -35,10 +35,10 @@ export default function DateForm({ setDate, date }: Props) {
       },
     ],
     defaultValues: {
-      startDate: date ? date.startDate : "",
-      endDate: date ? date.endDate : "",
+      startDate: date.startDate,
+      endDate:  date.endDate ,
     },
-    schema: AnalyticsSchema,
+    schema: GetDashboardAnalyticsSchema.query,
     onSuccess: (data) => {
       if (!("data" in data)) {
         const startDate = dayjs(data.startDate).toISOString();

@@ -6,34 +6,40 @@ import {
   entityName,
   transmission,
   boolean,
-  trainingSupport,
+  supportType,
+  booleanQuery,
 } from "@/validations/common.validation";
 
-export const CreateAreaSchema = z.object({
-  name: entityName,
-  supportType: trainingSupport,
-});
+export const CreateAreaSchema = {
+  body: z.object({
+    name: entityName,
+    supportType: supportType,
+  }),
+};
 
-export const UpdateAreaSchema = z.object({
-  name: entityName.optional(),
-  supportType: trainingSupport.optional(),
-  isActive: boolean.optional(),
-});
+export const UpdateAreaSchema = {
+  params: z.object({ areaId: id }),
+  body: z.object({
+    name: entityName.optional(),
+    supportType: supportType.optional(),
+    isActive: boolean.optional(),
+  }),
+};
 
-export const DeleteAreaSchema = z.object({
-  id,
-});
+export const GetAllAreasSchema = {
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    search: z.string().optional(),
+    supportType: transmission.optional(),
+    isActive: booleanQuery.optional(),
+    limit: limit,
+  }),
+};
 
-export const GetAreaDetailsSchema = z.object({
-  id,
-});
+export const GetAreaDetailsSchema = {
+  params: z.object({ areaId: id }),
+};
 
-export const GetAllAreasSchema = z.object({
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
-  search: z.string().optional(),
-});
-
-export const FilterAreasSchema = z.object({
-  type: transmission.optional(),
-});
+export const DeleteAreaSchema = {
+  params: z.object({ areaId: id }),
+};

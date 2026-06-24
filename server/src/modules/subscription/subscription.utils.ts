@@ -27,34 +27,32 @@ export const buildSubscriptionWhere = ({
 };
 
 export const getSubscriptionStatus = ({
-  totalLessons,
   usedLessons,
-  bookedLessons,
-  subscriptionPrice,
+  totalLessons,
   totalPaid,
+  requiredInitialDeposit,
+  subscriptionPrice,
+  isCanceled,
 }: {
-  totalLessons: number;
   usedLessons: number;
-  bookedLessons: number;
-  subscriptionPrice: number;
+  totalLessons: number;
   totalPaid: number;
+  requiredInitialDeposit: number;
+  subscriptionPrice: number;
+  isCanceled?: boolean;
 }): SubscriptionStatus => {
+  if (isCanceled) return SubscriptionStatus.CANCELED;
+
   if (usedLessons >= totalLessons) {
     return SubscriptionStatus.COMPLETED;
   }
 
-  if (usedLessons + bookedLessons >= totalLessons) {
-    return SubscriptionStatus.FULLYBOOKED;
+  if (totalPaid < requiredInitialDeposit) {
+    return SubscriptionStatus.PENDING_DEPOSIT;
   }
 
-  if (totalPaid < 50) {
-    return SubscriptionStatus.PAUSED;
-  }
-
-  const oneThirdLessons = Math.floor(totalLessons / 4);
-
-  if (bookedLessons > oneThirdLessons && totalPaid < subscriptionPrice) {
-    return SubscriptionStatus.PAUSED;
+  if (totalPaid < subscriptionPrice) {
+    return SubscriptionStatus.ACTIVE_LIMITED;
   }
 
   return SubscriptionStatus.ACTIVE;

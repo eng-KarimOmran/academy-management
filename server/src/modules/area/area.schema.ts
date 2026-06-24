@@ -5,41 +5,57 @@ import {
   positiveNumber,
   entityName,
   transmission,
-  boolean,
-  trainingSupport,
   booleanQuery,
+  boolean,
 } from "../../shared/utils/common.validation";
 
-export const CreateAreaSchema = {
-  body: z.object({
-    name: entityName,
-    supportType: trainingSupport.optional().default("BOTH"),
-  }),
-};
+export const AreaSchema = {
+  create: {
+    params: z.object({
+      academyId: id,
+    }),
+    body: z.object({
+      name: entityName,
+      supportType: transmission,
+    }),
+  },
 
-export const UpdateAreaSchema = {
-  params: z.object({ areaId:id }),
-  body: z.object({
-    name: entityName.optional(),
-    supportType: trainingSupport.optional(),
-    isActive: boolean.optional(),
-  }),
-};
+  update: {
+    params: z.object({
+      academyId: id,
+      areaId: id,
+    }),
+    body: z.object({
+      name: entityName.optional(),
+      supportType: transmission.optional(),
+      isActive: boolean.optional(),
+    }),
+  },
 
-export const GetAllAreasSchema = {
-  query: z.object({
-    page: positiveNumber.optional().default(1),
-    search: z.string().optional(),
-    supportType: transmission.optional(),
-    isActive: booleanQuery.optional(),
-    limit: limit,
-  }),
-};
+  delete: {
+    params: z.object({
+      academyId: id,
+      areaId: id,
+    }),
+  },
 
-export const GetAreaDetailsSchema = {
-  params: z.object({ areaId:id }),
-};
+  get: {
+    params: z.object({
+      academyId: id,
+      areaId: id,
+    }),
+  },
 
-export const DeleteAreaSchema = {
-  params: z.object({ areaId:id }),
+  getAll: {
+    params: z.object({
+      academyId: id,
+    }),
+    query: z.object({
+      page: positiveNumber.optional().default(1),
+      search: z.string().optional(),
+      supportType: transmission.optional(),
+      isActive: booleanQuery.optional(),
+      limit: limit,
+    }),
+  },
 };

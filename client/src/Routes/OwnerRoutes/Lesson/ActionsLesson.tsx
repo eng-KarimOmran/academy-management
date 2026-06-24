@@ -12,8 +12,14 @@ import type { LessonBase } from "@/types/lesson";
 import { useNavigate } from "react-router-dom";
 import { useDialogState } from "@/store/DialogState";
 import ChangeLesson from "./Forms/ChangeLesson";
+import UpdateLesson from "./Forms/UpdateLesson";
 
-type ActionType = "details" | "changeState" | "client" | "subscriptionDetails";
+type ActionType =
+  | "details"
+  | "changeState"
+  | "client"
+  | "subscriptionDetails"
+  | "update";
 
 interface Action {
   title: string;
@@ -52,22 +58,25 @@ export default function ActionsLesson({
       case "details":
         navigate(`/dashboard/lesson/${item.id}?academyId=${academyId}`);
         break;
-
       case "changeState":
         setConfigDialog({
           title: "تحديث حالة الحصة",
-          description:
-            "قم بتغيير حالة الحصة (مكتملة، ملغاة) وإضافة تفاصيل الدفع.",
+          description: "قم بتغيير حالة الحصة",
           children: <ChangeLesson item={item} />,
         });
         break;
-
+      case "update":
+        setConfigDialog({
+          title: "تعديل الحصة",
+          description: "قم بتغيير بيانات الحصة",
+          children: <UpdateLesson item={item} />,
+        });
+        break;
       case "client":
         navigate(
           `/dashboard/client/${item.client.id}?academyId=${item.academy.id}`,
         );
         break;
-
       case "subscriptionDetails":
         navigate(
           `/dashboard/subscription/${item.subscriptionId}?academyId=${item.academy.id}`,

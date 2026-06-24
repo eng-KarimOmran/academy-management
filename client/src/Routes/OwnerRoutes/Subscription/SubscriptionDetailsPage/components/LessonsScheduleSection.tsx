@@ -28,7 +28,9 @@ export default function LessonsScheduleSection({ data }: Props) {
   const configDialogAdd = {
     title: "إضافة حصة جديدة",
     description: "قم بإدخال بيانات الحصة الجديدة للجدول.",
-    children: <AddLesson academyId={data.academy.id} subscription={data} />,
+    children: (
+      <AddLesson academyId={data.subscription.academy.id} data={data} />
+    ),
   };
 
   return (
@@ -43,21 +45,21 @@ export default function LessonsScheduleSection({ data }: Props) {
             <h2 className="text-xl font-bold tracking-tight text-foreground">
               جدول الحصص
             </h2>
-            {data.lessons.length > 0 && (
+            {data.subscription.lessons.length > 0 && (
               <span className="flex h-5 items-center justify-center rounded-full bg-primary/10 px-2 text-xs font-semibold text-primary">
-                {data.lessons.length}
+                {data.subscription.lessons.length}
               </span>
             )}
           </div>
         </AccordionTrigger>
 
-        <AccordionContent key={data.lessons.length}>
+        <AccordionContent key={data.subscription.lessons.length}>
           <div className="flex flex-col gap-6 pb-4">
             <div className="flex items-center justify-end border-b border-border/50 pb-4">
               <ButtonAdd configDialogAdd={configDialogAdd} />
             </div>
 
-            {data.lessons.length === 0 ? (
+            {data.subscription.lessons.length === 0 ? (
               <div className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-border/60 bg-muted/20 p-10 text-center transition-colors hover:bg-muted/30">
                 <div className="mb-3 rounded-full border bg-background p-3 shadow-sm">
                   <RiCalendarCloseLine className="h-6 w-6 text-muted-foreground/80" />
@@ -68,7 +70,7 @@ export default function LessonsScheduleSection({ data }: Props) {
               </div>
             ) : (
               <ul className="flex flex-col gap-4">
-                {data.lessons.map((lesson) => (
+                {data.subscription.lessons.map((lesson) => (
                   <li
                     key={lesson.id}
                     className="group flex flex-col gap-4 rounded-xl border border-border/50 bg-background p-5 shadow-sm transition-all duration-200 hover:border-primary/30 hover:shadow-md sm:flex-row sm:items-center sm:justify-between"
@@ -122,7 +124,7 @@ export default function LessonsScheduleSection({ data }: Props) {
 
                       <Button variant="link" className="px-0 sm:px-4" asChild>
                         <Link
-                          to={`/dashboard/lesson/${lesson.id}?academyId=${data.academy.id}`}
+                          to={`/dashboard/lesson/${lesson.id}?academyId=${data.subscription.academy.id}`}
                           className="flex items-center gap-1.5"
                         >
                           <RiEyeLine className="h-4 w-4 opacity-80" />

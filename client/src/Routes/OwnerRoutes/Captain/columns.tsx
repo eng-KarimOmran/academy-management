@@ -14,11 +14,11 @@ export const columns: Header<Captain>[] = [
     display: (data) => data.user.phone,
   },
   {
-    key: "trainingType",
+    key: "supportType",
     header: "نوع التدريب",
     display: (data) => (
       <span className="text-xs bg-muted p-1 rounded">
-        {enumTranslations[data.trainingType]}
+        {enumTranslations[data.supportType]}
       </span>
     ),
   },

@@ -5,7 +5,7 @@ import type { SubscriptionDetails } from "@/types/subscription";
 import type { ReactNode } from "react";
 
 type Props = {
-  data: SubscriptionDetails;
+  data: SubscriptionDetails["subscription"];
   paymentSummary: CalculatePaymentSummary;
 };
 

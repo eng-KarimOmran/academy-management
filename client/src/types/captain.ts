@@ -1,14 +1,18 @@
-import type { TrainingSupport } from "./enums";
+import type { SupportType } from "./enums";
+
+interface User {
+  id: string;
+  name: string;
+  phone: string;
+};
 
 export interface Captain {
   id: string;
   isActive: boolean;
   captainLessonPrice: number;
-  trainingType: TrainingSupport;
+  supportType: SupportType;
   createdAt: string;
-  user: {
-    id: string;
-    name: string;
-    phone: string;
-  };
+  baseSalary: string
+  academyId: string
+  user:User
 }

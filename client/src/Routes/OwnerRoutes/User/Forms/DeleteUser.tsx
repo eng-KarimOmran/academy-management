@@ -9,9 +9,12 @@ import { matchSchema } from "@/lib/matchSchema";
 
 import type { User } from "@/types/user";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteUserDto } from "@/DTOs/user.dto";
 
 export default function DeleteUser({ item }: { item: User }) {
   const { setConfigDialog } = useDialogState();
+
+  const params: DeleteUserDto["params"] = { userId: item.id };
 
   const config: FormProps<{ name: string }, User> = {
     inputs: [
@@ -23,10 +26,6 @@ export default function DeleteUser({ item }: { item: User }) {
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "اسم المستخدم", item.name),
 
     submitButton: {
@@ -35,7 +34,7 @@ export default function DeleteUser({ item }: { item: User }) {
       variant: "destructive",
     },
 
-    service: () => deleteUser({ userId: item.id }),
+    service: () => deleteUser({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });

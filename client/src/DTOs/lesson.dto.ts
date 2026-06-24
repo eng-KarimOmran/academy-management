@@ -1,16 +1,26 @@
 import z from "zod";
 import * as Schema from "../validations/lesson.validation";
 
-// ================== CREATE ==================
-export type CreateLessonDto = z.infer<typeof Schema.CreateLessonSchema>;
+export type CreateLessonDto = {
+    params: z.infer<typeof Schema.CreateLessonSchema.params>;
+    body: z.infer<typeof Schema.CreateLessonSchema.body>;
+};
 
-// ================== GET ALL ==================
-export type GetAllLessonsDto = z.infer<typeof Schema.GetAllLessonsSchema>;
+export type GetAllLessonsDto = {
+    params: z.infer<typeof Schema.GetAllLessonsSchema.params>;
+    query: z.infer<typeof Schema.GetAllLessonsSchema.query>;
+};
 
-// ================== DETAILS ==================
-export type GetLessonDetailsDto = z.infer<typeof Schema.GetLessonDetailsSchema>;
+export type GetLessonDetailsDto = {
+    params: z.infer<typeof Schema.GetLessonDetailsSchema.params>;
+};
 
-// ================== CHANGE STATUS ==================
-export type ChangeLessonStateDto = z.infer<
-  typeof Schema.ChangeLessonStateSchema
->;
+export type ChangeLessonStateDto = {
+    params: z.infer<typeof Schema.ChangeLessonStateSchema.params>;
+    body: z.infer<typeof Schema.ChangeLessonStateSchema.body>;
+};
+
+export type UpdateLessonDto = {
+    params: z.infer<typeof Schema.UpdateLessonSchema.params>;
+    body: z.infer<typeof Schema.UpdateLessonSchema.body>;
+};

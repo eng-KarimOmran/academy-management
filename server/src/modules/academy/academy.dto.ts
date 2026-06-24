@@ -1,52 +1,63 @@
 import z from "zod";
-
-import {
-  CreateAcademySchema,
-  UpdateAcademySchema,
-  DeleteAcademySchema,
-  GetAllAcademiesSchema,
-  GetAcademySchema,
-  AddSocialMediaSchema,
-  DeleteSocialMediaSchema,
-  AddOwnerSchema,
-  DeleteOwnerSchema,
-} from "./academy.Schema";
+import { AcademySchema } from "./academy.Schema";
 
 export type CreateAcademyDto = {
-  body: z.infer<typeof CreateAcademySchema.body>;
+  body: z.infer<typeof AcademySchema.create.body>;
 };
 
 export type UpdateAcademyDto = {
-  params: z.infer<typeof UpdateAcademySchema.params>;
-  body: z.infer<typeof UpdateAcademySchema.body>;
+  params: z.infer<typeof AcademySchema.update.params>;
+  body: z.infer<typeof AcademySchema.update.body>;
 };
 
 export type DeleteAcademyDto = {
-  params: z.infer<typeof DeleteAcademySchema.params>;
+  params: z.infer<typeof AcademySchema.delete.params>;
 };
 
 export type GetAllAcademiesDto = {
-  query: z.infer<typeof GetAllAcademiesSchema.query>;
+  query: z.infer<typeof AcademySchema.getAll.query>;
 };
 
 export type GetAcademyDetailsDto = {
-  params: z.infer<typeof GetAcademySchema.params>;
+  params: z.infer<typeof AcademySchema.get.params>;
+};
+
+export type AddPhoneDto = {
+  params: z.infer<typeof AcademySchema.phone.add.params>;
+  body: z.infer<typeof AcademySchema.phone.add.body>;
+};
+
+export type DeletePhoneDto = {
+  params: z.infer<typeof AcademySchema.phone.delete.params>;
+};
+
+export type AddAddressDto = {
+  params: z.infer<typeof AcademySchema.address.add.params>;
+  body: z.infer<typeof AcademySchema.address.add.body>;
+};
+
+export type DeleteAddressDto = {
+  params: z.infer<typeof AcademySchema.address.delete.params>;
 };
 
 export type AddSocialMediaDto = {
-  params: z.infer<typeof AddSocialMediaSchema.params>;
-  body: z.infer<typeof AddSocialMediaSchema.body>;
+  params: z.infer<typeof AcademySchema.socialMedia.add.params>;
+  body: z.infer<typeof AcademySchema.socialMedia.add.body>;
 };
 
 export type DeleteSocialMediaDto = {
-  params: z.infer<typeof DeleteSocialMediaSchema.params>;
+  params: z.infer<typeof AcademySchema.socialMedia.delete.params>;
+};
+
+export type UpdateSocialMediaDto = {
+  params: z.infer<typeof AcademySchema.socialMedia.update.params>;
+  body: z.infer<typeof AcademySchema.socialMedia.update.body>;
 };
 
 export type AddOwnerDto = {
-  params: z.infer<typeof AddOwnerSchema.params>;
-  body: z.infer<typeof AddOwnerSchema.body>;
+  params: z.infer<typeof AcademySchema.owner.add.params>;
 };
 
 export type DeleteOwnerDto = {
-  params: z.infer<typeof DeleteOwnerSchema.params>;
+  params: z.infer<typeof AcademySchema.owner.delete.params>;
 };

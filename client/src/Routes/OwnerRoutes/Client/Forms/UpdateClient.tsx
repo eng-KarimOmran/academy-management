@@ -14,7 +14,12 @@ import { useDialogState } from "@/store/DialogState";
 export default function UpdateClient({ item }: { item: Client }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<UpdateClientDto, Client> = {
+  const params: UpdateClientDto["params"] = {
+    academyId: item.academyId,
+    clientId: item.id,
+  };
+
+  const config: FormProps<UpdateClientDto["body"], Client> = {
     inputs: [
       {
         name: "name",
@@ -29,13 +34,12 @@ export default function UpdateClient({ item }: { item: Client }) {
     ],
 
     defaultValues: {
-      id: item.id,
-      academyId: item.academyId,
       name: item.name,
       phone: item.phone,
+      clientSource: item.clientSource,
     },
 
-    schema: UpdateClientSchema,
+    schema: UpdateClientSchema.body,
 
     submitButton: {
       text: "حفظ التعديلات",
@@ -44,7 +48,7 @@ export default function UpdateClient({ item }: { item: Client }) {
 
     service: (data) => {
       console.log(data);
-      return updateClient(data);
+      return updateClient({ body: data, params });
     },
 
     onSuccess: () => {

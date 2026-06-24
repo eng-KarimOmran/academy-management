@@ -2,35 +2,42 @@ import z from "zod";
 import {
   id,
   limit,
-  phone,
   positiveNumber,
   price,
 } from "@/validations/common.validation";
 
-export const CreateSecretarySchema = z.object({
-  phone,
-  baseSalary: price,
-  targetCount: price,
-  bonusAmount: price,
-});
+export const CreateSecretarySchema = {
+  params: z.object({ academyId: id }),
+  body: z.object({
+    userId: id,
+    baseSalary: price,
+    targetCount: price,
+    bonusAmount: price,
+  }),
+};
 
-export const UpdateSecretarySchema = z.object({
-  secretaryId: id,
-  baseSalary: price,
-  targetCount: price,
-  bonusAmount: price,
-});
+export const UpdateSecretarySchema = {
+  params: z.object({ secretaryId: id, academyId: id }),
+  body: z.object({
+    baseSalary: price.optional(),
+    targetCount: price.optional(),
+    bonusAmount: price.optional(),
+  }),
+};
 
-export const DeleteSecretarySchema = z.object({
-  secretaryId: id,
-});
+export const GetAllSecretariesSchema = {
+  params: z.object({ academyId: id }),
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit,
+    search: z.string().optional(),
+  }),
+};
 
-export const GetSecretarySchema = z.object({
-  secretaryId: id,
-});
+export const GetSecretaryDetailsSchema = {
+  params: z.object({ secretaryId: id, academyId: id }),
+};
 
-export const GetAllSecretariesSchema = z.object({
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
-  search: z.string().optional().default(""),
-});
+export const DeleteSecretarySchema = {
+  params: z.object({ secretaryId: id, academyId: id }),
+};

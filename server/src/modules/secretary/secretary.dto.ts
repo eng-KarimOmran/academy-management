@@ -1,29 +1,25 @@
 import z from "zod";
-import {
-  CreateSecretarySchema,
-  UpdateSecretarySchema,
-  GetAllSecretariesSchema,
-  GetSecretaryDetailsSchema,
-  DeleteSecretarySchema,
-} from "./secretary.schema";
+import * as Schema from "./secretary.schema";
 
 export type CreateDto = {
-  body: z.infer<typeof CreateSecretarySchema.body>;
+  params: z.infer<typeof Schema.CreateSecretarySchema.params>;
+  body: z.infer<typeof Schema.CreateSecretarySchema.body>;
 };
 
 export type UpdateDto = {
-  params: z.infer<typeof UpdateSecretarySchema.params>;
-  body: z.infer<typeof UpdateSecretarySchema.body>;
+  params: z.infer<typeof Schema.UpdateSecretarySchema.params>;
+  body: z.infer<typeof Schema.UpdateSecretarySchema.body>;
 };
 
 export type GetAllDto = {
-  query: z.infer<typeof GetAllSecretariesSchema.query>;
+  params: z.infer<typeof Schema.GetAllSecretariesSchema.params>;
+  query: z.infer<typeof Schema.GetAllSecretariesSchema.query>;
 };
 
 export type GetDetailsDto = {
-  params: z.infer<typeof GetSecretaryDetailsSchema.params>;
+  params: z.infer<typeof Schema.GetSecretaryDetailsSchema.params>;
 };
 
 export type DeleteDto = {
-  params: z.infer<typeof DeleteSecretarySchema.params>;
+  params: z.infer<typeof Schema.DeleteSecretarySchema.params>;
 };

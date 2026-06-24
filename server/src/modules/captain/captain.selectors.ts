@@ -4,8 +4,10 @@ export const CaptainBaseSelect: CaptainSelect = {
   id: true,
   isActive: true,
   captainLessonPrice: true,
-  trainingType: true,
+  supportType: true,
   createdAt: true,
+  baseSalary: true,
+  academyId: true,
   user: {
     select: {
       id: true,

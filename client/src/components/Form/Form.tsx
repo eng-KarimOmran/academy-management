@@ -22,7 +22,7 @@ export type FormProps<T extends FieldValues, R> = {
   inputs: FieldConfig<T>[];
   schema?: ZodType<T, T>;
   defaultValues?: DefaultValues<T>;
-  submitButton: SubmitButtonProps;
+  submitButton?: SubmitButtonProps;
   service?: (data: T) => Promise<AxiosResponse<SuccessfulResponse<R>>>;
   onSuccess?: (data: SuccessfulResponse<R> | T) => void;
 };
@@ -85,7 +85,9 @@ export default function Form<T extends FieldValues, R>({
           </FieldWrapper>
         ))}
       </div>
-      <SubmitButton isSubmitting={isSubmitting} {...submitButton} />
+      {submitButton && (
+        <SubmitButton isSubmitting={isSubmitting} {...submitButton} />
+      )}
     </form>
   );
 }

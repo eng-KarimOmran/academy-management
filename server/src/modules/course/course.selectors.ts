@@ -6,12 +6,13 @@ export const courseBaseSelect: CourseSelect = {
   description: true,
   featuredReason: true,
   isActive: true,
-  practicalSessions: true,
   sessionDurationMinutes: true,
+  requiredInitialDeposit: true,
+  sessionsBeforeFullPayment: true,
   priceDiscounted: true,
   priceOriginal: true,
   totalSessions: true,
-  academyId:true,
+  academyId: true,
   createdAt: true,
 };
 

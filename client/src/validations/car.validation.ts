@@ -8,38 +8,43 @@ import {
   entityName,
   price,
   positiveNumber,
+  booleanQuery,
 } from "@/validations/common.validation";
 
-export const CreateCarSchema = z.object({
-  plateNumber: entityName,
-  modelName: entityName,
-  gearType: transmission,
-  carSessionPrice: price,
-});
+export const CreateCarSchema = {
+  body: z.object({
+    plateNumber: entityName,
+    modelName: entityName,
+    gearType: transmission,
+    carSessionPrice: price,
+  }),
+};
 
-export const UpdateCarSchema = z.object({
-  carId: id,
-  plateNumber: entityName,
-  modelName: entityName,
-  gearType: transmission,
-  carSessionPrice: price,
-  isActive: boolean,
-});
+export const UpdateCarSchema = {
+  params: z.object({ carId: id }),
+  body: z.object({
+    plateNumber: entityName.optional(),
+    modelName: entityName.optional(),
+    gearType: transmission.optional(),
+    carSessionPrice: price.optional(),
+    isActive: boolean.optional(),
+  }),
+};
 
-export const GetAllCarsSchema = z.object({
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
-  search: z.string().optional(),
-});
+export const GetAllCarsSchema = {
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit,
+    search: z.string().optional(),
+    isActive: booleanQuery.optional(),
+    gearType: transmission.optional(),
+  }),
+};
 
-export const GetCarDetailsSchema = z.object({
-  carId: id,
-});
+export const GetCarDetailsSchema = {
+  params: z.object({ carId: id }),
+};
 
-export const DeleteCarSchema = z.object({
-  carId: id,
-});
-
-export const FilterByTypeSchema = z.object({
-  type: transmission.optional(),
-});
+export const DeleteCarSchema = {
+  params: z.object({ carId: id }),
+};

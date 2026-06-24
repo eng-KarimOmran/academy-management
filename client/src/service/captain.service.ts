@@ -1,62 +1,60 @@
 import { axiosClient } from "@/lib/axios";
-import type {
-  CreateCaptainDto,
-  UpdateCaptainDto,
-  DeleteCaptainDto,
-  GetAllCaptainsDto,
-  GetLessonCaptainDto,
-} from "@/DTOs/captain.dto";
+import * as Dto from "@/DTOs/captain.dto";
+
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { Captain } from "@/types/captain";
-import type { Transmission } from "@/types/enums";
-import type { LessonBase } from "@/types/lesson";
 
-const baseUrl = "/captains";
+type Entity = Captain;
 
-export const getAllCaptains = (data: GetAllCaptainsDto) => {
-  return axiosClient.get<PaginatedResponse<Captain>>(baseUrl, {
-    params: {
-      page: data.page ?? 1,
-      limit: data.limit ?? 10,
-      search: data.search ?? "",
-    },
-  });
+const captainsUrl = {
+  base: (academyId: string) => `/academies/${academyId}/captains`,
+  byId: (academyId: string, captainId: string) => `/academies/${academyId}/captains/${captainId}`,
 };
 
-export const getCaptain = (id: string) =>
-  axiosClient.get<SuccessfulResponse<Captain>>(`${baseUrl}/${id}`);
+export const getAllCaptains = (data: Dto.GetAllDto) => {
+  const { query, params } = data;
+  const { academyId } = params
 
-export const createCaptain = (data: CreateCaptainDto) =>
-  axiosClient.post<SuccessfulResponse<Captain>>(baseUrl, data);
-
-export const updateCaptain = (id: string, data: UpdateCaptainDto) =>
-  axiosClient.patch<SuccessfulResponse<Captain>>(`${baseUrl}/${id}`, data);
-
-export const deleteCaptain = (data: DeleteCaptainDto) =>
-  axiosClient.delete<SuccessfulResponse<null>>(`${baseUrl}/${data.id}`);
-
-export const getActiveCaptain = ({
-  trainingType,
-}: {
-  trainingType: Transmission;
-}) => {
-  return axiosClient.get<PaginatedResponse<Captain>>(baseUrl, {
-    params: {
-      isActive: true,
-      trainingType,
-    },
-  });
+  return axiosClient.get<PaginatedResponse<Entity>>(
+    captainsUrl.base(academyId),
+    { params: query }
+  );
 };
 
-export const getLessonsCaptains = (data: GetLessonCaptainDto) => {
-  const { userId, gte, lte } = data;
-  return axiosClient.get<SuccessfulResponse<LessonBase[]>>(
-    `${baseUrl}/${userId}/lessons`,
-    {
-      params: {
-        gte,
-        lte,
-      },
-    },
+export const getCaptain = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { academyId, captainId } = params
+
+  return axiosClient.get<SuccessfulResponse<Entity>>(
+    captainsUrl.byId(academyId, captainId)
+  );
+};
+
+export const createCaptain = (data: Dto.CreateDto) => {
+  const { body, params } = data;
+  const { academyId } = params
+
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    captainsUrl.base(academyId),
+    body
+  );
+};
+
+export const updateCaptain = (data: Dto.UpdateDto) => {
+  const { params, body } = data;
+  const { academyId, captainId } = params
+
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    captainsUrl.byId(academyId, captainId),
+    body
+  );
+};
+
+export const deleteCaptain = (data: Dto.DeleteDto) => {
+  const { params } = data;
+  const { academyId, captainId } = params
+
+  return axiosClient.delete<SuccessfulResponse<Entity>>(
+    captainsUrl.byId(academyId, captainId)
   );
 };

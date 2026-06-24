@@ -4,7 +4,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BadgeDemo } from "@/components/CustomBadge/CustomBadge";
 import ButtonAdd from "@/components/Table/ButtonAdd";
 import { enumTranslations } from "@/lib/enumTranslations";
 import { formatDate } from "@/lib/utils";
@@ -19,7 +18,7 @@ import {
 } from "@remixicon/react";
 
 type Props = {
-  payments: SubscriptionDetails["payments"];
+  payments: SubscriptionDetails["ledgerTransactions"];
   subscriptionId: string;
   academyId: string;
 };
@@ -91,17 +90,6 @@ export default function PaymentHistorySection({
                           <RiNoCreditCardFill className="h-3 w-3 opacity-70" />
                           {enumTranslations[p.paymentMethod]}
                         </span>
-                      </div>
-
-                      <div className="flex flex-wrap items-center gap-2">
-                        <BadgeDemo
-                          type={p.status}
-                          text={enumTranslations[p.status]}
-                        />
-                        <BadgeDemo
-                          type={p.type}
-                          text={enumTranslations[p.type]}
-                        />
                       </div>
                     </div>
 

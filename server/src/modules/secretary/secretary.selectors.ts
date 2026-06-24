@@ -6,6 +6,7 @@ export const secretaryBaseSelect: SecretarySelect = {
   bonusAmount: true,
   targetCount: true,
   createdAt: true,
+  academyId:true,
   user: {
     select: {
       id: true,

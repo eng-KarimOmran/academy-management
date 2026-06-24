@@ -4,7 +4,6 @@ import {
   personName,
   password,
   phone,
-  userRole,
   limit,
   positiveNumber,
   boolean,
@@ -41,7 +40,7 @@ export const GetAllUsersSchema = {
     page: positiveNumber.optional().default(1),
     limit: limit,
     search: z.string().optional(),
-    role: userRole.optional(),
+    // role: userRole.optional(),
     isActive: booleanQuery.optional(),
   }),
 };

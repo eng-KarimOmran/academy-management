@@ -7,11 +7,20 @@ import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
 import type { Captain } from "@/types/captain";
+import type { DeleteDto } from "@/DTOs/captain.dto";
 
-export default function DeleteCaptain({ item }: { item: Pick<Captain, "id"> }) {
+export default function DeleteCaptain({
+  item,
+}: {
+  item: Pick<Captain, "id" | "academyId">;
+}) {
   const { setConfigDialog } = useDialogState();
+  const params: DeleteDto["params"] = {
+    captainId: item.id,
+    academyId: item.academyId,
+  };
 
-  const config: FormProps<{ name: string }, null> = {
+  const config: FormProps<{ name: string }, Captain> = {
     inputs: [
       {
         name: "name",
@@ -21,10 +30,6 @@ export default function DeleteCaptain({ item }: { item: Pick<Captain, "id"> }) {
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "كلمة التأكيد", "تأكيد"),
 
     submitButton: {
@@ -33,7 +38,7 @@ export default function DeleteCaptain({ item }: { item: Pick<Captain, "id"> }) {
       variant: "destructive",
     },
 
-    service: async () => deleteCaptain({ id: item.id }),
+    service: () => deleteCaptain({ params }),
 
     onSuccess: () => {
       toast.success("تم حذف الكابتن بنجاح");

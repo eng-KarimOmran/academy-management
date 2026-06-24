@@ -1,55 +1,41 @@
-import { useState, useEffect } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useDebounce } from "use-debounce";
-import { useSearchParams } from "react-router-dom";
-
-import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
 import PageHeader from "@/components/PageHeader/PageHeader";
+import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
 
 import { getAllSecretaries } from "@/service/secretary.service";
 import type { Secretary } from "@/types/secretary";
 
 import AddSecretary from "./Forms/AddSecretary";
 import ActionsSecretary from "./ActionsSecretary";
-
 import { columns } from "./columns";
 
+import { useActiveAcademyState } from "@/store/ActiveAcademyState";
+import type { GetAllDto } from "@/DTOs/secretary.dto";
+import useAppQuery from "@/hooks/useAppQuery";
+
 export default function SecretaryPage() {
-  const [searchParams] = useSearchParams();
+  const { activeAcademy } = useActiveAcademyState();
+  const academyId = activeAcademy?.id;
 
-  const page = Math.max(1, Number(searchParams.get("page")) || 1);
-  const search = searchParams.get("search") ?? "";
-
-  const [debouncedSearch] = useDebounce(search, 500);
-  const [limit] = useState<number>(10);
-
-  const { data, isLoading, isFetching, error } = useQuery({
-    queryKey: ["secretaries", debouncedSearch, page],
-    queryFn: () =>
-      getAllSecretaries({
-        page,
-        limit,
-        search: debouncedSearch,
-      }),
-    select: (res) => res.data.data,
-    placeholderData: keepPreviousData,
+  const { data, isFetching, isLoading } = useAppQuery<GetAllDto, Secretary>({
+    queryFn: (params) => {
+      if (!academyId) throw new Error("من فضلك اختر الأكاديمية");
+      return getAllSecretaries({
+        query: params.query,
+        params: { academyId: academyId! },
+      });
+    },
+    queryKey: ["secretaries", academyId!],
+    keepPrevious: true,
+    enabled: !!academyId,
   });
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message || "خطأ في تحميل السكرتارية");
-    }
-  }, [error]);
-
   const configTable: DataTableProps<Secretary> = {
-    data: data?.items || [],
+    data: data?.items ?? [],
     maxPage: data?.pagination?.totalPages ?? 1,
     isLoading,
     isFetching,
     headers: columns,
     actions: (item) => <ActionsSecretary item={item} />,
-
     configDialogAdd: {
       title: "إضافة سكرتير جديد",
       description: "قم بإدخال بيانات السكرتير الجديد.",
@@ -63,7 +49,6 @@ export default function SecretaryPage() {
         title="إدارة السكرتارية"
         description="عرض وإدارة جميع السكرتارية المسجلين."
       />
-
       <TableUi {...configTable} />
     </section>
   );

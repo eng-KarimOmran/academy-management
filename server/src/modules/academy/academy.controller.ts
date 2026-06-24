@@ -1,15 +1,14 @@
 import { Response } from "express";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./academy.dto";
-import { RequestAcademy } from "./academy.middleware";
 import AcademyService from "./academy.service";
 import sendSuccess from "../../shared/utils/successResponse";
+import { RequestAcademy } from "./academy.middleware";
 
 const AcademyController = {
   createAcademy: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateAcademyDto;
-
-    const academy = await AcademyService.create(dataSafe.body);
+    const academy = await AcademyService.create(dataSafe);
 
     return sendSuccess({
       res,
@@ -21,12 +20,7 @@ const AcademyController = {
 
   updateAcademy: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.UpdateAcademyDto;
-    const academy = req.academy!;
-
-    const updatedAcademy = await AcademyService.update({
-      ...dataSafe,
-      academy
-    });
+    const updatedAcademy = await AcademyService.update(dataSafe, req.academy);
 
     return sendSuccess({
       res,
@@ -36,58 +30,44 @@ const AcademyController = {
   },
 
   deleteAcademy: async (req: RequestAcademy, res: Response) => {
-    const academy = req.academy!;
-
-    await AcademyService.delete({ academy });
+    const dataSafe = req.dataSafe as DTO.DeleteAcademyDto;
+    await AcademyService.delete(dataSafe, req.academy);
 
     return sendSuccess({
       res,
-      message: "تم حذف الأكاديمية وتحديث أدوار المستخدمين بنجاح",
+      message: "تم حذف الأكاديمية بنجاح",
     });
   },
 
-  getAllAcademy: async (req: RequestAuth, res: Response) => {
+  getAllAcademy: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllAcademiesDto;
-
-    const data = await AcademyService.getAll(dataSafe.query);
+    const data = await AcademyService.getAll(dataSafe);
 
     return sendSuccess({ res, data });
   },
 
-  getDetailsAcademy: async (req: RequestAuth, res: Response) => {
+  getDetailsAcademy: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAcademyDetailsDto;
-    const { academyId } = dataSafe.params;
-
-    const academy = await AcademyService.getDetails({ academyId });
+    const academy = await AcademyService.getDetails(dataSafe, req.academy);
 
     return sendSuccess({ res, data: academy });
   },
 
   addOwnerAcademy: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.AddOwnerDto;
-    const academy = req.academy!;
-
-    const data = await AcademyService.addOwner({
-      phone: dataSafe.body.phone,
-      academy
-    });
+    const data = await AcademyService.addOwner(dataSafe, req.academy);
 
     return sendSuccess({
       res,
       statusCode: 201,
       data,
-      message: "تم اضافة المالك بنجاح",
+      message: "تم إضافة المالك بنجاح",
     });
   },
 
   deleteOwnerAcademy: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.DeleteOwnerDto;
-    const academy = req.academy!;
-
-    const data = await AcademyService.deleteOwner({
-      userId: dataSafe.params.ownerId,
-      academy
-    });
+    const data = await AcademyService.deleteOwner(dataSafe, req.academy);
 
     return sendSuccess({
       res,
@@ -97,36 +77,36 @@ const AcademyController = {
   },
 
   addSocialMediaAcademy: async (req: RequestAcademy, res: Response) => {
-    const { body } = req.dataSafe as DTO.AddSocialMediaDto;
-    const academy = req.academy!;
-
-    const data = await AcademyService.addSocialMedia({
-      academy,
-      ...body
-    });
+    const dataSafe = req.dataSafe as DTO.AddSocialMediaDto;
+    const data = await AcademyService.addSocialMedia(dataSafe, req.academy);
 
     return sendSuccess({
       res,
       statusCode: 201,
       data,
-      message: "تم اضافة المنصة بنجاح",
+      message: "تم إضافة المنصة بنجاح",
     });
   },
 
   deleteSocialMediaAcademy: async (req: RequestAcademy, res: Response) => {
-    const { params } = req.dataSafe as DTO.DeleteSocialMediaDto;
-    const { platformId } = params;
-    const academy = req.academy!;
+    const dataSafe = req.dataSafe as DTO.DeleteSocialMediaDto;
 
-    const data = await AcademyService.deleteSocialMedia({
-      academy,
-      platformId,
-    });
+    const data = await AcademyService.deleteSocialMedia(dataSafe, req.academy);
 
     return sendSuccess({
       res,
       data,
       message: "تم حذف المنصة بنجاح",
+    });
+  },
+
+  getMyAcademics: async (req: RequestAuth, res: Response) => {
+    const userId = req.userLogin!.id;
+    const data = await AcademyService.myAcademics({ userId });
+
+    return sendSuccess({
+      res,
+      data,
     });
   },
 };

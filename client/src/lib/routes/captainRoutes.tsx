@@ -3,7 +3,11 @@ import GetLessons from "@/Routes/CaptainRoutes/GetLessons/GetLessons";
 import { RiLayout2Line } from "@remixicon/react";
 import { Navigate } from "react-router-dom";
 
-export const CAPTAIN_ROUTES_Shared: AppRoute[] = [
+export const CAPTAIN_ROUTES: AppRoute[] = [
+  {
+    path: "",
+    element: <Navigate to={"/dashboard/today"} replace />,
+  },
   {
     element: <GetLessons day="today" />,
     path: "today",
@@ -18,12 +22,4 @@ export const CAPTAIN_ROUTES_Shared: AppRoute[] = [
     label: "حصص غدًا",
     showInNavbar: true,
   },
-];
-
-export const CAPTAIN_ROUTES: AppRoute[] = [
-  {
-    path: "",
-    element: <Navigate to={"/dashboard/today"} replace />,
-  },
-  ...CAPTAIN_ROUTES_Shared,
 ];

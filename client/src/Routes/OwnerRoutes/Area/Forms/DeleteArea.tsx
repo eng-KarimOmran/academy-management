@@ -6,9 +6,11 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteDto } from "@/DTOs/area.dto";
 
 export default function DeleteArea({ item }: { item: Area }) {
   const { setConfigDialog } = useDialogState();
+  const params: DeleteDto["params"] = { areaId: item.id };
 
   const config: FormProps<{ name: string }, null> = {
     inputs: [
@@ -20,10 +22,6 @@ export default function DeleteArea({ item }: { item: Area }) {
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "اسم المنطقة", item.name),
 
     submitButton: {
@@ -32,7 +30,7 @@ export default function DeleteArea({ item }: { item: Area }) {
       variant: "destructive",
     },
 
-    service: async () => deleteArea({ id: item.id }),
+    service: async () => deleteArea({ params }),
 
     onSuccess: () => {
       toast.success("تم حذف المنطقة بنجاح");

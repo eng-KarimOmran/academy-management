@@ -3,7 +3,6 @@ import {
   RiMoneyDollarCircleLine,
   RiDiscountPercentLine,
   RiListOrdered,
-  RiCarLine,
   RiTimeLine,
   RiCheckboxCircleLine,
   RiCloseCircleLine,
@@ -55,13 +54,18 @@ export default function BasicDataSection({
       icon: <RiListOrdered />,
     },
     {
-      label: "الحصص العملية",
-      value: `${course.practicalSessions} حصة`,
-      icon: <RiCarLine />,
-    },
-    {
       label: "مدة الحصة الواحدة",
       value: `${course.sessionDurationMinutes} دقيقة`,
+      icon: <RiTimeLine />,
+    },
+    {
+      label: "الحد الأدنى للديبوزت",
+      value: `${course.requiredInitialDeposit} ج.م`,
+      icon: <RiTimeLine />,
+    },
+    {
+      label: "عدد الحصص قبل سداد كامل المبلغ.",
+      value: `${course.sessionDurationMinutes} حصة`,
       icon: <RiTimeLine />,
     },
     {
@@ -89,7 +93,7 @@ export default function BasicDataSection({
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-2">
         {basicData.map((item, i) => (
           <div
             key={i}

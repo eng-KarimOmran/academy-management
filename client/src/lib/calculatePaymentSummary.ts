@@ -1,10 +1,10 @@
 import type { SubscriptionDetails } from "@/types/subscription";
 
 export interface CalculatePaymentSummary {
-  totalPaid: number; // إجمالي المدفوع
-  totalRefunded: number; // إجمالي المرتجع/الراجع
-  netPaid: number; // الصافي الفعلي
-  remaining: number; // المتبقي
+  totalPaid: number;
+  totalRefunded: number;
+  netPaid: number;
+  remaining: number;
   isFullyPaid: boolean;
 }
 
@@ -12,32 +12,33 @@ export const calculatePaymentSummary = ({
   payments = [],
   totalRequiredAmount,
 }: {
-  payments?: SubscriptionDetails["payments"];
+  payments?: SubscriptionDetails["ledgerTransactions"];
   totalRequiredAmount: number;
 }): CalculatePaymentSummary => {
-  const summary = payments.reduce(
-    (acc, p) => {
-      if (p.status === "COMPLETED") {
-        if (p.type === "REFUND") {
-          acc.refunded += p.amount;
-        } else {
-          acc.paid += p.amount;
-        }
-      }
 
-      return acc;
-    },
-    { paid: 0, refunded: 0 },
-  );
 
-  const netPaid = summary.paid - summary.refunded;
-  const remainingRaw = totalRequiredAmount - netPaid;
+  let totalPaid = 0;
+  let totalRefunded = 0;
+
+  payments.forEach((p) => {
+    if (p.receiverType === "SUBSCRIPTION") {
+      totalRefunded += p.amount
+    }
+
+    if (p.senderType === "SUBSCRIPTION") {
+      totalPaid += p.amount
+    }
+  })
+
+  const netPaid = totalPaid - totalRefunded
+  const remaining = totalRequiredAmount - netPaid
+  const isFullyPaid = remaining <= 0
 
   return {
-    totalPaid: summary.paid,
-    totalRefunded: summary.refunded,
+    totalPaid,
+    totalRefunded,
     netPaid,
-    remaining: Math.max(remainingRaw, 0),
-    isFullyPaid: remainingRaw <= 0,
+    remaining,
+    isFullyPaid,
   };
 };

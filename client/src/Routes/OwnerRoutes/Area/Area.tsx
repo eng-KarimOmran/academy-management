@@ -1,43 +1,65 @@
-import { useState, useEffect } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { useDebounce } from "use-debounce";
-import { useSearchParams } from "react-router-dom";
-
+import PageHeader from "@/components/PageHeader/PageHeader";
 import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
+
 import { getAllAreas } from "@/service/area.service";
-import { columns } from "./columns";
+
 import type { Area } from "@/types/area";
 
 import AddArea from "./Forms/AddArea";
 import ActionsArea from "./ActionsArea";
-import PageHeader from "@/components/PageHeader/PageHeader";
+import { columns } from "./columns";
+import useAppQuery from "@/hooks/useAppQuery";
+import type { GetAllDto } from "@/DTOs/area.dto";
 
 export default function AreaPage() {
-  const [searchParams] = useSearchParams();
-  const page = Math.max(1, Number(searchParams.get("page")) || 1);
-  const search = searchParams.get("search") ?? "";
-  const [debouncedSearch] = useDebounce(search, 500);
-  const [limit] = useState<number>(10);
-
-  const { isLoading, isFetching, error, data } = useQuery({
-    queryKey: ["areas", debouncedSearch, page],
-    queryFn: () => getAllAreas({ limit, page, search: debouncedSearch }),
-    select: (res) => res.data.data,
-    placeholderData: keepPreviousData,
+  const { data, isLoading, isFetching } = useAppQuery<GetAllDto, Area>({
+    queryFn: getAllAreas,
+    queryKey: ["areas"],
+    keepPrevious: true,
+    filters: ["isActive", "supportType"],
   });
 
-  useEffect(() => {
-    if (error) toast.error(error.message || "خطأ في تحميل المناطق");
-  }, [error]);
+  const filters = [
+    {
+      group: "حالة المنطقة",
+      option: [
+        {
+          key: "isActive",
+          label: "نشطة",
+          val: "true",
+        },
+        {
+          key: "isActive",
+          label: "غير نشطة",
+          val: "false",
+        },
+      ],
+    },
+    {
+      group: "ناقل الحركة",
+      option: [
+        {
+          key: "supportType",
+          label: "مانول",
+          val: "MANUAL",
+        },
+        {
+          key: "supportType",
+          label: "أتوماتك",
+          val: "AUTOMATIC",
+        },
+      ],
+    },
+  ];
 
   const configTable: DataTableProps<Area> = {
-    data: data?.items || [],
+    data: data?.items ?? [],
     maxPage: data?.pagination?.totalPages ?? 1,
     isLoading,
     isFetching,
     headers: columns,
     actions: (item) => <ActionsArea item={item} />,
+    filters,
     configDialogAdd: {
       title: "إضافة منطقة جديدة",
       description: "قم بإدخال بيانات المنطقة الجديدة.",

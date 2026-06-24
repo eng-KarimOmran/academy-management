@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { enumTranslations } from "@/lib/enumTranslations";
 import { formatDate } from "@/lib/utils";
 import { getLessonDetails } from "@/service/lesson.service";
+import { useDialogState } from "@/store/DialogState";
 import {
   RiCarLine,
   RiTimeLine,
@@ -15,8 +16,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
+import ChangeLesson from "../Forms/ChangeLesson";
+import UpdateLesson from "../Forms/UpdateLesson";
 
 export default function LessonDetailsPage() {
+  const { setConfigDialog } = useDialogState();
+
   const { lessonId } = useParams();
   const [searchParams] = useSearchParams();
   const academyId = searchParams.get("academyId");
@@ -25,8 +30,10 @@ export default function LessonDetailsPage() {
     queryKey: ["lessons", academyId, lessonId],
     queryFn: () =>
       getLessonDetails({
-        academyId: academyId!,
-        lessonId: lessonId!,
+        params: {
+          academyId: academyId!,
+          lessonId: lessonId!,
+        },
       }),
     select: (res) => res.data.data,
     enabled: !!academyId && !!lessonId,
@@ -52,15 +59,37 @@ export default function LessonDetailsPage() {
 
   return (
     <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
-      <header className="flex justify-between items-center bg-muted p-5 rounded-xl shadow-sm border">
-        <h1 className="text-2xl font-bold">تفاصيل الحصة</h1>
-        <div className="flex flex-col gap-2">
-          <div className="mx-auto">
-            <BadgeDemo
-              type={data.status}
-              text={enumTranslations[data.status]}
-            />
-          </div>
+      <header className="bg-muted p-5 rounded-xl shadow-sm border space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">تفاصيل الحصة</h2>
+          <BadgeDemo type={data.status} text={enumTranslations[data.status]} />
+        </div>
+        <div className="flex items-center gap-1 md:gap-2">
+          <Button
+            disabled={["COMPLETED", "CANCELED_CHARGED"].includes(data.status)}
+            variant="outline"
+            onClick={() => {
+              setConfigDialog({
+                title: "تعديل الحصة",
+                description: "قم بتغيير بيانات الحصة",
+                children: <UpdateLesson item={data} />,
+              });
+            }}
+          >
+            تعديل
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setConfigDialog({
+                title: "تحديث حالة الحصة",
+                description: "قم بتغيير حالة الحصة",
+                children: <ChangeLesson item={data} />,
+              });
+            }}
+          >
+            تغيير الحالة
+          </Button>
           <Button asChild>
             <Link
               to={`/dashboard/subscription/${data.subscriptionId}?academyId=${data.academy.id}`}
@@ -71,7 +100,7 @@ export default function LessonDetailsPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <CardArray
           title="معلومات الحصة والمنطقة"
           icon={<RiTimeLine />}
@@ -135,7 +164,7 @@ export default function LessonDetailsPage() {
           data={[
             { label: "الاسم", val: data.captain.user.name },
             {
-              label: "تكلفة الكابتن",
+              label: "سعر حصة الكابتن",
               val: `${data.captainLessonPrice} ج.م`,
             },
             {
@@ -173,7 +202,7 @@ export default function LessonDetailsPage() {
             { label: "الموديل", val: data.car.modelName },
             { label: "رقم اللوحة", val: data.car.plateNumber },
             {
-              label: "تكلفة السيارة",
+              label: "التكلفة التشغلية للسيارة",
               val: `${data.carSessionPrice} ج.م`,
             },
           ]}

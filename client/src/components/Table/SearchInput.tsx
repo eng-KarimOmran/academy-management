@@ -1,10 +1,14 @@
+import type { SetURLSearchParams } from "react-router-dom";
 import { Input } from "../ui/input";
-import { useSearchParams } from "react-router-dom";
 
-export default function SearchInput() {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const search = searchParams.get("search") || "";
+export default function SearchInput({
+  searchParams,
+  setSearchParams,
+}: {
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+}) {
+  const search = searchParams.get("search") ?? "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

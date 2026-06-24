@@ -1,7 +1,6 @@
 import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 
-import type { CreateCourseDto } from "@/DTOs/course.dto";
 import { CreateSchema } from "@/validations/course.validation";
 
 import { createCourse } from "@/service/course.service";
@@ -9,11 +8,13 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import type { Course } from "@/types/course";
 import { useDialogState } from "@/store/DialogState";
+import type { CreateDto } from "@/DTOs/course.dto";
 
 export default function AddCourse({ academyId }: { academyId: string }) {
   const { setConfigDialog } = useDialogState();
+  const params: CreateDto["params"] = { academyId };
 
-  const config: FormProps<CreateCourseDto, Course> = {
+  const config: FormProps<CreateDto["body"], Course> = {
     inputs: [
       {
         name: "name",
@@ -40,17 +41,23 @@ export default function AddCourse({ academyId }: { academyId: string }) {
         label: "السعر بعد الخصم",
         col: "half",
       },
-
+      {
+        name: "requiredInitialDeposit",
+        type: "number",
+        label: "الحد الأدنى للديبوزت",
+        col: "half",
+      },
+      {
+        name: "sessionsBeforeFullPayment",
+        type: "number",
+        label: "عدد الحصص قبل سداد كامل المبلغ.",
+        placeholder: "عدد الحصص المسموح بيها قبل سدادا كامل المبلغ",
+        col: "half",
+      },
       {
         name: "totalSessions",
         type: "number",
         label: "إجمالي الحصص",
-        col: "half",
-      },
-      {
-        name: "practicalSessions",
-        type: "number",
-        label: "الحصص العملية",
         col: "half",
       },
       {
@@ -59,7 +66,6 @@ export default function AddCourse({ academyId }: { academyId: string }) {
         label: "مدة الحصة (دقيقة)",
         col: "half",
       },
-
       {
         name: "featuredReason",
         type: "text",
@@ -69,26 +75,19 @@ export default function AddCourse({ academyId }: { academyId: string }) {
       },
     ],
 
-    defaultValues: {
-      academyId,
-      name: "",
-      description: "",
-      priceOriginal: 0,
-      priceDiscounted: 0,
-      totalSessions: 0,
-      practicalSessions: 0,
-      sessionDurationMinutes: 50,
-      featuredReason: undefined,
-    },
+    schema: CreateSchema.body,
 
-    schema: CreateSchema,
+    defaultValues: {
+      requiredInitialDeposit: 50,
+      sessionDurationMinutes: 50,
+    },
 
     submitButton: {
       text: "إضافة الكورس",
       loadingText: "جاري الإضافة...",
     },
 
-    service: (data) => createCourse(data),
+    service: (data) => createCourse({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });

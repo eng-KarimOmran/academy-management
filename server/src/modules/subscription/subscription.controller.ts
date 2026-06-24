@@ -1,6 +1,6 @@
 import { Response } from "express";
 import * as DTO from "./subscription.dto";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import SubscriptionService from "./subscription.service";
 import sendSuccess from "../../shared/utils/successResponse";
 import { RequestAcademy } from "../academy/academy.middleware";
@@ -26,7 +26,7 @@ const SubscriptionController = {
   getAllSubscriptions: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllSubscriptionsDto;
 
-    const data = await SubscriptionService.getAll(dataSafe);
+    const data = await SubscriptionService.getAll({ dataSafe });
 
     return sendSuccess({ res, data });
   },
@@ -34,7 +34,7 @@ const SubscriptionController = {
   getSubscriptionDetails: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetSubscriptionDetailsDto;
 
-    const subscriptionData = await SubscriptionService.getDetails(dataSafe);
+    const subscriptionData = await SubscriptionService.getDetails({ dataSafe });
 
     return sendSuccess({ res, data: subscriptionData });
   },
@@ -42,7 +42,7 @@ const SubscriptionController = {
   deleteSubscription: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.DeleteSubscriptionDto;
 
-    await SubscriptionService.deleteSubscription(dataSafe);
+    await SubscriptionService.delete({ dataSafe });
 
     return sendSuccess({
       res,
@@ -53,7 +53,7 @@ const SubscriptionController = {
   cancelSubscription: async (req: RequestAcademy, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CancelSubscriptionDto;
 
-    const cancellationRecord = await SubscriptionService.cancel(dataSafe);
+    const cancellationRecord = await SubscriptionService.cancel({ dataSafe });
 
     return sendSuccess({
       res,

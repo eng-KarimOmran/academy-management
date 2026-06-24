@@ -2,13 +2,13 @@ import { Response } from "express";
 import * as DTO from "./lesson.dto";
 import LessonService from "./lesson.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestAuth } from "../../middlewares/auth.middleware";
+import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 
 const LessonController = {
   createLesson: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.CreateLessonDto;
 
-    const lesson = await LessonService.create(dataSafe);
+    const lesson = await LessonService.create({ dataSafe });
 
     return sendSuccess({
       res,
@@ -21,7 +21,7 @@ const LessonController = {
   getAllLessons: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetAllLessonsDto;
 
-    const data = await LessonService.getAll(dataSafe);
+    const data = await LessonService.getAll({ dataSafe });
 
     return sendSuccess({
       res,
@@ -32,7 +32,7 @@ const LessonController = {
   getLessonDetails: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.GetLessonDetailsDto;
 
-    const lessonData = await LessonService.getDetails(dataSafe);
+    const lessonData = await LessonService.getDetails({ dataSafe });
 
     return sendSuccess({
       res,
@@ -43,7 +43,7 @@ const LessonController = {
   updateLesson: async (req: RequestAuth, res: Response) => {
     const dataSafe = req.dataSafe as DTO.UpdateLessonDto;
 
-    const updatedLesson = await LessonService.update(dataSafe);
+    const updatedLesson = await LessonService.update({ dataSafe });
 
     return sendSuccess({
       res,

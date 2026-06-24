@@ -7,10 +7,12 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteDto } from "@/DTOs/car.dto";
 
 export default function DeleteCar({ item }: { item: Car }) {
-    const { setConfigDialog } = useDialogState();
-  
+  const { setConfigDialog } = useDialogState();
+  const params: DeleteDto["params"] = { carId: item.id };
+
   const config: FormProps<{ confirmPlate: string }, null> = {
     inputs: [
       {
@@ -21,10 +23,6 @@ export default function DeleteCar({ item }: { item: Car }) {
       },
     ],
 
-    defaultValues: {
-      confirmPlate: "",
-    },
-
     schema: matchSchema("confirmPlate", "رقم اللوحة", item.plateNumber),
 
     submitButton: {
@@ -33,7 +31,7 @@ export default function DeleteCar({ item }: { item: Car }) {
       variant: "destructive",
     },
 
-    service: async () => deleteCar({ carId: item.id }),
+    service: async () => deleteCar({ params }),
 
     onSuccess: () => {
       toast.success("تم حذف السيارة بنجاح");

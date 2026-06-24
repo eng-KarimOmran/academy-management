@@ -51,23 +51,26 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  BlacklistedToken: 'BlacklistedToken',
-  Academy: 'Academy',
+  ProofOfPaymentImage: 'ProofOfPaymentImage',
+  AcademyPhone: 'AcademyPhone',
+  ClientPhone: 'ClientPhone',
+  FinancialAccount: 'FinancialAccount',
+  Address: 'Address',
+  PaymentLink: 'PaymentLink',
   SocialMedia: 'SocialMedia',
-  Secretary: 'Secretary',
-  Captain: 'Captain',
+  Academy: 'Academy',
+  BlacklistedToken: 'BlacklistedToken',
+  Client: 'Client',
+  Course: 'Course',
+  Subscription: 'Subscription',
+  JobProfile: 'JobProfile',
+  User: 'User',
+  TrainingDetails: 'TrainingDetails',
   Car: 'Car',
   Area: 'Area',
-  Client: 'Client',
-  Subscription: 'Subscription',
-  ProofOfPaymentImage: 'ProofOfPaymentImage',
-  PaymentTransaction: 'PaymentTransaction',
   Lesson: 'Lesson',
-  TrainingDetails: 'TrainingDetails',
-  Course: 'Course',
-  Expense: 'Expense',
-  LedgerTransaction: 'LedgerTransaction'
+  LedgerTransaction: 'LedgerTransaction',
+  Payroll: 'Payroll'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -86,42 +89,61 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
+export const ProofOfPaymentImageScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  phone: 'phone',
-  password: 'password',
-  isPasswordChanged: 'isPasswordChanged',
-  roles: 'roles',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  logoutAt: 'logoutAt'
+  imageUrl: 'imageUrl',
+  publicId: 'publicId'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type ProofOfPaymentImageScalarFieldEnum = (typeof ProofOfPaymentImageScalarFieldEnum)[keyof typeof ProofOfPaymentImageScalarFieldEnum]
 
 
-export const BlacklistedTokenScalarFieldEnum = {
+export const AcademyPhoneScalarFieldEnum = {
   id: 'id',
-  jti: 'jti',
-  expiresAt: 'expiresAt'
+  phone: 'phone',
+  academyId: 'academyId'
 } as const
 
-export type BlacklistedTokenScalarFieldEnum = (typeof BlacklistedTokenScalarFieldEnum)[keyof typeof BlacklistedTokenScalarFieldEnum]
+export type AcademyPhoneScalarFieldEnum = (typeof AcademyPhoneScalarFieldEnum)[keyof typeof AcademyPhoneScalarFieldEnum]
 
 
-export const AcademyScalarFieldEnum = {
+export const ClientPhoneScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   phone: 'phone',
+  academyId: 'academyId',
+  clientId: 'clientId'
+} as const
+
+export type ClientPhoneScalarFieldEnum = (typeof ClientPhoneScalarFieldEnum)[keyof typeof ClientPhoneScalarFieldEnum]
+
+
+export const FinancialAccountScalarFieldEnum = {
+  id: 'id',
+  jobProfileId: 'jobProfileId',
+  subscriptionId: 'subscriptionId',
+  academyId: 'academyId'
+} as const
+
+export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFieldEnum)[keyof typeof FinancialAccountScalarFieldEnum]
+
+
+export const AddressScalarFieldEnum = {
+  id: 'id',
   address: 'address',
-  paymentLink: 'paymentLink',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  academyId: 'academyId'
 } as const
 
-export type AcademyScalarFieldEnum = (typeof AcademyScalarFieldEnum)[keyof typeof AcademyScalarFieldEnum]
+export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
+
+
+export const PaymentLinkScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  walletProvider: 'walletProvider',
+  academyId: 'academyId'
+} as const
+
+export type PaymentLinkScalarFieldEnum = (typeof PaymentLinkScalarFieldEnum)[keyof typeof PaymentLinkScalarFieldEnum]
 
 
 export const SocialMediaScalarFieldEnum = {
@@ -134,28 +156,110 @@ export const SocialMediaScalarFieldEnum = {
 export type SocialMediaScalarFieldEnum = (typeof SocialMediaScalarFieldEnum)[keyof typeof SocialMediaScalarFieldEnum]
 
 
-export const SecretaryScalarFieldEnum = {
+export const AcademyScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt'
+} as const
+
+export type AcademyScalarFieldEnum = (typeof AcademyScalarFieldEnum)[keyof typeof AcademyScalarFieldEnum]
+
+
+export const BlacklistedTokenScalarFieldEnum = {
+  jti: 'jti',
+  expiresAt: 'expiresAt'
+} as const
+
+export type BlacklistedTokenScalarFieldEnum = (typeof BlacklistedTokenScalarFieldEnum)[keyof typeof BlacklistedTokenScalarFieldEnum]
+
+
+export const ClientScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  academyId: 'academyId',
+  source: 'source',
+  createdAt: 'createdAt'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  priceOriginal: 'priceOriginal',
+  priceDiscounted: 'priceDiscounted',
+  requiredInitialDeposit: 'requiredInitialDeposit',
+  totalSessions: 'totalSessions',
+  sessionsBeforeFullPayment: 'sessionsBeforeFullPayment',
+  sessionDurationMinutes: 'sessionDurationMinutes',
+  featuredReason: 'featuredReason',
+  academyId: 'academyId',
+  createdAt: 'createdAt'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  subscriptionStatus: 'subscriptionStatus',
+  priceAtBooking: 'priceAtBooking',
+  totalSessions: 'totalSessions',
+  sessionDurationMinutes: 'sessionDurationMinutes',
+  requiredInitialDeposit: 'requiredInitialDeposit',
+  sessionsBeforeFullPayment: 'sessionsBeforeFullPayment',
+  trainingTypeAtRegistration: 'trainingTypeAtRegistration',
+  clientId: 'clientId',
+  courseId: 'courseId',
+  academyId: 'academyId',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  payrollId: 'payrollId'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const JobProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  academyId: 'academyId',
+  jobProfileType: 'jobProfileType',
   baseSalary: 'baseSalary',
+  lessonPrice: 'lessonPrice',
+  supportType: 'supportType',
   targetCount: 'targetCount',
   bonusAmount: 'bonusAmount',
   createdAt: 'createdAt'
 } as const
 
-export type SecretaryScalarFieldEnum = (typeof SecretaryScalarFieldEnum)[keyof typeof SecretaryScalarFieldEnum]
+export type JobProfileScalarFieldEnum = (typeof JobProfileScalarFieldEnum)[keyof typeof JobProfileScalarFieldEnum]
 
 
-export const CaptainScalarFieldEnum = {
+export const UserScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
+  name: 'name',
+  phone: 'phone',
+  password: 'password',
   isActive: 'isActive',
-  captainLessonPrice: 'captainLessonPrice',
-  trainingType: 'trainingType',
+  email: 'email',
+  logoutAt: 'logoutAt',
+  isPasswordChanged: 'isPasswordChanged',
   createdAt: 'createdAt'
 } as const
 
-export type CaptainScalarFieldEnum = (typeof CaptainScalarFieldEnum)[keyof typeof CaptainScalarFieldEnum]
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const TrainingDetailsScalarFieldEnum = {
+  id: 'id',
+  feature: 'feature',
+  courseId: 'courseId'
+} as const
+
+export type TrainingDetailsScalarFieldEnum = (typeof TrainingDetailsScalarFieldEnum)[keyof typeof TrainingDetailsScalarFieldEnum]
 
 
 export const CarScalarFieldEnum = {
@@ -165,6 +269,7 @@ export const CarScalarFieldEnum = {
   gearType: 'gearType',
   carSessionPrice: 'carSessionPrice',
   isActive: 'isActive',
+  academyId: 'academyId',
   createdAt: 'createdAt'
 } as const
 
@@ -176,143 +281,70 @@ export const AreaScalarFieldEnum = {
   name: 'name',
   supportType: 'supportType',
   isActive: 'isActive',
+  academyId: 'academyId',
   createdAt: 'createdAt'
 } as const
 
 export type AreaScalarFieldEnum = (typeof AreaScalarFieldEnum)[keyof typeof AreaScalarFieldEnum]
 
 
-export const ClientScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  phone: 'phone',
-  clientSource: 'clientSource',
-  academyId: 'academyId',
-  createdAt: 'createdAt'
-} as const
-
-export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
-
-
-export const SubscriptionScalarFieldEnum = {
-  id: 'id',
-  status: 'status',
-  priceAtBooking: 'priceAtBooking',
-  totalSessions: 'totalSessions',
-  sessionDurationMinutes: 'sessionDurationMinutes',
-  trainingTypeAtRegistration: 'trainingTypeAtRegistration',
-  areaId: 'areaId',
-  clientId: 'clientId',
-  courseId: 'courseId',
-  academyId: 'academyId',
-  createdAt: 'createdAt',
-  createdById: 'createdById'
-} as const
-
-export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
-
-
-export const ProofOfPaymentImageScalarFieldEnum = {
-  id: 'id',
-  imageUrl: 'imageUrl',
-  publicId: 'publicId',
-  transactionId: 'transactionId'
-} as const
-
-export type ProofOfPaymentImageScalarFieldEnum = (typeof ProofOfPaymentImageScalarFieldEnum)[keyof typeof ProofOfPaymentImageScalarFieldEnum]
-
-
-export const PaymentTransactionScalarFieldEnum = {
-  id: 'id',
-  amount: 'amount',
-  paymentMethod: 'paymentMethod',
-  type: 'type',
-  status: 'status',
-  clientId: 'clientId',
-  subscriptionId: 'subscriptionId',
-  receiverId: 'receiverId',
-  academyId: 'academyId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PaymentTransactionScalarFieldEnum = (typeof PaymentTransactionScalarFieldEnum)[keyof typeof PaymentTransactionScalarFieldEnum]
-
-
 export const LessonScalarFieldEnum = {
   id: 'id',
   startTime: 'startTime',
   endTime: 'endTime',
-  status: 'status',
+  lessonStatus: 'lessonStatus',
   transmission: 'transmission',
   expectedAmount: 'expectedAmount',
   carSessionPrice: 'carSessionPrice',
   captainLessonPrice: 'captainLessonPrice',
-  isPaid: 'isPaid',
-  captainId: 'captainId',
-  carId: 'carId',
-  clientId: 'clientId',
-  areaId: 'areaId',
+  academyId: 'academyId',
   subscriptionId: 'subscriptionId',
-  academyId: 'academyId'
+  carId: 'carId',
+  ledgerTransactionId: 'ledgerTransactionId',
+  areaId: 'areaId',
+  jobProfileId: 'jobProfileId',
+  createdAt: 'createdAt',
+  payrollId: 'payrollId'
 } as const
 
 export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
 
 
-export const TrainingDetailsScalarFieldEnum = {
-  id: 'id',
-  text: 'text',
-  courseId: 'courseId'
-} as const
-
-export type TrainingDetailsScalarFieldEnum = (typeof TrainingDetailsScalarFieldEnum)[keyof typeof TrainingDetailsScalarFieldEnum]
-
-
-export const CourseScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  description: 'description',
-  isActive: 'isActive',
-  priceOriginal: 'priceOriginal',
-  priceDiscounted: 'priceDiscounted',
-  totalSessions: 'totalSessions',
-  practicalSessions: 'practicalSessions',
-  sessionDurationMinutes: 'sessionDurationMinutes',
-  featuredReason: 'featuredReason',
-  academyId: 'academyId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
-
-
-export const ExpenseScalarFieldEnum = {
-  id: 'id',
-  amount: 'amount',
-  type: 'type',
-  academyId: 'academyId',
-  createdAt: 'createdAt'
-} as const
-
-export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
-
-
 export const LedgerTransactionScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   academyId: 'academyId',
-  category: 'category',
+  transactionType: 'transactionType',
+  paymentMethod: 'paymentMethod',
+  senderId: 'senderId',
+  receiverId: 'receiverId',
   amount: 'amount',
-  referenceId: 'referenceId',
-  referenceCategory: 'referenceCategory',
-  ledgerEffect: 'ledgerEffect',
-  notes: 'notes',
-  createdAt: 'createdAt'
+  proofOfPaymentImageId: 'proofOfPaymentImageId',
+  createdAt: 'createdAt',
+  subscriptionId: 'subscriptionId'
 } as const
 
 export type LedgerTransactionScalarFieldEnum = (typeof LedgerTransactionScalarFieldEnum)[keyof typeof LedgerTransactionScalarFieldEnum]
+
+
+export const PayrollScalarFieldEnum = {
+  id: 'id',
+  jobProfileId: 'jobProfileId',
+  academyId: 'academyId',
+  periodFrom: 'periodFrom',
+  periodTo: 'periodTo',
+  baseSalary: 'baseSalary',
+  totalLessonsCount: 'totalLessonsCount',
+  totalLessonsAmount: 'totalLessonsAmount',
+  totalSubscriptionsCount: 'totalSubscriptionsCount',
+  targetCount: 'targetCount',
+  bonusAmount: 'bonusAmount',
+  totalDeductions: 'totalDeductions',
+  netAmount: 'netAmount',
+  ledgerTransactionId: 'ledgerTransactionId',
+  createdAt: 'createdAt'
+} as const
+
+export type PayrollScalarFieldEnum = (typeof PayrollScalarFieldEnum)[keyof typeof PayrollScalarFieldEnum]
 
 
 export const SortOrder = {

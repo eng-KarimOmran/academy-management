@@ -50,7 +50,6 @@ export const ChangeLessonStateSchema = {
   params: z.object({ lessonId: id, academyId: id }),
   body: z.object({
     status: lessonStatus,
-    paymentMethod: paymentMethod.optional(),
     amount: price.optional(),
   }),
 };

@@ -16,14 +16,13 @@ import {
   RiGiftLine,
 } from "@remixicon/react";
 
-interface SecretaryCardProps {
+export default function SecretaryCard({
+  secretary,
+}: {
   secretary: UserProfile["secretaryProfile"];
-}
-
-export default function SecretaryCard({ secretary }: SecretaryCardProps) {
+}) {
   const { setConfigDialog } = useDialogState();
 
-  // حماية المكون في حال كانت بيانات السكرتارية غير متوفرة بشكل غير متوقع
   if (!secretary) {
     return (
       <Card className="border-dashed p-6 text-center text-muted-foreground">

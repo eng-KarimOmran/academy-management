@@ -2,7 +2,6 @@ import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 
 import type { Car } from "@/types/car";
-import type { UpdateCarDto } from "@/DTOs/car.dto";
 
 import { updateCar } from "@/service/car.service";
 import { UpdateCarSchema } from "@/validations/car.validation";
@@ -13,11 +12,13 @@ import { toast } from "sonner";
 import { Transmission } from "@/types/enums";
 import { enumTranslations } from "@/lib/enumTranslations";
 import { useDialogState } from "@/store/DialogState";
+import type { UpdateDto } from "@/DTOs/car.dto";
 
 export default function UpdateCar({ item }: { item: Car }) {
-    const { setConfigDialog } = useDialogState();
-  
-  const config: FormProps<UpdateCarDto, Car> = {
+  const { setConfigDialog } = useDialogState();
+  const params: UpdateDto["params"] = { carId: item.id };
+
+  const config: FormProps<UpdateDto["body"], Car> = {
     inputs: [
       {
         name: "isActive",
@@ -54,7 +55,6 @@ export default function UpdateCar({ item }: { item: Car }) {
     ],
 
     defaultValues: {
-      carId: item.id,
       modelName: item.modelName,
       plateNumber: item.plateNumber,
       gearType: item.gearType,
@@ -62,14 +62,14 @@ export default function UpdateCar({ item }: { item: Car }) {
       isActive: item.isActive,
     },
 
-    schema: UpdateCarSchema,
+    schema: UpdateCarSchema.body,
 
     submitButton: {
       text: "حفظ التعديلات",
       loadingText: "جاري الحفظ...",
     },
 
-    service: (data) => updateCar(data),
+    service: (data) => updateCar({ body: data, params }),
 
     onSuccess: () => {
       toast.success("تم تعديل السيارة بنجاح");

@@ -21,8 +21,10 @@ export default function ClientDetailsPage() {
     queryKey: ["clients", academyId, clientId],
     queryFn: () =>
       getClientDetails({
-        academyId: academyId!,
-        clientId: clientId!,
+        params: {
+          academyId: academyId!,
+          clientId: clientId!,
+        },
       }),
     select: (res) => res.data.data,
     enabled: !!academyId && !!clientId,
@@ -62,7 +64,7 @@ export default function ClientDetailsPage() {
     children: (
       <AddSubscription
         academyId={currentClient.academyId}
-        phone={currentClient.phone}
+        clientId={currentClient.id}
       />
     ),
   };

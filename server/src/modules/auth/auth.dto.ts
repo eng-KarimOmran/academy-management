@@ -1,18 +1,24 @@
 import z from "zod";
-import {
-  LoginSchema,
-  LogoutSchema,
-  changePasswordSchema,
-} from "./auth.schema";
+import * as Schema from "./auth.schema";
 
 export type LoginDto = {
-  body: z.infer<typeof LoginSchema.body>;
+  body: z.infer<typeof Schema.LoginSchema.body>;
 };
 
 export type LogoutDto = {
-  query: z.infer<typeof LogoutSchema.query>;
+  query: z.infer<typeof Schema.LogoutSchema.query>;
 };
 
 export type ChangePasswordDto = {
-  body: z.infer<typeof changePasswordSchema.body>;
+  body: z.infer<typeof Schema.changePasswordSchema.body>;
 };
+
+export type NewPasswordDto = {
+  params: z.infer<typeof Schema.newPasswordSchema.params>;
+  body: z.infer<typeof Schema.newPasswordSchema.body>;
+};
+
+export type CreateFirstUserDto = {
+  body: z.infer<typeof Schema.createFirstUserSchema.body>;
+};
+

@@ -2,28 +2,27 @@ import { Badge } from "@/components/ui/badge";
 
 type Status =
   | "ACTIVE"
-  | "PAUSED"
   | "COMPLETED"
   | "CANCELED"
-  | "FULLYBOOKED"
   | "PENDING"
-  | "REJECTED"
   | "PAYMENT"
   | "REFUND"
   | "SCHEDULED"
   | "CANCELED_CHARGED"
   | "FALSE"
-  | "TRUE";
+  | "TRUE"
+  | "PENDING_DEPOSIT"
+  | "ACTIVE_LIMITED";
 
 export function BadgeDemo({ type, text }: { type: Status; text?: string }) {
   const green: Status[] = [
     "ACTIVE",
     "COMPLETED",
-    "FULLYBOOKED",
     "PAYMENT",
     "TRUE",
+    "ACTIVE_LIMITED",
   ];
-  const yellow: Status[] = ["PAUSED", "PENDING", "SCHEDULED"];
+  const yellow: Status[] = ["PENDING", "SCHEDULED"];
   if (!text) {
     text = type;
   }

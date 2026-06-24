@@ -16,7 +16,6 @@ import type { Client } from "@/types/client";
 
 import UpdateClient from "./Forms/UpdateClient";
 import DeleteClient from "./Forms/DeleteClient";
-import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import { useDialogState } from "@/store/DialogState";
 
 type ActionType = "update" | "delete" | "details" | "whatsapp" | "phone-call";
@@ -30,7 +29,6 @@ interface Action {
 
 export default function ActionsClient({ item }: { item: Client }) {
   const navigate = useNavigate();
-  const { activeAcademy } = useActiveAcademyState();
 
   const { setConfigDialog } = useDialogState();
 
@@ -66,7 +64,7 @@ export default function ActionsClient({ item }: { item: Client }) {
     switch (type) {
       case "details":
         navigate(
-          `/dashboard/client/${item.id}?academyId=${activeAcademy?.id ?? ""}`,
+          `/dashboard/client/${item.id}?academyId=${item.academyId}`,
         );
         break;
       case "update":

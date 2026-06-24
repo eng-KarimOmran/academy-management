@@ -8,38 +8,41 @@ import {
   clientSource,
 } from "../validations/common.validation";
 
-export const CreateClientSchema = z.object({
-  academyId: id,
-  name: personName,
-  phone,
-  clientSource,
-});
+export const CreateClientSchema = {
+  body: z.object({
+    academyId: id,
+    name: personName,
+    phone,
+    clientSource,
+  }),
+};
 
-export const UpdateClientSchema = z.object({
-  id,
-  academyId: id,
-  name: personName.optional(),
-  phone: phone.optional(),
-});
+export const UpdateClientSchema = {
+  params: z.object({ clientId: id, academyId: id }),
+  body: z.object({
+    name: personName.optional(),
+    phone: phone.optional(),
+    clientSource: clientSource.optional(),
+  }),
+};
 
-export const DeleteClientSchema = z.object({
-  academyId: id,
-  id,
-});
+export const DeleteClientSchema = {
+  params: z.object({ clientId: id, academyId: id }),
+};
 
-export const GetAllClientsSchema = z.object({
-  academyId: id,
-  page: positiveNumber.optional().default(1),
-  limit: limit.optional().default(10),
-  search: z.string().optional().default(""),
-});
+export const GetAllClientsSchema = {
+  params: z.object({ academyId: id }),
+  query: z.object({
+    page: positiveNumber.optional().default(1),
+    limit: limit,
+    search: z.string().optional(),
+  }),
+};
 
-export const GetClientDetailsSchema = z.object({
-  academyId: id,
-  clientId: id,
-});
+export const GetClientDetailsSchema = {
+  params: z.object({ academyId: id, clientId: id }),
+};
 
-export const GetClientByPhoneSchema = z.object({
-  academyId: id,
-  phone,
-});
+export const GetClientByPhoneSchema = {
+  params: z.object({ academyId: id, phone }),
+};

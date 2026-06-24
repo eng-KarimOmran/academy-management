@@ -1,43 +1,43 @@
 import { Router } from "express";
-import validation from "../../middlewares/validation.middleware";
+import validation from "../../shared/middlewares/validation.middleware";
 import * as Schema from "./secretary.schema";
 import SecretaryController from "./secretary.controller";
-import checkRole from "../../middlewares/role.middleware";
+import { checkAcademyExists } from "../academy/academy.middleware";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 router.get(
   "/",
   validation(Schema.GetAllSecretariesSchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   SecretaryController.getAllSecretary,
 );
 
 router.post(
   "/",
   validation(Schema.CreateSecretarySchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   SecretaryController.createSecretary,
 );
 
 router.get(
   "/:secretaryId",
   validation(Schema.GetSecretaryDetailsSchema),
-  checkRole(["OWNER", "SECRETARY"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   SecretaryController.getDetailsSecretary,
 );
 
 router.patch(
   "/:secretaryId",
   validation(Schema.UpdateSecretarySchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   SecretaryController.updateSecretary,
 );
 
 router.delete(
   "/:secretaryId",
   validation(Schema.DeleteSecretarySchema),
-  checkRole(["OWNER"]),
+  checkAcademyExists({ isAcademyOwner: true }),
   SecretaryController.deleteSecretary,
 );
 

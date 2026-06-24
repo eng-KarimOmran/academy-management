@@ -10,6 +10,9 @@ import ButtonAdd from "./ButtonAdd";
 import Pagination from "./Pagination";
 import { Spinner } from "../ui/spinner";
 import type { ConfigDialog } from "@/store/DialogState";
+import TableLimitSelector from "./TableLimitSelector";
+import TableFilter, { type TableFilterProps } from "./TableFilter";
+import { useSearchParams } from "react-router-dom";
 
 export type DataTableProps<T> = {
   data?: T[];
@@ -19,6 +22,7 @@ export type DataTableProps<T> = {
   actions?: (item: T) => ReactNode;
   configDialogAdd?: ConfigDialog;
   maxPage: number;
+  filters?: TableFilterProps["data"];
 };
 
 export default function TableUi<T>({
@@ -29,17 +33,35 @@ export default function TableUi<T>({
   actions,
   configDialogAdd,
   maxPage,
+  filters,
 }: DataTableProps<T>) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const colSpan = headers.length + (actions ? 1 : 0);
 
   return (
     <div className="rounded-md border bg-muted/50 p-2">
-      <div className="py-2 flex justify-between items-center flex-col-reverse gap-2 md:flex-row">
+      <div className="py-2 flex justify-between items-start md:items-center flex-col gap-2 md:flex-row">
         <div className="w-full flex items-center gap-1">
-          <SearchInput />
+          <SearchInput
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
           {!isLoading && isFetching && <Spinner />}
+          {configDialogAdd && <ButtonAdd configDialogAdd={configDialogAdd} />}
         </div>
-        {configDialogAdd && <ButtonAdd configDialogAdd={configDialogAdd} />}
+        <div className="flex items-start md:items-center gap-1">
+          <TableLimitSelector
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
+          {filters && (
+            <TableFilter
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+              data={filters}
+            />
+          )}
+        </div>
       </div>
       <Table>
         <HeaderTable headers={headers} hasActions={!!actions} />

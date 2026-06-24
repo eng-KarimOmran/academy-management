@@ -11,7 +11,7 @@ export default function GetClientByPhoneForm() {
   const navigate = useNavigate();
   const { activeAcademy } = useActiveAcademyState();
   if (!activeAcademy) return null;
-  const config: FormProps<GetClientByPhoneDto, Client> = {
+  const config: FormProps<GetClientByPhoneDto["params"], Client> = {
     inputs: [
       {
         name: "phone",
@@ -22,17 +22,16 @@ export default function GetClientByPhoneForm() {
 
     defaultValues: {
       academyId: activeAcademy.id,
-      phone: "",
     },
 
-    schema: GetClientByPhoneSchema,
+    schema: GetClientByPhoneSchema.params,
 
     submitButton: {
       text: "ابحث",
       loadingText: "جاري البحث...",
     },
 
-    service: (data) => getClientByPhone(data),
+    service: (data) => getClientByPhone({ params: data }),
 
     onSuccess: (res) => {
       if ("data" in res) {

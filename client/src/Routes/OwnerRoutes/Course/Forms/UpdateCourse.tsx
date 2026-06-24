@@ -2,18 +2,23 @@ import type { FormProps } from "@/components/Form/Form";
 import Form from "@/components/Form/Form";
 
 import type { Course } from "@/types/course";
-import type { UpdateCourseDto } from "@/DTOs/course.dto";
 
 import { updateCourse } from "@/service/course.service";
 import { UpdateSchema } from "@/validations/course.validation";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { useDialogState } from "@/store/DialogState";
+import type { UpdateDto } from "@/DTOs/course.dto";
 
 export default function UpdateCourse({ item }: { item: Course }) {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<UpdateCourseDto, Course> = {
+  const params: UpdateDto["params"] = {
+    courseId: item.id,
+    academyId: item.academyId,
+  };
+
+  const config: FormProps<UpdateDto["body"], Course> = {
     inputs: [
       {
         name: "isActive",
@@ -48,28 +53,31 @@ export default function UpdateCourse({ item }: { item: Course }) {
         label: "السعر بعد الخصم",
         col: "half",
       },
-
+      {
+        name: "requiredInitialDeposit",
+        type: "number",
+        label: "الحد الأدنى للديبوزت",
+        col: "half",
+      },
+      {
+        name: "sessionsBeforeFullPayment",
+        type: "number",
+        label: "عدد الحصص قبل سداد كامل المبلغ.",
+        placeholder: "عدد الحصص المسموح بيها قبل سدادا كامل المبلغ",
+        col: "half",
+      },
       {
         name: "totalSessions",
         type: "number",
         label: "إجمالي الحصص",
         col: "half",
       },
-
-      {
-        name: "practicalSessions",
-        type: "number",
-        label: "الحصص العملية",
-        col: "half",
-      },
-
       {
         name: "sessionDurationMinutes",
         type: "number",
         label: "المدة (دقيقة)",
         col: "half",
       },
-
       {
         name: "featuredReason",
         type: "text",
@@ -80,27 +88,26 @@ export default function UpdateCourse({ item }: { item: Course }) {
     ],
 
     defaultValues: {
-      courseId: item.id,
-      academyId: item.academyId,
       name: item.name,
       description: item.description,
       priceOriginal: item.priceOriginal,
       priceDiscounted: item.priceDiscounted,
       totalSessions: item.totalSessions,
-      practicalSessions: item.practicalSessions,
       sessionDurationMinutes: item.sessionDurationMinutes,
       isActive: item.isActive,
-      featuredReason: item.featuredReason ?? undefined,
+      featuredReason: item.featuredReason ?? "",
+      requiredInitialDeposit: item.requiredInitialDeposit,
+      sessionsBeforeFullPayment: item.sessionsBeforeFullPayment,
     },
 
-    schema: UpdateSchema,
+    schema: UpdateSchema.body,
 
     submitButton: {
       text: "حفظ التعديلات",
       loadingText: "جاري الحفظ...",
     },
 
-    service: (data) => updateCourse(data),
+    service: (data) => updateCourse({ body: data, params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["courses"] });

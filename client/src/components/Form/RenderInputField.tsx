@@ -43,7 +43,8 @@ export type InputType =
   | "date&time"
   | "tel"
   | "url"
-  | "img";
+  | "img"
+  | "checkbox";
 
 export type Option = {
   label: string;
@@ -81,6 +82,17 @@ export default function RenderInputField<T extends FieldValues>({
   switch (config.type) {
     case "text":
     case "password":
+      return (
+        <Input
+          {...register(config.name, {
+            onChange: (e) => handleChange(e.target.value),
+          })}
+          id={String(config.name)}
+          type={config.type}
+          placeholder={config.placeholder}
+          disabled={config.disabled}
+        />
+      );
     case "url":
       return (
         <Input
@@ -91,9 +103,9 @@ export default function RenderInputField<T extends FieldValues>({
           type={config.type}
           placeholder={config.placeholder}
           disabled={config.disabled}
+          dir="ltr"
         />
       );
-
     case "tel":
       return (
         <Input
@@ -104,16 +116,16 @@ export default function RenderInputField<T extends FieldValues>({
           type={config.type}
           placeholder={config.placeholder}
           disabled={config.disabled}
-          className="text-end"
+          dir="ltr"
         />
       );
-
     case "number":
       return (
         <Input
           id={String(config.name)}
           placeholder={config.placeholder}
           disabled={config.disabled}
+          dir="ltr"
           type="number"
           {...register(config.name, {
             valueAsNumber: true,
@@ -121,7 +133,6 @@ export default function RenderInputField<T extends FieldValues>({
           })}
         />
       );
-
     case "textarea":
       return (
         <Textarea
@@ -133,7 +144,6 @@ export default function RenderInputField<T extends FieldValues>({
           })}
         />
       );
-
     case "select":
       return (
         <Controller
@@ -162,7 +172,6 @@ export default function RenderInputField<T extends FieldValues>({
           )}
         />
       );
-
     case "switch":
       return (
         <Controller
@@ -195,7 +204,6 @@ export default function RenderInputField<T extends FieldValues>({
           )}
         />
       );
-
     case "date":
       return (
         <Controller
@@ -241,7 +249,6 @@ export default function RenderInputField<T extends FieldValues>({
           }}
         />
       );
-
     case "date&time":
       return (
         <Controller
@@ -251,7 +258,6 @@ export default function RenderInputField<T extends FieldValues>({
             const date = field.value
               ? new Date(field.value as string | number | Date)
               : undefined;
-
             const handleDateChange = (d?: Date) => {
               if (!d) return;
               const newDate = new Date(d);
@@ -263,7 +269,6 @@ export default function RenderInputField<T extends FieldValues>({
               field.onChange(isoString);
               handleChange(isoString);
             };
-
             const handleTimeChange = (
               e: React.ChangeEvent<HTMLInputElement>,
             ) => {
@@ -276,7 +281,6 @@ export default function RenderInputField<T extends FieldValues>({
               field.onChange(isoString);
               handleChange(isoString);
             };
-
             return (
               <div className="flex gap-2" dir="rtl">
                 <Popover open={open} onOpenChange={setOpen}>
@@ -286,7 +290,6 @@ export default function RenderInputField<T extends FieldValues>({
                       className="flex-1 justify-between font-normal text-right"
                     >
                       {date ? (
-                        // عرض التاريخ بالعربي: "15 مايو 2024"
                         format(date, "PPP", { locale: arSA })
                       ) : (
                         <span className="text-muted-foreground">
@@ -309,13 +312,11 @@ export default function RenderInputField<T extends FieldValues>({
                         setOpen(false);
                       }}
                       disabled={config.disabled}
-                      // تعريب واجهة التقويم (أيام الأسبوع والشهور)
                       locale={arSADayPicker}
                       dir="rtl"
                     />
                   </PopoverContent>
                 </Popover>
-
                 <Input
                   type="time"
                   className="w-30 text-center"
@@ -346,6 +347,18 @@ export default function RenderInputField<T extends FieldValues>({
               }}
             />
           )}
+        />
+      );
+    case "checkbox":
+      return (
+        <Input
+          {...register(config.name, {
+            onChange: (e) => handleChange(e.target.value),
+          })}
+          id={String(config.name)}
+          type={config.type}
+          placeholder={config.placeholder}
+          disabled={config.disabled}
         />
       );
     default:

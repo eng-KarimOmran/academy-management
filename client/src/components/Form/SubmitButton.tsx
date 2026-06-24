@@ -5,6 +5,7 @@ import { Activity } from "react";
 export interface SubmitButtonProps {
   loadingText?: string;
   text: string;
+  disabled?: boolean;
   variant?:
     | "link"
     | "default"
@@ -19,11 +20,13 @@ export default function SubmitButton({
   text,
   variant = "default",
   isSubmitting,
+  disabled,
 }: SubmitButtonProps & { isSubmitting: boolean }) {
+  const isDisabled = typeof disabled === "boolean" ? disabled : false;
   return (
     <Button
       type="submit"
-      disabled={isSubmitting}
+      disabled={isDisabled || isSubmitting}
       className="w-full"
       variant={variant}
     >

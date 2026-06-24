@@ -13,7 +13,7 @@ import { useDialogState } from "@/store/DialogState";
 export default function AddUser() {
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<CreateUserDto, User> = {
+  const config: FormProps<CreateUserDto["body"], User> = {
     inputs: [
       {
         name: "name",
@@ -40,20 +40,14 @@ export default function AddUser() {
       },
     ],
 
-    defaultValues: {
-      name: "",
-      phone: "",
-      password: "",
-    },
-
-    schema: CreateUserSchema,
+    schema: CreateUserSchema.body,
 
     submitButton: {
       text: "إضافة المستخدم",
       loadingText: "جاري الإضافة...",
     },
 
-    service: (data) => createUser(data),
+    service: (data) => createUser({ body: data }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });

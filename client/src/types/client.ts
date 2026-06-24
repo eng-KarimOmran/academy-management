@@ -1,9 +1,10 @@
-import type { SubscriptionStatus } from "./enums";
+import type { ClientSource, SubscriptionStatus } from "./enums";
 
 export interface Client {
   id: string;
   name: string;
   phone: string;
+  clientSource: ClientSource
   createdAt: string;
   academyId: string;
 }

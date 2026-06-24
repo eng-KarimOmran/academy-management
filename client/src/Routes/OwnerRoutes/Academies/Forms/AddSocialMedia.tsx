@@ -11,12 +11,9 @@ import { toast } from "sonner";
 
 export default function AddSocialMedia({ academyId }: { academyId: string }) {
   const { setConfigDialog } = useDialogState();
+  const params: AddSocialMediaDto["params"] = { academyId };
 
-  const config: FormProps<AddSocialMediaDto, Academy> = {
-    defaultValues: {
-      academyId,
-      url: "",
-    },
+  const config: FormProps<AddSocialMediaDto["body"], Academy> = {
     inputs: [
       {
         name: "platform",
@@ -39,8 +36,8 @@ export default function AddSocialMedia({ academyId }: { academyId: string }) {
       loadingText: "جاري اضافة المنصة للأكادمية",
       text: "اضافة المنصة",
     },
-    schema: AddSocialMediaSchema,
-    service: (data) => addSocialMedia(data),
+    schema: AddSocialMediaSchema.body,
+    service: (data) => addSocialMedia({ body: data, params }),
     onSuccess: () => {
       toast.success("تم اضافة المالك بنجاح");
       queryClient.invalidateQueries({ queryKey: ["academies"] });

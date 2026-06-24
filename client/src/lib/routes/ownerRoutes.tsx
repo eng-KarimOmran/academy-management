@@ -25,13 +25,40 @@ import {
   RiSteering2Line,
   RiUser2Line,
   RiUserSettingsFill,
+  RiWallet3Line,
 } from "@remixicon/react";
 
 import AcademyDetailsPage from "@/Routes/OwnerRoutes/Academies/components/AcademyDetails";
 import CourseDetailsPage from "@/Routes/OwnerRoutes/Course/components/CourseDetailsPage";
 import UserDetailsPage from "@/Routes/OwnerRoutes/User/UserDetailsPage/UserDetailsPage";
-import { SECRETARY_ROUTES_Shared } from "./secretaryRoutes";
-import { CAPTAIN_ROUTES_Shared } from "./captainRoutes";
+import Accounts from "@/Routes/OwnerRoutes/Accounts/Accounts";
+import ClientDetailsPage from "@/Routes/OwnerRoutes/Client/ClientDetailsPage/ClientDetailsPage";
+import SubscriptionDetailsPage from "@/Routes/OwnerRoutes/Subscription/SubscriptionDetailsPage/SubscriptionDetailsPage";
+import LessonDetailsPage from "@/Routes/OwnerRoutes/Lesson/components/LessonDetailsPage";
+import TransactionDetailsPage from "@/Routes/OwnerRoutes/Transaction/TransactionDetailsPage/TransactionDetailsPage";
+
+export const OWNER_ROUTES_SHARED: AppRoute[] = [
+  {
+    path: "client/:clientId",
+    element: <ClientDetailsPage />,
+    showInNavbar: false,
+  },
+  {
+    path: "subscription/:subscriptionId",
+    element: <SubscriptionDetailsPage />,
+    showInNavbar: false,
+  },
+  {
+    path: "lesson/:lessonId",
+    element: <LessonDetailsPage />,
+    showInNavbar: false,
+  },
+  {
+    path: "transactions/:transactionId",
+    element: <TransactionDetailsPage />,
+    showInNavbar: false,
+  },
+];
 
 export const OWNER_ROUTES: AppRoute[] = [
   {
@@ -39,6 +66,13 @@ export const OWNER_ROUTES: AppRoute[] = [
     element: <Dashboard />,
     label: "لوحة التحكم",
     icon: <RiLayout2Line />,
+    showInNavbar: true,
+  },
+  {
+    path: "accounts",
+    element: <Accounts />,
+    label: "الحسابات",
+    icon: <RiWallet3Line />,
     showInNavbar: true,
   },
   {
@@ -133,6 +167,5 @@ export const OWNER_ROUTES: AppRoute[] = [
     element: <UserDetailsPage />,
     showInNavbar: false,
   },
-  ...SECRETARY_ROUTES_Shared,
-  ...CAPTAIN_ROUTES_Shared,
+  ...OWNER_ROUTES_SHARED,
 ];

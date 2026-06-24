@@ -1,29 +1,63 @@
-import type { ChangePasswordDto, LoginDto } from "@/DTOs/auth.dto";
+import * as Dto from "@/DTOs/auth.dto";
 import type { CreateUserDto } from "@/DTOs/user.dto";
 import { axiosClient } from "@/lib/axios";
+
 import type { SuccessfulResponse } from "@/types/axios";
 import type { UserAuth } from "@/types/user";
 
-const baseUrl = "/auth";
+type Entity = UserAuth;
 
-export const login = (data: LoginDto) => axiosClient.post<SuccessfulResponse<UserAuth>>(`${baseUrl}/login`, data);
+const authUrl = {
+  base: "/auth",
+  login: "/auth/login",
+  refresh: "/auth/refresh",
+  changePassword: "/auth/change-password",
+  logout: "/auth/logout",
+  signup: "/auth/sign-up-first-user",
+  newPassword: (userId: string) => `/auth/${userId}/new-password`
+};
 
-export const refresh = () =>
-  axiosClient.get<SuccessfulResponse<UserAuth>>(`${baseUrl}/refresh`);
-
-export const changePassword = (data: ChangePasswordDto) => {
-  const { password, newPassword } = data;
-  return axiosClient.patch<SuccessfulResponse<UserAuth>>(
-    `${baseUrl}/change-password`,
-    { password, newPassword },
+export const login = (data: Dto.LoginDto) => {
+  const { body } = data
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    authUrl.login,
+    body
   );
 };
 
-export const logout = (allDevices: boolean) =>
-  axiosClient.post<SuccessfulResponse<null>>(`${baseUrl}/logout?`, {
-    params: {
-      allDevices,
-    },
-  });
+export const refresh = () => {
+  return axiosClient.get<SuccessfulResponse<Entity>>(authUrl.refresh);
+};
 
-export const signup = (data: CreateUserDto) => axiosClient.post<SuccessfulResponse<null>>(`${baseUrl}/sign-up-first-user`, data);
+export const changePassword = (data: Dto.ChangePasswordDto) => {
+  const { body } = data;
+
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    authUrl.changePassword,
+    body
+  );
+};
+
+export const logout = (data: Dto.LogoutDto) => {
+  const { query } = data;
+
+  return axiosClient.post<SuccessfulResponse<null>>(authUrl.logout, null, { params: query });
+};
+
+export const signup = (data: CreateUserDto) => {
+  const { body } = data
+  return axiosClient.post<SuccessfulResponse<null>>(
+    authUrl.signup,
+    body
+  );
+};
+
+export const newPassword = (data: Dto.NewPasswordDto) => {
+  const { body, params } = data;
+  const { userId } = params
+
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    authUrl.newPassword(userId),
+    body
+  );
+};

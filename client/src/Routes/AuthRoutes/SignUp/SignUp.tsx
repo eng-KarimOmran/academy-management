@@ -8,7 +8,7 @@ import { toast } from "sonner";
 export default function SignUp() {
   const navigate = useNavigate();
 
-  const config: FormProps<CreateUserDto, null> = {
+  const config: FormProps<CreateUserDto["body"], null> = {
     inputs: [
       {
         name: "name",
@@ -29,20 +29,14 @@ export default function SignUp() {
       },
     ],
 
-    defaultValues: {
-      phone: "",
-      password: "",
-      name: "",
-    },
-
-    schema: CreateUserSchema,
+    schema: CreateUserSchema.body,
 
     submitButton: {
       text: "تسجيل الدخول",
       loadingText: "جاري تسجيل الدخول...",
     },
 
-    service: (data) => signup(data),
+    service: (data) => signup({ body: data }),
 
     onSuccess: () => {
       navigate("/", { replace: true });

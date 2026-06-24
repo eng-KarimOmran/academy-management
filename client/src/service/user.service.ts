@@ -1,31 +1,61 @@
-import type {
-  CreateUserDto,
-  UpdateUserDto,
-  GetAllUsersDto,
-  DeleteUserDto,
-} from "@/DTOs/user.dto";
 import { axiosClient } from "@/lib/axios";
+import * as Dto from "@/DTOs/user.dto";
+
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
 import type { User, UserProfile } from "@/types/user";
 
-const baseUrl = "/users";
+type Entity = User;
+type EntityDetails = UserProfile;
 
-export const createUser = (data: CreateUserDto) =>
-  axiosClient.post<SuccessfulResponse<User>>(baseUrl, data);
+const usersUrl = {
+  base: "/users",
+  byId: (userId: string) => `/users/${userId}`,
+};
 
-export const updateUser = (data: UpdateUserDto) => {
-  const { userId, ...body } = data;
-  return axiosClient.patch<SuccessfulResponse<User>>(
-    `${baseUrl}/${userId}`,
-    body,
+export const createUser = (data: Dto.CreateUserDto) => {
+  const { body } = data;
+
+  return axiosClient.post<SuccessfulResponse<Entity>>(
+    usersUrl.base,
+    body
   );
 };
 
-export const deleteUser = (data: DeleteUserDto) =>
-  axiosClient.delete<SuccessfulResponse<User>>(`${baseUrl}/${data.userId}`);
+export const updateUser = (data: Dto.UpdateUserDto) => {
+  const { params, body } = data;
+  const { userId } = params;
 
-export const getAllUsers = (data: GetAllUsersDto) =>
-  axiosClient.get<PaginatedResponse<User>>(baseUrl, { data });
+  return axiosClient.patch<SuccessfulResponse<Entity>>(
+    usersUrl.byId(userId),
+    body
+  );
+};
 
-export const getUserDetails = ({ userId }: { userId: string }) =>
-  axiosClient.get<SuccessfulResponse<UserProfile>>(`${baseUrl}/${userId}`);
+export const deleteUser = (data: Dto.DeleteUserDto) => {
+  const { params } = data;
+  const { userId } = params;
+
+  return axiosClient.delete<SuccessfulResponse<Entity>>(
+    usersUrl.byId(userId)
+  );
+};
+
+export const getAllUsers = (data: Dto.GetAllUsersDto) => {
+  const { query } = data;
+
+  return axiosClient.get<PaginatedResponse<Entity>>(
+    usersUrl.base,
+    {
+      params: query,
+    }
+  );
+};
+
+export const getUserDetails = (data: Dto.GetUserDetailsDto) => {
+  const { params } = data;
+  const { userId } = params;
+
+  return axiosClient.get<SuccessfulResponse<EntityDetails>>(
+    usersUrl.byId(userId)
+  );
+};

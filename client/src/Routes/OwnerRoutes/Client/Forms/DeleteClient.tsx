@@ -7,10 +7,16 @@ import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 import { matchSchema } from "@/lib/matchSchema";
 import { useDialogState } from "@/store/DialogState";
+import type { DeleteClientDto } from "@/DTOs/client.dto";
 
 export default function DeleteClient({ item }: { item: Client }) {
-    const { setConfigDialog } = useDialogState();
+  const { setConfigDialog } = useDialogState();
   
+  const params: DeleteClientDto["params"] = {
+    academyId: item.academyId,
+    clientId: item.id,
+  };
+
   const config: FormProps<{ name: string }, null> = {
     inputs: [
       {
@@ -21,10 +27,6 @@ export default function DeleteClient({ item }: { item: Client }) {
       },
     ],
 
-    defaultValues: {
-      name: "",
-    },
-
     schema: matchSchema("name", "العميل", item.name),
 
     submitButton: {
@@ -33,11 +35,7 @@ export default function DeleteClient({ item }: { item: Client }) {
       variant: "destructive",
     },
 
-    service: async () =>
-      deleteClient({
-        academyId: item.academyId,
-        id: item.id,
-      }),
+    service: async () => deleteClient({ params }),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

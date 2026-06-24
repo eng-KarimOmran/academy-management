@@ -1,33 +1,67 @@
-export type LessonStatistics = {
-  totalLessons: number;
-  scheduledLessons: number;
-  completedLessons: number;
-  canceledChargedLessons: number;
-  canceledLessons: number;
-  automaticLessons: number;
-  manualLessons: number;
-};
+export interface DashboardStatistics {
+  clients: {
+    officeCount: number;
+    platformCount: number;
+    totalClient: number;
+  };
 
-export type PaymentStatistics = {
-  totalPaidAmount: number;
-  totalRefundedAmount: number;
-};
+  courses: {
+    courseId: string;
+    name: string;
+    count: number;
+  }[];
 
-export type ClientStatistics = {
-  totalClients: number;
-  platformClients: number;
-  officeClients: number;
-  subscribedClients: number;
-  nonSubscribedClients: number;
-};
+  subscriptions: {
+    subscriptionActive: number;
+    subscriptionActiveLimited: number;
+    subscriptionCanceled: number;
+    subscriptionCompleted: number;
+    subscriptionPendingDeposit: number;
+    totalSubscription: number;
+  };
 
-type CourseSubscription = {
-  id: string;
-  name: string;
-  subsCount: number;
-};
+  transactions: {
+    totalCash: number;
+    totalRefund: number;
+    totalCollected: number;
+    totalWallet: number
+  };
 
-export type CourseStatistics = {
-  total: number;
-  courses: CourseSubscription[];
-};
+  lessons: {
+    lessonCanceled: number;
+    lessonCanceledCharged: number;
+    lessonCompleted: number;
+    lessonScheduled: number;
+    lessonAutomatic: number;
+    lessonManual: number;
+    totalLesson: number;
+  };
+
+  area: {
+    areaId: string;
+    name: string;
+    countLesson: number;
+  }[];
+
+  car: {
+    carId: string;
+    modelName: string;
+    plateNumber: string;
+    countLesson: number;
+  }[];
+
+  captain: {
+    captainId: string;
+    userId: string;
+    name: string;
+    phone: string;
+    countLesson: number;
+  }[];
+
+  usersCreatedSubscription: {
+    userId: string;
+    name: string;
+    phone: string;
+    countSubscription: number;
+  }[];
+}

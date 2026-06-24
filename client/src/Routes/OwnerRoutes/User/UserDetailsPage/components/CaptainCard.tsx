@@ -15,11 +15,11 @@ import {
   RiSteering2Line,
 } from "@remixicon/react";
 
-interface CaptainCardProps {
+export default function CaptainCard({
+  captain,
+}: {
   captain: UserProfile["captainProfile"];
-}
-
-export default function CaptainCard({ captain }: CaptainCardProps) {
+}) {
   const { setConfigDialog } = useDialogState();
 
   if (!captain) {
@@ -89,7 +89,7 @@ export default function CaptainCard({ captain }: CaptainCardProps) {
               <span className="text-xs font-medium">نوع التدريب</span>
             </div>
             <p className="font-semibold text-sm text-foreground truncate">
-              {enumTranslations[captain.trainingType] || captain.trainingType}
+              {enumTranslations[captain.supportType] || captain.supportType}
             </p>
           </div>
         </div>

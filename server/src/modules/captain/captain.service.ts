@@ -1,119 +1,144 @@
+import { buildCaptainWhere } from './captain.utils';
+import { CaptainCreateInput, TransactionClient } from './../../../prisma/generated/internal/prismaNamespace';
 import * as DTO from "./captain.dto";
 import ApiError from "../../shared/utils/ApiError";
 import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
-import { Prisma } from "../../../prisma/generated/client";
-import UserRepository from "../user/user.repository";
+import { Prisma, Captain } from "../../../prisma/generated/client";
 import UserService from "../user/user.service";
-import CaptainRepository from "./captain.repository";
-import { buildCaptainWhere } from "./captain.utils";
 import { userDetailsSelect } from "../user/user.selectors";
 import { prisma } from "../../lib/prisma";
-import dayjs from "dayjs";
+import { CaptainBaseSelect } from './captain.selectors';
 
-const CaptainService = {
-  async create(dataSafe: DTO.CreateDto) {
-    const { phone, trainingType, captainLessonPrice } = dataSafe.body;
+interface ICaptainService {
+  create: (data: { dataSafe: DTO.CreateDto; tx?: TransactionClient }) => Promise<Captain>;
+  update: (data: { dataSafe: DTO.UpdateDto; tx?: TransactionClient }) => Promise<Captain>;
+  getAll: (data: { dataSafe: DTO.GetAllDto; tx?: TransactionClient }) => Promise<{ items: Captain[]; pagination: { limit: number; page: number; totalPages: number; total: number } }>;
+  delete: (data: { dataSafe: DTO.DeleteDto; tx?: TransactionClient }) => Promise<Captain>;
+  getDetails: (data: { dataSafe: DTO.GetDetailsDto; tx?: TransactionClient }) => Promise<Captain>;
+}
 
-    const user = await UserRepository.findByPhone({ phone, select: userDetailsSelect });
-    if (!user) throw ApiError.NotFound({ model: "User" });
+const CaptainService: ICaptainService = {
+  async create({ dataSafe, tx }) {
+    const { academyId } = dataSafe.params;
+    const { userId, ...body } = dataSafe.body;
 
-    if (user.captainProfile) {
-      throw ApiError.Conflict("CaptainProfile");
-    }
+    const run = async (tx: TransactionClient) => {
+      const user = await tx.user.findUnique({
+        where: { id: userId },
+        select: userDetailsSelect
+      });
 
-    return await prisma.$transaction(async (tx) => {
-      const captain = await CaptainRepository.create({
-        data: {
-          captainLessonPrice,
-          trainingType,
-          user: { connect: { id: user.id } },
-        },
-        tx
+      if (!user) throw ApiError.NotFound({ model: "User" });
+
+      if (user.captainProfile) {
+        throw ApiError.Conflict('CaptainProfile');
+      }
+
+      const dataCaptain: CaptainCreateInput = {
+        ...body,
+        academy: { connect: { id: academyId } },
+        user: { connect: { id: user.id } },
+      }
+
+      const captain = await tx.captain.create({
+        data: dataCaptain,
+        select: CaptainBaseSelect
       });
 
       await UserService.recalculateUserRole({ userId: user.id, tx });
 
       return captain;
-    });
+    };
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async update(dataSafe: DTO.UpdateDto) {
+  async update({ dataSafe, tx }) {
     const { body, params } = dataSafe;
     const { captainId } = params;
 
-    const captainExists = await CaptainRepository.findById({ captainId });
-    if (!captainExists) throw ApiError.NotFound({ model: "Captain" });
+    const run = async (tx: TransactionClient) => {
+      const captainExists = await tx.captain.findUnique({ where: { id: captainId } });
+      if (!captainExists) throw ApiError.NotFound({ model: "Captain" });
 
-    const { isActive, ...data } = body;
-    const updateData: Prisma.CaptainUpdateInput = data;
+      const { isActive, ...data } = body;
+      const updateData: Prisma.CaptainUpdateInput = data;
 
-    if (typeof isActive !== "undefined") {
-      updateData.isActive = isActive;
-    }
+      if (typeof isActive !== "undefined") {
+        updateData.isActive = isActive;
+      }
 
-    return await CaptainRepository.update({ captainId, data: updateData });
+      return await tx.captain.update({
+        where: { id: captainId },
+        data: updateData,
+        select: CaptainBaseSelect
+      });
+    };
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async getAll(dataSafe: DTO.GetAllDto) {
-    const { limit, page, search, isActive, trainingType } = dataSafe.query;
+  async getAll({ dataSafe, tx }) {
+    const { limit, page, search, isActive, supportType } = dataSafe.query;
+    const { academyId } = dataSafe.params;
 
-    const where = buildCaptainWhere({ search, isActive, trainingType });
-    const { take, skip } = getPagination({ page, limit });
+    const run = async (tx: TransactionClient) => {
+      const { take, skip } = getPagination({ page, limit });
 
-    const { captains, count } = await CaptainRepository.findMany({
-      where,
-      take,
-      skip,
-      orderBy: { createdAt: "desc" },
-    });
+      const where = buildCaptainWhere({ search, isActive, supportType, academyId })
 
-    const totalPages = getTotalPages({ limit, count });
-    const pagination = { limit, page, totalPages, total: count };
+      const [captains, count] = await Promise.all([
+        tx.captain.findMany({
+          where,
+          take,
+          skip,
+          orderBy: { createdAt: "desc" },
+          select: CaptainBaseSelect
+        }),
+        tx.captain.count({ where })
+      ]);
 
-    return { items: captains, pagination };
+      const totalPages = getTotalPages({ limit, count });
+      const pagination = { limit, page, totalPages, total: count };
+
+      return { items: captains, pagination };
+    };
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async remove(dataSafe: DTO.DeleteDto) {
+  async delete({ dataSafe, tx }) {
     const { captainId } = dataSafe.params;
 
-    const captainExists = await CaptainRepository.findById({ captainId });
-    if (!captainExists) throw ApiError.NotFound({ model: "Captain" });
+    const run = async (tx: TransactionClient) => {
+      const captainExists = await tx.captain.findUnique({ where: { id: captainId } });
+      if (!captainExists) throw ApiError.NotFound({ model: "Captain" });
 
-    return await prisma.$transaction(async (tx) => {
-      const deletedCaptain = await CaptainRepository.delete({ captainId, tx });
+      const deletedCaptain = await tx.captain.delete({ where: { id: captainId }, select: CaptainBaseSelect });
+
       await UserService.recalculateUserRole({ userId: captainExists.userId, tx });
+
       return deletedCaptain;
-    });
+    };
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async getDetails(dataSafe: DTO.GetDetailsDto) {
+  async getDetails({ dataSafe, tx }) {
     const { captainId } = dataSafe.params;
 
-    const captain = await CaptainRepository.findById({ captainId });
-    if (!captain) throw ApiError.NotFound({ model: "Captain" });
+    const run = async (tx: TransactionClient) => {
+      const captain = await tx.captain.findUnique({
+        where: { id: captainId },
+        select: CaptainBaseSelect
+      });
+      if (!captain) throw ApiError.NotFound({ model: "Captain" });
 
-    return captain;
+      return captain;
+    };
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
-
-  async getLessonsCaptain(dataSafe: DTO.GetLessonCaptainDto) {
-    const { params, query } = dataSafe;
-    const { userId } = params;
-    let { gte, lte } = query;
-
-    const captain = await CaptainRepository.findByUserId({ userId });
-    if (!captain) throw ApiError.NotFound({ model: "Captain" });
-
-    if (!gte || !lte) {
-      gte = dayjs().startOf("day").toDate();
-      lte = dayjs().endOf("day").toDate();
-    }
-
-    return await CaptainRepository.getLessonsByCaptainId({
-      captainId: captain.id,
-      gte,
-      lte,
-    });
-  }
 };
 
 export default CaptainService;

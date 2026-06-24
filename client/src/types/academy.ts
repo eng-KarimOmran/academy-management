@@ -4,7 +4,12 @@ export interface SocialMediaLink {
   id: string;
   platform: Platform;
   url: string;
-  academyId: string;
+}
+
+export interface Owners {
+  id: string;
+  name: string;
+  phone: string;
 }
 
 export interface Academy {
@@ -13,14 +18,10 @@ export interface Academy {
   phone: string;
   address: string;
   paymentLink: string;
+  createdAt: string;
 }
 
 export interface AcademyDetails extends Academy {
-  createdAt: string;
   socialMediaPlatforms: SocialMediaLink[];
-  owners: {
-    id: string;
-    name: string;
-    phone: string;
-  }[];
+  owners: Owners[];
 }

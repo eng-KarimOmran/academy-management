@@ -29,16 +29,18 @@ export type AggregateCourse = {
 export type CourseAvgAggregateOutputType = {
   priceOriginal: number | null
   priceDiscounted: number | null
+  requiredInitialDeposit: number | null
   totalSessions: number | null
-  practicalSessions: number | null
+  sessionsBeforeFullPayment: number | null
   sessionDurationMinutes: number | null
 }
 
 export type CourseSumAggregateOutputType = {
   priceOriginal: number | null
   priceDiscounted: number | null
+  requiredInitialDeposit: number | null
   totalSessions: number | null
-  practicalSessions: number | null
+  sessionsBeforeFullPayment: number | null
   sessionDurationMinutes: number | null
 }
 
@@ -49,13 +51,13 @@ export type CourseMinAggregateOutputType = {
   isActive: boolean | null
   priceOriginal: number | null
   priceDiscounted: number | null
+  requiredInitialDeposit: number | null
   totalSessions: number | null
-  practicalSessions: number | null
+  sessionsBeforeFullPayment: number | null
   sessionDurationMinutes: number | null
   featuredReason: string | null
   academyId: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type CourseMaxAggregateOutputType = {
@@ -65,13 +67,13 @@ export type CourseMaxAggregateOutputType = {
   isActive: boolean | null
   priceOriginal: number | null
   priceDiscounted: number | null
+  requiredInitialDeposit: number | null
   totalSessions: number | null
-  practicalSessions: number | null
+  sessionsBeforeFullPayment: number | null
   sessionDurationMinutes: number | null
   featuredReason: string | null
   academyId: string | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type CourseCountAggregateOutputType = {
@@ -81,13 +83,13 @@ export type CourseCountAggregateOutputType = {
   isActive: number
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason: number
   academyId: number
   createdAt: number
-  updatedAt: number
   _all: number
 }
 
@@ -95,16 +97,18 @@ export type CourseCountAggregateOutputType = {
 export type CourseAvgAggregateInputType = {
   priceOriginal?: true
   priceDiscounted?: true
+  requiredInitialDeposit?: true
   totalSessions?: true
-  practicalSessions?: true
+  sessionsBeforeFullPayment?: true
   sessionDurationMinutes?: true
 }
 
 export type CourseSumAggregateInputType = {
   priceOriginal?: true
   priceDiscounted?: true
+  requiredInitialDeposit?: true
   totalSessions?: true
-  practicalSessions?: true
+  sessionsBeforeFullPayment?: true
   sessionDurationMinutes?: true
 }
 
@@ -115,13 +119,13 @@ export type CourseMinAggregateInputType = {
   isActive?: true
   priceOriginal?: true
   priceDiscounted?: true
+  requiredInitialDeposit?: true
   totalSessions?: true
-  practicalSessions?: true
+  sessionsBeforeFullPayment?: true
   sessionDurationMinutes?: true
   featuredReason?: true
   academyId?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type CourseMaxAggregateInputType = {
@@ -131,13 +135,13 @@ export type CourseMaxAggregateInputType = {
   isActive?: true
   priceOriginal?: true
   priceDiscounted?: true
+  requiredInitialDeposit?: true
   totalSessions?: true
-  practicalSessions?: true
+  sessionsBeforeFullPayment?: true
   sessionDurationMinutes?: true
   featuredReason?: true
   academyId?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type CourseCountAggregateInputType = {
@@ -147,13 +151,13 @@ export type CourseCountAggregateInputType = {
   isActive?: true
   priceOriginal?: true
   priceDiscounted?: true
+  requiredInitialDeposit?: true
   totalSessions?: true
-  practicalSessions?: true
+  sessionsBeforeFullPayment?: true
   sessionDurationMinutes?: true
   featuredReason?: true
   academyId?: true
   createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -250,13 +254,13 @@ export type CourseGroupByOutputType = {
   isActive: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason: string | null
   academyId: string
   createdAt: Date
-  updatedAt: Date
   _count: CourseCountAggregateOutputType | null
   _avg: CourseAvgAggregateOutputType | null
   _sum: CourseSumAggregateOutputType | null
@@ -289,15 +293,15 @@ export type CourseWhereInput = {
   isActive?: Prisma.BoolFilter<"Course"> | boolean
   priceOriginal?: Prisma.FloatFilter<"Course"> | number
   priceDiscounted?: Prisma.FloatFilter<"Course"> | number
+  requiredInitialDeposit?: Prisma.FloatFilter<"Course"> | number
   totalSessions?: Prisma.IntFilter<"Course"> | number
-  practicalSessions?: Prisma.IntFilter<"Course"> | number
+  sessionsBeforeFullPayment?: Prisma.IntFilter<"Course"> | number
   sessionDurationMinutes?: Prisma.IntFilter<"Course"> | number
   featuredReason?: Prisma.StringNullableFilter<"Course"> | string | null
   academyId?: Prisma.StringFilter<"Course"> | string
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  courseFeatures?: Prisma.TrainingDetailsListRelationFilter
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
+  features?: Prisma.TrainingDetailsListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
 }
 
@@ -308,22 +312,21 @@ export type CourseOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
   featuredReason?: Prisma.SortOrderInput | Prisma.SortOrder
   academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  courseFeatures?: Prisma.TrainingDetailsOrderByRelationAggregateInput
   academy?: Prisma.AcademyOrderByWithRelationInput
+  features?: Prisma.TrainingDetailsOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
 }
 
 export type CourseWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   academyId_name?: Prisma.CourseAcademyIdNameCompoundUniqueInput
-  academyId_id?: Prisma.CourseAcademyIdIdCompoundUniqueInput
   AND?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
   OR?: Prisma.CourseWhereInput[]
   NOT?: Prisma.CourseWhereInput | Prisma.CourseWhereInput[]
@@ -332,17 +335,17 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"Course"> | boolean
   priceOriginal?: Prisma.FloatFilter<"Course"> | number
   priceDiscounted?: Prisma.FloatFilter<"Course"> | number
+  requiredInitialDeposit?: Prisma.FloatFilter<"Course"> | number
   totalSessions?: Prisma.IntFilter<"Course"> | number
-  practicalSessions?: Prisma.IntFilter<"Course"> | number
+  sessionsBeforeFullPayment?: Prisma.IntFilter<"Course"> | number
   sessionDurationMinutes?: Prisma.IntFilter<"Course"> | number
   featuredReason?: Prisma.StringNullableFilter<"Course"> | string | null
   academyId?: Prisma.StringFilter<"Course"> | string
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  courseFeatures?: Prisma.TrainingDetailsListRelationFilter
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
+  features?: Prisma.TrainingDetailsListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
-}, "id" | "academyId_name" | "academyId_id">
+}, "id" | "academyId_name">
 
 export type CourseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -351,13 +354,13 @@ export type CourseOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
   featuredReason?: Prisma.SortOrderInput | Prisma.SortOrder
   academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.CourseCountOrderByAggregateInput
   _avg?: Prisma.CourseAvgOrderByAggregateInput
   _max?: Prisma.CourseMaxOrderByAggregateInput
@@ -375,13 +378,13 @@ export type CourseScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"Course"> | boolean
   priceOriginal?: Prisma.FloatWithAggregatesFilter<"Course"> | number
   priceDiscounted?: Prisma.FloatWithAggregatesFilter<"Course"> | number
+  requiredInitialDeposit?: Prisma.FloatWithAggregatesFilter<"Course"> | number
   totalSessions?: Prisma.IntWithAggregatesFilter<"Course"> | number
-  practicalSessions?: Prisma.IntWithAggregatesFilter<"Course"> | number
+  sessionsBeforeFullPayment?: Prisma.IntWithAggregatesFilter<"Course"> | number
   sessionDurationMinutes?: Prisma.IntWithAggregatesFilter<"Course"> | number
   featuredReason?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null
   academyId?: Prisma.StringWithAggregatesFilter<"Course"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Course"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Course"> | Date | string
 }
 
 export type CourseCreateInput = {
@@ -391,14 +394,14 @@ export type CourseCreateInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  courseFeatures?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
   academy: Prisma.AcademyCreateNestedOneWithoutCoursesInput
+  features?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCourseInput
 }
 
@@ -409,14 +412,14 @@ export type CourseUncheckedCreateInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   academyId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
-  courseFeatures?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
+  features?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCourseInput
 }
 
@@ -427,14 +430,14 @@ export type CourseUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseFeatures?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutCoursesNestedInput
+  features?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCourseNestedInput
 }
 
@@ -445,14 +448,14 @@ export type CourseUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseFeatures?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
+  features?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -463,13 +466,13 @@ export type CourseCreateManyInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   academyId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type CourseUpdateManyMutationInput = {
@@ -479,12 +482,12 @@ export type CourseUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CourseUncheckedUpdateManyInput = {
@@ -494,13 +497,13 @@ export type CourseUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CourseListRelationFilter = {
@@ -513,24 +516,9 @@ export type CourseOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type CourseScalarRelationFilter = {
-  is?: Prisma.CourseWhereInput
-  isNot?: Prisma.CourseWhereInput
-}
-
-export type CourseNullableScalarRelationFilter = {
-  is?: Prisma.CourseWhereInput | null
-  isNot?: Prisma.CourseWhereInput | null
-}
-
 export type CourseAcademyIdNameCompoundUniqueInput = {
   academyId: string
   name: string
-}
-
-export type CourseAcademyIdIdCompoundUniqueInput = {
-  academyId: string
-  id: string
 }
 
 export type CourseCountOrderByAggregateInput = {
@@ -540,20 +528,21 @@ export type CourseCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
   featuredReason?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type CourseAvgOrderByAggregateInput = {
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
 }
 
@@ -564,13 +553,13 @@ export type CourseMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
   featuredReason?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type CourseMinOrderByAggregateInput = {
@@ -580,21 +569,27 @@ export type CourseMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
   featuredReason?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type CourseSumOrderByAggregateInput = {
   priceOriginal?: Prisma.SortOrder
   priceDiscounted?: Prisma.SortOrder
+  requiredInitialDeposit?: Prisma.SortOrder
   totalSessions?: Prisma.SortOrder
-  practicalSessions?: Prisma.SortOrder
+  sessionsBeforeFullPayment?: Prisma.SortOrder
   sessionDurationMinutes?: Prisma.SortOrder
+}
+
+export type CourseScalarRelationFilter = {
+  is?: Prisma.CourseWhereInput
+  isNot?: Prisma.CourseWhereInput
 }
 
 export type CourseCreateNestedManyWithoutAcademyInput = {
@@ -639,6 +634,26 @@ export type CourseUncheckedUpdateManyWithoutAcademyNestedInput = {
   deleteMany?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[]
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type CourseCreateNestedOneWithoutSubscriptionsInput = {
   create?: Prisma.XOR<Prisma.CourseCreateWithoutSubscriptionsInput, Prisma.CourseUncheckedCreateWithoutSubscriptionsInput>
   connectOrCreate?: Prisma.CourseCreateOrConnectWithoutSubscriptionsInput
@@ -653,20 +668,18 @@ export type CourseUpdateOneRequiredWithoutSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.CourseUpdateWithoutSubscriptionsInput>, Prisma.CourseUncheckedUpdateWithoutSubscriptionsInput>
 }
 
-export type CourseCreateNestedOneWithoutCourseFeaturesInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutCourseFeaturesInput, Prisma.CourseUncheckedCreateWithoutCourseFeaturesInput>
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCourseFeaturesInput
+export type CourseCreateNestedOneWithoutFeaturesInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutFeaturesInput, Prisma.CourseUncheckedCreateWithoutFeaturesInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutFeaturesInput
   connect?: Prisma.CourseWhereUniqueInput
 }
 
-export type CourseUpdateOneWithoutCourseFeaturesNestedInput = {
-  create?: Prisma.XOR<Prisma.CourseCreateWithoutCourseFeaturesInput, Prisma.CourseUncheckedCreateWithoutCourseFeaturesInput>
-  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCourseFeaturesInput
-  upsert?: Prisma.CourseUpsertWithoutCourseFeaturesInput
-  disconnect?: Prisma.CourseWhereInput | boolean
-  delete?: Prisma.CourseWhereInput | boolean
+export type CourseUpdateOneRequiredWithoutFeaturesNestedInput = {
+  create?: Prisma.XOR<Prisma.CourseCreateWithoutFeaturesInput, Prisma.CourseUncheckedCreateWithoutFeaturesInput>
+  connectOrCreate?: Prisma.CourseCreateOrConnectWithoutFeaturesInput
+  upsert?: Prisma.CourseUpsertWithoutFeaturesInput
   connect?: Prisma.CourseWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutCourseFeaturesInput, Prisma.CourseUpdateWithoutCourseFeaturesInput>, Prisma.CourseUncheckedUpdateWithoutCourseFeaturesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutFeaturesInput, Prisma.CourseUpdateWithoutFeaturesInput>, Prisma.CourseUncheckedUpdateWithoutFeaturesInput>
 }
 
 export type CourseCreateWithoutAcademyInput = {
@@ -676,13 +689,13 @@ export type CourseCreateWithoutAcademyInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  courseFeatures?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
+  features?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCourseInput
 }
 
@@ -693,13 +706,13 @@ export type CourseUncheckedCreateWithoutAcademyInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  courseFeatures?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
+  features?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCourseInput
 }
 
@@ -739,13 +752,13 @@ export type CourseScalarWhereInput = {
   isActive?: Prisma.BoolFilter<"Course"> | boolean
   priceOriginal?: Prisma.FloatFilter<"Course"> | number
   priceDiscounted?: Prisma.FloatFilter<"Course"> | number
+  requiredInitialDeposit?: Prisma.FloatFilter<"Course"> | number
   totalSessions?: Prisma.IntFilter<"Course"> | number
-  practicalSessions?: Prisma.IntFilter<"Course"> | number
+  sessionsBeforeFullPayment?: Prisma.IntFilter<"Course"> | number
   sessionDurationMinutes?: Prisma.IntFilter<"Course"> | number
   featuredReason?: Prisma.StringNullableFilter<"Course"> | string | null
   academyId?: Prisma.StringFilter<"Course"> | string
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string
 }
 
 export type CourseCreateWithoutSubscriptionsInput = {
@@ -755,14 +768,14 @@ export type CourseCreateWithoutSubscriptionsInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
-  courseFeatures?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
   academy: Prisma.AcademyCreateNestedOneWithoutCoursesInput
+  features?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutSubscriptionsInput = {
@@ -772,14 +785,14 @@ export type CourseUncheckedCreateWithoutSubscriptionsInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   academyId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
-  courseFeatures?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
+  features?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutSubscriptionsInput = {
@@ -805,14 +818,14 @@ export type CourseUpdateWithoutSubscriptionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseFeatures?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutCoursesNestedInput
+  features?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutSubscriptionsInput = {
@@ -822,97 +835,97 @@ export type CourseUncheckedUpdateWithoutSubscriptionsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseFeatures?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
+  features?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
 }
 
-export type CourseCreateWithoutCourseFeaturesInput = {
+export type CourseCreateWithoutFeaturesInput = {
   id?: string
   name: string
   description: string
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutCoursesInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCourseInput
 }
 
-export type CourseUncheckedCreateWithoutCourseFeaturesInput = {
+export type CourseUncheckedCreateWithoutFeaturesInput = {
   id?: string
   name: string
   description: string
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   academyId: string
   createdAt?: Date | string
-  updatedAt?: Date | string
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCourseInput
 }
 
-export type CourseCreateOrConnectWithoutCourseFeaturesInput = {
+export type CourseCreateOrConnectWithoutFeaturesInput = {
   where: Prisma.CourseWhereUniqueInput
-  create: Prisma.XOR<Prisma.CourseCreateWithoutCourseFeaturesInput, Prisma.CourseUncheckedCreateWithoutCourseFeaturesInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutFeaturesInput, Prisma.CourseUncheckedCreateWithoutFeaturesInput>
 }
 
-export type CourseUpsertWithoutCourseFeaturesInput = {
-  update: Prisma.XOR<Prisma.CourseUpdateWithoutCourseFeaturesInput, Prisma.CourseUncheckedUpdateWithoutCourseFeaturesInput>
-  create: Prisma.XOR<Prisma.CourseCreateWithoutCourseFeaturesInput, Prisma.CourseUncheckedCreateWithoutCourseFeaturesInput>
+export type CourseUpsertWithoutFeaturesInput = {
+  update: Prisma.XOR<Prisma.CourseUpdateWithoutFeaturesInput, Prisma.CourseUncheckedUpdateWithoutFeaturesInput>
+  create: Prisma.XOR<Prisma.CourseCreateWithoutFeaturesInput, Prisma.CourseUncheckedCreateWithoutFeaturesInput>
   where?: Prisma.CourseWhereInput
 }
 
-export type CourseUpdateToOneWithWhereWithoutCourseFeaturesInput = {
+export type CourseUpdateToOneWithWhereWithoutFeaturesInput = {
   where?: Prisma.CourseWhereInput
-  data: Prisma.XOR<Prisma.CourseUpdateWithoutCourseFeaturesInput, Prisma.CourseUncheckedUpdateWithoutCourseFeaturesInput>
+  data: Prisma.XOR<Prisma.CourseUpdateWithoutFeaturesInput, Prisma.CourseUncheckedUpdateWithoutFeaturesInput>
 }
 
-export type CourseUpdateWithoutCourseFeaturesInput = {
+export type CourseUpdateWithoutFeaturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutCoursesNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCourseNestedInput
 }
 
-export type CourseUncheckedUpdateWithoutCourseFeaturesInput = {
+export type CourseUncheckedUpdateWithoutFeaturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -923,12 +936,12 @@ export type CourseCreateManyAcademyInput = {
   isActive?: boolean
   priceOriginal: number
   priceDiscounted: number
+  requiredInitialDeposit: number
   totalSessions: number
-  practicalSessions: number
+  sessionsBeforeFullPayment: number
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type CourseUpdateWithoutAcademyInput = {
@@ -938,13 +951,13 @@ export type CourseUpdateWithoutAcademyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseFeatures?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
+  features?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCourseNestedInput
 }
 
@@ -955,13 +968,13 @@ export type CourseUncheckedUpdateWithoutAcademyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  courseFeatures?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
+  features?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -972,12 +985,12 @@ export type CourseUncheckedUpdateManyWithoutAcademyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   priceOriginal?: Prisma.FloatFieldUpdateOperationsInput | number
   priceDiscounted?: Prisma.FloatFieldUpdateOperationsInput | number
+  requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   totalSessions?: Prisma.IntFieldUpdateOperationsInput | number
-  practicalSessions?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -986,12 +999,12 @@ export type CourseUncheckedUpdateManyWithoutAcademyInput = {
  */
 
 export type CourseCountOutputType = {
-  courseFeatures: number
+  features: number
   subscriptions: number
 }
 
 export type CourseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  courseFeatures?: boolean | CourseCountOutputTypeCountCourseFeaturesArgs
+  features?: boolean | CourseCountOutputTypeCountFeaturesArgs
   subscriptions?: boolean | CourseCountOutputTypeCountSubscriptionsArgs
 }
 
@@ -1008,7 +1021,7 @@ export type CourseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * CourseCountOutputType without action
  */
-export type CourseCountOutputTypeCountCourseFeaturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type CourseCountOutputTypeCountFeaturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TrainingDetailsWhereInput
 }
 
@@ -1027,15 +1040,15 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   isActive?: boolean
   priceOriginal?: boolean
   priceDiscounted?: boolean
+  requiredInitialDeposit?: boolean
   totalSessions?: boolean
-  practicalSessions?: boolean
+  sessionsBeforeFullPayment?: boolean
   sessionDurationMinutes?: boolean
   featuredReason?: boolean
   academyId?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
-  courseFeatures?: boolean | Prisma.Course$courseFeaturesArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
+  features?: boolean | Prisma.Course$featuresArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Course$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
@@ -1047,13 +1060,13 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isActive?: boolean
   priceOriginal?: boolean
   priceDiscounted?: boolean
+  requiredInitialDeposit?: boolean
   totalSessions?: boolean
-  practicalSessions?: boolean
+  sessionsBeforeFullPayment?: boolean
   sessionDurationMinutes?: boolean
   featuredReason?: boolean
   academyId?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
 
@@ -1064,13 +1077,13 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isActive?: boolean
   priceOriginal?: boolean
   priceDiscounted?: boolean
+  requiredInitialDeposit?: boolean
   totalSessions?: boolean
-  practicalSessions?: boolean
+  sessionsBeforeFullPayment?: boolean
   sessionDurationMinutes?: boolean
   featuredReason?: boolean
   academyId?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["course"]>
 
@@ -1081,19 +1094,19 @@ export type CourseSelectScalar = {
   isActive?: boolean
   priceOriginal?: boolean
   priceDiscounted?: boolean
+  requiredInitialDeposit?: boolean
   totalSessions?: boolean
-  practicalSessions?: boolean
+  sessionsBeforeFullPayment?: boolean
   sessionDurationMinutes?: boolean
   featuredReason?: boolean
   academyId?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "isActive" | "priceOriginal" | "priceDiscounted" | "totalSessions" | "practicalSessions" | "sessionDurationMinutes" | "featuredReason" | "academyId" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "isActive" | "priceOriginal" | "priceDiscounted" | "requiredInitialDeposit" | "totalSessions" | "sessionsBeforeFullPayment" | "sessionDurationMinutes" | "featuredReason" | "academyId" | "createdAt", ExtArgs["result"]["course"]>
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  courseFeatures?: boolean | Prisma.Course$courseFeaturesArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
+  features?: boolean | Prisma.Course$featuresArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Course$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1107,8 +1120,8 @@ export type CourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Course"
   objects: {
-    courseFeatures: Prisma.$TrainingDetailsPayload<ExtArgs>[]
     academy: Prisma.$AcademyPayload<ExtArgs>
+    features: Prisma.$TrainingDetailsPayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1118,13 +1131,13 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     isActive: boolean
     priceOriginal: number
     priceDiscounted: number
+    requiredInitialDeposit: number
     totalSessions: number
-    practicalSessions: number
+    sessionsBeforeFullPayment: number
     sessionDurationMinutes: number
     featuredReason: string | null
     academyId: string
     createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["course"]>
   composites: {}
 }
@@ -1519,8 +1532,8 @@ readonly fields: CourseFieldRefs;
  */
 export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  courseFeatures<T extends Prisma.Course$courseFeaturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$courseFeaturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingDetailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  features<T extends Prisma.Course$featuresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$featuresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingDetailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Course$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1557,13 +1570,13 @@ export interface CourseFieldRefs {
   readonly isActive: Prisma.FieldRef<"Course", 'Boolean'>
   readonly priceOriginal: Prisma.FieldRef<"Course", 'Float'>
   readonly priceDiscounted: Prisma.FieldRef<"Course", 'Float'>
+  readonly requiredInitialDeposit: Prisma.FieldRef<"Course", 'Float'>
   readonly totalSessions: Prisma.FieldRef<"Course", 'Int'>
-  readonly practicalSessions: Prisma.FieldRef<"Course", 'Int'>
+  readonly sessionsBeforeFullPayment: Prisma.FieldRef<"Course", 'Int'>
   readonly sessionDurationMinutes: Prisma.FieldRef<"Course", 'Int'>
   readonly featuredReason: Prisma.FieldRef<"Course", 'String'>
   readonly academyId: Prisma.FieldRef<"Course", 'String'>
   readonly createdAt: Prisma.FieldRef<"Course", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"Course", 'DateTime'>
 }
     
 
@@ -1965,9 +1978,9 @@ export type CourseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Course.courseFeatures
+ * Course.features
  */
-export type Course$courseFeaturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Course$featuresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the TrainingDetails
    */

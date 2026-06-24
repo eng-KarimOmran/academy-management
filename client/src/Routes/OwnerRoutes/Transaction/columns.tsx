@@ -1,12 +1,11 @@
-import { BadgeDemo } from "@/components/CustomBadge/CustomBadge";
 import type { Header } from "@/components/Table/HeaderTable";
 import { Button } from "@/components/ui/button";
 import { enumTranslations } from "@/lib/enumTranslations";
 import { formatDate } from "@/lib/utils";
-import type { Payment } from "@/types/transaction";
+import type { LedgerTransaction } from "@/types/ledgerTransaction";
 import { RiImageLine } from "@remixicon/react";
 
-export const columns: Header<Payment>[] = [
+export const columns: Header<LedgerTransaction>[] = [
   {
     key: "amount",
     header: "المبلغ",
@@ -16,89 +15,77 @@ export const columns: Header<Payment>[] = [
       </div>
     ),
   },
+
   {
-    key: "subscription",
-    header: "العميل",
+    key: "senderType",
+    header: "المرسل",
     display: (data) => (
       <div className="flex flex-col">
-        <span className="font-semibold text-[14px]">{data.client.name}</span>
-        <span className="text-xs text-muted-foreground font-mono" dir="ltr">
-          {data.client.phone}
-        </span>
+        <span>{enumTranslations[data.senderType] ?? data.senderType}</span>
+        <span className="text-xs text-muted-foreground">{data.senderId}</span>
       </div>
     ),
   },
 
   {
-    key: "receiver",
+    key: "receiverType",
     header: "المستلم",
     display: (data) => (
       <div className="flex flex-col">
-        <span className="font-medium text-[14px]">{data.receiver.name}</span>
-        <span className="text-[11px] text-muted-foreground">
-          {data.receiver.phone}
-        </span>
+        <span>{enumTranslations[data.receiverType] ?? data.receiverType}</span>
+        <span className="text-xs text-muted-foreground">{data.receiverId}</span>
       </div>
     ),
   },
+
   {
-    key: "type",
-    header: "النوع",
+    key: "transactionType",
+    header: "نوع العملية",
     display: (data) => (
-      <BadgeDemo type={data.type} text={enumTranslations[data.type]} />
+      <div>
+        {enumTranslations[data.transactionType] ?? data.transactionType}
+      </div>
     ),
   },
+
   {
     key: "paymentMethod",
     header: "طريقة الدفع",
     display: (data) => (
       <div className="text-sm font-medium text-muted-foreground">
-        {enumTranslations[data.paymentMethod]}
+        {enumTranslations[data.paymentMethod] ?? data.paymentMethod}
       </div>
     ),
   },
+
   {
     key: "proofOfPaymentImage",
-    header: "اثبات الدفع",
-    display: (data) => {
-      console.log(data.proofOfPaymentImage);
-      return (
-        <div className="text-sm font-medium text-muted-foreground">
-          {data.proofOfPaymentImage ? (
-            <Button asChild>
-              <a
-                href={data.proofOfPaymentImage.imageUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <RiImageLine className="text-base" />
-                عرض إثبات الدفع
-              </a>
-            </Button>
-          ) : (
-            "لا يوجد"
-          )}
-        </div>
-      );
-    },
+    header: "إثبات الدفع",
+    display: (data) =>
+      data.proofOfPaymentImage ? (
+        <Button asChild size="sm" variant="outline">
+          <a
+            href={data.proofOfPaymentImage.imageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2"
+          >
+            <RiImageLine size={16} />
+            عرض
+          </a>
+        </Button>
+      ) : (
+        <span className="text-muted-foreground">لا يوجد</span>
+      ),
   },
-  {
-    key: "status",
-    header: "الحالة",
-    display: (data) => (
-      <BadgeDemo type={data.status} text={enumTranslations[data.status]} />
-    ),
-  },
+
   {
     key: "createdAt",
     header: "التاريخ",
     display: (data) => (
-      <div className="text-xs flex flex-col items-start gap-1">
-        <span className="font-medium text-foreground">
-          {formatDate(data.createdAt, "datetime")}
-        </span>
-      </div>
+      <span className="whitespace-nowrap">
+        {formatDate(data.createdAt, "datetime")}
+      </span>
     ),
   },
 ];
