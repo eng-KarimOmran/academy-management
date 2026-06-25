@@ -44,6 +44,7 @@ export interface IAuthService {
   createFirstUser(data: {
     name: string;
     phone: string;
+    email?: string
   }): Promise<{
     id: string;
     phone: string;

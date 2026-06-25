@@ -61,3 +61,12 @@ export type AddOwnerDto = {
 export type DeleteOwnerDto = {
   params: z.infer<typeof AcademySchema.owner.delete.params>;
 };
+
+export type AddPaymentLinkDto = {
+  params: z.infer<typeof AcademySchema.paymentLink.add.params>;
+  body: z.infer<typeof AcademySchema.paymentLink.add.body>;
+};
+
+export type DeletePaymentLinkDto = {
+  params: z.infer<typeof AcademySchema.paymentLink.delete.params>;
+};

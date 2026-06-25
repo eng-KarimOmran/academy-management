@@ -27,5 +27,6 @@ export const createFirstUserSchema = {
   body: z.object({
     name: personName,
     phone,
+    email: z.email().optional()
   }),
 };

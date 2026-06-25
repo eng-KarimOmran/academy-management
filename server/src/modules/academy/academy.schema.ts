@@ -130,4 +130,22 @@ export const AcademySchema = {
       }),
     },
   },
+  paymentLink: {
+    add: {
+      params: z.object({
+        academyId: id,
+      }),
+      body: z.object({
+        url: url,
+        walletProvider: z.string(),
+        phone: phone.optional()
+      }),
+    },
+    delete: {
+      params: z.object({
+        academyId: id,
+        paymentLinkId: id,
+      }),
+    }
+  }
 };

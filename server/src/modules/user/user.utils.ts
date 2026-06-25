@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
-import { User, UserRole } from "../../../prisma/generated/client";
+import { User } from "../../../prisma/generated/client";
 import ApiError from "../../shared/utils/ApiError";
 import { UserOrderByWithRelationInput, UserWhereInput } from "../../../prisma/generated/models";
+import { omit } from "../../shared/utils/omit";
 
 export const assertCanModifyUser = ({
   currentUser,
@@ -11,8 +12,6 @@ export const assertCanModifyUser = ({
   targetUser: User;
 }) => {
   if (currentUser.id === targetUser.id) return;
-
-  if (currentUser.userRole !== "ADMIN") throw ApiError.Forbidden()
 
   const currentIsNewer = dayjs(currentUser.createdAt).isAfter(dayjs(targetUser.createdAt));
 
@@ -24,11 +23,11 @@ export const assertCanModifyUser = ({
 export const buildUserWhere = ({
   search,
   isActive,
-  userRole
+  isAdmin
 }: {
   search?: string;
   isActive?: boolean;
-  userRole?: UserRole
+  isAdmin?: boolean
 }): UserWhereInput => {
   const where: UserWhereInput = {};
 
@@ -39,15 +38,17 @@ export const buildUserWhere = ({
     ];
   }
 
-  if (typeof isActive !== "undefined") {
+  if (typeof isActive === "boolean") {
     where.isActive = isActive;
   }
 
-  if (userRole) {
-    where.userRole = userRole
+  if (typeof isAdmin === "boolean") {
+    where.isAdmin = isAdmin
   }
 
   return where;
 };
 
-export const orderBy: UserOrderByWithRelationInput = { createdAt: "desc" } 
+export const orderBy: UserOrderByWithRelationInput = { createdAt: "desc" }
+
+export const userSafe = (user: User) => omit(user, ["password", "logoutAt"])

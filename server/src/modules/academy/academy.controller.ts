@@ -1,12 +1,10 @@
-import { Response } from "express";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./academy.dto";
 import AcademyService from "./academy.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestAcademy } from "./academy.middleware";
+import { IAcademyController } from "./academy.type";
 
-const AcademyController = {
-  createAcademy: async (req: RequestAuth, res: Response) => {
+const AcademyController: IAcademyController = {
+  create: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CreateAcademyDto;
     const academy = await AcademyService.create(dataSafe);
 
@@ -18,9 +16,19 @@ const AcademyController = {
     });
   },
 
-  updateAcademy: async (req: RequestAcademy, res: Response) => {
+  myAcademics: async (req, res) => {
+    const userId = req.userLogin!.id;
+    const data = await AcademyService.myAcademics({ userId });
+
+    return sendSuccess({
+      res,
+      data,
+    });
+  },
+
+  update: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.UpdateAcademyDto;
-    const updatedAcademy = await AcademyService.update(dataSafe, req.academy);
+    const updatedAcademy = await AcademyService.update(dataSafe);
 
     return sendSuccess({
       res,
@@ -29,9 +37,9 @@ const AcademyController = {
     });
   },
 
-  deleteAcademy: async (req: RequestAcademy, res: Response) => {
+  delete: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.DeleteAcademyDto;
-    await AcademyService.delete(dataSafe, req.academy);
+    await AcademyService.delete(dataSafe);
 
     return sendSuccess({
       res,
@@ -39,23 +47,23 @@ const AcademyController = {
     });
   },
 
-  getAllAcademy: async (req: RequestAcademy, res: Response) => {
+  getAll: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetAllAcademiesDto;
     const data = await AcademyService.getAll(dataSafe);
 
     return sendSuccess({ res, data });
   },
 
-  getDetailsAcademy: async (req: RequestAcademy, res: Response) => {
+  getDetails: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetAcademyDetailsDto;
-    const academy = await AcademyService.getDetails(dataSafe, req.academy);
+    const academy = await AcademyService.getDetails(dataSafe);
 
     return sendSuccess({ res, data: academy });
   },
 
-  addOwnerAcademy: async (req: RequestAcademy, res: Response) => {
+  addOwner: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.AddOwnerDto;
-    const data = await AcademyService.addOwner(dataSafe, req.academy);
+    const data = await AcademyService.addOwner(dataSafe);
 
     return sendSuccess({
       res,
@@ -65,9 +73,9 @@ const AcademyController = {
     });
   },
 
-  deleteOwnerAcademy: async (req: RequestAcademy, res: Response) => {
+  deleteOwner: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.DeleteOwnerDto;
-    const data = await AcademyService.deleteOwner(dataSafe, req.academy);
+    const data = await AcademyService.deleteOwner(dataSafe);
 
     return sendSuccess({
       res,
@@ -76,9 +84,9 @@ const AcademyController = {
     });
   },
 
-  addSocialMediaAcademy: async (req: RequestAcademy, res: Response) => {
+  addSocialMedia: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.AddSocialMediaDto;
-    const data = await AcademyService.addSocialMedia(dataSafe, req.academy);
+    const data = await AcademyService.addSocialMedia(dataSafe);
 
     return sendSuccess({
       res,
@@ -88,10 +96,10 @@ const AcademyController = {
     });
   },
 
-  deleteSocialMediaAcademy: async (req: RequestAcademy, res: Response) => {
+  deleteSocialMedia: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.DeleteSocialMediaDto;
 
-    const data = await AcademyService.deleteSocialMedia(dataSafe, req.academy);
+    const data = await AcademyService.deleteSocialMedia(dataSafe);
 
     return sendSuccess({
       res,
@@ -100,13 +108,72 @@ const AcademyController = {
     });
   },
 
-  getMyAcademics: async (req: RequestAuth, res: Response) => {
-    const userId = req.userLogin!.id;
-    const data = await AcademyService.myAcademics({ userId });
+  addPhone: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.AddPhoneDto
+
+    const data = await AcademyService.addPhone(dataSafe);
 
     return sendSuccess({
       res,
       data,
+      message: "تم اضافة رقم الهاتف بنجاح",
+    });
+  },
+
+  deletePhone: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.DeletePhoneDto
+
+    const data = await AcademyService.deletePhone(dataSafe);
+
+    return sendSuccess({
+      res,
+      data,
+      message: "تم حذف رقم الهاتف بنجاح",
+    });
+  },
+
+  addAddress: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.AddAddressDto
+
+    const data = await AcademyService.addAddress(dataSafe);
+
+    return sendSuccess({
+      res,
+      data,
+      message: "تم اضافة العنوان بنجاح",
+    });
+  },
+  deleteAddress: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.DeleteAddressDto;
+
+    const data = await AcademyService.deleteAddress(dataSafe);
+
+    return sendSuccess({
+      res,
+      data,
+      message: "تم حذف العنوان بنجاح",
+    });
+  },
+  addPaymentLink: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.AddPaymentLinkDto;
+
+    const data = await AcademyService.addPaymentLink(dataSafe);
+
+    return sendSuccess({
+      res,
+      data,
+      message: "تم اضافة رابط الدفع بنجاح",
+    });
+  },
+  deletePaymentLink: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.DeletePaymentLinkDto;
+
+    const data = await AcademyService.deletePaymentLink(dataSafe);
+
+    return sendSuccess({
+      res,
+      data,
+      message: "تم حذف رابط الدفع بنجاح",
     });
   },
 };

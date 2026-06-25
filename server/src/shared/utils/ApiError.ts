@@ -24,6 +24,11 @@ const NOT_FOUND_MESSAGES = {
   PaymentLink: "رابط الدفع غير موجود",
   Person: "الشخص غير موجود",
   PersonPhone: "هاتف الشخص غير موجود",
+  AcademyPhone: "رقم الأكاديمية غير موجود",
+
+  AcademyAddress: "عنوان الأكاديمية غير موجود",
+  AcademyPaymentLink: "رابط الدفع غير موجود",
+  PATH_NOT_FOUND: "المسار غير موجود"
 } as const;
 
 export const CONFLICT_MESSAGES = {

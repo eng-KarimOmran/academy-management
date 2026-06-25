@@ -26,14 +26,14 @@ export type AggregateSocialMedia = {
 
 export type SocialMediaMinAggregateOutputType = {
   id: string | null
-  platform: string | null
+  platform: $Enums.Platform | null
   url: string | null
   academyId: string | null
 }
 
 export type SocialMediaMaxAggregateOutputType = {
   id: string | null
-  platform: string | null
+  platform: $Enums.Platform | null
   url: string | null
   academyId: string | null
 }
@@ -143,7 +143,7 @@ export type SocialMediaGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type SocialMediaGroupByOutputType = {
   id: string
-  platform: string
+  platform: $Enums.Platform
   url: string
   academyId: string
   _count: SocialMediaCountAggregateOutputType | null
@@ -171,7 +171,7 @@ export type SocialMediaWhereInput = {
   OR?: Prisma.SocialMediaWhereInput[]
   NOT?: Prisma.SocialMediaWhereInput | Prisma.SocialMediaWhereInput[]
   id?: Prisma.StringFilter<"SocialMedia"> | string
-  platform?: Prisma.StringFilter<"SocialMedia"> | string
+  platform?: Prisma.EnumPlatformFilter<"SocialMedia"> | $Enums.Platform
   url?: Prisma.StringFilter<"SocialMedia"> | string
   academyId?: Prisma.StringFilter<"SocialMedia"> | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
@@ -190,7 +190,7 @@ export type SocialMediaWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SocialMediaWhereInput | Prisma.SocialMediaWhereInput[]
   OR?: Prisma.SocialMediaWhereInput[]
   NOT?: Prisma.SocialMediaWhereInput | Prisma.SocialMediaWhereInput[]
-  platform?: Prisma.StringFilter<"SocialMedia"> | string
+  platform?: Prisma.EnumPlatformFilter<"SocialMedia"> | $Enums.Platform
   url?: Prisma.StringFilter<"SocialMedia"> | string
   academyId?: Prisma.StringFilter<"SocialMedia"> | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
@@ -211,55 +211,55 @@ export type SocialMediaScalarWhereWithAggregatesInput = {
   OR?: Prisma.SocialMediaScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SocialMediaScalarWhereWithAggregatesInput | Prisma.SocialMediaScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"SocialMedia"> | string
-  platform?: Prisma.StringWithAggregatesFilter<"SocialMedia"> | string
+  platform?: Prisma.EnumPlatformWithAggregatesFilter<"SocialMedia"> | $Enums.Platform
   url?: Prisma.StringWithAggregatesFilter<"SocialMedia"> | string
   academyId?: Prisma.StringWithAggregatesFilter<"SocialMedia"> | string
 }
 
 export type SocialMediaCreateInput = {
   id?: string
-  platform: string
+  platform: $Enums.Platform
   url: string
   academy: Prisma.AcademyCreateNestedOneWithoutSocialMediaInput
 }
 
 export type SocialMediaUncheckedCreateInput = {
   id?: string
-  platform: string
+  platform: $Enums.Platform
   url: string
   academyId: string
 }
 
 export type SocialMediaUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSocialMediaNestedInput
 }
 
 export type SocialMediaUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SocialMediaCreateManyInput = {
   id?: string
-  platform: string
+  platform: $Enums.Platform
   url: string
   academyId: string
 }
 
 export type SocialMediaUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SocialMediaUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -293,6 +293,10 @@ export type SocialMediaListRelationFilter = {
 
 export type SocialMediaOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type EnumPlatformFieldUpdateOperationsInput = {
+  set?: $Enums.Platform
 }
 
 export type SocialMediaCreateNestedManyWithoutAcademyInput = {
@@ -339,13 +343,13 @@ export type SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput = {
 
 export type SocialMediaCreateWithoutAcademyInput = {
   id?: string
-  platform: string
+  platform: $Enums.Platform
   url: string
 }
 
 export type SocialMediaUncheckedCreateWithoutAcademyInput = {
   id?: string
-  platform: string
+  platform: $Enums.Platform
   url: string
 }
 
@@ -380,32 +384,32 @@ export type SocialMediaScalarWhereInput = {
   OR?: Prisma.SocialMediaScalarWhereInput[]
   NOT?: Prisma.SocialMediaScalarWhereInput | Prisma.SocialMediaScalarWhereInput[]
   id?: Prisma.StringFilter<"SocialMedia"> | string
-  platform?: Prisma.StringFilter<"SocialMedia"> | string
+  platform?: Prisma.EnumPlatformFilter<"SocialMedia"> | $Enums.Platform
   url?: Prisma.StringFilter<"SocialMedia"> | string
   academyId?: Prisma.StringFilter<"SocialMedia"> | string
 }
 
 export type SocialMediaCreateManyAcademyInput = {
   id?: string
-  platform: string
+  platform: $Enums.Platform
   url: string
 }
 
 export type SocialMediaUpdateWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SocialMediaUncheckedUpdateWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type SocialMediaUncheckedUpdateManyWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  platform?: Prisma.StringFieldUpdateOperationsInput | string
+  platform?: Prisma.EnumPlatformFieldUpdateOperationsInput | $Enums.Platform
   url?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -460,7 +464,7 @@ export type $SocialMediaPayload<ExtArgs extends runtime.Types.Extensions.Interna
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    platform: string
+    platform: $Enums.Platform
     url: string
     academyId: string
   }, ExtArgs["result"]["socialMedia"]>
@@ -888,7 +892,7 @@ export interface Prisma__SocialMediaClient<T, Null = never, ExtArgs extends runt
  */
 export interface SocialMediaFieldRefs {
   readonly id: Prisma.FieldRef<"SocialMedia", 'String'>
-  readonly platform: Prisma.FieldRef<"SocialMedia", 'String'>
+  readonly platform: Prisma.FieldRef<"SocialMedia", 'Platform'>
   readonly url: Prisma.FieldRef<"SocialMedia", 'String'>
   readonly academyId: Prisma.FieldRef<"SocialMedia", 'String'>
 }

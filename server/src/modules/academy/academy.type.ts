@@ -1,45 +1,92 @@
 import { PaginatedResponse } from './../../shared/types/types';
-import { AcademyGetPayload, TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
+import { AcademyGetPayload, AcademyInclude, TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import * as DTO from "./academy.dto";
-import { Academy } from '../../../prisma/generated/client';
+import { Academy, User } from '../../../prisma/generated/client';
+import { RequestAuth } from '../auth/auth.type';
+import { Response, NextFunction } from 'express';
+
+type SafeUser = Omit<User, "password" | "logoutAt">;
+
 
 export type AcademyWithFullRelations =
     AcademyGetPayload<{
         include: {
-            owners: true;
-            phones: true;
-            addresses: true;
-            paymentLinks: true;
-            socialMedia: true;
+            academyPhones: true,
+            addresses: true,
+            owners: true,
+            paymentLinks: true,
+            socialMedia: true,
         };
     }>;
+
+export type AcademyWithSafeRelations = Omit<AcademyWithFullRelations, "owners"> & { owners: SafeUser[] };
+
+export interface RequestAcademy extends RequestAuth {
+    academy?: Academy;
+}
 
 export interface IAcademyService {
     create: (data: DTO.CreateAcademyDto) => Promise<Academy>;
 
-    update: (data: DTO.UpdateAcademyDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    update: (data: DTO.UpdateAcademyDto) => Promise<Academy>;
 
-    delete: (data: DTO.DeleteAcademyDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    delete: (data: DTO.DeleteAcademyDto) => Promise<Academy>;
 
-    addOwner: (data: DTO.AddOwnerDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    addOwner: (data: DTO.AddOwnerDto) => Promise<Omit<AcademyGetPayload<{ include: { owners: true } }>, "owners"> & { owners: SafeUser[] }>;
 
-    deleteOwner: (data: DTO.DeleteOwnerDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    deleteOwner: (data: DTO.DeleteOwnerDto) => Promise<Omit<AcademyGetPayload<{ include: { owners: true } }>, "owners"> & { owners: SafeUser[] }>;
 
-    addSocialMedia: (data: DTO.AddSocialMediaDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    addSocialMedia: (data: DTO.AddSocialMediaDto) => Promise<AcademyGetPayload<{ include: { socialMedia: true } }>>;
 
-    deleteSocialMedia: (data: DTO.DeleteSocialMediaDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    deleteSocialMedia: (data: DTO.DeleteSocialMediaDto) => Promise<AcademyGetPayload<{ include: { socialMedia: true } }>>;
 
-    addPhone: (data: DTO.AddPhoneDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    addPhone: (data: DTO.AddPhoneDto) => Promise<AcademyGetPayload<{ include: { academyPhones: true } }>>;
 
-    deletePhone: (data: DTO.DeletePhoneDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    deletePhone: (data: DTO.DeletePhoneDto) => Promise<AcademyGetPayload<{ include: { academyPhones: true } }>>;
 
-    addAddress: (data: DTO.AddAddressDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    addAddress: (data: DTO.AddAddressDto) => Promise<AcademyGetPayload<{ include: { addresses: true } }>>;
 
-    deleteAddress: (data: DTO.DeleteAddressDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    deleteAddress: (data: DTO.DeleteAddressDto) => Promise<AcademyGetPayload<{ include: { addresses: true } }>>;
 
-    getDetails: (data: DTO.GetAcademyDetailsDto, academy?: AcademyWithFullRelations) => Promise<Academy>;
+    getDetails: (academy: DTO.GetAcademyDetailsDto) => Promise<AcademyWithSafeRelations>
 
     getAll: (data: DTO.GetAllAcademiesDto) => Promise<PaginatedResponse<Academy>>;
 
     myAcademics: (data: { userId: string; tx?: TransactionClient }) => Promise<Academy[]>;
+
+    deletePaymentLink: (data: DTO.DeletePaymentLinkDto) => Promise<AcademyGetPayload<{ include: { paymentLinks: true } }>>;
+
+    addPaymentLink: (data: DTO.AddPaymentLinkDto) => Promise<AcademyGetPayload<{ include: { paymentLinks: true } }>>;
+}
+
+
+export type AcademyControllerMethod<T> = (
+    req: T,
+    res: Response,
+    next: NextFunction
+) => Promise<Response>
+
+export interface IAcademyController {
+    create: AcademyControllerMethod<RequestAuth>
+    update: AcademyControllerMethod<RequestAcademy>
+    delete: AcademyControllerMethod<RequestAcademy>
+
+    addOwner: AcademyControllerMethod<RequestAcademy>
+    deleteOwner: AcademyControllerMethod<RequestAcademy>
+
+    addSocialMedia: AcademyControllerMethod<RequestAcademy>
+    deleteSocialMedia: AcademyControllerMethod<RequestAcademy>
+
+    addPhone: AcademyControllerMethod<RequestAcademy>
+    deletePhone: AcademyControllerMethod<RequestAcademy>
+
+    addAddress: AcademyControllerMethod<RequestAcademy>
+    deleteAddress: AcademyControllerMethod<RequestAcademy>
+
+    getDetails: AcademyControllerMethod<RequestAcademy>
+    getAll: AcademyControllerMethod<RequestAcademy>
+    myAcademics: AcademyControllerMethod<RequestAuth>
+
+    addPaymentLink: AcademyControllerMethod<RequestAcademy>
+    deletePaymentLink: AcademyControllerMethod<RequestAcademy>
 }

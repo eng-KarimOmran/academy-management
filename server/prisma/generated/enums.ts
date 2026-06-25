@@ -9,6 +9,20 @@
 * 🟢 You can import this file directly.
 */
 
+export const Platform = {
+  FACEBOOK: 'FACEBOOK',
+  TIKTOK: 'TIKTOK',
+  INSTAGRAM: 'INSTAGRAM',
+  TWITTER: 'TWITTER',
+  YOUTUBE: 'YOUTUBE',
+  LINKEDIN: 'LINKEDIN',
+  SNAPCHAT: 'SNAPCHAT',
+  WHATSAPP: 'WHATSAPP'
+} as const
+
+export type Platform = (typeof Platform)[keyof typeof Platform]
+
+
 export const ClientSource = {
   PLATFORM: 'PLATFORM',
   OFFICE: 'OFFICE'
@@ -44,14 +58,6 @@ export const JobProfileType = {
 } as const
 
 export type JobProfileType = (typeof JobProfileType)[keyof typeof JobProfileType]
-
-
-export const UserRole = {
-  USER: 'USER',
-  ADMIN: 'ADMIN'
-} as const
-
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const SupportType = {

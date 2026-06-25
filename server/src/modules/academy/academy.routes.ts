@@ -1,101 +1,169 @@
 import { Router } from "express";
 import validation from "../../shared/middlewares/validation.middleware";
-import checkRole from "../../shared/middlewares/role.middleware";
 import AcademyController from "./academy.controller";
 import { checkAcademyExists } from "./academy.middleware";
-
-import routerCourse from "../course/course.routes";
-import routerClient from "../client/client.routes";
-import routerSubscription from "../subscription/subscription.routes";
-import routerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
-import routerLesson from "../lesson/lesson.routes";
-import routerStatistics from "../dashboard/dashboard.routes";
-import routerCaptain from "../captain/captain.routes";
-import routerSecretary from "../secretary/secretary.routes";
-import routerAccount from "../account/account.routes";
 import { AcademySchema } from "./academy.Schema";
+import { isAdmin } from './../user/user.middleware';
+
+// import routerCourse from "../course/course.routes";
+// import routerClient from "../client/client.routes";
+// import routerSubscription from "../subscription/subscription.routes";
+// import routerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
+// import routerLesson from "../lesson/lesson.routes";
+// import routerStatistics from "../dashboard/dashboard.routes";
+// import routerCaptain from "../captain/captain.routes";
+// import routerSecretary from "../secretary/secretary.routes";
+// import routerAccount from "../account/account.routes";
+// import routerArea from "../area/area.routes";
+// import routerCar from "../car/car.routes";
 
 const router = Router();
 
+// =======================
+// General Academy Routes
+// =======================
 router.get(
   "/",
   validation(AcademySchema.getAll),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  AcademyController.getAllAcademy
+  AcademyController.getAll
 );
 
 router.get(
   "/my-academics",
-  checkRole(["OWNER"]),
-  AcademyController.getMyAcademics
+  AcademyController.myAcademics
 );
 
 router.post(
   "/",
   validation(AcademySchema.create),
-  checkRole(["OWNER"]),
-  AcademyController.createAcademy
+  isAdmin,
+  AcademyController.create
 );
 
-router.use("/:academyId", checkAcademyExists());
-
+// =======================
+// Owners Routes
+// =======================
 router.post(
   "/:academyId/owner/:userId",
   validation(AcademySchema.owner.add),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.addOwnerAcademy
+  AcademyController.addOwner
 );
 
 router.delete(
   "/:academyId/owner/:userId",
   validation(AcademySchema.owner.delete),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.deleteOwnerAcademy
+  AcademyController.deleteOwner
 );
 
+// =======================
+// Social Media Routes
+// =======================
 router.post(
   "/:academyId/social-media",
   validation(AcademySchema.socialMedia.add),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.addSocialMediaAcademy
+  AcademyController.addSocialMedia
 );
 
 router.delete(
   "/:academyId/social-media/:socialMediaId",
   validation(AcademySchema.socialMedia.delete),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.deleteSocialMediaAcademy
+  AcademyController.deleteSocialMedia
 );
 
+// =======================
+// Phone Routes
+// =======================
+router.post(
+  "/:academyId/phone",
+  validation(AcademySchema.phone.add),
+  checkAcademyExists({ isAcademyOwner: true }),
+  AcademyController.addPhone
+);
+
+router.delete(
+  "/:academyId/phone/:phoneId",
+  validation(AcademySchema.phone.delete),
+  checkAcademyExists({ isAcademyOwner: true }),
+  AcademyController.deletePhone
+);
+
+// =======================
+// Address Routes 
+// =======================
+router.post(
+  "/:academyId/address",
+  validation(AcademySchema.address.add),
+  checkAcademyExists({ isAcademyOwner: true }),
+  AcademyController.addAddress
+);
+
+router.delete(
+  "/:academyId/address/:addressId",
+  validation(AcademySchema.address.delete),
+  checkAcademyExists({ isAcademyOwner: true }),
+  AcademyController.deleteAddress
+);
+
+// =======================
+// Payment Link Routes
+// =======================
+router.post(
+  "/:academyId/payment-link",
+  validation(AcademySchema.paymentLink.add),
+  checkAcademyExists({ isAcademyOwner: true }),
+  AcademyController.addPaymentLink
+);
+
+router.delete(
+  "/:academyId/payment-link/:paymentLinkId",
+  validation(AcademySchema.paymentLink.delete),
+  checkAcademyExists({ isAcademyOwner: true }),
+  AcademyController.deletePaymentLink
+);
+
+// =======================
+// Academy Core By ID
+// =======================
 router.get(
   "/:academyId",
   validation(AcademySchema.get),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.getDetailsAcademy
+  AcademyController.getDetails
 );
 
 router.patch(
   "/:academyId",
   validation(AcademySchema.update),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.updateAcademy
+  AcademyController.update
 );
 
 router.delete(
   "/:academyId",
   validation(AcademySchema.delete),
   checkAcademyExists({ isAcademyOwner: true }),
-  AcademyController.deleteAcademy
+  AcademyController.delete
 );
 
-router.use("/:academyId/clients", routerClient);
-router.use("/:academyId/courses", routerCourse);
-router.use("/:academyId/subscriptions", routerSubscription);
-router.use("/:academyId/transactions", routerTransactions);
-router.use("/:academyId/lessons", routerLesson);
-router.use("/:academyId/statistics", routerStatistics);
-router.use("/:academyId/captains", routerCaptain);
-router.use("/:academyId/secretaries", routerSecretary);
-router.use("/:academyId/accounts", routerAccount);
+// =======================
+// Nested Routes Sub-router
+// =======================
+router.use("/:academyId", checkAcademyExists());
+
+// router.use("/:academyId/clients", routerClient);
+// router.use("/:academyId/courses", routerCourse);
+// router.use("/:academyId/subscriptions", routerSubscription);
+// router.use("/:academyId/transactions", routerTransactions);
+// router.use("/:academyId/lessons", routerLesson);
+// router.use("/:academyId/statistics", routerStatistics);
+// router.use("/:academyId/captains", routerCaptain);
+// router.use("/:academyId/secretaries", routerSecretary);
+// router.use("/:academyId/accounts", routerAccount);
+// router.use("/:academyId/cars", routerCar);
+// router.use("/:academyId/areas", routerArea);
 
 export default router;

@@ -139,6 +139,7 @@ export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeo
 export const PaymentLinkScalarFieldEnum = {
   id: 'id',
   url: 'url',
+  phone: 'phone',
   walletProvider: 'walletProvider',
   academyId: 'academyId'
 } as const
@@ -158,6 +159,7 @@ export type SocialMediaScalarFieldEnum = (typeof SocialMediaScalarFieldEnum)[key
 
 export const AcademyScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   createdAt: 'createdAt'
 } as const
 
@@ -248,7 +250,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   logoutAt: 'logoutAt',
   isPasswordChanged: 'isPasswordChanged',
-  userRole: 'userRole',
+  isAdmin: 'isAdmin',
   createdAt: 'createdAt'
 } as const
 

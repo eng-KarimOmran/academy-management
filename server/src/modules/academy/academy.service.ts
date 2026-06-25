@@ -1,4 +1,4 @@
-import { buildAcademyWhere, getAcademyOrThrow } from "./academy.utils";
+import { buildAcademyWhere, sanitizeAcademy } from "./academy.utils";
 
 import {
   AcademyCreateInput,
@@ -8,65 +8,82 @@ import {
 import ApiError from "../../shared/utils/ApiError";
 import { prisma } from "../../lib/prisma";
 import { IAcademyService } from "./academy.type";
-import AcademyRepository from "./academy.repository";
-import UserRepository from "../user/user.repository";
+
 import {
   buildPagination,
   buildPaginationMeta,
 } from "../../shared/utils/Pagination";
+import getClient from "../../shared/utils/getClient";
+import { omit } from "../../shared/utils/omit";
+import { userSafe } from "../user/user.utils";
 
 const AcademyService: IAcademyService = {
   async create({ body }) {
     const { name, userId, phone } = body;
 
     return prisma.$transaction(async (tx) => {
-      const [academyByName, academyByPhone, user] = await Promise.all([
-        AcademyRepository.findByName(name, tx),
-        AcademyRepository.findByPhone(phone, tx),
-        UserRepository.findById(userId, tx),
+      const [academyEx, user] = await Promise.all([
+        tx.academy.findFirst({
+          where: {
+            OR: [
+              { name },
+              { academyPhones: { some: { phone } } },
+            ],
+          },
+          include: { academyPhones: true },
+        }),
+        tx.user.findUnique({ where: { id: userId } }),
       ]);
 
-      if (academyByName) throw ApiError.Conflict("Name");
-      if (academyByPhone) throw ApiError.Conflict("Phone");
       if (!user) throw ApiError.NotFound("User");
+      if (academyEx?.name === name) throw ApiError.Conflict("NAME_ALREADY_EXISTS");
+      if (academyEx?.academyPhones.some((p) => p.phone === phone)) throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
 
       const data: AcademyCreateInput = {
         name,
-        phones: { create: { phone } },
+        academyPhones: { create: { phone } },
         owners: { connect: { id: userId } },
+        financialAccount: { create: {} },
       };
 
-      const newAcademy = await AcademyRepository.create(data, tx);
-      await UserRepository.recalculateUserRole(userId, tx);
-
-      return newAcademy
+      return tx.academy.create({ data });
     });
   },
 
-  async update({ body, params }, academy) {
-    const { academyId } = params;
+  async update({ body, params }) {
     const { name } = body;
+    const { academyId } = params;
 
     return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+      const academy = await tx.academy.findUnique({ where: { id: academyId } });
 
-      if (academyEx.name === name) return academyEx;
+      if (!academy) throw ApiError.NotFound("Academy");
 
-      const nameExists = await AcademyRepository.findByName(name, tx);
-      if (nameExists) throw ApiError.Conflict("Name");
+      if (academy.name === name) return academy;
+
+      const nameExists = await tx.academy.findUnique({ where: { name } });
+      if (nameExists) throw ApiError.Conflict("NAME_ALREADY_EXISTS");
 
       const data: AcademyUpdateInput = { name };
 
-      return AcademyRepository.update(academyId, data, tx);
+      return tx.academy.update({
+        where: { id: academyId },
+        data,
+      });
     });
   },
 
-  async delete({ params }, academy) {
+  async delete({ params }) {
     const { academyId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      await getAcademyOrThrow(academyId, tx, academy);
-      return AcademyRepository.delete(academyId, tx);
+    const academyExists = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { id: true }
+    });
+    if (!academyExists) throw ApiError.NotFound("Academy");
+
+    return await prisma.academy.delete({
+      where: { id: academyId },
     });
   },
 
@@ -76,184 +93,247 @@ const AcademyService: IAcademyService = {
     const where = buildAcademyWhere({ search });
     const { take, skip } = buildPagination({ page, limit });
 
-    const { academies, count } = await prisma.$transaction(async (tx) => {
-      const [list, total] = await Promise.all([
-        AcademyRepository.findAll({ where, take, skip }, tx),
-        AcademyRepository.count(where, tx),
-      ]);
-
-      return { academies: list, count: total };
-    });
+    const [academies, count] = await prisma.$transaction([
+      prisma.academy.findMany({ where, take, skip }),
+      prisma.academy.count({ where }),
+    ]);
 
     const pagination = buildPaginationMeta({ limit, count, page });
 
     return { items: academies, pagination };
   },
 
-  async getDetails({ params }, academy) {
+  async getDetails({ params }) {
     const { academyId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      return getAcademyOrThrow(academyId, tx, academy);
-    });
-  },
-
-  async addAddress({ body, params }, academy) {
-    const { academyId } = params;
-    const { address } = body;
-
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
-
-      const exists = academyEx.addresses.some((a) => a.address === address);
-
-      if (exists) {
-        throw ApiError.Conflict("Address");
+    const academy = await prisma.academy.findUnique({
+      where: { id: academyId },
+      include: {
+        academyPhones: true,
+        addresses: true,
+        owners: true,
+        paymentLinks: true,
+        socialMedia: true,
       }
+    });
 
-      return AcademyRepository.addAddress(academyId, address, tx);
+    if (!academy) throw ApiError.NotFound("Academy");
+
+    const academySafe = {
+      ...academy,
+      owners: academy.owners.map((u) =>
+        omit(u, ["password", "logoutAt"])
+      ),
+    };
+
+    return academySafe;
+  },
+
+  async addAddress({ body, params }) {
+    const { address } = body;
+    const { academyId } = params;
+
+    const academyExists = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { id: true }
+    });
+
+    if (!academyExists) throw ApiError.NotFound("Academy");
+
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { addresses: { create: { address } } },
+      include: { addresses: true }
     });
   },
 
-  async deleteAddress({ params }, academy) {
+  async deleteAddress({ params }) {
     const { academyId, addressId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    const academyCheck = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { addresses: { where: { id: addressId }, select: { id: true } } }
+    });
 
-      const exists = academyEx.addresses.some((a) => a.id === addressId);
+    if (!academyCheck) throw ApiError.NotFound("Academy");
+    if (academyCheck.addresses.length === 0) throw ApiError.NotFound("AcademyAddress");
 
-      if (!exists) {
-        throw ApiError.NotFound("Address");
-      }
-
-      return AcademyRepository.deleteAddress(academyId, addressId, tx);
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { addresses: { delete: { id: addressId } } },
+      include: { addresses: true }
     });
   },
 
-  async addPhone({ body, params }, academy) {
-    const { academyId } = params;
+  async addPhone({ body, params }) {
     const { phone } = body;
+    const { academyId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    const academyExists = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { id: true }
+    });
+    if (!academyExists) throw ApiError.NotFound("Academy");
 
-      const existsInAcademy = academyEx.phones.some((p) => p.phone === phone);
+    const phoneExists = await prisma.academyPhone.findUnique({ where: { phone } });
+    if (phoneExists) throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
 
-      if (existsInAcademy) {
-        throw ApiError.Conflict("Phone");
-      }
-
-      const existsGlobally = await AcademyRepository.findByPhone(phone, tx);
-
-      if (existsGlobally) {
-        throw ApiError.Conflict("Phone");
-      }
-
-      return AcademyRepository.addPhone(academyId, phone, tx);
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { academyPhones: { create: { phone } } },
+      include: { academyPhones: true }
     });
   },
 
-  async deletePhone({ params }, academy) {
+  async deletePhone({ params }) {
     const { academyId, phoneId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    const academyCheck = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { academyPhones: { where: { id: phoneId }, select: { id: true } } }
+    });
 
-      const exists = academyEx.phones.some((p) => p.id === phoneId);
+    if (!academyCheck) throw ApiError.NotFound("Academy");
+    if (academyCheck.academyPhones.length === 0) throw ApiError.NotFound("AcademyPhone");
 
-      if (!exists) {
-        throw ApiError.NotFound("Phone");
-      }
-
-      return AcademyRepository.deletePhone(academyId, phoneId, tx);
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { academyPhones: { delete: { id: phoneId } } },
+      include: { academyPhones: true }
     });
   },
 
-  async addSocialMedia({ body, params }, academy) {
+  async addSocialMedia({ body, params }) {
+    const { url, platform } = body;
     const { academyId } = params;
-    const { platform, url } = body;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    const academyExists = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { id: true }
+    });
 
-      const exists = academyEx.socialMedia.some(
-        (s) => s.platform === platform && s.url === url
-      );
+    if (!academyExists) throw ApiError.NotFound("Academy");
 
-      if (exists) {
-        throw ApiError.Conflict("SocialMedia");
-      }
-
-      return AcademyRepository.addSocialMedia(academyId, { platform, url }, tx);
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { socialMedia: { create: { url, platform } } },
+      include: { socialMedia: true }
     });
   },
 
-  async deleteSocialMedia({ params }, academy) {
+  async deleteSocialMedia({ params }) {
     const { academyId, socialMediaId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    const academyCheck = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { socialMedia: { where: { id: socialMediaId }, select: { id: true } } }
+    });
 
-      const exists = academyEx.socialMedia.some((s) => s.id === socialMediaId);
+    if (!academyCheck) throw ApiError.NotFound("Academy");
+    if (academyCheck.socialMedia.length === 0) throw ApiError.NotFound("SocialMedia");
 
-      if (!exists) {
-        throw ApiError.NotFound("SocialMedia");
-      }
-
-      return AcademyRepository.deleteSocialMedia(academyId, socialMediaId, tx);
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { socialMedia: { delete: { id: socialMediaId } } },
+      include: { socialMedia: true }
     });
   },
 
-  async addOwner({ params }, academy) {
+  async myAcademics({ userId, tx }) {
+    const client = getClient(tx);
+    return await client.academy.findMany({
+      where: { owners: { some: { id: userId } } }
+    });
+  },
+
+  async addOwner({ params }) {
     const { academyId, userId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    return await prisma.$transaction(async (tx) => {
+      const academy = await tx.academy.findUnique({
+        where: { id: academyId },
+        include: { owners: true }
+      });
 
-      const exists = academyEx.owners.some((o) => o.id === userId);
+      if (!academy) throw ApiError.NotFound("Academy");
 
-      if (exists) {
-        throw ApiError.Conflict("OWNER_ALREADY_EXISTS");
+      const isOwner = academy.owners.some(o => o.id === userId);
+
+      if (isOwner) {
+        return sanitizeAcademy(academy)
       }
 
-      const user = await UserRepository.findById(userId, tx);
-
+      const user = await tx.user.findUnique({ where: { id: userId }, select: { id: true } });
       if (!user) throw ApiError.NotFound("User");
 
-      const result = await AcademyRepository.addOwner(academyId, userId, tx);
+      const updatedAcademy = await tx.academy.update({
+        where: { id: academyId },
+        data: { owners: { connect: { id: userId } } },
+        include: { owners: true }
+      });
 
-      await UserRepository.recalculateUserRole(userId, tx);
-
-      return result;
+      return sanitizeAcademy(updatedAcademy)
     });
   },
 
-  async deleteOwner({ params }, academy) {
+  async deleteOwner({ params }) {
     const { academyId, userId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const academyEx = await getAcademyOrThrow(academyId, tx, academy);
+    const academy = await prisma.academy.findUnique({
+      where: { id: academyId },
+      include: { owners: true }
+    });
 
-      const exists = academyEx.owners.some((o) => o.id === userId);
+    if (!academy) throw ApiError.NotFound("Academy");
 
-      if (!exists) {
-        throw ApiError.NotFound("User");
-      }
+    const isOwner = academy.owners.some(o => o.id === userId);
+    if (!isOwner) {
+      return sanitizeAcademy(academy)
+    }
 
-      const result = await AcademyRepository.removeOwner(academyId, userId, tx);
+    const updatedAcademy = await prisma.academy.update({
+      where: { id: academyId },
+      data: { owners: { disconnect: { id: userId } } },
+      include: { owners: true }
+    });
 
-      await UserRepository.recalculateUserRole(userId, tx);
+    return sanitizeAcademy(updatedAcademy)
+  },
 
-      return result;
+  async addPaymentLink({ params, body }) {
+    const { url, walletProvider, phone } = body;
+    const { academyId } = params;
+
+    const academyExists = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { id: true }
+    });
+    if (!academyExists) throw ApiError.NotFound("Academy");
+
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { paymentLinks: { create: { url, walletProvider, phone } } },
+      include: { paymentLinks: true }
     });
   },
 
-  async myAcademics({ userId }) {
-    return AcademyRepository.findAll({
-      where: { owners: { some: { id: userId } } },
+  async deletePaymentLink({ params }) {
+    const { academyId, paymentLinkId } = params;
+
+    const academyCheck = await prisma.academy.findUnique({
+      where: { id: academyId },
+      select: { paymentLinks: { where: { id: paymentLinkId }, select: { id: true } } }
+    });
+
+    if (!academyCheck) throw ApiError.NotFound("Academy");
+    if (academyCheck.paymentLinks.length === 0) throw ApiError.NotFound("PaymentLink");
+
+    return await prisma.academy.update({
+      where: { id: academyId },
+      data: { paymentLinks: { delete: { id: paymentLinkId } } },
+      include: { paymentLinks: true }
     });
   },
-};
+}
 
 export default AcademyService;

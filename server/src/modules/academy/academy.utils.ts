@@ -1,8 +1,6 @@
-import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
-import { AcademyWhereInput } from "../../../prisma/generated/models";
-import ApiError from "../../shared/utils/ApiError";
-import AcademyRepository from "./academy.repository";
-import { AcademyWithFullRelations } from "./academy.type";
+import { AcademyGetPayload, AcademyWhereInput } from "../../../prisma/generated/models";
+import { SafeUser } from "../user/user.type";
+import { userSafe } from "../user/user.utils";
 
 export const buildAcademyWhere = ({
   search,
@@ -21,14 +19,6 @@ export const buildAcademyWhere = ({
   return where;
 };
 
-export const getAcademyOrThrow = async (
-  academyId: string,
-  tx: TransactionClient,
-  academy?: AcademyWithFullRelations
-) => {
-  const academyEx = academy ?? await AcademyRepository.getAcademyDetails(academyId, tx)
-
-  if (!academyEx) throw ApiError.NotFound("Academy");
-
-  return academyEx;
-};
+export const sanitizeAcademy = (academy: AcademyGetPayload<{ include: { owners: true } }>): Omit<AcademyGetPayload<{ include: { owners: true } }>, "owners"> & { owners: SafeUser[] } => {
+  return { ...academy, owners: academy.owners.map((u) => userSafe(u)) }
+}

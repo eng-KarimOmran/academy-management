@@ -1,26 +1,31 @@
-import { omit } from './../../shared/utils/omit';
 import { IUserService } from "./user.type";
 import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
 import { HashHelper } from "../auth/auth.utils";
 import env from "../../config/env";
-import { assertCanModifyUser, buildUserWhere, orderBy } from "./user.utils";
+import { assertCanModifyUser, buildUserWhere, orderBy, userSafe } from "./user.utils";
 import dayjs from "dayjs";
 import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
 
 const UserService: IUserService = {
   async createUser({ body }) {
-    const { name, phone } = body;
+    const { name, phone, email } = body;
 
-    const userEx = await prisma.user.findUnique({
+    const userExPhone = await prisma.user.findUnique({
       where: { phone },
     });
 
-    if (userEx) throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
+    if (userExPhone) throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
 
-    const hashPassword = await HashHelper.hash(
-      env.app.DEFAULT_USER_PASSWORD
-    );
+    if (email) {
+      const userExEmail = await prisma.user.findUnique({
+        where: { email },
+      });
+      if (userExEmail) throw ApiError.Conflict("EMAIL_ALREADY_EXISTS");
+    }
+
+
+    const hashPassword = await HashHelper.hash(env.app.DEFAULT_USER_PASSWORD);
 
     const user = await prisma.user.create({
       data: {
@@ -29,7 +34,7 @@ const UserService: IUserService = {
         password: hashPassword,
       },
     });
-    return omit(user, ["password", "logoutAt"])
+    return userSafe(user)
   },
 
   async updateUser(dataSafe, currentUser) {
@@ -54,12 +59,21 @@ const UserService: IUserService = {
       }
     }
 
+    if (body.email && body.email !== targetUser.email) {
+      const emailExists = await prisma.user.findUnique({
+        where: { email: body.email },
+      });
+      if (emailExists) {
+        throw ApiError.Conflict("EMAIL_ALREADY_EXISTS");
+      }
+    }
+
     const user = await prisma.user.update({
       where: { id: userId },
       data: body,
     });
 
-    return omit(user, ["password", "logoutAt"])
+    return userSafe(user)
   },
 
   async deleteUser(dataSafe, currentUser) {
@@ -78,7 +92,7 @@ const UserService: IUserService = {
       where: { id: userId },
     });
 
-    return omit(user, ["password", "logoutAt"])
+    return userSafe(user)
   },
 
   async getAllUsers(dataSafe) {
@@ -98,7 +112,7 @@ const UserService: IUserService = {
       return { users, count }
     })
 
-    const usersSafe = users.map((u) => omit(u, ["password", "logoutAt"]))
+    const usersSafe = users.map((u) => userSafe(u))
 
     const paginationMeta = buildPaginationMeta({ limit, page, count })
 
@@ -118,7 +132,7 @@ const UserService: IUserService = {
     if (!user) throw ApiError.NotFound("User");
 
 
-    return omit(user, ["password", "logoutAt"])
+    return userSafe(user)
   },
 
   async newPassword(dataSafe, currentUser) {
@@ -145,7 +159,7 @@ const UserService: IUserService = {
       },
     });
 
-    return omit(user, ["password", "logoutAt"])
+    return userSafe(user)
   },
 };
 

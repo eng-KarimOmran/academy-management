@@ -9,13 +9,13 @@ import {
   positiveNumber,
   boolean,
   booleanQuery,
-  userRole,
 } from "../../shared/utils/common.validation";
 
 export const CreateUserSchema = {
   body: z.object({
     name: personName,
     phone,
+    email: z.email().optional()
   }),
 };
 
@@ -24,8 +24,9 @@ export const UpdateUserSchema = {
   body: z.object({
     name: personName.optional(),
     phone: phone.optional(),
+    email: z.email().optional(),
     isActive: boolean.optional(),
-    userRole: userRole.optional()
+    isAdmin: boolean.optional()
   }),
 };
 
@@ -43,7 +44,7 @@ export const GetAllUsersSchema = {
     limit: limit,
     search: z.string().optional(),
     isActive: booleanQuery.optional(),
-    userRole: userRole.optional()
+    isAdmin: booleanQuery.optional()
   }),
 };
 

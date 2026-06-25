@@ -1992,6 +1992,7 @@ export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeo
 export const PaymentLinkScalarFieldEnum = {
   id: 'id',
   url: 'url',
+  phone: 'phone',
   walletProvider: 'walletProvider',
   academyId: 'academyId'
 } as const
@@ -2011,6 +2012,7 @@ export type SocialMediaScalarFieldEnum = (typeof SocialMediaScalarFieldEnum)[key
 
 export const AcademyScalarFieldEnum = {
   id: 'id',
+  name: 'name',
   createdAt: 'createdAt'
 } as const
 
@@ -2101,7 +2103,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   logoutAt: 'logoutAt',
   isPasswordChanged: 'isPasswordChanged',
-  userRole: 'userRole',
+  isAdmin: 'isAdmin',
   createdAt: 'createdAt'
 } as const
 
@@ -2247,6 +2249,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Platform'
+ */
+export type EnumPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Platform'>
+    
+
+
+/**
+ * Reference to a field of type 'Platform[]'
+ */
+export type ListEnumPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Platform[]'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2362,20 +2378,6 @@ export type EnumSupportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'SupportType[]'
  */
 export type ListEnumSupportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SupportType[]'>
-    
-
-
-/**
- * Reference to a field of type 'UserRole'
- */
-export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
-    
-
-
-/**
- * Reference to a field of type 'UserRole[]'
- */
-export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 

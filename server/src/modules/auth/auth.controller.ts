@@ -3,7 +3,6 @@ import * as DTO from "./auth.dto";
 import AuthService from "./auth.service";
 import sendSuccess from "../../shared/utils/successResponse";
 import { RequestValidation } from "../../shared/middlewares/validation.middleware";
-import { CreateUserDto } from "../user/user.dto";
 import { cookieAccess, cookieRefresh } from "./auth.utils";
 import { RequestAuth } from "./auth.type";
 
@@ -79,7 +78,7 @@ const AuthController = {
 
 
   createFirstUser: async (req: RequestValidation, res: Response) => {
-    const dataSafe = req.dataSafe as CreateUserDto
+    const dataSafe = req.dataSafe as DTO.createFirstUserDto
     const body = dataSafe.body
 
     const user = await AuthService.createFirstUser(body);

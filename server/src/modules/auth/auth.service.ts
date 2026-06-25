@@ -50,14 +50,14 @@ const AuthService: IAuthService = {
     return true
   },
 
-  async createFirstUser({ name, phone }) {
+  async createFirstUser({ name, phone, email }) {
     const user = await prisma.user.findFirst();
 
     if (user) throw ApiError.Conflict("USER_ALREADY_EXISTS");
 
     const hashPassword = await HashHelper.hash(env.app.DEFAULT_USER_PASSWORD)
 
-    const newUser = await prisma.user.create({ data: { name, phone, password: hashPassword, userRole: "ADMIN" } })
+    const newUser = await prisma.user.create({ data: { name, phone, password: hashPassword, isAdmin: true, email } })
 
     return { id: newUser.id, phone }
   },

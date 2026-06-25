@@ -6,6 +6,7 @@ import { isAdmin } from "./user.middleware";
 
 const router = Router();
 
+
 router.get(
   "/",
   validation(Schema.GetAllUsersSchema),

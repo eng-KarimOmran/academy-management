@@ -55,21 +55,34 @@ model Address {
 model PaymentLink {
   id             String  @id @default(cuid())
   url            String
+  phone          String?
   walletProvider String
   academy        Academy @relation(fields: [academyId], references: [id])
   academyId      String
 }
 
+enum Platform {
+  FACEBOOK
+  TIKTOK
+  INSTAGRAM
+  TWITTER
+  YOUTUBE
+  LINKEDIN
+  SNAPCHAT
+  WHATSAPP
+}
+
 model SocialMedia {
-  id        String  @id @default(cuid())
-  platform  String
+  id        String   @id @default(cuid())
+  platform  Platform
   url       String
-  academy   Academy @relation(fields: [academyId], references: [id])
+  academy   Academy  @relation(fields: [academyId], references: [id])
   academyId String
 }
 
 model Academy {
   id                 String              @id @default(cuid())
+  name               String              @unique
   createdAt          DateTime            @default(now())
   addresses          Address[]
   paymentLinks       PaymentLink[]
@@ -226,17 +239,12 @@ model User {
   email             String?  @unique
   logoutAt          DateTime @default(now())
   isPasswordChanged Boolean  @default(false)
-  userRole          UserRole @default(USER)
+  isAdmin           Boolean  @default(false)
 
   jobProfile JobProfile[]
   academies  Academy[]    @relation("AcademyOwners")
 
   createdAt DateTime @default(now())
-}
-
-enum UserRole {
-  USER
-  ADMIN
 }
 
 enum SupportType {
