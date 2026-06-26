@@ -3,16 +3,15 @@ import validation from "../../shared/middlewares/validation.middleware";
 import AcademyController from "./academy.controller";
 import { checkAcademyExists } from "./academy.middleware";
 import { AcademySchema } from "./academy.Schema";
-import { isAdmin } from './../user/user.middleware';
+import { isAdmin } from '../user/user.middleware';
 
+import routerJobProfile from "../jobProfile/jobProfile.routes";
 // import routerCourse from "../course/course.routes";
 // import routerClient from "../client/client.routes";
 // import routerSubscription from "../subscription/subscription.routes";
 // import routerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
 // import routerLesson from "../lesson/lesson.routes";
 // import routerStatistics from "../dashboard/dashboard.routes";
-// import routerCaptain from "../captain/captain.routes";
-// import routerSecretary from "../secretary/secretary.routes";
 // import routerAccount from "../account/account.routes";
 // import routerArea from "../area/area.routes";
 // import routerCar from "../car/car.routes";
@@ -152,7 +151,12 @@ router.delete(
 // =======================
 // Nested Routes Sub-router
 // =======================
-router.use("/:academyId", checkAcademyExists());
+
+router.use(
+  "/:academyId/job-profile",
+  checkAcademyExists({ isAcademyOwner: true }),
+  routerJobProfile
+);
 
 // router.use("/:academyId/clients", routerClient);
 // router.use("/:academyId/courses", routerCourse);
@@ -160,7 +164,6 @@ router.use("/:academyId", checkAcademyExists());
 // router.use("/:academyId/transactions", routerTransactions);
 // router.use("/:academyId/lessons", routerLesson);
 // router.use("/:academyId/statistics", routerStatistics);
-// router.use("/:academyId/captains", routerCaptain);
 // router.use("/:academyId/secretaries", routerSecretary);
 // router.use("/:academyId/accounts", routerAccount);
 // router.use("/:academyId/cars", routerCar);

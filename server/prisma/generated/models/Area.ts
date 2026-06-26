@@ -399,6 +399,10 @@ export type AreaUncheckedUpdateManyWithoutAcademyNestedInput = {
   deleteMany?: Prisma.AreaScalarWhereInput | Prisma.AreaScalarWhereInput[]
 }
 
+export type EnumSupportTypeFieldUpdateOperationsInput = {
+  set?: $Enums.SupportType
+}
+
 export type AreaCreateNestedOneWithoutLessonsInput = {
   create?: Prisma.XOR<Prisma.AreaCreateWithoutLessonsInput, Prisma.AreaUncheckedCreateWithoutLessonsInput>
   connectOrCreate?: Prisma.AreaCreateOrConnectWithoutLessonsInput

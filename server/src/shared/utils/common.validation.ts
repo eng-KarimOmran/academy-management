@@ -56,6 +56,14 @@ export const positiveNumber = z.coerce
   .number()
   .positive("يجب أن يكون رقمًا موجبًا");
 
+export const number = z.coerce.number().min(0, "لا يمكن أن يكون الرقم سالبًا")
+
+export const page = z.coerce
+  .number()
+  .positive("يجب أن يكون رقمًا موجبًا")
+  .optional()
+  .default(1)
+
 export const price = z.coerce.number().min(0, "لا يمكن أن يكون السعر سالبًا");
 
 export const count = z.coerce
@@ -63,7 +71,7 @@ export const count = z.coerce
   .int("يجب أن يكون رقمًا صحيحًا")
   .min(1, "يجب أن يكون العدد 1 على الأقل");
 
-export const limit = z.coerce.number().int().min(1).max(100).default(50);
+export const limit = z.coerce.number().int().min(1).max(100).optional().default(50);
 
 // --- Dates ---
 

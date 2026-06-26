@@ -6,9 +6,9 @@ import {
   limit,
   phone,
   platform,
-  positiveNumber,
   url,
   entityName,
+  page,
 } from "../../shared/utils/common.validation";
 
 export const AcademySchema = {
@@ -43,8 +43,8 @@ export const AcademySchema = {
 
   getAll: {
     query: z.object({
-      page: positiveNumber.optional().default(1),
-      limit: limit.optional().default(50),
+      page,
+      limit,
       search: z.string().optional(),
     }),
   },

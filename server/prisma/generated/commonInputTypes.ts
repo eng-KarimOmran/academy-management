@@ -252,11 +252,11 @@ export type EnumJobProfileTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumJobProfileTypeFilter<$PrismaModel> | $Enums.JobProfileType
 }
 
-export type EnumSupportTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSupportTypeFilter<$PrismaModel> | $Enums.SupportType
+export type EnumSupportTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupportTypeNullableFilter<$PrismaModel> | $Enums.SupportType | null
 }
 
 export type EnumJobProfileTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -267,6 +267,23 @@ export type EnumJobProfileTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumJobProfileTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumJobProfileTypeFilter<$PrismaModel>
+}
+
+export type EnumSupportTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupportTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.SupportType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupportTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupportTypeNullableFilter<$PrismaModel>
+}
+
+export type EnumSupportTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTypeFilter<$PrismaModel> | $Enums.SupportType
 }
 
 export type EnumSupportTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -624,11 +641,11 @@ export type NestedEnumJobProfileTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumJobProfileTypeFilter<$PrismaModel> | $Enums.JobProfileType
 }
 
-export type NestedEnumSupportTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumSupportTypeFilter<$PrismaModel> | $Enums.SupportType
+export type NestedEnumSupportTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupportTypeNullableFilter<$PrismaModel> | $Enums.SupportType | null
 }
 
 export type NestedEnumJobProfileTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -639,6 +656,23 @@ export type NestedEnumJobProfileTypeWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumJobProfileTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumJobProfileTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSupportTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumSupportTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.SupportType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSupportTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSupportTypeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumSupportTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SupportType | Prisma.EnumSupportTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SupportType[] | Prisma.ListEnumSupportTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSupportTypeFilter<$PrismaModel> | $Enums.SupportType
 }
 
 export type NestedEnumSupportTypeWithAggregatesFilter<$PrismaModel = never> = {

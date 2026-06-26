@@ -384,7 +384,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  ProofOfPaymentImage: 'ProofOfPaymentImage',
+  Image: 'Image',
   AcademyPhone: 'AcademyPhone',
   ClientPhone: 'ClientPhone',
   FinancialAccount: 'FinancialAccount',
@@ -419,81 +419,81 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "proofOfPaymentImage" | "academyPhone" | "clientPhone" | "financialAccount" | "address" | "paymentLink" | "socialMedia" | "academy" | "blacklistedToken" | "client" | "course" | "subscription" | "jobProfile" | "user" | "trainingDetails" | "car" | "area" | "lesson" | "ledgerTransaction" | "payroll"
+    modelProps: "image" | "academyPhone" | "clientPhone" | "financialAccount" | "address" | "paymentLink" | "socialMedia" | "academy" | "blacklistedToken" | "client" | "course" | "subscription" | "jobProfile" | "user" | "trainingDetails" | "car" | "area" | "lesson" | "ledgerTransaction" | "payroll"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
-    ProofOfPaymentImage: {
-      payload: Prisma.$ProofOfPaymentImagePayload<ExtArgs>
-      fields: Prisma.ProofOfPaymentImageFieldRefs
+    Image: {
+      payload: Prisma.$ImagePayload<ExtArgs>
+      fields: Prisma.ImageFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ProofOfPaymentImageFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload> | null
+          args: Prisma.ImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ProofOfPaymentImageFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>
+          args: Prisma.ImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>
         }
         findFirst: {
-          args: Prisma.ProofOfPaymentImageFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload> | null
+          args: Prisma.ImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ProofOfPaymentImageFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>
+          args: Prisma.ImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>
         }
         findMany: {
-          args: Prisma.ProofOfPaymentImageFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>[]
+          args: Prisma.ImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>[]
         }
         create: {
-          args: Prisma.ProofOfPaymentImageCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>
+          args: Prisma.ImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>
         }
         createMany: {
-          args: Prisma.ProofOfPaymentImageCreateManyArgs<ExtArgs>
+          args: Prisma.ImageCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ProofOfPaymentImageCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>[]
+          args: Prisma.ImageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>[]
         }
         delete: {
-          args: Prisma.ProofOfPaymentImageDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>
+          args: Prisma.ImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>
         }
         update: {
-          args: Prisma.ProofOfPaymentImageUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>
+          args: Prisma.ImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>
         }
         deleteMany: {
-          args: Prisma.ProofOfPaymentImageDeleteManyArgs<ExtArgs>
+          args: Prisma.ImageDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ProofOfPaymentImageUpdateManyArgs<ExtArgs>
+          args: Prisma.ImageUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ProofOfPaymentImageUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>[]
+          args: Prisma.ImageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>[]
         }
         upsert: {
-          args: Prisma.ProofOfPaymentImageUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProofOfPaymentImagePayload>
+          args: Prisma.ImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ImagePayload>
         }
         aggregate: {
-          args: Prisma.ProofOfPaymentImageAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProofOfPaymentImage>
+          args: Prisma.ImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateImage>
         }
         groupBy: {
-          args: Prisma.ProofOfPaymentImageGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProofOfPaymentImageGroupByOutputType>[]
+          args: Prisma.ImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImageGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ProofOfPaymentImageCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProofOfPaymentImageCountAggregateOutputType> | number
+          args: Prisma.ImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ImageCountAggregateOutputType> | number
         }
       }
     }
@@ -1942,13 +1942,13 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const ProofOfPaymentImageScalarFieldEnum = {
+export const ImageScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   publicId: 'publicId'
 } as const
 
-export type ProofOfPaymentImageScalarFieldEnum = (typeof ProofOfPaymentImageScalarFieldEnum)[keyof typeof ProofOfPaymentImageScalarFieldEnum]
+export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
 
 
 export const AcademyPhoneScalarFieldEnum = {
@@ -2013,7 +2013,8 @@ export type SocialMediaScalarFieldEnum = (typeof SocialMediaScalarFieldEnum)[key
 export const AcademyScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  imageId: 'imageId'
 } as const
 
 export type AcademyScalarFieldEnum = (typeof AcademyScalarFieldEnum)[keyof typeof AcademyScalarFieldEnum]
@@ -2175,7 +2176,7 @@ export const LedgerTransactionScalarFieldEnum = {
   senderId: 'senderId',
   receiverId: 'receiverId',
   amount: 'amount',
-  proofOfPaymentImageId: 'proofOfPaymentImageId',
+  imageId: 'imageId',
   createdAt: 'createdAt',
   subscriptionId: 'subscriptionId'
 } as const
@@ -2546,7 +2547,7 @@ export type PrismaClientOptions = ({
   queryPlanCacheMaxSize?: number
 }
 export type GlobalOmitConfig = {
-  proofOfPaymentImage?: Prisma.ProofOfPaymentImageOmit
+  image?: Prisma.ImageOmit
   academyPhone?: Prisma.AcademyPhoneOmit
   clientPhone?: Prisma.ClientPhoneOmit
   financialAccount?: Prisma.FinancialAccountOmit

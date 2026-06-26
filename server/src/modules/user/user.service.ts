@@ -96,11 +96,11 @@ const UserService: IUserService = {
   },
 
   async getAllUsers(dataSafe) {
-    const { limit, page, ...query } = dataSafe.query;
+    const { limit, page, ...filters } = dataSafe.query;
 
     const pagination = buildPagination({ page, limit })
 
-    const where = buildUserWhere(query)
+    const where = buildUserWhere(filters)
 
     const { users, count } = await prisma.$transaction(async (tx) => {
       const [users, count] = await Promise.all(

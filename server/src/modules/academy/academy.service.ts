@@ -88,9 +88,10 @@ const AcademyService: IAcademyService = {
   },
 
   async getAll({ query }) {
-    const { limit, page, search } = query;
+    const { limit, page, ...filters } = query;
 
-    const where = buildAcademyWhere({ search });
+    const where = buildAcademyWhere(filters);
+
     const { take, skip } = buildPagination({ page, limit });
 
     const [academies, count] = await prisma.$transaction([

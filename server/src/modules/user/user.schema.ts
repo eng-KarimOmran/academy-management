@@ -6,9 +6,9 @@ import {
   password,
   phone,
   limit,
-  positiveNumber,
   boolean,
   booleanQuery,
+  page,
 } from "../../shared/utils/common.validation";
 
 export const CreateUserSchema = {
@@ -40,8 +40,8 @@ export const GetUserDetailsSchema = {
 
 export const GetAllUsersSchema = {
   query: z.object({
-    page: positiveNumber.optional().default(1),
-    limit: limit,
+    page,
+    limit,
     search: z.string().optional(),
     isActive: booleanQuery.optional(),
     isAdmin: booleanQuery.optional()

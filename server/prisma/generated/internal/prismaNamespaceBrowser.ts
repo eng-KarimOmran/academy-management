@@ -51,7 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  ProofOfPaymentImage: 'ProofOfPaymentImage',
+  Image: 'Image',
   AcademyPhone: 'AcademyPhone',
   ClientPhone: 'ClientPhone',
   FinancialAccount: 'FinancialAccount',
@@ -89,13 +89,13 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const ProofOfPaymentImageScalarFieldEnum = {
+export const ImageScalarFieldEnum = {
   id: 'id',
   imageUrl: 'imageUrl',
   publicId: 'publicId'
 } as const
 
-export type ProofOfPaymentImageScalarFieldEnum = (typeof ProofOfPaymentImageScalarFieldEnum)[keyof typeof ProofOfPaymentImageScalarFieldEnum]
+export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
 
 
 export const AcademyPhoneScalarFieldEnum = {
@@ -160,7 +160,8 @@ export type SocialMediaScalarFieldEnum = (typeof SocialMediaScalarFieldEnum)[key
 export const AcademyScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  imageId: 'imageId'
 } as const
 
 export type AcademyScalarFieldEnum = (typeof AcademyScalarFieldEnum)[keyof typeof AcademyScalarFieldEnum]
@@ -322,7 +323,7 @@ export const LedgerTransactionScalarFieldEnum = {
   senderId: 'senderId',
   receiverId: 'receiverId',
   amount: 'amount',
-  proofOfPaymentImageId: 'proofOfPaymentImageId',
+  imageId: 'imageId',
   createdAt: 'createdAt',
   subscriptionId: 'subscriptionId'
 } as const

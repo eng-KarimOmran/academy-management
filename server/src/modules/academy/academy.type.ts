@@ -1,5 +1,5 @@
 import { PaginatedResponse } from './../../shared/types/types';
-import { AcademyGetPayload, AcademyInclude, TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
+import { AcademyGetPayload, TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import * as DTO from "./academy.dto";
 import { Academy, User } from '../../../prisma/generated/client';
 import { RequestAuth } from '../auth/auth.type';

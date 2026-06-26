@@ -18,10 +18,10 @@ export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
 /**
- * Model ProofOfPaymentImage
+ * Model Image
  * 
  */
-export type ProofOfPaymentImage = Prisma.ProofOfPaymentImageModel
+export type Image = Prisma.ImageModel
 /**
  * Model AcademyPhone
  * 

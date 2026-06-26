@@ -28,7 +28,8 @@ const NOT_FOUND_MESSAGES = {
 
   AcademyAddress: "عنوان الأكاديمية غير موجود",
   AcademyPaymentLink: "رابط الدفع غير موجود",
-  PATH_NOT_FOUND: "المسار غير موجود"
+  PATH_NOT_FOUND: "المسار غير موجود",
+  JobProfile: "الملف الوظيفي غير موجد"
 } as const;
 
 export const CONFLICT_MESSAGES = {
@@ -64,6 +65,7 @@ export const CONFLICT_MESSAGES = {
   // Platform / System
   PLATFORM_ALREADY_EXISTS: "المنصة مسجلة بالفعل",
   SOCIAL_MEDIA_ALREADY_EXISTS: "منصة التواصل الاجتماعي مسجلة بالفعل",
+  JOB_PROFILE_EXISTS: "المستخدم لديه ملف وظيفي بالأكاديمية"
 } as const;
 
 type NotFoundModel = keyof typeof NOT_FOUND_MESSAGES;

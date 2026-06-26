@@ -7,11 +7,12 @@ datasource db {
   provider = "postgresql"
 }
 
-model ProofOfPaymentImage {
+model Image {
   id                 String              @id @default(cuid())
   imageUrl           String
   publicId           String
   ledgerTransactions LedgerTransaction[]
+  academies          Academy[]
 }
 
 model AcademyPhone {
@@ -83,6 +84,7 @@ model SocialMedia {
 model Academy {
   id                 String              @id @default(cuid())
   name               String              @unique
+  logo               Image?              @relation(fields: [imageId], references: [id])
   createdAt          DateTime            @default(now())
   addresses          Address[]
   paymentLinks       PaymentLink[]
@@ -100,6 +102,7 @@ model Academy {
   clientPhones       ClientPhone[]
   financialAccount   FinancialAccount?
   payrolls           Payroll[]
+  imageId            String?
 }
 
 model BlacklistedToken {
@@ -216,7 +219,7 @@ model JobProfile {
 
   baseSalary  Float       @default(0)
   lessonPrice Float       @default(0)
-  supportType SupportType
+  supportType SupportType?
 
   targetCount Int   @default(0)
   bonusAmount Float @default(0)
@@ -347,8 +350,8 @@ model LedgerTransaction {
 
   amount Decimal @db.Decimal(12, 2)
 
-  proofOfPaymentImageId String?
-  proofOfPaymentImage   ProofOfPaymentImage? @relation(fields: [proofOfPaymentImageId], references: [id], onDelete: SetNull)
+  imageId String?
+  Image   Image?  @relation(fields: [imageId], references: [id], onDelete: SetNull)
 
   createdAt      DateTime      @default(now())
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
