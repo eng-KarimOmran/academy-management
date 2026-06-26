@@ -9,7 +9,7 @@ const router = Router();
 
 router.use("/auth", routerAuth);
 
-router.use(auth(TokenType.ACCESS));
+router.use(auth(TokenType.ACCESS), checkPasswordChange);
 
 router.use("/users", routerUser);
 router.use("/academies", routerAcademy);

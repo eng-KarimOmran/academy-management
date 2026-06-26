@@ -10,7 +10,6 @@
  */
 export type * from './models/Image.ts'
 export type * from './models/AcademyPhone.ts'
-export type * from './models/ClientPhone.ts'
 export type * from './models/FinancialAccount.ts'
 export type * from './models/Address.ts'
 export type * from './models/PaymentLink.ts'

@@ -22,17 +22,6 @@ model AcademyPhone {
   academyId String
 }
 
-model ClientPhone {
-  id        String  @id @default(cuid())
-  phone     String
-  academy   Academy @relation(fields: [academyId], references: [id])
-  academyId String
-  client    Client  @relation(fields: [clientId], references: [id])
-  clientId  String
-
-  @@unique([phone, academyId])
-}
-
 model FinancialAccount {
   id             String        @id @default(cuid())
   jobProfile     JobProfile?   @relation(fields: [jobProfileId], references: [id])
@@ -99,7 +88,6 @@ model Academy {
   areas              Area[]
   ledgerTransactions LedgerTransaction[]
   academyPhones      AcademyPhone[]
-  clientPhones       ClientPhone[]
   financialAccount   FinancialAccount?
   payrolls           Payroll[]
   imageId            String?
@@ -115,12 +103,14 @@ model BlacklistedToken {
 model Client {
   id            String         @id @default(cuid())
   name          String
-  phones        ClientPhone[]
+  phone         String
   academyId     String
   academy       Academy        @relation(fields: [academyId], references: [id], onDelete: Restrict)
   source        ClientSource   @default(OFFICE)
   subscriptions Subscription[]
   createdAt     DateTime       @default(now())
+
+  @@unique([phone, academyId])
 }
 
 enum ClientSource {
@@ -217,8 +207,8 @@ model JobProfile {
 
   isActive Boolean @default(true)
 
-  baseSalary  Float       @default(0)
-  lessonPrice Float       @default(0)
+  baseSalary  Float        @default(0)
+  lessonPrice Float        @default(0)
   supportType SupportType?
 
   targetCount Int   @default(0)

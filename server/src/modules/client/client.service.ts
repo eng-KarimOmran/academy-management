@@ -1,155 +1,136 @@
-import { TransactionClient } from './../../../prisma/generated/internal/prismaNamespace';
-import * as DTO from "./client.dto";
-import ApiError from "../../shared/utils/ApiError";
-import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
+import { IClientService } from "./client.type";
 import { prisma } from "../../lib/prisma";
-import { buildClientWhere } from "./client.utils";
-import { clientBaseSelect, clientDetailsSelect } from "./client.selectors";
-import { Client } from "../../../prisma/generated/client";
-
-interface IClientService {
-  create: (data: { dataSafe: DTO.CreateClientDto; tx?: TransactionClient }) => Promise<Client>;
-  getAll: (data: { dataSafe: DTO.GetAllClientsDto; tx?: TransactionClient }) => Promise<{ items: Client[]; pagination: { limit: number; page: number; totalPages: number; total: number } }>;
-  getDetails: (data: { dataSafe: DTO.ClientDetailsDto; tx?: TransactionClient }) => Promise<{ currentClient: Client; otherFiles: Client[] }>;
-  update: (data: { dataSafe: DTO.UpdateClientDto; tx?: TransactionClient }) => Promise<Client>;
-  delete: (data: { dataSafe: DTO.DeleteClientDto; tx?: TransactionClient }) => Promise<Client>;
-  getClientByPhone: (data: { dataSafe: DTO.GetClientByPhoneDto; tx?: TransactionClient }) => Promise<Client>;
-}
+import ApiError from "../../shared/utils/ApiError";
+import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
+import { buildClientWhere, orderBy } from "./client.utils";
+import { ClientGetPayload } from "../../../prisma/generated/models";
 
 const ClientService: IClientService = {
-  async create({ dataSafe, tx }) {
-    const { body, params } = dataSafe;
-    const { name, phone, clientSource } = body;
+  async createClient({ params, body }) {
     const { academyId } = params;
+    const { phone } = body;
 
-    const run = async (tx: TransactionClient) => {
-      const clientExists = await tx.client.findFirst({
-        where: { phone, academyId }
-      });
-      if (clientExists) throw ApiError.Conflict("Phone");
+    const phoneExists = await prisma.client.findUnique({ where: { phone_academyId: { phone, academyId } } });
 
-      return await tx.client.create({
-        data: {
-          phone,
-          name,
-          clientSource,
-          academy: { connect: { id: academyId } },
+    if (phoneExists) {
+      throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
+    }
+
+    return prisma.client.create({
+      data: {
+        academy: {
+          connect: {
+            id: academyId,
+          },
         },
-        select: clientBaseSelect
-      });
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
+        ...body,
+      },
+    });
   },
 
-  async getAll({ dataSafe, tx }) {
-    const { query, params } = dataSafe;
+  async updateClient({ params, body }) {
+    const { clientId, academyId } = params;
+
+    const client = await prisma.client.findUnique({
+      where: { id: clientId, academyId },
+    });
+
+    if (!client) throw ApiError.NotFound("Client");
+
+    return prisma.client.update({
+      where: { id: clientId },
+      data: body,
+    });
+  },
+
+  async deleteClient({ params }) {
+    const { clientId, academyId } = params;
+
+    const client = await prisma.client.findUnique({
+      where: { id: clientId, academyId },
+    });
+
+    if (!client) throw ApiError.NotFound("Client");
+
+    return prisma.client.delete({
+      where: { id: clientId },
+    });
+  },
+
+  async getAllClients({ params, query }) {
     const { academyId } = params;
-    const { limit, page, search } = query;
+    const { page, limit, ...filters } = query;
 
-    const run = async (tx: TransactionClient) => {
-      const where = buildClientWhere({ search, academyId });
-      const { take, skip } = getPagination({ page, limit });
+    const pagination = buildPagination({ page, limit });
 
+    const where = buildClientWhere({
+      academyId,
+      ...filters,
+    });
+
+    const { clients, count } = await prisma.$transaction(async (tx) => {
       const [clients, count] = await Promise.all([
         tx.client.findMany({
           where,
-          take,
-          skip,
-          orderBy: { createdAt: "desc" },
-          select: clientBaseSelect
+          ...pagination,
+          orderBy,
         }),
-        tx.client.count({ where })
+        tx.client.count({ where }),
       ]);
 
-      const totalPages = getTotalPages({ limit, count });
-      const pagination = { limit, page, totalPages, total: count };
+      return { clients, count };
+    });
 
-      return { items: clients, pagination };
+    return {
+      items: clients,
+      pagination: buildPaginationMeta({
+        page,
+        limit,
+        count,
+      }),
     };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async getDetails({ dataSafe, tx }) {
-    const { clientId } = dataSafe.params;
+  async getClientDetails({ params, query }) {
+    const { academyId } = params;
+    const { phone, clientId } = query
 
-    const run = async (tx: TransactionClient) => {
-      const client = await tx.client.findUnique({
-        where: { id: clientId },
-        select: clientDetailsSelect,
+    if (!phone && !clientId) {
+      throw ApiError.ValidationError("يجب إرسال رقم الهاتف أو معرف العميل")
+    }
+    
+    let currentClient: ClientGetPayload<{ include: { subscriptions: true } }> | null = null
+
+    if (clientId) {
+      const client = await prisma.client.findUnique({
+        where: { id: clientId, academyId },
+        include: { subscriptions: true }
       });
-      if (!client) throw ApiError.NotFound({ model: "Client" });
-
-      const otherFiles = await tx.client.findMany({
-        where: {
-          phone: client.phone,
-          NOT: { id: clientId }
-        },
-        select: clientBaseSelect
-      });
-
-      return { currentClient: client, otherFiles };
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async update({ dataSafe, tx }) {
-    const { body, params } = dataSafe;
-    const { clientId, academyId } = params;
-
-    const run = async (tx: TransactionClient) => {
-      const client = await tx.client.findUnique({ where: { id: clientId } });
-      if (!client) throw ApiError.NotFound({ model: "Client" });
-
-      if (body.phone && client.phone !== body.phone) {
-        const existingPhone = await tx.client.findFirst({
-          where: { phone: body.phone, academyId },
-        });
-        if (existingPhone) throw ApiError.Conflict("Phone");
+      if (client) {
+        currentClient = client
       }
+    }
 
-      return await tx.client.update({
-        where: { id: clientId },
-        data: body,
-        select: clientDetailsSelect
+    if (phone) {
+      const client = await prisma.client.findFirst({
+        where: { academyId, phone },
+        include: { subscriptions: true }
       });
+      if (client) {
+        currentClient = client
+      }
+    }
+
+    if (!currentClient) throw ApiError.NotFound("Client")
+
+    const OtherFiles = await prisma.client.findMany({
+      where: { phone, id: { not: currentClient.id }, }
+    });
+
+    return {
+      currentClient,
+      OtherFiles,
     };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async delete({ dataSafe, tx }) {
-    const { clientId } = dataSafe.params;
-
-    const run = async (tx: TransactionClient) => {
-      const client = await tx.client.findUnique({ where: { id: clientId } });
-      if (!client) throw ApiError.NotFound({ model: "Client" });
-
-      return await tx.client.delete({
-        where: { id: clientId },
-        select: clientBaseSelect
-      });
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async getClientByPhone({ dataSafe, tx }) {
-    const { phone, academyId } = dataSafe.params;
-
-    const run = async (tx: TransactionClient) => {
-      const client = await tx.client.findFirst({
-        where: { phone, academyId },
-        select: clientBaseSelect,
-      });
-      if (!client) throw ApiError.NotFound({ model: "Client" });
-
-      return client;
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
   }
 };
 

@@ -11,19 +11,16 @@ export type UpdateClientDto = {
   body: z.infer<typeof Schema.UpdateClientSchema.body>;
 };
 
+export type DeleteClientDto = {
+  params: z.infer<typeof Schema.DeleteClientSchema.params>;
+};
+
 export type GetAllClientsDto = {
   params: z.infer<typeof Schema.GetAllClientsSchema.params>;
   query: z.infer<typeof Schema.GetAllClientsSchema.query>;
 };
 
-export type ClientDetailsDto = {
+export type GetClientDetailsDto = {
   params: z.infer<typeof Schema.GetClientDetailsSchema.params>;
-};
-
-export type DeleteClientDto = {
-  params: z.infer<typeof Schema.DeleteClientSchema.params>;
-};
-
-export type GetClientByPhoneDto = {
-  params: z.infer<typeof Schema.GetClientByPhoneSchema.params>;
+  query: z.infer<typeof Schema.GetClientDetailsSchema.query>;
 };

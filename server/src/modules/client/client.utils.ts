@@ -1,23 +1,38 @@
-import { ClientWhereInput } from "../../../prisma/generated/models";
+import {
+  ClientOrderByWithRelationInput,
+  ClientWhereInput,
+} from "../../../prisma/generated/models";
+import { ClientSource } from "../../../prisma/generated/enums";
 
 export const buildClientWhere = ({
-  search,
   academyId,
+  search,
+  clientSource,
 }: {
-  search?: string;
   academyId: string;
+  search?: string;
+  clientSource?: ClientSource;
 }): ClientWhereInput => {
-  const where: ClientWhereInput = {
-    academyId,
-  };
+  const where: ClientWhereInput = { academyId }
 
   if (search) {
     where.OR = [
-      { name: { contains: search, mode: "insensitive" } },
-      { phone: { contains: search } },
-      { id: { contains: search } },
-    ];
+      {
+        name: { contains: search, mode: "insensitive" }
+      },
+      {
+        phone: { contains: search }
+      }
+    ]
   }
 
-  return where;
+  if (clientSource) {
+    where.source = clientSource
+  }
+
+  return where
+}
+
+export const orderBy: ClientOrderByWithRelationInput = {
+  createdAt: "desc",
 };

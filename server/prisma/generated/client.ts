@@ -52,11 +52,6 @@ export type Image = Prisma.ImageModel
  */
 export type AcademyPhone = Prisma.AcademyPhoneModel
 /**
- * Model ClientPhone
- * 
- */
-export type ClientPhone = Prisma.ClientPhoneModel
-/**
  * Model FinancialAccount
  * 
  */

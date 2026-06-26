@@ -2,10 +2,11 @@ import { PaginatedResponse } from './../../shared/types/types';
 import { AcademyGetPayload, TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import * as DTO from "./academy.dto";
 import { Academy, User } from '../../../prisma/generated/client';
-import { RequestAuth } from '../auth/auth.type';
+import { AuthRequestHandler, RequestAuth } from '../auth/auth.type';
 import { Response, NextFunction } from 'express';
 
 type SafeUser = Omit<User, "password" | "logoutAt">;
+
 
 
 export type AcademyWithFullRelations =
@@ -24,6 +25,12 @@ export type AcademyWithSafeRelations = Omit<AcademyWithFullRelations, "owners"> 
 export interface RequestAcademy extends RequestAuth {
     academy?: Academy;
 }
+
+export type AcademyRequestHandler = (
+    req: RequestAcademy,
+    res: Response,
+    next: NextFunction
+) => Promise<Response>
 
 export interface IAcademyService {
     create: (data: DTO.CreateAcademyDto) => Promise<Academy>;
@@ -60,33 +67,27 @@ export interface IAcademyService {
 }
 
 
-export type AcademyControllerMethod<T> = (
-    req: T,
-    res: Response,
-    next: NextFunction
-) => Promise<Response>
-
 export interface IAcademyController {
-    create: AcademyControllerMethod<RequestAuth>
-    update: AcademyControllerMethod<RequestAcademy>
-    delete: AcademyControllerMethod<RequestAcademy>
+    create: AuthRequestHandler
+    update: AcademyRequestHandler
+    delete: AcademyRequestHandler
 
-    addOwner: AcademyControllerMethod<RequestAcademy>
-    deleteOwner: AcademyControllerMethod<RequestAcademy>
+    addOwner: AcademyRequestHandler
+    deleteOwner: AcademyRequestHandler
 
-    addSocialMedia: AcademyControllerMethod<RequestAcademy>
-    deleteSocialMedia: AcademyControllerMethod<RequestAcademy>
+    addSocialMedia: AcademyRequestHandler
+    deleteSocialMedia: AcademyRequestHandler
 
-    addPhone: AcademyControllerMethod<RequestAcademy>
-    deletePhone: AcademyControllerMethod<RequestAcademy>
+    addPhone: AcademyRequestHandler
+    deletePhone: AcademyRequestHandler
 
-    addAddress: AcademyControllerMethod<RequestAcademy>
-    deleteAddress: AcademyControllerMethod<RequestAcademy>
+    addAddress: AcademyRequestHandler
+    deleteAddress: AcademyRequestHandler
 
-    getDetails: AcademyControllerMethod<RequestAcademy>
-    getAll: AcademyControllerMethod<RequestAcademy>
-    myAcademics: AcademyControllerMethod<RequestAuth>
+    getDetails: AcademyRequestHandler
+    getAll: AcademyRequestHandler
+    myAcademics: AuthRequestHandler
 
-    addPaymentLink: AcademyControllerMethod<RequestAcademy>
-    deletePaymentLink: AcademyControllerMethod<RequestAcademy>
+    addPaymentLink: AcademyRequestHandler
+    deletePaymentLink: AcademyRequestHandler
 }

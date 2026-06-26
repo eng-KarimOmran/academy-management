@@ -1,28 +1,26 @@
-import { Response } from "express";
-import * as DTO from "./client.dto";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
-import ClientService from "./client.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestAcademy } from "../academy/academy.middleware";
+import * as DTO from "./client.dto";
+import ClientService from "./client.service";
+import { IClientController } from "./client.type";
 
-const ClientController = {
-  createClient: async (req: RequestAuth, res: Response) => {
+const ClientController: IClientController = {
+  create: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CreateClientDto;
 
-    const client = await ClientService.create({ dataSafe });
+    const client = await ClientService.createClient(dataSafe);
 
     return sendSuccess({
       res,
       statusCode: 201,
       data: client,
-      message: "تم إنشاء العميل بنجاح",
+      message: "تم تسجيل العميل بنجاح",
     });
   },
 
-  getAllClients: async (req: RequestAcademy, res: Response) => {
+  getAll: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetAllClientsDto;
 
-    const data = await ClientService.getAll({ dataSafe });
+    const data = await ClientService.getAllClients(dataSafe);
 
     return sendSuccess({
       res,
@@ -30,10 +28,10 @@ const ClientController = {
     });
   },
 
-  getDetailsClient: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.ClientDetailsDto;
+  getDetails: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.GetClientDetailsDto;
 
-    const clientData = await ClientService.getDetails({ dataSafe });
+    const clientData = await ClientService.getClientDetails(dataSafe);
 
     return sendSuccess({
       res,
@@ -41,10 +39,10 @@ const ClientController = {
     });
   },
 
-  updateClient: async (req: RequestAcademy, res: Response) => {
+  update: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.UpdateClientDto;
 
-    const updatedClient = await ClientService.update({ dataSafe });
+    const updatedClient = await ClientService.updateClient(dataSafe);
 
     return sendSuccess({
       res,
@@ -53,25 +51,14 @@ const ClientController = {
     });
   },
 
-  deleteClient: async (req: RequestAcademy, res: Response) => {
+  delete: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.DeleteClientDto;
 
-    await ClientService.delete({ dataSafe });
+    await ClientService.deleteClient(dataSafe);
 
     return sendSuccess({
       res,
       message: "تم حذف العميل نهائيًا",
-    });
-  },
-
-  getDetailsClientByPhone: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetClientByPhoneDto;
-
-    const clientData = await ClientService.getClientByPhone({ dataSafe });
-
-    return sendSuccess({
-      res,
-      data: clientData,
     });
   },
 };

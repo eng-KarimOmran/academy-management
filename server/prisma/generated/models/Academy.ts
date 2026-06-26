@@ -188,7 +188,6 @@ export type AcademyWhereInput = {
   areas?: Prisma.AreaListRelationFilter
   ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
   academyPhones?: Prisma.AcademyPhoneListRelationFilter
-  clientPhones?: Prisma.ClientPhoneListRelationFilter
   financialAccount?: Prisma.XOR<Prisma.FinancialAccountNullableScalarRelationFilter, Prisma.FinancialAccountWhereInput> | null
   payrolls?: Prisma.PayrollListRelationFilter
 }
@@ -212,7 +211,6 @@ export type AcademyOrderByWithRelationInput = {
   areas?: Prisma.AreaOrderByRelationAggregateInput
   ledgerTransactions?: Prisma.LedgerTransactionOrderByRelationAggregateInput
   academyPhones?: Prisma.AcademyPhoneOrderByRelationAggregateInput
-  clientPhones?: Prisma.ClientPhoneOrderByRelationAggregateInput
   financialAccount?: Prisma.FinancialAccountOrderByWithRelationInput
   payrolls?: Prisma.PayrollOrderByRelationAggregateInput
 }
@@ -239,7 +237,6 @@ export type AcademyWhereUniqueInput = Prisma.AtLeast<{
   areas?: Prisma.AreaListRelationFilter
   ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
   academyPhones?: Prisma.AcademyPhoneListRelationFilter
-  clientPhones?: Prisma.ClientPhoneListRelationFilter
   financialAccount?: Prisma.XOR<Prisma.FinancialAccountNullableScalarRelationFilter, Prisma.FinancialAccountWhereInput> | null
   payrolls?: Prisma.PayrollListRelationFilter
 }, "id" | "name">
@@ -282,7 +279,6 @@ export type AcademyCreateInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -305,7 +301,6 @@ export type AcademyUncheckedCreateInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -328,7 +323,6 @@ export type AcademyUpdateInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -351,7 +345,6 @@ export type AcademyUncheckedUpdateInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -471,20 +464,6 @@ export type AcademyUpdateOneRequiredWithoutAcademyPhonesNestedInput = {
   upsert?: Prisma.AcademyUpsertWithoutAcademyPhonesInput
   connect?: Prisma.AcademyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutAcademyPhonesInput, Prisma.AcademyUpdateWithoutAcademyPhonesInput>, Prisma.AcademyUncheckedUpdateWithoutAcademyPhonesInput>
-}
-
-export type AcademyCreateNestedOneWithoutClientPhonesInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientPhonesInput
-  connect?: Prisma.AcademyWhereUniqueInput
-}
-
-export type AcademyUpdateOneRequiredWithoutClientPhonesNestedInput = {
-  create?: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
-  connectOrCreate?: Prisma.AcademyCreateOrConnectWithoutClientPhonesInput
-  upsert?: Prisma.AcademyUpsertWithoutClientPhonesInput
-  connect?: Prisma.AcademyWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.AcademyUpdateToOneWithWhereWithoutClientPhonesInput, Prisma.AcademyUpdateWithoutClientPhonesInput>, Prisma.AcademyUncheckedUpdateWithoutClientPhonesInput>
 }
 
 export type AcademyCreateNestedOneWithoutFinancialAccountInput = {
@@ -730,7 +709,6 @@ export type AcademyCreateWithoutLogoInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -752,7 +730,6 @@ export type AcademyUncheckedCreateWithoutLogoInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -810,7 +787,6 @@ export type AcademyCreateWithoutAcademyPhonesInput = {
   cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -832,7 +808,6 @@ export type AcademyUncheckedCreateWithoutAcademyPhonesInput = {
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -870,7 +845,6 @@ export type AcademyUpdateWithoutAcademyPhonesInput = {
   cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -892,111 +866,6 @@ export type AcademyUncheckedUpdateWithoutAcademyPhonesInput = {
   cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
-  payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyCreateWithoutClientPhonesInput = {
-  id?: string
-  name: string
-  createdAt?: Date | string
-  logo?: Prisma.ImageCreateNestedOneWithoutAcademiesInput
-  addresses?: Prisma.AddressCreateNestedManyWithoutAcademyInput
-  paymentLinks?: Prisma.PaymentLinkCreateNestedManyWithoutAcademyInput
-  socialMedia?: Prisma.SocialMediaCreateNestedManyWithoutAcademyInput
-  courses?: Prisma.CourseCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutAcademyInput
-  lessons?: Prisma.LessonCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserCreateNestedManyWithoutAcademiesInput
-  jobProfiles?: Prisma.JobProfileCreateNestedManyWithoutAcademyInput
-  cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
-  areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
-  ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
-  academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
-  payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyUncheckedCreateWithoutClientPhonesInput = {
-  id?: string
-  name: string
-  createdAt?: Date | string
-  imageId?: string | null
-  addresses?: Prisma.AddressUncheckedCreateNestedManyWithoutAcademyInput
-  paymentLinks?: Prisma.PaymentLinkUncheckedCreateNestedManyWithoutAcademyInput
-  socialMedia?: Prisma.SocialMediaUncheckedCreateNestedManyWithoutAcademyInput
-  courses?: Prisma.CourseUncheckedCreateNestedManyWithoutAcademyInput
-  clients?: Prisma.ClientUncheckedCreateNestedManyWithoutAcademyInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutAcademyInput
-  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutAcademyInput
-  owners?: Prisma.UserUncheckedCreateNestedManyWithoutAcademiesInput
-  jobProfiles?: Prisma.JobProfileUncheckedCreateNestedManyWithoutAcademyInput
-  cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
-  areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
-  ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
-  academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
-  payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
-}
-
-export type AcademyCreateOrConnectWithoutClientPhonesInput = {
-  where: Prisma.AcademyWhereUniqueInput
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
-}
-
-export type AcademyUpsertWithoutClientPhonesInput = {
-  update: Prisma.XOR<Prisma.AcademyUpdateWithoutClientPhonesInput, Prisma.AcademyUncheckedUpdateWithoutClientPhonesInput>
-  create: Prisma.XOR<Prisma.AcademyCreateWithoutClientPhonesInput, Prisma.AcademyUncheckedCreateWithoutClientPhonesInput>
-  where?: Prisma.AcademyWhereInput
-}
-
-export type AcademyUpdateToOneWithWhereWithoutClientPhonesInput = {
-  where?: Prisma.AcademyWhereInput
-  data: Prisma.XOR<Prisma.AcademyUpdateWithoutClientPhonesInput, Prisma.AcademyUncheckedUpdateWithoutClientPhonesInput>
-}
-
-export type AcademyUpdateWithoutClientPhonesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  logo?: Prisma.ImageUpdateOneWithoutAcademiesNestedInput
-  addresses?: Prisma.AddressUpdateManyWithoutAcademyNestedInput
-  paymentLinks?: Prisma.PaymentLinkUpdateManyWithoutAcademyNestedInput
-  socialMedia?: Prisma.SocialMediaUpdateManyWithoutAcademyNestedInput
-  courses?: Prisma.CourseUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutAcademyNestedInput
-  lessons?: Prisma.LessonUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUpdateManyWithoutAcademiesNestedInput
-  jobProfiles?: Prisma.JobProfileUpdateManyWithoutAcademyNestedInput
-  cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
-  areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
-  ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
-  academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
-  payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
-}
-
-export type AcademyUncheckedUpdateWithoutClientPhonesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  addresses?: Prisma.AddressUncheckedUpdateManyWithoutAcademyNestedInput
-  paymentLinks?: Prisma.PaymentLinkUncheckedUpdateManyWithoutAcademyNestedInput
-  socialMedia?: Prisma.SocialMediaUncheckedUpdateManyWithoutAcademyNestedInput
-  courses?: Prisma.CourseUncheckedUpdateManyWithoutAcademyNestedInput
-  clients?: Prisma.ClientUncheckedUpdateManyWithoutAcademyNestedInput
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutAcademyNestedInput
-  lessons?: Prisma.LessonUncheckedUpdateManyWithoutAcademyNestedInput
-  owners?: Prisma.UserUncheckedUpdateManyWithoutAcademiesNestedInput
-  jobProfiles?: Prisma.JobProfileUncheckedUpdateManyWithoutAcademyNestedInput
-  cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
-  areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
-  ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
-  academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1019,7 +888,6 @@ export type AcademyCreateWithoutFinancialAccountInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
 
@@ -1041,7 +909,6 @@ export type AcademyUncheckedCreateWithoutFinancialAccountInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
 
@@ -1079,7 +946,6 @@ export type AcademyUpdateWithoutFinancialAccountInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
 
@@ -1101,7 +967,6 @@ export type AcademyUncheckedUpdateWithoutFinancialAccountInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
 
@@ -1122,7 +987,6 @@ export type AcademyCreateWithoutAddressesInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1144,7 +1008,6 @@ export type AcademyUncheckedCreateWithoutAddressesInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1182,7 +1045,6 @@ export type AcademyUpdateWithoutAddressesInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1204,7 +1066,6 @@ export type AcademyUncheckedUpdateWithoutAddressesInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1226,7 +1087,6 @@ export type AcademyCreateWithoutPaymentLinksInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1248,7 +1108,6 @@ export type AcademyUncheckedCreateWithoutPaymentLinksInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1286,7 +1145,6 @@ export type AcademyUpdateWithoutPaymentLinksInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1308,7 +1166,6 @@ export type AcademyUncheckedUpdateWithoutPaymentLinksInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1330,7 +1187,6 @@ export type AcademyCreateWithoutSocialMediaInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1352,7 +1208,6 @@ export type AcademyUncheckedCreateWithoutSocialMediaInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1390,7 +1245,6 @@ export type AcademyUpdateWithoutSocialMediaInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1412,7 +1266,6 @@ export type AcademyUncheckedUpdateWithoutSocialMediaInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1434,7 +1287,6 @@ export type AcademyCreateWithoutClientsInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1456,7 +1308,6 @@ export type AcademyUncheckedCreateWithoutClientsInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1494,7 +1345,6 @@ export type AcademyUpdateWithoutClientsInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1516,7 +1366,6 @@ export type AcademyUncheckedUpdateWithoutClientsInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1538,7 +1387,6 @@ export type AcademyCreateWithoutCoursesInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1560,7 +1408,6 @@ export type AcademyUncheckedCreateWithoutCoursesInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1598,7 +1445,6 @@ export type AcademyUpdateWithoutCoursesInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1620,7 +1466,6 @@ export type AcademyUncheckedUpdateWithoutCoursesInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1642,7 +1487,6 @@ export type AcademyCreateWithoutSubscriptionsInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1664,7 +1508,6 @@ export type AcademyUncheckedCreateWithoutSubscriptionsInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1702,7 +1545,6 @@ export type AcademyUpdateWithoutSubscriptionsInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1724,7 +1566,6 @@ export type AcademyUncheckedUpdateWithoutSubscriptionsInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1746,7 +1587,6 @@ export type AcademyCreateWithoutJobProfilesInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1768,7 +1608,6 @@ export type AcademyUncheckedCreateWithoutJobProfilesInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1806,7 +1645,6 @@ export type AcademyUpdateWithoutJobProfilesInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1828,7 +1666,6 @@ export type AcademyUncheckedUpdateWithoutJobProfilesInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -1850,7 +1687,6 @@ export type AcademyCreateWithoutOwnersInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1872,7 +1708,6 @@ export type AcademyUncheckedCreateWithoutOwnersInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1915,7 +1750,6 @@ export type AcademyCreateWithoutCarsInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -1937,7 +1771,6 @@ export type AcademyUncheckedCreateWithoutCarsInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -1975,7 +1808,6 @@ export type AcademyUpdateWithoutCarsInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -1997,7 +1829,6 @@ export type AcademyUncheckedUpdateWithoutCarsInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -2019,7 +1850,6 @@ export type AcademyCreateWithoutAreasInput = {
   cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -2041,7 +1871,6 @@ export type AcademyUncheckedCreateWithoutAreasInput = {
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -2079,7 +1908,6 @@ export type AcademyUpdateWithoutAreasInput = {
   cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -2101,7 +1929,6 @@ export type AcademyUncheckedUpdateWithoutAreasInput = {
   cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -2123,7 +1950,6 @@ export type AcademyCreateWithoutLessonsInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -2145,7 +1971,6 @@ export type AcademyUncheckedCreateWithoutLessonsInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -2183,7 +2008,6 @@ export type AcademyUpdateWithoutLessonsInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -2205,7 +2029,6 @@ export type AcademyUncheckedUpdateWithoutLessonsInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -2227,7 +2050,6 @@ export type AcademyCreateWithoutLedgerTransactionsInput = {
   cars?: Prisma.CarCreateNestedManyWithoutAcademyInput
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollCreateNestedManyWithoutAcademyInput
 }
@@ -2249,7 +2071,6 @@ export type AcademyUncheckedCreateWithoutLedgerTransactionsInput = {
   cars?: Prisma.CarUncheckedCreateNestedManyWithoutAcademyInput
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
   payrolls?: Prisma.PayrollUncheckedCreateNestedManyWithoutAcademyInput
 }
@@ -2287,7 +2108,6 @@ export type AcademyUpdateWithoutLedgerTransactionsInput = {
   cars?: Prisma.CarUpdateManyWithoutAcademyNestedInput
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -2309,7 +2129,6 @@ export type AcademyUncheckedUpdateWithoutLedgerTransactionsInput = {
   cars?: Prisma.CarUncheckedUpdateManyWithoutAcademyNestedInput
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -2332,7 +2151,6 @@ export type AcademyCreateWithoutPayrollsInput = {
   areas?: Prisma.AreaCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutAcademyInput
 }
 
@@ -2354,7 +2172,6 @@ export type AcademyUncheckedCreateWithoutPayrollsInput = {
   areas?: Prisma.AreaUncheckedCreateNestedManyWithoutAcademyInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutAcademyInput
   academyPhones?: Prisma.AcademyPhoneUncheckedCreateNestedManyWithoutAcademyInput
-  clientPhones?: Prisma.ClientPhoneUncheckedCreateNestedManyWithoutAcademyInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutAcademyInput
 }
 
@@ -2392,7 +2209,6 @@ export type AcademyUpdateWithoutPayrollsInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
 }
 
@@ -2414,7 +2230,6 @@ export type AcademyUncheckedUpdateWithoutPayrollsInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
 }
 
@@ -2441,7 +2256,6 @@ export type AcademyUpdateWithoutLogoInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -2463,7 +2277,6 @@ export type AcademyUncheckedUpdateWithoutLogoInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -2491,7 +2304,6 @@ export type AcademyUpdateWithoutOwnersInput = {
   areas?: Prisma.AreaUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUpdateManyWithoutAcademyNestedInput
 }
@@ -2513,7 +2325,6 @@ export type AcademyUncheckedUpdateWithoutOwnersInput = {
   areas?: Prisma.AreaUncheckedUpdateManyWithoutAcademyNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutAcademyNestedInput
   academyPhones?: Prisma.AcademyPhoneUncheckedUpdateManyWithoutAcademyNestedInput
-  clientPhones?: Prisma.ClientPhoneUncheckedUpdateManyWithoutAcademyNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutAcademyNestedInput
   payrolls?: Prisma.PayrollUncheckedUpdateManyWithoutAcademyNestedInput
 }
@@ -2544,7 +2355,6 @@ export type AcademyCountOutputType = {
   areas: number
   ledgerTransactions: number
   academyPhones: number
-  clientPhones: number
   payrolls: number
 }
 
@@ -2562,7 +2372,6 @@ export type AcademyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   areas?: boolean | AcademyCountOutputTypeCountAreasArgs
   ledgerTransactions?: boolean | AcademyCountOutputTypeCountLedgerTransactionsArgs
   academyPhones?: boolean | AcademyCountOutputTypeCountAcademyPhonesArgs
-  clientPhones?: boolean | AcademyCountOutputTypeCountClientPhonesArgs
   payrolls?: boolean | AcademyCountOutputTypeCountPayrollsArgs
 }
 
@@ -2670,13 +2479,6 @@ export type AcademyCountOutputTypeCountAcademyPhonesArgs<ExtArgs extends runtime
 /**
  * AcademyCountOutputType without action
  */
-export type AcademyCountOutputTypeCountClientPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ClientPhoneWhereInput
-}
-
-/**
- * AcademyCountOutputType without action
- */
 export type AcademyCountOutputTypeCountPayrollsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PayrollWhereInput
 }
@@ -2701,7 +2503,6 @@ export type AcademySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   areas?: boolean | Prisma.Academy$areasArgs<ExtArgs>
   ledgerTransactions?: boolean | Prisma.Academy$ledgerTransactionsArgs<ExtArgs>
   academyPhones?: boolean | Prisma.Academy$academyPhonesArgs<ExtArgs>
-  clientPhones?: boolean | Prisma.Academy$clientPhonesArgs<ExtArgs>
   financialAccount?: boolean | Prisma.Academy$financialAccountArgs<ExtArgs>
   payrolls?: boolean | Prisma.Academy$payrollsArgs<ExtArgs>
   _count?: boolean | Prisma.AcademyCountOutputTypeDefaultArgs<ExtArgs>
@@ -2746,7 +2547,6 @@ export type AcademyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   areas?: boolean | Prisma.Academy$areasArgs<ExtArgs>
   ledgerTransactions?: boolean | Prisma.Academy$ledgerTransactionsArgs<ExtArgs>
   academyPhones?: boolean | Prisma.Academy$academyPhonesArgs<ExtArgs>
-  clientPhones?: boolean | Prisma.Academy$clientPhonesArgs<ExtArgs>
   financialAccount?: boolean | Prisma.Academy$financialAccountArgs<ExtArgs>
   payrolls?: boolean | Prisma.Academy$payrollsArgs<ExtArgs>
   _count?: boolean | Prisma.AcademyCountOutputTypeDefaultArgs<ExtArgs>
@@ -2775,7 +2575,6 @@ export type $AcademyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     areas: Prisma.$AreaPayload<ExtArgs>[]
     ledgerTransactions: Prisma.$LedgerTransactionPayload<ExtArgs>[]
     academyPhones: Prisma.$AcademyPhonePayload<ExtArgs>[]
-    clientPhones: Prisma.$ClientPhonePayload<ExtArgs>[]
     financialAccount: Prisma.$FinancialAccountPayload<ExtArgs> | null
     payrolls: Prisma.$PayrollPayload<ExtArgs>[]
   }
@@ -3192,7 +2991,6 @@ export interface Prisma__AcademyClient<T, Null = never, ExtArgs extends runtime.
   areas<T extends Prisma.Academy$areasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$areasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ledgerTransactions<T extends Prisma.Academy$ledgerTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$ledgerTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   academyPhones<T extends Prisma.Academy$academyPhonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$academyPhonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AcademyPhonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  clientPhones<T extends Prisma.Academy$clientPhonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$clientPhonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClientPhonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   financialAccount<T extends Prisma.Academy$financialAccountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$financialAccountArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payrolls<T extends Prisma.Academy$payrollsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Academy$payrollsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -3957,30 +3755,6 @@ export type Academy$academyPhonesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.AcademyPhoneScalarFieldEnum | Prisma.AcademyPhoneScalarFieldEnum[]
-}
-
-/**
- * Academy.clientPhones
- */
-export type Academy$clientPhonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ClientPhone
-   */
-  select?: Prisma.ClientPhoneSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ClientPhone
-   */
-  omit?: Prisma.ClientPhoneOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ClientPhoneInclude<ExtArgs> | null
-  where?: Prisma.ClientPhoneWhereInput
-  orderBy?: Prisma.ClientPhoneOrderByWithRelationInput | Prisma.ClientPhoneOrderByWithRelationInput[]
-  cursor?: Prisma.ClientPhoneWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ClientPhoneScalarFieldEnum | Prisma.ClientPhoneScalarFieldEnum[]
 }
 
 /**

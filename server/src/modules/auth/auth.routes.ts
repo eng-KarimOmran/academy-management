@@ -1,6 +1,6 @@
 import { auth } from './auth.middleware';
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
+import validate from "../../shared/middlewares/validate.middleware";
 import * as Schema from "./auth.schema";
 import AuthController from "./auth.controller";
 import { TokenType } from './auth.type';
@@ -9,19 +9,19 @@ const router = Router();
 
 router.post(
   "/login",
-  validation(Schema.LoginSchema),
+  validate(Schema.LoginSchema),
   AuthController.login
 );
 
 router.post(
   "/first-user",
-  validation(Schema.createFirstUserSchema),
+  validate(Schema.createFirstUserSchema),
   AuthController.createFirstUser
 );
 
 router.post(
   "/logout",
-  validation(Schema.LogoutSchema),
+  validate(Schema.LogoutSchema),
   auth(TokenType.REFRESH),
   AuthController.logout
 );
@@ -34,7 +34,7 @@ router.get(
 
 router.patch(
   "/change-password",
-  validation(Schema.changePasswordSchema),
+  validate(Schema.changePasswordSchema),
   auth(TokenType.ACCESS),
   AuthController.changePassword,
 );

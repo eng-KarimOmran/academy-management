@@ -16,7 +16,7 @@ export interface ValidationSchemas {
   params?: ZodObject;
 }
 
-const validation = ({
+const validate = ({
   body,
   params,
   query,
@@ -49,4 +49,4 @@ const validation = ({
   };
 };
 
-export default validation;
+export default validate;

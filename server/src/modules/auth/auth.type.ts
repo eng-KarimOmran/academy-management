@@ -1,5 +1,6 @@
+import { NextFunction, Response } from 'express';
 import { User } from '../../../prisma/generated/client';
-import { RequestValidation } from './../../shared/middlewares/validation.middleware';
+import { RequestValidation } from '../../shared/middlewares/validate.middleware';
 import { JwtPayload } from "jsonwebtoken";
 
 export enum TokenType {
@@ -50,3 +51,9 @@ export interface IAuthService {
     phone: string;
   }>;
 }
+
+export type AuthRequestHandler = (
+  req: RequestAuth,
+  res: Response,
+  next: NextFunction
+) => Promise<Response>

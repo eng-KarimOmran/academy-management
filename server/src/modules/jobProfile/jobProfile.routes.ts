@@ -1,37 +1,37 @@
 import { Router } from "express";
 import JobProfileController from "./jobProfile.controller";
 import * as Schema from "./jobProfile.schema";
-import validation from "../../shared/middlewares/validation.middleware";
+import validate from "../../shared/middlewares/validate.middleware";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
-  validation(Schema.createJobProfileSchema),
+  validate(Schema.createJobProfileSchema),
   JobProfileController.createJobProfile
 );
 
 router.get(
   "/",
-  validation(Schema.getAllJobProfilesSchema),
+  validate(Schema.getAllJobProfilesSchema),
   JobProfileController.getAllJobProfiles
 );
 
 router.get(
   "/:jobProfileId",
-  validation(Schema.getJobProfileDetailsSchema),
+  validate(Schema.getJobProfileDetailsSchema),
   JobProfileController.getJobProfileDetails
 );
 
 router.patch(
   "/:jobProfileId",
-  validation(Schema.updateJobProfileSchema),
+  validate(Schema.updateJobProfileSchema),
   JobProfileController.updateJobProfile
 );
 
 router.delete(
   "/:jobProfileId",
-  validation(Schema.deleteJobProfileSchema),
+  validate(Schema.deleteJobProfileSchema),
   JobProfileController.deleteJobProfile
 );
 

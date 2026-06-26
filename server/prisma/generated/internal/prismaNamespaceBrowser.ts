@@ -53,7 +53,6 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Image: 'Image',
   AcademyPhone: 'AcademyPhone',
-  ClientPhone: 'ClientPhone',
   FinancialAccount: 'FinancialAccount',
   Address: 'Address',
   PaymentLink: 'PaymentLink',
@@ -105,16 +104,6 @@ export const AcademyPhoneScalarFieldEnum = {
 } as const
 
 export type AcademyPhoneScalarFieldEnum = (typeof AcademyPhoneScalarFieldEnum)[keyof typeof AcademyPhoneScalarFieldEnum]
-
-
-export const ClientPhoneScalarFieldEnum = {
-  id: 'id',
-  phone: 'phone',
-  academyId: 'academyId',
-  clientId: 'clientId'
-} as const
-
-export type ClientPhoneScalarFieldEnum = (typeof ClientPhoneScalarFieldEnum)[keyof typeof ClientPhoneScalarFieldEnum]
 
 
 export const FinancialAccountScalarFieldEnum = {
@@ -178,6 +167,7 @@ export type BlacklistedTokenScalarFieldEnum = (typeof BlacklistedTokenScalarFiel
 export const ClientScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  phone: 'phone',
   academyId: 'academyId',
   source: 'source',
   createdAt: 'createdAt'

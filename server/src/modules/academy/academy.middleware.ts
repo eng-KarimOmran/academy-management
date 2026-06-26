@@ -15,9 +15,11 @@ export const checkAcademyExists = ({ isAcademyOwner }: { isAcademyOwner?: boolea
     }
 
 
-    const academy = await prisma.academy.findUnique({
+    const academy = req.academy ?? await prisma.academy.findUnique({
       where: { id: academyId },
-      ...(isAcademyOwner && { include: { owners: true } })
+      include: {
+        owners: true
+      }
     })
 
     if (!academy) throw ApiError.NotFound("Academy");

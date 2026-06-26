@@ -1,5 +1,5 @@
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
+import validate from "../../shared/middlewares/validate.middleware";
 import * as Schema from "./user.schema";
 import UserController from "./user.controller";
 import { isAdmin } from "./user.middleware";
@@ -9,41 +9,41 @@ const router = Router();
 
 router.get(
   "/",
-  validation(Schema.GetAllUsersSchema),
+  validate(Schema.GetAllUsersSchema),
   isAdmin,
   UserController.getAllUser,
 );
 
 router.post(
   "/",
-  validation(Schema.CreateUserSchema),
+  validate(Schema.CreateUserSchema),
   isAdmin,
   UserController.createUser,
 );
 
 router.get(
   "/:userId",
-  validation(Schema.GetUserDetailsSchema),
+  validate(Schema.GetUserDetailsSchema),
   UserController.getDetailsUser,
 );
 
 router.patch(
   "/:userId/new-password",
-  validation(Schema.newPasswordSchema),
+  validate(Schema.newPasswordSchema),
   isAdmin,
   UserController.newPassword,
 );
 
 router.patch(
   "/:userId",
-  validation(Schema.UpdateUserSchema),
+  validate(Schema.UpdateUserSchema),
   isAdmin,
   UserController.updateUser,
 );
 
 router.delete(
   "/:userId",
-  validation(Schema.DeleteUserSchema),
+  validate(Schema.DeleteUserSchema),
   isAdmin,
   UserController.deleteUser,
 );

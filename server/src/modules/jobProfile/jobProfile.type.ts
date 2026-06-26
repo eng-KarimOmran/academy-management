@@ -1,6 +1,6 @@
-import { JobProfile, User } from "../../../prisma/generated/browser";
+import { JobProfile } from "../../../prisma/generated/browser";
 import { PaginatedResponse } from "../../shared/types/types";
-import { RequestAcademy } from "../academy/academy.type";
+import { AcademyRequestHandler } from "../academy/academy.type";
 
 import {
     CreateJobProfileDto,
@@ -9,8 +9,6 @@ import {
     GetAllJobProfilesDto,
     GetJobProfileDetailsDto,
 } from "./jobProfile.dto";
-
-import { NextFunction, Response } from "express";
 
 export interface IJobProfileService {
     createJobProfile(
@@ -34,20 +32,15 @@ export interface IJobProfileService {
     ): Promise<JobProfile>;
 }
 
-export type JobProfileControllerMethod = (
-    req: RequestAcademy,
-    res: Response,
-    next: NextFunction
-) => Promise<Response>
 
 export interface IJobProfileController {
-    createJobProfile: JobProfileControllerMethod;
+    createJobProfile: AcademyRequestHandler;
 
-    updateJobProfile: JobProfileControllerMethod;
+    updateJobProfile: AcademyRequestHandler;
 
-    deleteJobProfile: JobProfileControllerMethod;
+    deleteJobProfile: AcademyRequestHandler;
 
-    getAllJobProfiles: JobProfileControllerMethod;
+    getAllJobProfiles: AcademyRequestHandler;
 
-    getJobProfileDetails: JobProfileControllerMethod;
+    getJobProfileDetails: AcademyRequestHandler;
 }

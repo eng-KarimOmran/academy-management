@@ -386,7 +386,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Image: 'Image',
   AcademyPhone: 'AcademyPhone',
-  ClientPhone: 'ClientPhone',
   FinancialAccount: 'FinancialAccount',
   Address: 'Address',
   PaymentLink: 'PaymentLink',
@@ -419,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "image" | "academyPhone" | "clientPhone" | "financialAccount" | "address" | "paymentLink" | "socialMedia" | "academy" | "blacklistedToken" | "client" | "course" | "subscription" | "jobProfile" | "user" | "trainingDetails" | "car" | "area" | "lesson" | "ledgerTransaction" | "payroll"
+    modelProps: "image" | "academyPhone" | "financialAccount" | "address" | "paymentLink" | "socialMedia" | "academy" | "blacklistedToken" | "client" | "course" | "subscription" | "jobProfile" | "user" | "trainingDetails" | "car" | "area" | "lesson" | "ledgerTransaction" | "payroll"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -568,80 +567,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AcademyPhoneCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AcademyPhoneCountAggregateOutputType> | number
-        }
-      }
-    }
-    ClientPhone: {
-      payload: Prisma.$ClientPhonePayload<ExtArgs>
-      fields: Prisma.ClientPhoneFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ClientPhoneFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ClientPhoneFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>
-        }
-        findFirst: {
-          args: Prisma.ClientPhoneFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ClientPhoneFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>
-        }
-        findMany: {
-          args: Prisma.ClientPhoneFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>[]
-        }
-        create: {
-          args: Prisma.ClientPhoneCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>
-        }
-        createMany: {
-          args: Prisma.ClientPhoneCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ClientPhoneCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>[]
-        }
-        delete: {
-          args: Prisma.ClientPhoneDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>
-        }
-        update: {
-          args: Prisma.ClientPhoneUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>
-        }
-        deleteMany: {
-          args: Prisma.ClientPhoneDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ClientPhoneUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ClientPhoneUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>[]
-        }
-        upsert: {
-          args: Prisma.ClientPhoneUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClientPhonePayload>
-        }
-        aggregate: {
-          args: Prisma.ClientPhoneAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateClientPhone>
-        }
-        groupBy: {
-          args: Prisma.ClientPhoneGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClientPhoneGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ClientPhoneCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClientPhoneCountAggregateOutputType> | number
         }
       }
     }
@@ -1960,16 +1885,6 @@ export const AcademyPhoneScalarFieldEnum = {
 export type AcademyPhoneScalarFieldEnum = (typeof AcademyPhoneScalarFieldEnum)[keyof typeof AcademyPhoneScalarFieldEnum]
 
 
-export const ClientPhoneScalarFieldEnum = {
-  id: 'id',
-  phone: 'phone',
-  academyId: 'academyId',
-  clientId: 'clientId'
-} as const
-
-export type ClientPhoneScalarFieldEnum = (typeof ClientPhoneScalarFieldEnum)[keyof typeof ClientPhoneScalarFieldEnum]
-
-
 export const FinancialAccountScalarFieldEnum = {
   id: 'id',
   jobProfileId: 'jobProfileId',
@@ -2031,6 +1946,7 @@ export type BlacklistedTokenScalarFieldEnum = (typeof BlacklistedTokenScalarFiel
 export const ClientScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  phone: 'phone',
   academyId: 'academyId',
   source: 'source',
   createdAt: 'createdAt'
@@ -2549,7 +2465,6 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   image?: Prisma.ImageOmit
   academyPhone?: Prisma.AcademyPhoneOmit
-  clientPhone?: Prisma.ClientPhoneOmit
   financialAccount?: Prisma.FinancialAccountOmit
   address?: Prisma.AddressOmit
   paymentLink?: Prisma.PaymentLinkOmit
