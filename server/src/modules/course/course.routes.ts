@@ -3,12 +3,14 @@ import CourseController from "./course.controller";
 import * as Schema from "./course.schema";
 import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
 
 const router = Router({ mergeParams: true });
 
 router.get(
   "/",
   validate(Schema.GetAllSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   CourseController.getAllCourses
 );
 

@@ -14,6 +14,7 @@ import routerSubscription from "../subscription/subscription.routes";
 import routerLedgerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
 import routerLesson from "../lesson/lesson.routes";
 import routerStatistics from "../statistics/statistics.routes";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
 
 const router = Router();
 
@@ -23,7 +24,6 @@ const router = Router();
 router.get(
   "/",
   validate(AcademySchema.getAll),
-  isAdmin,
   AcademyController.getAll
 );
 

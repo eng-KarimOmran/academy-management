@@ -127,7 +127,7 @@ export const getValidatedLessonDependencies = async ({
       where: { id: areaId },
     }),
     tx.jobProfile.findUnique({
-      where: { id: jobProfileId, jobProfileType: "TRAINER", supportType: { in: ["BOTH", transmission] } },
+      where: { id: jobProfileId, supportType: { in: ["BOTH", transmission] } },
     }),
   ]);
 

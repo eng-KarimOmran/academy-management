@@ -2,7 +2,6 @@ import { RequestAcademy } from './academy.type';
 import { Response, NextFunction } from "express";
 import ApiError from "../../shared/utils/ApiError";
 import { prisma } from '../../lib/prisma';
-import { AcademyGetPayload } from '../../../prisma/generated/models';
 
 export const checkAcademyExists = ({ isAcademyOwner }: { isAcademyOwner?: boolean } = {}) => {
   return async (req: RequestAcademy, res: Response, next: NextFunction) => {
@@ -18,19 +17,24 @@ export const checkAcademyExists = ({ isAcademyOwner }: { isAcademyOwner?: boolea
     const academy = req.academy ?? await prisma.academy.findUnique({
       where: { id: academyId },
       include: {
-        owners: true
+        owners: true,
+        financialAccount: true
       }
     })
 
     if (!academy) throw ApiError.NotFound("Academy");
 
     if (isAcademyOwner) {
-      const academyWithOwners = academy as AcademyGetPayload<{ include: { owners: true } }>;
-      const isOwner = academyWithOwners.owners.some((o) => o.id === userId);
+      const isOwner = academy.owners.some((o) => o.id === userId);
       if (!isOwner) throw ApiError.Forbidden();
     }
 
+    if (!academy.financialAccount) {
+      throw ApiError.NotFound("financialAccount")
+    }
+
     req.academy = academy;
+
     return next();
   }
 };

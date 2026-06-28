@@ -3,12 +3,15 @@ import CarController from "./car.controller";
 import * as Schema from "./car.schema";
 import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares"
+import { JobProfileType } from "../../../prisma/generated/enums";
 
 const router = Router({ mergeParams: true });
 
 router.get(
   "/",
   validate(Schema.GetAllCarsSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   CarController.getAllCars
 );
 

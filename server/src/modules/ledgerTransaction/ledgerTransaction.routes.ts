@@ -3,12 +3,14 @@ import LedgerTransactionController from "./ledgerTransaction.controller";
 import * as Schema from "./ledgerTransaction.schema";
 import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
   validate(Schema.CreateLedgerTransactionSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   LedgerTransactionController.createLedgerTransaction
 );
 
@@ -22,6 +24,7 @@ router.get(
 router.get(
   "/:ledgerTransactionId",
   validate(Schema.GetLedgerTransactionDetailsSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   LedgerTransactionController.getLedgerTransactionDetails
 );
 

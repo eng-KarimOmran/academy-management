@@ -8,29 +8,25 @@ import { buildPagination, buildPaginationMeta } from '../../shared/utils/Paginat
 import { TransactionClient } from '../../../prisma/generated/internal/prismaNamespace';
 
 const LedgerTransactionService: ILedgerTransactionService = {
-  async createLedgerTransaction({ params, body }, tx) {
+  async createLedgerTransaction({ params, body, tx, academyAccountId, employeeAccountId }) {
     const { academyId } = params;
+    if (!academyAccountId) throw ApiError.BadRequest("academyAccountId مطلوب")
 
     const run = (async (tx: TransactionClient) => {
       let imageId: string | undefined;
 
       const {
-        senderId,
-        receiverId,
         subscriptionId,
         image,
         amount,
         paymentMethod,
         transactionType,
+        accountId
       } = body;
 
-      const [sender, receiver] = await Promise.all([
-        tx.financialAccount.findUnique({ where: { id: senderId } }),
-        tx.financialAccount.findUnique({ where: { id: receiverId } }),
-      ]);
-
-      if (!sender) throw ApiError.NotFound("Sender");
-      if (!receiver) throw ApiError.NotFound("Receiver");
+      let senderId: string | undefined;
+      let receiverId: string | undefined;
+      let subscriptionAccount: string | undefined
 
       if (subscriptionId) {
         const subscription = await tx.subscription.findUnique({
@@ -51,21 +47,59 @@ const LedgerTransactionService: ILedgerTransactionService = {
           if (netPaid + amount > subscription.priceAtBooking) {
             throw ApiError.Conflict("OVERPAYMENT")
           }
-          if (senderId !== subscription.financialAccount?.id) {
-            throw ApiError.Conflict("PAYMENT_SENDER_MUST_BE_SUBSCRIPTION")
-          }
         }
 
         if (transactionType === "CUSTOMER_REFUND") {
           if (netPaid < amount) {
             throw ApiError.Conflict("EXCESS_REFUND")
           }
-          if (receiverId !== subscription.financialAccount?.id) {
-            throw ApiError.Conflict("REFUND_RECEIVER_MUST_BE_SUBSCRIPTION")
-          }
         }
+
+        subscriptionAccount = subscription.financialAccount.id
       }
 
+
+
+      switch (body.transactionType) {
+        case 'CUSTOMER_PAYMENT':
+          senderId = subscriptionAccount
+          receiverId = employeeAccountId ?? academyAccountId;
+          break;
+
+        case 'CUSTOMER_REFUND':
+          senderId = employeeAccountId ?? academyAccountId;
+          receiverId = subscriptionAccount;
+          break;
+
+        case 'EMPLOYEE_TRANSFER_TO_EMPLOYEE':
+          senderId = accountId;
+          receiverId = employeeAccountId
+          break;
+
+        case 'EMPLOYEE_TRANSFER_TO_ACADEMY':
+          senderId = employeeAccountId;
+          receiverId = academyAccountId;
+          break;
+
+        case 'ACADEMY_TRANSFER_TO_EMPLOYEE':
+          senderId = academyAccountId;
+          receiverId = employeeAccountId;
+          break;
+
+        default:
+          throw ApiError.BadRequest("INVALID_TRANSACTION_TYPE");
+      }
+
+      if (!senderId) throw ApiError.BadRequest("senderId مطلوب");
+      if (!receiverId) throw ApiError.BadRequest("receiverId مطلوب");
+
+      const [sender, receiver] = await Promise.all([
+        tx.financialAccount.findUnique({ where: { id: senderId } }),
+        tx.financialAccount.findUnique({ where: { id: receiverId } }),
+      ]);
+
+      if (!sender) throw ApiError.NotFound("Sender");
+      if (!receiver) throw ApiError.NotFound("Receiver");
 
       if (image) {
         const createdImage = await tx.image.create({
@@ -104,6 +138,7 @@ const LedgerTransactionService: ILedgerTransactionService = {
 
     return tx ? await run(tx) : await prisma.$transaction(run);
   },
+
   async getAllLedgerTransactions({ params, query }) {
     const { academyId } = params;
 
@@ -152,6 +187,7 @@ const LedgerTransactionService: ILedgerTransactionService = {
       }),
     };
   },
+
   async getLedgerTransactionDetails({ params }) {
     const { academyId, ledgerTransactionId } = params;
 

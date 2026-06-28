@@ -1,14 +1,17 @@
 -- CreateEnum
+CREATE TYPE "Platform" AS ENUM ('FACEBOOK', 'TIKTOK', 'INSTAGRAM', 'TWITTER', 'YOUTUBE', 'LINKEDIN', 'SNAPCHAT', 'WHATSAPP');
+
+-- CreateEnum
 CREATE TYPE "ClientSource" AS ENUM ('PLATFORM', 'OFFICE');
 
 -- CreateEnum
-CREATE TYPE "SubscriptionStatus" AS ENUM ('PENDING_DEPOSIT', 'PENDING_FIRST_SESSION', 'ACTIVE_LIMITED', 'ACTIVE', 'CANCELED', 'COMPLETED');
+CREATE TYPE "SubscriptionStatus" AS ENUM ('PENDING_DEPOSIT', 'PENDING_FIRST_SESSION', 'ACTIVE_LIMITED', 'SUSPENDED', 'ACTIVE', 'CANCELED', 'COMPLETED');
 
 -- CreateEnum
 CREATE TYPE "Transmission" AS ENUM ('MANUAL', 'AUTOMATIC');
 
 -- CreateEnum
-CREATE TYPE "JobProfileType" AS ENUM ('trainer', 'secretary', 'manager');
+CREATE TYPE "JobProfileType" AS ENUM ('TRAINER', 'SECRETARY', 'MANAGER');
 
 -- CreateEnum
 CREATE TYPE "SupportType" AS ENUM ('MANUAL', 'AUTOMATIC', 'BOTH');
@@ -23,12 +26,12 @@ CREATE TYPE "PaymentMethod" AS ENUM ('MONETARY', 'ELECTRONIC');
 CREATE TYPE "TransactionType" AS ENUM ('CUSTOMER_PAYMENT', 'CUSTOMER_REFUND', 'EMPLOYEE_TRANSFER_TO_EMPLOYEE', 'EMPLOYEE_TRANSFER_TO_ACADEMY', 'ACADEMY_TRANSFER_TO_EMPLOYEE');
 
 -- CreateTable
-CREATE TABLE "ProofOfPaymentImage" (
+CREATE TABLE "Image" (
     "id" TEXT NOT NULL,
     "imageUrl" TEXT NOT NULL,
     "publicId" TEXT NOT NULL,
 
-    CONSTRAINT "ProofOfPaymentImage_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Image_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -41,21 +44,12 @@ CREATE TABLE "AcademyPhone" (
 );
 
 -- CreateTable
-CREATE TABLE "ClientPhone" (
-    "id" TEXT NOT NULL,
-    "phone" TEXT NOT NULL,
-    "academyId" TEXT NOT NULL,
-    "clientId" TEXT NOT NULL,
-
-    CONSTRAINT "ClientPhone_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "FinancialAccount" (
     "id" TEXT NOT NULL,
     "jobProfileId" TEXT,
     "subscriptionId" TEXT,
     "academyId" TEXT,
+    "balance" DOUBLE PRECISION NOT NULL DEFAULT 0,
 
     CONSTRAINT "FinancialAccount_pkey" PRIMARY KEY ("id")
 );
@@ -73,6 +67,7 @@ CREATE TABLE "Address" (
 CREATE TABLE "PaymentLink" (
     "id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
+    "phone" TEXT,
     "walletProvider" TEXT NOT NULL,
     "academyId" TEXT NOT NULL,
 
@@ -82,7 +77,7 @@ CREATE TABLE "PaymentLink" (
 -- CreateTable
 CREATE TABLE "SocialMedia" (
     "id" TEXT NOT NULL,
-    "platform" TEXT NOT NULL,
+    "platform" "Platform" NOT NULL,
     "url" TEXT NOT NULL,
     "academyId" TEXT NOT NULL,
 
@@ -92,7 +87,9 @@ CREATE TABLE "SocialMedia" (
 -- CreateTable
 CREATE TABLE "Academy" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "imageId" TEXT,
 
     CONSTRAINT "Academy_pkey" PRIMARY KEY ("id")
 );
@@ -107,6 +104,7 @@ CREATE TABLE "BlacklistedToken" (
 CREATE TABLE "Client" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
     "academyId" TEXT NOT NULL,
     "source" "ClientSource" NOT NULL DEFAULT 'OFFICE',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -146,6 +144,7 @@ CREATE TABLE "Subscription" (
     "clientId" TEXT NOT NULL,
     "courseId" TEXT NOT NULL,
     "academyId" TEXT NOT NULL,
+    "areaId" TEXT NOT NULL,
     "createdById" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "payrollId" TEXT,
@@ -159,9 +158,10 @@ CREATE TABLE "JobProfile" (
     "userId" TEXT NOT NULL,
     "academyId" TEXT NOT NULL,
     "jobProfileType" "JobProfileType" NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "baseSalary" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "lessonPrice" DOUBLE PRECISION NOT NULL DEFAULT 0,
-    "supportType" "SupportType" NOT NULL,
+    "supportType" "SupportType",
     "targetCount" INTEGER NOT NULL DEFAULT 0,
     "bonusAmount" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -179,18 +179,19 @@ CREATE TABLE "User" (
     "email" TEXT,
     "logoutAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "isPasswordChanged" BOOLEAN NOT NULL DEFAULT false,
+    "isAdmin" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "TrainingDetails" (
+CREATE TABLE "CourseFeature" (
     "id" TEXT NOT NULL,
     "feature" TEXT NOT NULL,
     "courseId" TEXT NOT NULL,
 
-    CONSTRAINT "TrainingDetails_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "CourseFeature_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -226,12 +227,14 @@ CREATE TABLE "Lesson" (
     "endTime" TIMESTAMP(3) NOT NULL,
     "lessonStatus" "LessonStatus" NOT NULL DEFAULT 'SCHEDULED',
     "transmission" "Transmission" NOT NULL,
-    "expectedAmount" DOUBLE PRECISION,
+    "sessionDurationMinutes" INTEGER NOT NULL,
+    "expectedPaymentAmount" DOUBLE PRECISION,
     "carSessionPrice" DOUBLE PRECISION NOT NULL,
     "captainLessonPrice" DOUBLE PRECISION NOT NULL,
     "academyId" TEXT NOT NULL,
     "subscriptionId" TEXT NOT NULL,
     "carId" TEXT NOT NULL,
+    "clientId" TEXT NOT NULL,
     "ledgerTransactionId" TEXT,
     "areaId" TEXT NOT NULL,
     "jobProfileId" TEXT NOT NULL,
@@ -250,7 +253,7 @@ CREATE TABLE "LedgerTransaction" (
     "senderId" TEXT NOT NULL,
     "receiverId" TEXT NOT NULL,
     "amount" DECIMAL(12,2) NOT NULL,
-    "proofOfPaymentImageId" TEXT,
+    "imageId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "subscriptionId" TEXT,
 
@@ -272,7 +275,6 @@ CREATE TABLE "Payroll" (
     "bonusAmount" DOUBLE PRECISION NOT NULL,
     "totalDeductions" DOUBLE PRECISION NOT NULL,
     "netAmount" DOUBLE PRECISION NOT NULL,
-    "ledgerTransactionId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Payroll_pkey" PRIMARY KEY ("id")
@@ -290,9 +292,6 @@ CREATE TABLE "_AcademyOwners" (
 CREATE UNIQUE INDEX "AcademyPhone_phone_key" ON "AcademyPhone"("phone");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ClientPhone_phone_academyId_key" ON "ClientPhone"("phone", "academyId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "FinancialAccount_jobProfileId_key" ON "FinancialAccount"("jobProfileId");
 
 -- CreateIndex
@@ -302,10 +301,16 @@ CREATE UNIQUE INDEX "FinancialAccount_subscriptionId_key" ON "FinancialAccount"(
 CREATE UNIQUE INDEX "FinancialAccount_academyId_key" ON "FinancialAccount"("academyId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Academy_name_key" ON "Academy"("name");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "BlacklistedToken_jti_key" ON "BlacklistedToken"("jti");
 
 -- CreateIndex
 CREATE INDEX "BlacklistedToken_expiresAt_idx" ON "BlacklistedToken"("expiresAt");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Client_phone_academyId_key" ON "Client"("phone", "academyId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Course_academyId_name_key" ON "Course"("academyId", "name");
@@ -338,19 +343,10 @@ CREATE INDEX "LedgerTransaction_senderId_idx" ON "LedgerTransaction"("senderId")
 CREATE INDEX "LedgerTransaction_receiverId_idx" ON "LedgerTransaction"("receiverId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Payroll_ledgerTransactionId_key" ON "Payroll"("ledgerTransactionId");
-
--- CreateIndex
 CREATE INDEX "_AcademyOwners_B_index" ON "_AcademyOwners"("B");
 
 -- AddForeignKey
 ALTER TABLE "AcademyPhone" ADD CONSTRAINT "AcademyPhone_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ClientPhone" ADD CONSTRAINT "ClientPhone_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "ClientPhone" ADD CONSTRAINT "ClientPhone_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FinancialAccount" ADD CONSTRAINT "FinancialAccount_jobProfileId_fkey" FOREIGN KEY ("jobProfileId") REFERENCES "JobProfile"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -371,6 +367,9 @@ ALTER TABLE "PaymentLink" ADD CONSTRAINT "PaymentLink_academyId_fkey" FOREIGN KE
 ALTER TABLE "SocialMedia" ADD CONSTRAINT "SocialMedia_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Academy" ADD CONSTRAINT "Academy_imageId_fkey" FOREIGN KEY ("imageId") REFERENCES "Image"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Client" ADD CONSTRAINT "Client_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -386,6 +385,9 @@ ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_courseId_fkey" FOREIGN K
 ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_areaId_fkey" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "JobProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -398,7 +400,7 @@ ALTER TABLE "JobProfile" ADD CONSTRAINT "JobProfile_userId_fkey" FOREIGN KEY ("u
 ALTER TABLE "JobProfile" ADD CONSTRAINT "JobProfile_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TrainingDetails" ADD CONSTRAINT "TrainingDetails_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "CourseFeature" ADD CONSTRAINT "CourseFeature_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Car" ADD CONSTRAINT "Car_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -414,6 +416,9 @@ ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_subscriptionId_fkey" FOREIGN KEY ("s
 
 -- AddForeignKey
 ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_carId_fkey" FOREIGN KEY ("carId") REFERENCES "Car"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_ledgerTransactionId_fkey" FOREIGN KEY ("ledgerTransactionId") REFERENCES "LedgerTransaction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -437,7 +442,7 @@ ALTER TABLE "LedgerTransaction" ADD CONSTRAINT "LedgerTransaction_senderId_fkey"
 ALTER TABLE "LedgerTransaction" ADD CONSTRAINT "LedgerTransaction_receiverId_fkey" FOREIGN KEY ("receiverId") REFERENCES "FinancialAccount"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "LedgerTransaction" ADD CONSTRAINT "LedgerTransaction_proofOfPaymentImageId_fkey" FOREIGN KEY ("proofOfPaymentImageId") REFERENCES "ProofOfPaymentImage"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "LedgerTransaction" ADD CONSTRAINT "LedgerTransaction_imageId_fkey" FOREIGN KEY ("imageId") REFERENCES "Image"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "LedgerTransaction" ADD CONSTRAINT "LedgerTransaction_subscriptionId_fkey" FOREIGN KEY ("subscriptionId") REFERENCES "Subscription"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -447,9 +452,6 @@ ALTER TABLE "Payroll" ADD CONSTRAINT "Payroll_jobProfileId_fkey" FOREIGN KEY ("j
 
 -- AddForeignKey
 ALTER TABLE "Payroll" ADD CONSTRAINT "Payroll_academyId_fkey" FOREIGN KEY ("academyId") REFERENCES "Academy"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Payroll" ADD CONSTRAINT "Payroll_ledgerTransactionId_fkey" FOREIGN KEY ("ledgerTransactionId") REFERENCES "LedgerTransaction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_AcademyOwners" ADD CONSTRAINT "_AcademyOwners_A_fkey" FOREIGN KEY ("A") REFERENCES "Academy"("id") ON DELETE CASCADE ON UPDATE CASCADE;

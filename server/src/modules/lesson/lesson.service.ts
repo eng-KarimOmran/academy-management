@@ -104,9 +104,9 @@ const LessonService: ILessonService = {
 
     return lesson
   },
-  async changeLessonState({ params, body }) {
-    const {  } = params;
-    const { lessonStatus, amount, paymentMethod, image } = body;
+  async changeLessonState({ params, body, academyAccountId, employeeAccountId }) {
+    const { lessonId } = params;
+    const { lessonStatus, amount } = body;
 
     const updatedLesson = await prisma.$transaction(async (tx) => {
       const lessonEx = await tx.lesson.findUnique({
@@ -121,21 +121,21 @@ const LessonService: ILessonService = {
       });
 
       if (amount) {
-        const receiver = await tx.financialAccount.findUnique({ where: { jobProfileId: updatedLesson.jobProfileId } })
-        if (!receiver) throw ApiError.NotFound("Receiver")
         const dataSafe: CreateLedgerTransactionDto = {
           params: { academyId: updatedLesson.academyId },
           body: {
             amount,
-            paymentMethod: paymentMethod ?? "MONETARY",
+            paymentMethod: "MONETARY",
             transactionType: "CUSTOMER_PAYMENT",
-            senderId: updatedLesson.subscriptionId,
-            receiverId: receiver.id,
             subscriptionId: updatedLesson.subscriptionId,
-            image
-          }
+          },
         }
-        await LedgerTransactionService.createLedgerTransaction(dataSafe, tx)
+        await LedgerTransactionService.createLedgerTransaction({
+          ...dataSafe,
+          tx,
+          academyAccountId,
+          employeeAccountId
+        })
       }
 
       await SubscriptionService.recalculateSubscriptionStatus({ tx, subscriptionId: updatedLesson.subscriptionId })
@@ -187,7 +187,7 @@ const LessonService: ILessonService = {
     })
 
     return lesson
-  }
+  },
 };
 
 export default LessonService;

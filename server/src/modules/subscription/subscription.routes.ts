@@ -3,18 +3,21 @@ import SubscriptionController from "./subscription.controller";
 import * as Schema from "./subscription.schema";
 import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
   validate(Schema.CreateSubscriptionSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   SubscriptionController.createSubscription
 );
 
 router.get(
   "/:subscriptionId",
   validate(Schema.GetSubscriptionDetailsSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   SubscriptionController.getSubscriptionDetails
 );
 

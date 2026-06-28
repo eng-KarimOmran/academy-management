@@ -6,8 +6,11 @@ import { ILedgerTransactionController } from "./ledgerTransaction.type";
 const LedgerTransactionController: ILedgerTransactionController = {
   createLedgerTransaction: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CreateLedgerTransactionDto;
+    const { body, params } = dataSafe
+    const academyAccountId = req.academy?.financialAccount?.id
+    const employeeAccountId = req.jobProfile?.financialAccount?.id
 
-    const ledgerTransaction = await LedgerTransactionService.createLedgerTransaction(dataSafe);
+    const ledgerTransaction = await LedgerTransactionService.createLedgerTransaction({ body, params, academyAccountId, employeeAccountId });
 
     return sendSuccess({
       res,

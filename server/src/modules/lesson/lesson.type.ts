@@ -1,6 +1,7 @@
 import { Lesson } from "../../../prisma/generated/browser";
 import { PaginatedResponse } from "../../shared/types/types";
 import { AcademyRequestHandler } from "../academy/academy.type";
+import { JobProfileRequestHandler } from "../jobProfile/jobProfile.type";
 
 import {
     CreateLessonDto,
@@ -28,18 +29,18 @@ export interface ILessonService {
     ): Promise<Lesson>;
 
     changeLessonState(
-        data: ChangeLessonStateDto
+        data: ChangeLessonStateDto & { academyAccountId?: string, employeeAccountId?: string }
     ): Promise<Lesson>;
 }
 
 export interface ILessonController {
-    createLesson: AcademyRequestHandler;
+    createLesson: JobProfileRequestHandler;
 
-    updateLesson: AcademyRequestHandler;
+    updateLesson: JobProfileRequestHandler;
 
     getAllLessons: AcademyRequestHandler;
 
-    getLessonDetails: AcademyRequestHandler;
+    getLessonDetails: JobProfileRequestHandler;
 
-    changeLessonState: AcademyRequestHandler;
+    changeLessonState: JobProfileRequestHandler;
 }

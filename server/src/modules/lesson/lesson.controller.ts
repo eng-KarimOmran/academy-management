@@ -55,7 +55,10 @@ const LessonController: ILessonController = {
   changeLessonState: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.ChangeLessonStateDto;
 
-    const updatedLesson = await LessonService.changeLessonState(dataSafe);
+    const academyAccountId = req.academy?.financialAccount?.id
+    const employeeAccountId = req.jobProfile?.financialAccount?.id
+
+    const updatedLesson = await LessonService.changeLessonState({ ...dataSafe, academyAccountId, employeeAccountId });
 
     return sendSuccess({
       res,

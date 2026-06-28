@@ -3,18 +3,21 @@ import validate from "../../shared/middlewares/validate.middleware";
 import * as Schema from "./client.schema";
 import ClientController from "./client.controller";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
   validate(Schema.CreateClientSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   ClientController.create
 );
 
 router.get(
   "/details",
   validate(Schema.GetClientDetailsSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   ClientController.getDetails
 );
 

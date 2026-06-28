@@ -4,6 +4,7 @@ import * as DTO from "./academy.dto";
 import { Academy, User } from '../../../prisma/generated/client';
 import { AuthRequestHandler, RequestAuth } from '../auth/auth.type';
 import { Response, NextFunction } from 'express';
+import { FinancialAccount } from '../../../prisma/generated/browser';
 
 type SafeUser = Omit<User, "password" | "logoutAt">;
 
@@ -23,7 +24,7 @@ export type AcademyWithFullRelations =
 export type AcademyWithSafeRelations = Omit<AcademyWithFullRelations, "owners"> & { owners: SafeUser[] };
 
 export interface RequestAcademy extends RequestAuth {
-    academy?: Academy;
+    academy?: AcademyGetPayload<{ include: { owners: true, financialAccount: true } }>;
 }
 
 export type AcademyRequestHandler = (

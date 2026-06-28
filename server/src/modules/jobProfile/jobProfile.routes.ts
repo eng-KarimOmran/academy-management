@@ -3,18 +3,21 @@ import JobProfileController from "./jobProfile.controller";
 import * as Schema from "./jobProfile.schema";
 import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "./jobProfile.middlewares";
 
 const router = Router({ mergeParams: true });
 
 router.get(
   "/",
   validate(Schema.getAllJobProfilesSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   JobProfileController.getAllJobProfiles
 );
 
 router.get(
   "/:jobProfileId",
   validate(Schema.getJobProfileDetailsSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   JobProfileController.getJobProfileDetails
 );
 

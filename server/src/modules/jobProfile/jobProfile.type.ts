@@ -1,6 +1,8 @@
+import { NextFunction, Response } from "express";
 import { JobProfile } from "../../../prisma/generated/browser";
+import { JobProfileGetPayload } from "../../../prisma/generated/models";
 import { PaginatedResponse } from "../../shared/types/types";
-import { AcademyRequestHandler } from "../academy/academy.type";
+import { AcademyRequestHandler, RequestAcademy } from "../academy/academy.type";
 
 import {
     CreateJobProfileDto,
@@ -44,3 +46,13 @@ export interface IJobProfileController {
 
     getJobProfileDetails: AcademyRequestHandler;
 }
+
+export interface RequestJobProfile extends RequestAcademy {
+    jobProfile?: JobProfileGetPayload<{ include: { financialAccount: true } }>
+}
+
+export type JobProfileRequestHandler = (
+    req: RequestJobProfile,
+    res: Response,
+    next: NextFunction
+) => Promise<Response>

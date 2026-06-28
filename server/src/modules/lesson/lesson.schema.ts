@@ -7,9 +7,9 @@ import {
   lessonStatus,
   transmission,
   price,
-  paymentMethod,
   page,
   url,
+  date,
 } from "../../shared/utils/common.validation";
 
 export const CreateLessonSchema = {
@@ -51,24 +51,8 @@ export const ChangeLessonStateSchema = {
   params: z.object({ lessonId: id, academyId: id }),
   body: z.object({
     lessonStatus: lessonStatus,
-    paymentMethod: paymentMethod.optional(),
-    amount: price.optional(),
-    image: z
-      .object({
-        publicId: z.string().min(1, "معرف الصورة مطلوب"),
-        imageUrl: url,
-      })
-      .optional(),
-  }).refine(
-    (data) => {
-      const isElectronic = data.paymentMethod === "ELECTRONIC";
-      return !isElectronic || !!data.image;
-    },
-    {
-      error: "الصورة مطلوبة عند الدفع الإلكتروني",
-      path: ["image"],
-    },
-  ),
+    amount: price.optional()
+  })
 };
 
 export const UpdateLessonSchema = {

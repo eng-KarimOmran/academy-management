@@ -2,6 +2,7 @@ import { LedgerTransaction } from "../../../prisma/generated/browser";
 import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import { PaginatedResponse } from "../../shared/types/types";
 import { AcademyRequestHandler } from "../academy/academy.type";
+import { JobProfileRequestHandler } from "../jobProfile/jobProfile.type";
 
 import {
     CreateLedgerTransactionDto,
@@ -11,7 +12,7 @@ import {
 
 export interface ILedgerTransactionService {
     createLedgerTransaction(
-        data: CreateLedgerTransactionDto, tx?: TransactionClient
+        data: CreateLedgerTransactionDto & { tx?: TransactionClient, academyAccountId?: string, employeeAccountId?: string }
     ): Promise<LedgerTransaction>;
 
     getAllLedgerTransactions(
@@ -24,10 +25,9 @@ export interface ILedgerTransactionService {
 }
 
 export interface ILedgerTransactionController {
-    createLedgerTransaction: AcademyRequestHandler;
+    createLedgerTransaction: JobProfileRequestHandler;
 
     getAllLedgerTransactions: AcademyRequestHandler;
 
-    getLedgerTransactionDetails: AcademyRequestHandler;
-
+    getLedgerTransactionDetails: JobProfileRequestHandler;
 }

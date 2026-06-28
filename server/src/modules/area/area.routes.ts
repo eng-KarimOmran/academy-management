@@ -3,12 +3,14 @@ import AreaController from "./area.controller";
 import * as Schema from "./area.schema";
 import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
 
 const router = Router({ mergeParams: true });
 
 router.get(
   "/",
   validate(Schema.GetAllAreasSchema),
+  allowJobProfiles(["MANAGER", "SECRETARY"]),
   AreaController.getAllAreas
 );
 
