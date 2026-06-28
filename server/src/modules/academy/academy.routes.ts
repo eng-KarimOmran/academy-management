@@ -12,8 +12,8 @@ import routerCourse from "../course/course.routes";
 import routerClient from "../client/client.routes";
 import routerSubscription from "../subscription/subscription.routes";
 import routerLedgerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
+import routerLesson from "../lesson/lesson.routes";
 
-// import routerLesson from "../lesson/lesson.routes";
 // import routerStatistics from "../dashboard/dashboard.routes";
 // import routerAccount from "../account/account.routes";
 
@@ -168,7 +168,8 @@ router.use("/:academyId/subscription", routerSubscription);
 
 router.use("/:academyId/ledger-transactions", routerLedgerTransactions);
 
-// router.use("/:academyId/lesson", routerLesson);
+router.use("/:academyId/lesson", routerLesson);
+
 // router.use("/:academyId/statistic", routerStatistics);
 // router.use("/:academyId/account", routerAccount);
 

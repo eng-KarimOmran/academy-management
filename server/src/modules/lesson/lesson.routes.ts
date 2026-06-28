@@ -1,44 +1,41 @@
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
 import * as Schema from "./lesson.schema";
 import controller from "./lesson.controller";
-import checkRole from "../../shared/middlewares/role.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
+import validate from "../../shared/middlewares/validate.middleware";
 
 const router = Router({ mergeParams: true });
 
+router.use(checkAcademyExists())
+
 router.post(
   "/",
-  validation(Schema.CreateLessonSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
+  validate(Schema.CreateLessonSchema),
   controller.createLesson,
 );
 
 router.get(
   "/",
-  validation(Schema.GetAllLessonsSchema),
+  validate(Schema.GetAllLessonsSchema),
   checkAcademyExists({ isAcademyOwner: true }),
   controller.getAllLessons,
 );
 
 router.get(
   "/:lessonId",
-  validation(Schema.GetLessonDetailsSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
+  validate(Schema.GetLessonDetailsSchema),
   controller.getLessonDetails,
 );
 
 router.patch(
   "/:lessonId/status",
-  validation(Schema.ChangeLessonStateSchema),
-  checkRole(["OWNER", "CAPTAIN", "SECRETARY", "MANAGER"]),
+  validate(Schema.ChangeLessonStateSchema),
   controller.changeLessonState,
 );
 
 router.patch(
   "/:lessonId",
-  validation(Schema.UpdateLessonSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
+  validate(Schema.UpdateLessonSchema),
   controller.updateLesson,
 );
 

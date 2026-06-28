@@ -1,17 +1,17 @@
-import { userSafe } from './../user/user.utils';
 import { LedgerTransactionCreateInput } from './../../../prisma/generated/models/LedgerTransaction';
 import { ILedgerTransactionService } from './ledgerTransaction.type';
 import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
 import SubscriptionService from "../subscription/subscription.service";
-import { buildLedgerTransactionWhere, orderBy } from './ledgerTransaction.utils';
+import { buildLedgerTransactionWhere, calculateSubscriptionBalance, orderBy } from './ledgerTransaction.utils';
 import { buildPagination, buildPaginationMeta } from '../../shared/utils/Pagination';
+import { TransactionClient } from '../../../prisma/generated/internal/prismaNamespace';
 
 const LedgerTransactionService: ILedgerTransactionService = {
-  async createLedgerTransaction({ params, body }) {
+  async createLedgerTransaction({ params, body }, tx) {
     const { academyId } = params;
 
-    return prisma.$transaction(async (tx) => {
+    const run = (async (tx: TransactionClient) => {
       let imageId: string | undefined;
 
       const {
@@ -33,8 +33,35 @@ const LedgerTransactionService: ILedgerTransactionService = {
       if (!receiver) throw ApiError.NotFound("Receiver");
 
       if (subscriptionId) {
-        const subscription = await tx.subscription.findUnique({ where: { id: subscriptionId } })
+        const subscription = await tx.subscription.findUnique({
+          where: { id: subscriptionId },
+          include: { financialAccount: true, ledgerTransactions: true }
+        })
         if (!subscription) throw ApiError.NotFound("Subscription")
+        const financialAccountId = subscription.financialAccount?.id
+        const ledgerTransactions = subscription.ledgerTransactions
+        const { netPaid } = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
+        if (netPaid >= subscription.priceAtBooking) {
+          throw ApiError.Conflict("SUBSCRIPTION_ALREADY_PAID")
+        }
+
+        if (transactionType === "CUSTOMER_PAYMENT") {
+          if (netPaid + amount >= subscription.priceAtBooking) {
+            throw ApiError.Conflict("OVERPAYMENT")
+          }
+          if (senderId !== subscription.financialAccount?.id) {
+            throw ApiError.Conflict("PAYMENT_SENDER_MUST_BE_SUBSCRIPTION")
+          }
+        }
+
+        if (transactionType === "CUSTOMER_REFUND") {
+          if (netPaid < amount) {
+            throw ApiError.Conflict("EXCESS_REFUND")
+          }
+          if (receiverId !== subscription.financialAccount?.id) {
+            throw ApiError.Conflict("REFUND_RECEIVER_MUST_BE_SUBSCRIPTION")
+          }
+        }
       }
 
 
@@ -65,8 +92,10 @@ const LedgerTransactionService: ILedgerTransactionService = {
         await SubscriptionService.recalculateSubscriptionStatus({ subscriptionId, tx });
       }
 
-      return ledgerTransaction;
+      return ledgerTransaction
     });
+
+    return tx ? await run(tx) : await prisma.$transaction(run);
   },
   async getAllLedgerTransactions({ params, query }) {
     const { academyId } = params;

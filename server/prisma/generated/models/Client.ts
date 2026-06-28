@@ -192,6 +192,7 @@ export type ClientWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  lessons?: Prisma.LessonListRelationFilter
 }
 
 export type ClientOrderByWithRelationInput = {
@@ -203,6 +204,7 @@ export type ClientOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   academy?: Prisma.AcademyOrderByWithRelationInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
+  lessons?: Prisma.LessonOrderByRelationAggregateInput
 }
 
 export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -218,6 +220,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  lessons?: Prisma.LessonListRelationFilter
 }, "id" | "phone_academyId">
 
 export type ClientOrderByWithAggregationInput = {
@@ -252,6 +255,7 @@ export type ClientCreateInput = {
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutClientsInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutClientInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateInput = {
@@ -262,6 +266,7 @@ export type ClientUncheckedCreateInput = {
   source?: $Enums.ClientSource
   createdAt?: Date | string
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutClientInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientUpdateInput = {
@@ -272,6 +277,7 @@ export type ClientUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutClientsNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutClientNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateInput = {
@@ -282,6 +288,7 @@ export type ClientUncheckedUpdateInput = {
   source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutClientNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateManyInput = {
@@ -417,6 +424,20 @@ export type ClientUpdateOneRequiredWithoutSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.ClientUpdateWithoutSubscriptionsInput>, Prisma.ClientUncheckedUpdateWithoutSubscriptionsInput>
 }
 
+export type ClientCreateNestedOneWithoutLessonsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutLessonsInput, Prisma.ClientUncheckedCreateWithoutLessonsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutLessonsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneRequiredWithoutLessonsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutLessonsInput, Prisma.ClientUncheckedCreateWithoutLessonsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutLessonsInput
+  upsert?: Prisma.ClientUpsertWithoutLessonsInput
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutLessonsInput, Prisma.ClientUpdateWithoutLessonsInput>, Prisma.ClientUncheckedUpdateWithoutLessonsInput>
+}
+
 export type ClientCreateWithoutAcademyInput = {
   id?: string
   name: string
@@ -424,6 +445,7 @@ export type ClientCreateWithoutAcademyInput = {
   source?: $Enums.ClientSource
   createdAt?: Date | string
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutClientInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutAcademyInput = {
@@ -433,6 +455,7 @@ export type ClientUncheckedCreateWithoutAcademyInput = {
   source?: $Enums.ClientSource
   createdAt?: Date | string
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutClientInput
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutAcademyInput = {
@@ -480,6 +503,7 @@ export type ClientCreateWithoutSubscriptionsInput = {
   source?: $Enums.ClientSource
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutClientsInput
+  lessons?: Prisma.LessonCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutSubscriptionsInput = {
@@ -489,6 +513,7 @@ export type ClientUncheckedCreateWithoutSubscriptionsInput = {
   academyId: string
   source?: $Enums.ClientSource
   createdAt?: Date | string
+  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutSubscriptionsInput = {
@@ -514,6 +539,7 @@ export type ClientUpdateWithoutSubscriptionsInput = {
   source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutClientsNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutSubscriptionsInput = {
@@ -523,6 +549,63 @@ export type ClientUncheckedUpdateWithoutSubscriptionsInput = {
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutClientNestedInput
+}
+
+export type ClientCreateWithoutLessonsInput = {
+  id?: string
+  name: string
+  phone: string
+  source?: $Enums.ClientSource
+  createdAt?: Date | string
+  academy: Prisma.AcademyCreateNestedOneWithoutClientsInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutClientInput
+}
+
+export type ClientUncheckedCreateWithoutLessonsInput = {
+  id?: string
+  name: string
+  phone: string
+  academyId: string
+  source?: $Enums.ClientSource
+  createdAt?: Date | string
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutClientInput
+}
+
+export type ClientCreateOrConnectWithoutLessonsInput = {
+  where: Prisma.ClientWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientCreateWithoutLessonsInput, Prisma.ClientUncheckedCreateWithoutLessonsInput>
+}
+
+export type ClientUpsertWithoutLessonsInput = {
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutLessonsInput, Prisma.ClientUncheckedUpdateWithoutLessonsInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutLessonsInput, Prisma.ClientUncheckedCreateWithoutLessonsInput>
+  where?: Prisma.ClientWhereInput
+}
+
+export type ClientUpdateToOneWithWhereWithoutLessonsInput = {
+  where?: Prisma.ClientWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutLessonsInput, Prisma.ClientUncheckedUpdateWithoutLessonsInput>
+}
+
+export type ClientUpdateWithoutLessonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  academy?: Prisma.AcademyUpdateOneRequiredWithoutClientsNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutClientNestedInput
+}
+
+export type ClientUncheckedUpdateWithoutLessonsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
+  source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateManyAcademyInput = {
@@ -540,6 +623,7 @@ export type ClientUpdateWithoutAcademyInput = {
   source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutClientNestedInput
+  lessons?: Prisma.LessonUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutAcademyInput = {
@@ -549,6 +633,7 @@ export type ClientUncheckedUpdateWithoutAcademyInput = {
   source?: Prisma.EnumClientSourceFieldUpdateOperationsInput | $Enums.ClientSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutClientNestedInput
+  lessons?: Prisma.LessonUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateManyWithoutAcademyInput = {
@@ -566,10 +651,12 @@ export type ClientUncheckedUpdateManyWithoutAcademyInput = {
 
 export type ClientCountOutputType = {
   subscriptions: number
+  lessons: number
 }
 
 export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscriptions?: boolean | ClientCountOutputTypeCountSubscriptionsArgs
+  lessons?: boolean | ClientCountOutputTypeCountLessonsArgs
 }
 
 /**
@@ -589,6 +676,13 @@ export type ClientCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.
   where?: Prisma.SubscriptionWhereInput
 }
 
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountLessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LessonWhereInput
+}
+
 
 export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -599,6 +693,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdAt?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Client$subscriptionsArgs<ExtArgs>
+  lessons?: boolean | Prisma.Client$lessonsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
@@ -635,6 +730,7 @@ export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Client$subscriptionsArgs<ExtArgs>
+  lessons?: boolean | Prisma.Client$lessonsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -649,6 +745,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     academy: Prisma.$AcademyPayload<ExtArgs>
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
+    lessons: Prisma.$LessonPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1053,6 +1150,7 @@ export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subscriptions<T extends Prisma.Client$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lessons<T extends Prisma.Client$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1510,6 +1608,30 @@ export type Client$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
+}
+
+/**
+ * Client.lessons
+ */
+export type Client$lessonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lesson
+   */
+  select?: Prisma.LessonSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lesson
+   */
+  omit?: Prisma.LessonOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LessonInclude<ExtArgs> | null
+  where?: Prisma.LessonWhereInput
+  orderBy?: Prisma.LessonOrderByWithRelationInput | Prisma.LessonOrderByWithRelationInput[]
+  cursor?: Prisma.LessonWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LessonScalarFieldEnum | Prisma.LessonScalarFieldEnum[]
 }
 
 /**

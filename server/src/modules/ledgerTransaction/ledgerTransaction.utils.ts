@@ -50,8 +50,13 @@ export const calculateSubscriptionBalance = ({
 }: {
   financialAccountId?: string;
   ledgerTransactions: LedgerTransaction[];
-}) => {
-  if (!financialAccountId) return 0;
+}): {
+  netPaid: number;
+  totalRefund: number;
+} => {
+  if (!financialAccountId) {
+    return { netPaid: 0, totalRefund: 0 }
+  }
 
   let totalPaid = 0;
   let totalRefund = 0;
@@ -67,5 +72,5 @@ export const calculateSubscriptionBalance = ({
 
   const netPaid = totalPaid - totalRefund
 
-  return netPaid
+  return { netPaid, totalRefund }
 };

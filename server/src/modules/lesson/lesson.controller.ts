@@ -2,13 +2,13 @@ import { Response } from "express";
 import * as DTO from "./lesson.dto";
 import LessonService from "./lesson.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
+import { ILessonController } from "./lesson.type";
 
-const LessonController = {
-  createLesson: async (req: RequestAuth, res: Response) => {
+const LessonController: ILessonController = {
+  createLesson: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CreateLessonDto;
 
-    const lesson = await LessonService.create({ dataSafe });
+    const lesson = await LessonService.createLesson(dataSafe);
 
     return sendSuccess({
       res,
@@ -18,10 +18,10 @@ const LessonController = {
     });
   },
 
-  getAllLessons: async (req: RequestAuth, res: Response) => {
+  getAllLessons: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetAllLessonsDto;
 
-    const data = await LessonService.getAll({ dataSafe });
+    const data = await LessonService.getAllLessons(dataSafe);
 
     return sendSuccess({
       res,
@@ -29,10 +29,10 @@ const LessonController = {
     });
   },
 
-  getLessonDetails: async (req: RequestAuth, res: Response) => {
+  getLessonDetails: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetLessonDetailsDto;
 
-    const lessonData = await LessonService.getDetails({ dataSafe });
+    const lessonData = await LessonService.getLessonDetails(dataSafe);
 
     return sendSuccess({
       res,
@@ -40,10 +40,10 @@ const LessonController = {
     });
   },
 
-  updateLesson: async (req: RequestAuth, res: Response) => {
+  updateLesson: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.UpdateLessonDto;
 
-    const updatedLesson = await LessonService.update({ dataSafe });
+    const updatedLesson = await LessonService.updateLesson(dataSafe);
 
     return sendSuccess({
       res,
@@ -52,15 +52,10 @@ const LessonController = {
     });
   },
 
-  changeLessonState: async (req: RequestAuth, res: Response) => {
+  changeLessonState: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.ChangeLessonStateDto;
 
-    const userLogin = req.userLogin!;
-
-    const updatedLesson = await LessonService.changeLessonState({
-      userId: userLogin.id,
-      dataSafe,
-    });
+    const updatedLesson = await LessonService.changeLessonState(dataSafe);
 
     return sendSuccess({
       res,

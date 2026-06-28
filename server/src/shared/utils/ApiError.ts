@@ -15,6 +15,7 @@ const NOT_FOUND_MESSAGES = {
   Subscription: "الاشتراك غير موجود",
   Course: "الدورة التدريبية غير موجودة",
   Lesson: "الحصة غير موجودة",
+  Captain: "المدرب غير موجود",
 
   ProofOfPaymentImage: "إثبات الدفع غير موجود",
   TrainingDetails: "خصائص البرنامج غير موجودة",
@@ -22,8 +23,6 @@ const NOT_FOUND_MESSAGES = {
 
   Employee: "الموظف غير موجود",
   PaymentLink: "رابط الدفع غير موجود",
-  Person: "الشخص غير موجود",
-  PersonPhone: "هاتف الشخص غير موجود",
   AcademyPhone: "رقم الأكاديمية غير موجود",
 
   AcademyAddress: "عنوان الأكاديمية غير موجود",
@@ -68,7 +67,10 @@ export const CONFLICT_MESSAGES = {
   // Platform / System
   PLATFORM_ALREADY_EXISTS: "المنصة مسجلة بالفعل",
   SOCIAL_MEDIA_ALREADY_EXISTS: "منصة التواصل الاجتماعي مسجلة بالفعل",
-  JOB_PROFILE_EXISTS: "المستخدم لديه ملف وظيفي بالأكاديمية"
+  JOB_PROFILE_EXISTS: "المستخدم لديه ملف وظيفي بالأكاديمية",
+  PAYMENT_SENDER_MUST_BE_SUBSCRIPTION: "في عملية الدفع يجب أن يكون المرسل هو الاشتراك",
+  REFUND_RECEIVER_MUST_BE_SUBSCRIPTION: "في عملية الاسترداد يجب أن يكون المستلم هو الاشتراك",
+  LESSON_NOT_SCHEDULED: "لا يمكن تعديل بيانات الحصة إلا في حالة الجدولة"
 } as const;
 
 type NotFoundModel = keyof typeof NOT_FOUND_MESSAGES;

@@ -3,12 +3,13 @@ import z from "zod";
 import {
   id,
   limit,
-  positiveNumber,
   futureDate,
   lessonStatus,
   transmission,
   price,
   paymentMethod,
+  page,
+  url,
 } from "../../shared/utils/common.validation";
 
 export const CreateLessonSchema = {
@@ -18,8 +19,8 @@ export const CreateLessonSchema = {
   body: z.object({
     startTime: futureDate,
     transmission: transmission,
-    expectedAmount: price,
-    captainId: id,
+    expectedPaymentAmount: price.optional(),
+    jobProfileId: id,
     carId: id,
     areaId: id,
     subscriptionId: id,
@@ -31,10 +32,10 @@ export const GetAllLessonsSchema = {
     academyId: id,
   }),
   query: z.object({
-    page: positiveNumber.optional().default(1),
-    limit: limit,
+    page,
+    limit,
     transmission: transmission.optional(),
-    status: lessonStatus.optional(),
+    lessonStatus: lessonStatus.optional(),
     search: z.string().optional(),
   }),
 };
@@ -49,9 +50,25 @@ export const GetLessonDetailsSchema = {
 export const ChangeLessonStateSchema = {
   params: z.object({ lessonId: id, academyId: id }),
   body: z.object({
-    status: lessonStatus,
+    lessonStatus: lessonStatus,
+    paymentMethod: paymentMethod.optional(),
     amount: price.optional(),
-  }),
+    image: z
+      .object({
+        publicId: z.string().min(1, "معرف الصورة مطلوب"),
+        imageUrl: url,
+      })
+      .optional(),
+  }).refine(
+    (data) => {
+      const isElectronic = data.paymentMethod === "ELECTRONIC";
+      return !isElectronic || !!data.image;
+    },
+    {
+      error: "الصورة مطلوبة عند الدفع الإلكتروني",
+      path: ["image"],
+    },
+  ),
 };
 
 export const UpdateLessonSchema = {
@@ -60,11 +77,11 @@ export const UpdateLessonSchema = {
     lessonId: id,
   }),
   body: z.object({
-    startTime: futureDate,
-    transmission: transmission,
-    expectedAmount: price,
-    captainId: id,
-    carId: id,
-    areaId: id,
+    startTime: futureDate.optional(),
+    transmission: transmission.optional(),
+    expectedPaymentAmount: price.optional(),
+    jobProfileId: id.optional(),
+    carId: id.optional(),
+    areaId: id.optional(),
   }),
 };

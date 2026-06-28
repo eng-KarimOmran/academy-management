@@ -27,13 +27,15 @@ export type AggregateLesson = {
 }
 
 export type LessonAvgAggregateOutputType = {
-  expectedAmount: number | null
+  sessionDurationMinutes: number | null
+  expectedPaymentAmount: number | null
   carSessionPrice: number | null
   captainLessonPrice: number | null
 }
 
 export type LessonSumAggregateOutputType = {
-  expectedAmount: number | null
+  sessionDurationMinutes: number | null
+  expectedPaymentAmount: number | null
   carSessionPrice: number | null
   captainLessonPrice: number | null
 }
@@ -44,12 +46,14 @@ export type LessonMinAggregateOutputType = {
   endTime: Date | null
   lessonStatus: $Enums.LessonStatus | null
   transmission: $Enums.Transmission | null
-  expectedAmount: number | null
+  sessionDurationMinutes: number | null
+  expectedPaymentAmount: number | null
   carSessionPrice: number | null
   captainLessonPrice: number | null
   academyId: string | null
   subscriptionId: string | null
   carId: string | null
+  clientId: string | null
   ledgerTransactionId: string | null
   areaId: string | null
   jobProfileId: string | null
@@ -63,12 +67,14 @@ export type LessonMaxAggregateOutputType = {
   endTime: Date | null
   lessonStatus: $Enums.LessonStatus | null
   transmission: $Enums.Transmission | null
-  expectedAmount: number | null
+  sessionDurationMinutes: number | null
+  expectedPaymentAmount: number | null
   carSessionPrice: number | null
   captainLessonPrice: number | null
   academyId: string | null
   subscriptionId: string | null
   carId: string | null
+  clientId: string | null
   ledgerTransactionId: string | null
   areaId: string | null
   jobProfileId: string | null
@@ -82,12 +88,14 @@ export type LessonCountAggregateOutputType = {
   endTime: number
   lessonStatus: number
   transmission: number
-  expectedAmount: number
+  sessionDurationMinutes: number
+  expectedPaymentAmount: number
   carSessionPrice: number
   captainLessonPrice: number
   academyId: number
   subscriptionId: number
   carId: number
+  clientId: number
   ledgerTransactionId: number
   areaId: number
   jobProfileId: number
@@ -98,13 +106,15 @@ export type LessonCountAggregateOutputType = {
 
 
 export type LessonAvgAggregateInputType = {
-  expectedAmount?: true
+  sessionDurationMinutes?: true
+  expectedPaymentAmount?: true
   carSessionPrice?: true
   captainLessonPrice?: true
 }
 
 export type LessonSumAggregateInputType = {
-  expectedAmount?: true
+  sessionDurationMinutes?: true
+  expectedPaymentAmount?: true
   carSessionPrice?: true
   captainLessonPrice?: true
 }
@@ -115,12 +125,14 @@ export type LessonMinAggregateInputType = {
   endTime?: true
   lessonStatus?: true
   transmission?: true
-  expectedAmount?: true
+  sessionDurationMinutes?: true
+  expectedPaymentAmount?: true
   carSessionPrice?: true
   captainLessonPrice?: true
   academyId?: true
   subscriptionId?: true
   carId?: true
+  clientId?: true
   ledgerTransactionId?: true
   areaId?: true
   jobProfileId?: true
@@ -134,12 +146,14 @@ export type LessonMaxAggregateInputType = {
   endTime?: true
   lessonStatus?: true
   transmission?: true
-  expectedAmount?: true
+  sessionDurationMinutes?: true
+  expectedPaymentAmount?: true
   carSessionPrice?: true
   captainLessonPrice?: true
   academyId?: true
   subscriptionId?: true
   carId?: true
+  clientId?: true
   ledgerTransactionId?: true
   areaId?: true
   jobProfileId?: true
@@ -153,12 +167,14 @@ export type LessonCountAggregateInputType = {
   endTime?: true
   lessonStatus?: true
   transmission?: true
-  expectedAmount?: true
+  sessionDurationMinutes?: true
+  expectedPaymentAmount?: true
   carSessionPrice?: true
   captainLessonPrice?: true
   academyId?: true
   subscriptionId?: true
   carId?: true
+  clientId?: true
   ledgerTransactionId?: true
   areaId?: true
   jobProfileId?: true
@@ -259,12 +275,14 @@ export type LessonGroupByOutputType = {
   endTime: Date
   lessonStatus: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId: string | null
   areaId: string
   jobProfileId: string
@@ -301,12 +319,14 @@ export type LessonWhereInput = {
   endTime?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFilter<"Lesson"> | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFilter<"Lesson"> | $Enums.Transmission
-  expectedAmount?: Prisma.FloatNullableFilter<"Lesson"> | number | null
+  sessionDurationMinutes?: Prisma.IntFilter<"Lesson"> | number
+  expectedPaymentAmount?: Prisma.FloatNullableFilter<"Lesson"> | number | null
   carSessionPrice?: Prisma.FloatFilter<"Lesson"> | number
   captainLessonPrice?: Prisma.FloatFilter<"Lesson"> | number
   academyId?: Prisma.StringFilter<"Lesson"> | string
   subscriptionId?: Prisma.StringFilter<"Lesson"> | string
   carId?: Prisma.StringFilter<"Lesson"> | string
+  clientId?: Prisma.StringFilter<"Lesson"> | string
   ledgerTransactionId?: Prisma.StringNullableFilter<"Lesson"> | string | null
   areaId?: Prisma.StringFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringFilter<"Lesson"> | string
@@ -315,6 +335,7 @@ export type LessonWhereInput = {
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionScalarRelationFilter, Prisma.SubscriptionWhereInput>
   car?: Prisma.XOR<Prisma.CarScalarRelationFilter, Prisma.CarWhereInput>
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   ledgerTransaction?: Prisma.XOR<Prisma.LedgerTransactionNullableScalarRelationFilter, Prisma.LedgerTransactionWhereInput> | null
   area?: Prisma.XOR<Prisma.AreaScalarRelationFilter, Prisma.AreaWhereInput>
   jobProfile?: Prisma.XOR<Prisma.JobProfileScalarRelationFilter, Prisma.JobProfileWhereInput>
@@ -327,12 +348,14 @@ export type LessonOrderByWithRelationInput = {
   endTime?: Prisma.SortOrder
   lessonStatus?: Prisma.SortOrder
   transmission?: Prisma.SortOrder
-  expectedAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   carId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   ledgerTransactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
@@ -341,6 +364,7 @@ export type LessonOrderByWithRelationInput = {
   academy?: Prisma.AcademyOrderByWithRelationInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
   car?: Prisma.CarOrderByWithRelationInput
+  client?: Prisma.ClientOrderByWithRelationInput
   ledgerTransaction?: Prisma.LedgerTransactionOrderByWithRelationInput
   area?: Prisma.AreaOrderByWithRelationInput
   jobProfile?: Prisma.JobProfileOrderByWithRelationInput
@@ -356,12 +380,14 @@ export type LessonWhereUniqueInput = Prisma.AtLeast<{
   endTime?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFilter<"Lesson"> | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFilter<"Lesson"> | $Enums.Transmission
-  expectedAmount?: Prisma.FloatNullableFilter<"Lesson"> | number | null
+  sessionDurationMinutes?: Prisma.IntFilter<"Lesson"> | number
+  expectedPaymentAmount?: Prisma.FloatNullableFilter<"Lesson"> | number | null
   carSessionPrice?: Prisma.FloatFilter<"Lesson"> | number
   captainLessonPrice?: Prisma.FloatFilter<"Lesson"> | number
   academyId?: Prisma.StringFilter<"Lesson"> | string
   subscriptionId?: Prisma.StringFilter<"Lesson"> | string
   carId?: Prisma.StringFilter<"Lesson"> | string
+  clientId?: Prisma.StringFilter<"Lesson"> | string
   ledgerTransactionId?: Prisma.StringNullableFilter<"Lesson"> | string | null
   areaId?: Prisma.StringFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringFilter<"Lesson"> | string
@@ -370,6 +396,7 @@ export type LessonWhereUniqueInput = Prisma.AtLeast<{
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionScalarRelationFilter, Prisma.SubscriptionWhereInput>
   car?: Prisma.XOR<Prisma.CarScalarRelationFilter, Prisma.CarWhereInput>
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   ledgerTransaction?: Prisma.XOR<Prisma.LedgerTransactionNullableScalarRelationFilter, Prisma.LedgerTransactionWhereInput> | null
   area?: Prisma.XOR<Prisma.AreaScalarRelationFilter, Prisma.AreaWhereInput>
   jobProfile?: Prisma.XOR<Prisma.JobProfileScalarRelationFilter, Prisma.JobProfileWhereInput>
@@ -382,12 +409,14 @@ export type LessonOrderByWithAggregationInput = {
   endTime?: Prisma.SortOrder
   lessonStatus?: Prisma.SortOrder
   transmission?: Prisma.SortOrder
-  expectedAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   carId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   ledgerTransactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
@@ -409,12 +438,14 @@ export type LessonScalarWhereWithAggregatesInput = {
   endTime?: Prisma.DateTimeWithAggregatesFilter<"Lesson"> | Date | string
   lessonStatus?: Prisma.EnumLessonStatusWithAggregatesFilter<"Lesson"> | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionWithAggregatesFilter<"Lesson"> | $Enums.Transmission
-  expectedAmount?: Prisma.FloatNullableWithAggregatesFilter<"Lesson"> | number | null
+  sessionDurationMinutes?: Prisma.IntWithAggregatesFilter<"Lesson"> | number
+  expectedPaymentAmount?: Prisma.FloatNullableWithAggregatesFilter<"Lesson"> | number | null
   carSessionPrice?: Prisma.FloatWithAggregatesFilter<"Lesson"> | number
   captainLessonPrice?: Prisma.FloatWithAggregatesFilter<"Lesson"> | number
   academyId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   subscriptionId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   carId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
+  clientId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   ledgerTransactionId?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
   areaId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
@@ -428,13 +459,15 @@ export type LessonCreateInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
@@ -447,12 +480,14 @@ export type LessonUncheckedCreateInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -466,13 +501,15 @@ export type LessonUpdateInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
@@ -485,12 +522,14 @@ export type LessonUncheckedUpdateInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -504,12 +543,14 @@ export type LessonCreateManyInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -523,7 +564,8 @@ export type LessonUpdateManyMutationInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -535,12 +577,14 @@ export type LessonUncheckedUpdateManyInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -564,12 +608,14 @@ export type LessonCountOrderByAggregateInput = {
   endTime?: Prisma.SortOrder
   lessonStatus?: Prisma.SortOrder
   transmission?: Prisma.SortOrder
-  expectedAmount?: Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   carId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   ledgerTransactionId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
@@ -578,7 +624,8 @@ export type LessonCountOrderByAggregateInput = {
 }
 
 export type LessonAvgOrderByAggregateInput = {
-  expectedAmount?: Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
 }
@@ -589,12 +636,14 @@ export type LessonMaxOrderByAggregateInput = {
   endTime?: Prisma.SortOrder
   lessonStatus?: Prisma.SortOrder
   transmission?: Prisma.SortOrder
-  expectedAmount?: Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   carId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   ledgerTransactionId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
@@ -608,12 +657,14 @@ export type LessonMinOrderByAggregateInput = {
   endTime?: Prisma.SortOrder
   lessonStatus?: Prisma.SortOrder
   transmission?: Prisma.SortOrder
-  expectedAmount?: Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   carId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   ledgerTransactionId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
@@ -622,7 +673,8 @@ export type LessonMinOrderByAggregateInput = {
 }
 
 export type LessonSumOrderByAggregateInput = {
-  expectedAmount?: Prisma.SortOrder
+  sessionDurationMinutes?: Prisma.SortOrder
+  expectedPaymentAmount?: Prisma.SortOrder
   carSessionPrice?: Prisma.SortOrder
   captainLessonPrice?: Prisma.SortOrder
 }
@@ -666,6 +718,48 @@ export type LessonUncheckedUpdateManyWithoutAcademyNestedInput = {
   connect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
   update?: Prisma.LessonUpdateWithWhereUniqueWithoutAcademyInput | Prisma.LessonUpdateWithWhereUniqueWithoutAcademyInput[]
   updateMany?: Prisma.LessonUpdateManyWithWhereWithoutAcademyInput | Prisma.LessonUpdateManyWithWhereWithoutAcademyInput[]
+  deleteMany?: Prisma.LessonScalarWhereInput | Prisma.LessonScalarWhereInput[]
+}
+
+export type LessonCreateNestedManyWithoutClientInput = {
+  create?: Prisma.XOR<Prisma.LessonCreateWithoutClientInput, Prisma.LessonUncheckedCreateWithoutClientInput> | Prisma.LessonCreateWithoutClientInput[] | Prisma.LessonUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.LessonCreateOrConnectWithoutClientInput | Prisma.LessonCreateOrConnectWithoutClientInput[]
+  createMany?: Prisma.LessonCreateManyClientInputEnvelope
+  connect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+}
+
+export type LessonUncheckedCreateNestedManyWithoutClientInput = {
+  create?: Prisma.XOR<Prisma.LessonCreateWithoutClientInput, Prisma.LessonUncheckedCreateWithoutClientInput> | Prisma.LessonCreateWithoutClientInput[] | Prisma.LessonUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.LessonCreateOrConnectWithoutClientInput | Prisma.LessonCreateOrConnectWithoutClientInput[]
+  createMany?: Prisma.LessonCreateManyClientInputEnvelope
+  connect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+}
+
+export type LessonUpdateManyWithoutClientNestedInput = {
+  create?: Prisma.XOR<Prisma.LessonCreateWithoutClientInput, Prisma.LessonUncheckedCreateWithoutClientInput> | Prisma.LessonCreateWithoutClientInput[] | Prisma.LessonUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.LessonCreateOrConnectWithoutClientInput | Prisma.LessonCreateOrConnectWithoutClientInput[]
+  upsert?: Prisma.LessonUpsertWithWhereUniqueWithoutClientInput | Prisma.LessonUpsertWithWhereUniqueWithoutClientInput[]
+  createMany?: Prisma.LessonCreateManyClientInputEnvelope
+  set?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  disconnect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  delete?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  connect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  update?: Prisma.LessonUpdateWithWhereUniqueWithoutClientInput | Prisma.LessonUpdateWithWhereUniqueWithoutClientInput[]
+  updateMany?: Prisma.LessonUpdateManyWithWhereWithoutClientInput | Prisma.LessonUpdateManyWithWhereWithoutClientInput[]
+  deleteMany?: Prisma.LessonScalarWhereInput | Prisma.LessonScalarWhereInput[]
+}
+
+export type LessonUncheckedUpdateManyWithoutClientNestedInput = {
+  create?: Prisma.XOR<Prisma.LessonCreateWithoutClientInput, Prisma.LessonUncheckedCreateWithoutClientInput> | Prisma.LessonCreateWithoutClientInput[] | Prisma.LessonUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.LessonCreateOrConnectWithoutClientInput | Prisma.LessonCreateOrConnectWithoutClientInput[]
+  upsert?: Prisma.LessonUpsertWithWhereUniqueWithoutClientInput | Prisma.LessonUpsertWithWhereUniqueWithoutClientInput[]
+  createMany?: Prisma.LessonCreateManyClientInputEnvelope
+  set?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  disconnect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  delete?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  connect?: Prisma.LessonWhereUniqueInput | Prisma.LessonWhereUniqueInput[]
+  update?: Prisma.LessonUpdateWithWhereUniqueWithoutClientInput | Prisma.LessonUpdateWithWhereUniqueWithoutClientInput[]
+  updateMany?: Prisma.LessonUpdateManyWithWhereWithoutClientInput | Prisma.LessonUpdateManyWithWhereWithoutClientInput[]
   deleteMany?: Prisma.LessonScalarWhereInput | Prisma.LessonScalarWhereInput[]
 }
 
@@ -939,12 +1033,14 @@ export type LessonCreateWithoutAcademyInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
@@ -957,11 +1053,13 @@ export type LessonUncheckedCreateWithoutAcademyInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1004,17 +1102,85 @@ export type LessonScalarWhereInput = {
   endTime?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFilter<"Lesson"> | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFilter<"Lesson"> | $Enums.Transmission
-  expectedAmount?: Prisma.FloatNullableFilter<"Lesson"> | number | null
+  sessionDurationMinutes?: Prisma.IntFilter<"Lesson"> | number
+  expectedPaymentAmount?: Prisma.FloatNullableFilter<"Lesson"> | number | null
   carSessionPrice?: Prisma.FloatFilter<"Lesson"> | number
   captainLessonPrice?: Prisma.FloatFilter<"Lesson"> | number
   academyId?: Prisma.StringFilter<"Lesson"> | string
   subscriptionId?: Prisma.StringFilter<"Lesson"> | string
   carId?: Prisma.StringFilter<"Lesson"> | string
+  clientId?: Prisma.StringFilter<"Lesson"> | string
   ledgerTransactionId?: Prisma.StringNullableFilter<"Lesson"> | string | null
   areaId?: Prisma.StringFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringFilter<"Lesson"> | string
   createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   payrollId?: Prisma.StringNullableFilter<"Lesson"> | string | null
+}
+
+export type LessonCreateWithoutClientInput = {
+  id?: string
+  startTime: Date | string
+  endTime: Date | string
+  lessonStatus?: $Enums.LessonStatus
+  transmission: $Enums.Transmission
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
+  carSessionPrice: number
+  captainLessonPrice: number
+  createdAt?: Date | string
+  academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
+  subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
+  car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
+  area: Prisma.AreaCreateNestedOneWithoutLessonsInput
+  jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutLessonsInput
+}
+
+export type LessonUncheckedCreateWithoutClientInput = {
+  id?: string
+  startTime: Date | string
+  endTime: Date | string
+  lessonStatus?: $Enums.LessonStatus
+  transmission: $Enums.Transmission
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
+  carSessionPrice: number
+  captainLessonPrice: number
+  academyId: string
+  subscriptionId: string
+  carId: string
+  ledgerTransactionId?: string | null
+  areaId: string
+  jobProfileId: string
+  createdAt?: Date | string
+  payrollId?: string | null
+}
+
+export type LessonCreateOrConnectWithoutClientInput = {
+  where: Prisma.LessonWhereUniqueInput
+  create: Prisma.XOR<Prisma.LessonCreateWithoutClientInput, Prisma.LessonUncheckedCreateWithoutClientInput>
+}
+
+export type LessonCreateManyClientInputEnvelope = {
+  data: Prisma.LessonCreateManyClientInput | Prisma.LessonCreateManyClientInput[]
+  skipDuplicates?: boolean
+}
+
+export type LessonUpsertWithWhereUniqueWithoutClientInput = {
+  where: Prisma.LessonWhereUniqueInput
+  update: Prisma.XOR<Prisma.LessonUpdateWithoutClientInput, Prisma.LessonUncheckedUpdateWithoutClientInput>
+  create: Prisma.XOR<Prisma.LessonCreateWithoutClientInput, Prisma.LessonUncheckedCreateWithoutClientInput>
+}
+
+export type LessonUpdateWithWhereUniqueWithoutClientInput = {
+  where: Prisma.LessonWhereUniqueInput
+  data: Prisma.XOR<Prisma.LessonUpdateWithoutClientInput, Prisma.LessonUncheckedUpdateWithoutClientInput>
+}
+
+export type LessonUpdateManyWithWhereWithoutClientInput = {
+  where: Prisma.LessonScalarWhereInput
+  data: Prisma.XOR<Prisma.LessonUpdateManyMutationInput, Prisma.LessonUncheckedUpdateManyWithoutClientInput>
 }
 
 export type LessonCreateWithoutSubscriptionInput = {
@@ -1023,12 +1189,14 @@ export type LessonCreateWithoutSubscriptionInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
@@ -1041,11 +1209,13 @@ export type LessonUncheckedCreateWithoutSubscriptionInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1085,13 +1255,15 @@ export type LessonCreateWithoutJobProfileInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLessonsInput
@@ -1103,12 +1275,14 @@ export type LessonUncheckedCreateWithoutJobProfileInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   createdAt?: Date | string
@@ -1147,12 +1321,14 @@ export type LessonCreateWithoutCarInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
@@ -1165,11 +1341,13 @@ export type LessonUncheckedCreateWithoutCarInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1209,13 +1387,15 @@ export type LessonCreateWithoutAreaInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLessonsInput
@@ -1227,12 +1407,14 @@ export type LessonUncheckedCreateWithoutAreaInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   jobProfileId: string
   createdAt?: Date | string
@@ -1271,13 +1453,15 @@ export type LessonCreateWithoutLedgerTransactionInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLessonsInput
@@ -1289,12 +1473,14 @@ export type LessonUncheckedCreateWithoutLedgerTransactionInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   areaId: string
   jobProfileId: string
   createdAt?: Date | string
@@ -1333,13 +1519,15 @@ export type LessonCreateWithoutPayrollInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLessonsInput
   subscription: Prisma.SubscriptionCreateNestedOneWithoutLessonsInput
   car: Prisma.CarCreateNestedOneWithoutLessonsInput
+  client: Prisma.ClientCreateNestedOneWithoutLessonsInput
   ledgerTransaction?: Prisma.LedgerTransactionCreateNestedOneWithoutLessonsInput
   area: Prisma.AreaCreateNestedOneWithoutLessonsInput
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutLessonsInput
@@ -1351,12 +1539,14 @@ export type LessonUncheckedCreateWithoutPayrollInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1395,11 +1585,13 @@ export type LessonCreateManyAcademyInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1413,12 +1605,14 @@ export type LessonUpdateWithoutAcademyInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
@@ -1431,11 +1625,13 @@ export type LessonUncheckedUpdateWithoutAcademyInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1449,9 +1645,91 @@ export type LessonUncheckedUpdateManyWithoutAcademyInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type LessonCreateManyClientInput = {
+  id?: string
+  startTime: Date | string
+  endTime: Date | string
+  lessonStatus?: $Enums.LessonStatus
+  transmission: $Enums.Transmission
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
+  carSessionPrice: number
+  captainLessonPrice: number
+  academyId: string
+  subscriptionId: string
+  carId: string
+  ledgerTransactionId?: string | null
+  areaId: string
+  jobProfileId: string
+  createdAt?: Date | string
+  payrollId?: string | null
+}
+
+export type LessonUpdateWithoutClientInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
+  transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
+  car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
+  area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
+  jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutLessonsNestedInput
+}
+
+export type LessonUncheckedUpdateWithoutClientInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
+  transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
+  subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  carId?: Prisma.StringFieldUpdateOperationsInput | string
+  ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type LessonUncheckedUpdateManyWithoutClientInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  startTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
+  transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1467,11 +1745,13 @@ export type LessonCreateManySubscriptionInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1485,12 +1765,14 @@ export type LessonUpdateWithoutSubscriptionInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
@@ -1503,11 +1785,13 @@ export type LessonUncheckedUpdateWithoutSubscriptionInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1521,11 +1805,13 @@ export type LessonUncheckedUpdateManyWithoutSubscriptionInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1539,12 +1825,14 @@ export type LessonCreateManyJobProfileInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   createdAt?: Date | string
@@ -1557,13 +1845,15 @@ export type LessonUpdateWithoutJobProfileInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLessonsNestedInput
@@ -1575,12 +1865,14 @@ export type LessonUncheckedUpdateWithoutJobProfileInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1593,12 +1885,14 @@ export type LessonUncheckedUpdateManyWithoutJobProfileInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1611,11 +1905,13 @@ export type LessonCreateManyCarInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1629,12 +1925,14 @@ export type LessonUpdateWithoutCarInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
@@ -1647,11 +1945,13 @@ export type LessonUncheckedUpdateWithoutCarInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1665,11 +1965,13 @@ export type LessonUncheckedUpdateManyWithoutCarInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1683,12 +1985,14 @@ export type LessonCreateManyAreaInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   jobProfileId: string
   createdAt?: Date | string
@@ -1701,13 +2005,15 @@ export type LessonUpdateWithoutAreaInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLessonsNestedInput
@@ -1719,12 +2025,14 @@ export type LessonUncheckedUpdateWithoutAreaInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1737,12 +2045,14 @@ export type LessonUncheckedUpdateManyWithoutAreaInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1755,12 +2065,14 @@ export type LessonCreateManyLedgerTransactionInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   areaId: string
   jobProfileId: string
   createdAt?: Date | string
@@ -1773,13 +2085,15 @@ export type LessonUpdateWithoutLedgerTransactionInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLessonsNestedInput
@@ -1791,12 +2105,14 @@ export type LessonUncheckedUpdateWithoutLedgerTransactionInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1809,12 +2125,14 @@ export type LessonUncheckedUpdateManyWithoutLedgerTransactionInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1827,12 +2145,14 @@ export type LessonCreateManyPayrollInput = {
   endTime: Date | string
   lessonStatus?: $Enums.LessonStatus
   transmission: $Enums.Transmission
-  expectedAmount?: number | null
+  sessionDurationMinutes: number
+  expectedPaymentAmount?: number | null
   carSessionPrice: number
   captainLessonPrice: number
   academyId: string
   subscriptionId: string
   carId: string
+  clientId: string
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
@@ -1845,13 +2165,15 @@ export type LessonUpdateWithoutPayrollInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLessonsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneRequiredWithoutLessonsNestedInput
   car?: Prisma.CarUpdateOneRequiredWithoutLessonsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutLessonsNestedInput
   ledgerTransaction?: Prisma.LedgerTransactionUpdateOneWithoutLessonsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutLessonsNestedInput
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutLessonsNestedInput
@@ -1863,12 +2185,14 @@ export type LessonUncheckedUpdateWithoutPayrollInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1881,12 +2205,14 @@ export type LessonUncheckedUpdateManyWithoutPayrollInput = {
   endTime?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonStatus?: Prisma.EnumLessonStatusFieldUpdateOperationsInput | $Enums.LessonStatus
   transmission?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
-  expectedAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  expectedPaymentAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   carSessionPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   captainLessonPrice?: Prisma.FloatFieldUpdateOperationsInput | number
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.StringFieldUpdateOperationsInput | string
   carId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1901,12 +2227,14 @@ export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   endTime?: boolean
   lessonStatus?: boolean
   transmission?: boolean
-  expectedAmount?: boolean
+  sessionDurationMinutes?: boolean
+  expectedPaymentAmount?: boolean
   carSessionPrice?: boolean
   captainLessonPrice?: boolean
   academyId?: boolean
   subscriptionId?: boolean
   carId?: boolean
+  clientId?: boolean
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
@@ -1915,6 +2243,7 @@ export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   ledgerTransaction?: boolean | Prisma.Lesson$ledgerTransactionArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -1927,12 +2256,14 @@ export type LessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   endTime?: boolean
   lessonStatus?: boolean
   transmission?: boolean
-  expectedAmount?: boolean
+  sessionDurationMinutes?: boolean
+  expectedPaymentAmount?: boolean
   carSessionPrice?: boolean
   captainLessonPrice?: boolean
   academyId?: boolean
   subscriptionId?: boolean
   carId?: boolean
+  clientId?: boolean
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
@@ -1941,6 +2272,7 @@ export type LessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   ledgerTransaction?: boolean | Prisma.Lesson$ledgerTransactionArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -1953,12 +2285,14 @@ export type LessonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   endTime?: boolean
   lessonStatus?: boolean
   transmission?: boolean
-  expectedAmount?: boolean
+  sessionDurationMinutes?: boolean
+  expectedPaymentAmount?: boolean
   carSessionPrice?: boolean
   captainLessonPrice?: boolean
   academyId?: boolean
   subscriptionId?: boolean
   carId?: boolean
+  clientId?: boolean
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
@@ -1967,6 +2301,7 @@ export type LessonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   ledgerTransaction?: boolean | Prisma.Lesson$ledgerTransactionArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -1979,12 +2314,14 @@ export type LessonSelectScalar = {
   endTime?: boolean
   lessonStatus?: boolean
   transmission?: boolean
-  expectedAmount?: boolean
+  sessionDurationMinutes?: boolean
+  expectedPaymentAmount?: boolean
   carSessionPrice?: boolean
   captainLessonPrice?: boolean
   academyId?: boolean
   subscriptionId?: boolean
   carId?: boolean
+  clientId?: boolean
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
@@ -1992,11 +2329,12 @@ export type LessonSelectScalar = {
   payrollId?: boolean
 }
 
-export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "lessonStatus" | "transmission" | "expectedAmount" | "carSessionPrice" | "captainLessonPrice" | "academyId" | "subscriptionId" | "carId" | "ledgerTransactionId" | "areaId" | "jobProfileId" | "createdAt" | "payrollId", ExtArgs["result"]["lesson"]>
+export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "lessonStatus" | "transmission" | "sessionDurationMinutes" | "expectedPaymentAmount" | "carSessionPrice" | "captainLessonPrice" | "academyId" | "subscriptionId" | "carId" | "clientId" | "ledgerTransactionId" | "areaId" | "jobProfileId" | "createdAt" | "payrollId", ExtArgs["result"]["lesson"]>
 export type LessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   ledgerTransaction?: boolean | Prisma.Lesson$ledgerTransactionArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -2006,6 +2344,7 @@ export type LessonIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   ledgerTransaction?: boolean | Prisma.Lesson$ledgerTransactionArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -2015,6 +2354,7 @@ export type LessonIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   ledgerTransaction?: boolean | Prisma.Lesson$ledgerTransactionArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -2027,6 +2367,7 @@ export type $LessonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     academy: Prisma.$AcademyPayload<ExtArgs>
     subscription: Prisma.$SubscriptionPayload<ExtArgs>
     car: Prisma.$CarPayload<ExtArgs>
+    client: Prisma.$ClientPayload<ExtArgs>
     ledgerTransaction: Prisma.$LedgerTransactionPayload<ExtArgs> | null
     area: Prisma.$AreaPayload<ExtArgs>
     jobProfile: Prisma.$JobProfilePayload<ExtArgs>
@@ -2038,12 +2379,14 @@ export type $LessonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     endTime: Date
     lessonStatus: $Enums.LessonStatus
     transmission: $Enums.Transmission
-    expectedAmount: number | null
+    sessionDurationMinutes: number
+    expectedPaymentAmount: number | null
     carSessionPrice: number
     captainLessonPrice: number
     academyId: string
     subscriptionId: string
     carId: string
+    clientId: string
     ledgerTransactionId: string | null
     areaId: string
     jobProfileId: string
@@ -2446,6 +2789,7 @@ export interface Prisma__LessonClient<T, Null = never, ExtArgs extends runtime.T
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   subscription<T extends Prisma.SubscriptionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubscriptionDefaultArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   car<T extends Prisma.CarDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CarDefaultArgs<ExtArgs>>): Prisma.Prisma__CarClient<runtime.Types.Result.GetResult<Prisma.$CarPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ledgerTransaction<T extends Prisma.Lesson$ledgerTransactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lesson$ledgerTransactionArgs<ExtArgs>>): Prisma.Prisma__LedgerTransactionClient<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   area<T extends Prisma.AreaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AreaDefaultArgs<ExtArgs>>): Prisma.Prisma__AreaClient<runtime.Types.Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   jobProfile<T extends Prisma.JobProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__JobProfileClient<runtime.Types.Result.GetResult<Prisma.$JobProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2484,12 +2828,14 @@ export interface LessonFieldRefs {
   readonly endTime: Prisma.FieldRef<"Lesson", 'DateTime'>
   readonly lessonStatus: Prisma.FieldRef<"Lesson", 'LessonStatus'>
   readonly transmission: Prisma.FieldRef<"Lesson", 'Transmission'>
-  readonly expectedAmount: Prisma.FieldRef<"Lesson", 'Float'>
+  readonly sessionDurationMinutes: Prisma.FieldRef<"Lesson", 'Int'>
+  readonly expectedPaymentAmount: Prisma.FieldRef<"Lesson", 'Float'>
   readonly carSessionPrice: Prisma.FieldRef<"Lesson", 'Float'>
   readonly captainLessonPrice: Prisma.FieldRef<"Lesson", 'Float'>
   readonly academyId: Prisma.FieldRef<"Lesson", 'String'>
   readonly subscriptionId: Prisma.FieldRef<"Lesson", 'String'>
   readonly carId: Prisma.FieldRef<"Lesson", 'String'>
+  readonly clientId: Prisma.FieldRef<"Lesson", 'String'>
   readonly ledgerTransactionId: Prisma.FieldRef<"Lesson", 'String'>
   readonly areaId: Prisma.FieldRef<"Lesson", 'String'>
   readonly jobProfileId: Prisma.FieldRef<"Lesson", 'String'>

@@ -1,4 +1,5 @@
 import { LedgerTransaction } from "../../../prisma/generated/browser";
+import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
 import { PaginatedResponse } from "../../shared/types/types";
 import { AcademyRequestHandler } from "../academy/academy.type";
 
@@ -10,7 +11,7 @@ import {
 
 export interface ILedgerTransactionService {
     createLedgerTransaction(
-        data: CreateLedgerTransactionDto
+        data: CreateLedgerTransactionDto, tx?: TransactionClient
     ): Promise<LedgerTransaction>;
 
     getAllLedgerTransactions(
@@ -28,4 +29,5 @@ export interface ILedgerTransactionController {
     getAllLedgerTransactions: AcademyRequestHandler;
 
     getLedgerTransactionDetails: AcademyRequestHandler;
+
 }

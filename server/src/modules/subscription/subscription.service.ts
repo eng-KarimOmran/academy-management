@@ -82,7 +82,19 @@ const SubscriptionService: ISubscriptionService = {
 
     if (!subscription) throw ApiError.NotFound("Subscription")
 
-    return subscription
+    const financialAccountId = subscription.financialAccount?.id
+    const ledgerTransactions = subscription.ledgerTransactions
+
+    const { netPaid, totalRefund } = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
+
+    return {
+      ...subscription,
+      paymentDetails: {
+        netPaid,
+        totalRefund,
+        isPaidInFull: netPaid >= subscription.priceAtBooking
+      }
+    }
   },
 
   async deleteSubscription({ params }) {
@@ -141,12 +153,13 @@ const SubscriptionService: ISubscriptionService = {
 
     const financialAccountId = subscription.financialAccount?.id
     const ledgerTransactions = subscription.ledgerTransactions
-    const balance = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
+
+    const { netPaid } = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
 
     const subscriptionStatus = getSubscriptionStatus({
       usedLessons: COMPLETED + CANCELED_CHARGED,
       isCanceled,
-      totalPaid: balance,
+      totalPaid: netPaid,
       requiredInitialDeposit: subscription.requiredInitialDeposit,
       subscriptionPrice: subscription.priceAtBooking,
       sessionsBeforeFullPayment: subscription.sessionsBeforeFullPayment,

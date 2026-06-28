@@ -109,6 +109,7 @@ model Client {
   source        ClientSource   @default(OFFICE)
   subscriptions Subscription[]
   createdAt     DateTime       @default(now())
+  lessons       Lesson[]
 
   @@unique([phone, academyId])
 }
@@ -287,15 +288,16 @@ model Area {
 }
 
 model Lesson {
-  id                 String       @id @default(cuid())
-  startTime          DateTime
-  endTime            DateTime
-  lessonStatus       LessonStatus @default(SCHEDULED)
-  transmission       Transmission
-  expectedAmount     Float?
-  carSessionPrice    Float
-  captainLessonPrice Float
-  academyId          String
+  id                     String       @id @default(cuid())
+  startTime              DateTime
+  endTime                DateTime
+  lessonStatus           LessonStatus @default(SCHEDULED)
+  transmission           Transmission
+  sessionDurationMinutes Int
+  expectedPaymentAmount  Float?
+  carSessionPrice        Float
+  captainLessonPrice     Float
+  academyId              String
 
   academy        Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
   subscriptionId String
@@ -304,6 +306,9 @@ model Lesson {
 
   car   Car    @relation(fields: [carId], references: [id], onDelete: Restrict)
   carId String
+
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  clientId String
 
   ledgerTransaction   LedgerTransaction? @relation(fields: [ledgerTransactionId], references: [id], onDelete: Restrict)
   ledgerTransactionId String?
