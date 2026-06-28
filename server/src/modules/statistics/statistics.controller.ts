@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { RequestAcademy } from "../academy/academy.middleware";
-import DashboardService from "./dashboard.service";
+import DashboardService from "./statistics.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import * as DTO from "./dashboard.dto";
+import * as DTO from "./statistics.dto";
+import { RequestAcademy } from "../academy/academy.type";
 
 const DashboardController = {
   getStatistics: async (req: RequestAcademy, res: Response) => {
@@ -12,7 +12,7 @@ const DashboardController = {
       clients,
       courses,
       subscriptions,
-      transactions,
+      ledgerTransaction,
       lessons,
       area,
       car,
@@ -22,7 +22,7 @@ const DashboardController = {
       DashboardService.clients({ dataSafe }),
       DashboardService.courses({ dataSafe }),
       DashboardService.subscriptions({ dataSafe }),
-      DashboardService.transactions({ dataSafe }),
+      DashboardService.ledgerTransaction({ dataSafe }),
       DashboardService.lessons({ dataSafe }),
       DashboardService.area({ dataSafe }),
       DashboardService.car({ dataSafe }),
@@ -36,7 +36,7 @@ const DashboardController = {
         clients,
         courses,
         subscriptions,
-        transactions,
+        ledgerTransaction,
         lessons,
         area,
         car,

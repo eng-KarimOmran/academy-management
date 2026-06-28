@@ -62,7 +62,6 @@ export type PayrollMinAggregateOutputType = {
   bonusAmount: number | null
   totalDeductions: number | null
   netAmount: number | null
-  ledgerTransactionId: string | null
   createdAt: Date | null
 }
 
@@ -80,7 +79,6 @@ export type PayrollMaxAggregateOutputType = {
   bonusAmount: number | null
   totalDeductions: number | null
   netAmount: number | null
-  ledgerTransactionId: string | null
   createdAt: Date | null
 }
 
@@ -98,7 +96,6 @@ export type PayrollCountAggregateOutputType = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: number
   createdAt: number
   _all: number
 }
@@ -140,7 +137,6 @@ export type PayrollMinAggregateInputType = {
   bonusAmount?: true
   totalDeductions?: true
   netAmount?: true
-  ledgerTransactionId?: true
   createdAt?: true
 }
 
@@ -158,7 +154,6 @@ export type PayrollMaxAggregateInputType = {
   bonusAmount?: true
   totalDeductions?: true
   netAmount?: true
-  ledgerTransactionId?: true
   createdAt?: true
 }
 
@@ -176,7 +171,6 @@ export type PayrollCountAggregateInputType = {
   bonusAmount?: true
   totalDeductions?: true
   netAmount?: true
-  ledgerTransactionId?: true
   createdAt?: true
   _all?: true
 }
@@ -281,7 +275,6 @@ export type PayrollGroupByOutputType = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt: Date
   _count: PayrollCountAggregateOutputType | null
   _avg: PayrollAvgAggregateOutputType | null
@@ -322,13 +315,11 @@ export type PayrollWhereInput = {
   bonusAmount?: Prisma.FloatFilter<"Payroll"> | number
   totalDeductions?: Prisma.FloatFilter<"Payroll"> | number
   netAmount?: Prisma.FloatFilter<"Payroll"> | number
-  ledgerTransactionId?: Prisma.StringFilter<"Payroll"> | string
   createdAt?: Prisma.DateTimeFilter<"Payroll"> | Date | string
   jobProfile?: Prisma.XOR<Prisma.JobProfileScalarRelationFilter, Prisma.JobProfileWhereInput>
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   lessons?: Prisma.LessonListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
-  ledgerTransaction?: Prisma.XOR<Prisma.LedgerTransactionScalarRelationFilter, Prisma.LedgerTransactionWhereInput>
 }
 
 export type PayrollOrderByWithRelationInput = {
@@ -345,18 +336,15 @@ export type PayrollOrderByWithRelationInput = {
   bonusAmount?: Prisma.SortOrder
   totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
-  ledgerTransactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   jobProfile?: Prisma.JobProfileOrderByWithRelationInput
   academy?: Prisma.AcademyOrderByWithRelationInput
   lessons?: Prisma.LessonOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
-  ledgerTransaction?: Prisma.LedgerTransactionOrderByWithRelationInput
 }
 
 export type PayrollWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  ledgerTransactionId?: string
   AND?: Prisma.PayrollWhereInput | Prisma.PayrollWhereInput[]
   OR?: Prisma.PayrollWhereInput[]
   NOT?: Prisma.PayrollWhereInput | Prisma.PayrollWhereInput[]
@@ -377,8 +365,7 @@ export type PayrollWhereUniqueInput = Prisma.AtLeast<{
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   lessons?: Prisma.LessonListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
-  ledgerTransaction?: Prisma.XOR<Prisma.LedgerTransactionScalarRelationFilter, Prisma.LedgerTransactionWhereInput>
-}, "id" | "ledgerTransactionId">
+}, "id">
 
 export type PayrollOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -394,7 +381,6 @@ export type PayrollOrderByWithAggregationInput = {
   bonusAmount?: Prisma.SortOrder
   totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
-  ledgerTransactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.PayrollCountOrderByAggregateInput
   _avg?: Prisma.PayrollAvgOrderByAggregateInput
@@ -420,7 +406,6 @@ export type PayrollScalarWhereWithAggregatesInput = {
   bonusAmount?: Prisma.FloatWithAggregatesFilter<"Payroll"> | number
   totalDeductions?: Prisma.FloatWithAggregatesFilter<"Payroll"> | number
   netAmount?: Prisma.FloatWithAggregatesFilter<"Payroll"> | number
-  ledgerTransactionId?: Prisma.StringWithAggregatesFilter<"Payroll"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payroll"> | Date | string
 }
 
@@ -441,7 +426,6 @@ export type PayrollCreateInput = {
   academy: Prisma.AcademyCreateNestedOneWithoutPayrollsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutPayrollInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutPayrollInput
-  ledgerTransaction: Prisma.LedgerTransactionCreateNestedOneWithoutPayrollInput
 }
 
 export type PayrollUncheckedCreateInput = {
@@ -458,7 +442,6 @@ export type PayrollUncheckedCreateInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPayrollInput
@@ -481,7 +464,6 @@ export type PayrollUpdateInput = {
   academy?: Prisma.AcademyUpdateOneRequiredWithoutPayrollsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutPayrollNestedInput
-  ledgerTransaction?: Prisma.LedgerTransactionUpdateOneRequiredWithoutPayrollNestedInput
 }
 
 export type PayrollUncheckedUpdateInput = {
@@ -498,7 +480,6 @@ export type PayrollUncheckedUpdateInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPayrollNestedInput
@@ -518,7 +499,6 @@ export type PayrollCreateManyInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
 }
 
@@ -551,7 +531,6 @@ export type PayrollUncheckedUpdateManyInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -584,7 +563,6 @@ export type PayrollCountOrderByAggregateInput = {
   bonusAmount?: Prisma.SortOrder
   totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
-  ledgerTransactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -613,7 +591,6 @@ export type PayrollMaxOrderByAggregateInput = {
   bonusAmount?: Prisma.SortOrder
   totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
-  ledgerTransactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -631,7 +608,6 @@ export type PayrollMinOrderByAggregateInput = {
   bonusAmount?: Prisma.SortOrder
   totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
-  ledgerTransactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -762,38 +738,6 @@ export type PayrollUpdateOneWithoutLessonsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.PayrollUpdateToOneWithWhereWithoutLessonsInput, Prisma.PayrollUpdateWithoutLessonsInput>, Prisma.PayrollUncheckedUpdateWithoutLessonsInput>
 }
 
-export type PayrollCreateNestedOneWithoutLedgerTransactionInput = {
-  create?: Prisma.XOR<Prisma.PayrollCreateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedCreateWithoutLedgerTransactionInput>
-  connectOrCreate?: Prisma.PayrollCreateOrConnectWithoutLedgerTransactionInput
-  connect?: Prisma.PayrollWhereUniqueInput
-}
-
-export type PayrollUncheckedCreateNestedOneWithoutLedgerTransactionInput = {
-  create?: Prisma.XOR<Prisma.PayrollCreateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedCreateWithoutLedgerTransactionInput>
-  connectOrCreate?: Prisma.PayrollCreateOrConnectWithoutLedgerTransactionInput
-  connect?: Prisma.PayrollWhereUniqueInput
-}
-
-export type PayrollUpdateOneWithoutLedgerTransactionNestedInput = {
-  create?: Prisma.XOR<Prisma.PayrollCreateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedCreateWithoutLedgerTransactionInput>
-  connectOrCreate?: Prisma.PayrollCreateOrConnectWithoutLedgerTransactionInput
-  upsert?: Prisma.PayrollUpsertWithoutLedgerTransactionInput
-  disconnect?: Prisma.PayrollWhereInput | boolean
-  delete?: Prisma.PayrollWhereInput | boolean
-  connect?: Prisma.PayrollWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PayrollUpdateToOneWithWhereWithoutLedgerTransactionInput, Prisma.PayrollUpdateWithoutLedgerTransactionInput>, Prisma.PayrollUncheckedUpdateWithoutLedgerTransactionInput>
-}
-
-export type PayrollUncheckedUpdateOneWithoutLedgerTransactionNestedInput = {
-  create?: Prisma.XOR<Prisma.PayrollCreateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedCreateWithoutLedgerTransactionInput>
-  connectOrCreate?: Prisma.PayrollCreateOrConnectWithoutLedgerTransactionInput
-  upsert?: Prisma.PayrollUpsertWithoutLedgerTransactionInput
-  disconnect?: Prisma.PayrollWhereInput | boolean
-  delete?: Prisma.PayrollWhereInput | boolean
-  connect?: Prisma.PayrollWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PayrollUpdateToOneWithWhereWithoutLedgerTransactionInput, Prisma.PayrollUpdateWithoutLedgerTransactionInput>, Prisma.PayrollUncheckedUpdateWithoutLedgerTransactionInput>
-}
-
 export type PayrollCreateWithoutAcademyInput = {
   id?: string
   periodFrom: Date | string
@@ -810,7 +754,6 @@ export type PayrollCreateWithoutAcademyInput = {
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutPayrollInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutPayrollInput
-  ledgerTransaction: Prisma.LedgerTransactionCreateNestedOneWithoutPayrollInput
 }
 
 export type PayrollUncheckedCreateWithoutAcademyInput = {
@@ -826,7 +769,6 @@ export type PayrollUncheckedCreateWithoutAcademyInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPayrollInput
@@ -875,7 +817,6 @@ export type PayrollScalarWhereInput = {
   bonusAmount?: Prisma.FloatFilter<"Payroll"> | number
   totalDeductions?: Prisma.FloatFilter<"Payroll"> | number
   netAmount?: Prisma.FloatFilter<"Payroll"> | number
-  ledgerTransactionId?: Prisma.StringFilter<"Payroll"> | string
   createdAt?: Prisma.DateTimeFilter<"Payroll"> | Date | string
 }
 
@@ -895,7 +836,6 @@ export type PayrollCreateWithoutSubscriptionsInput = {
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
   academy: Prisma.AcademyCreateNestedOneWithoutPayrollsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutPayrollInput
-  ledgerTransaction: Prisma.LedgerTransactionCreateNestedOneWithoutPayrollInput
 }
 
 export type PayrollUncheckedCreateWithoutSubscriptionsInput = {
@@ -912,7 +852,6 @@ export type PayrollUncheckedCreateWithoutSubscriptionsInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
 }
@@ -949,7 +888,6 @@ export type PayrollUpdateWithoutSubscriptionsInput = {
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutPayrollsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutPayrollNestedInput
-  ledgerTransaction?: Prisma.LedgerTransactionUpdateOneRequiredWithoutPayrollNestedInput
 }
 
 export type PayrollUncheckedUpdateWithoutSubscriptionsInput = {
@@ -966,7 +904,6 @@ export type PayrollUncheckedUpdateWithoutSubscriptionsInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
 }
@@ -987,7 +924,6 @@ export type PayrollCreateWithoutJobProfileInput = {
   academy: Prisma.AcademyCreateNestedOneWithoutPayrollsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutPayrollInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutPayrollInput
-  ledgerTransaction: Prisma.LedgerTransactionCreateNestedOneWithoutPayrollInput
 }
 
 export type PayrollUncheckedCreateWithoutJobProfileInput = {
@@ -1003,7 +939,6 @@ export type PayrollUncheckedCreateWithoutJobProfileInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPayrollInput
@@ -1051,7 +986,6 @@ export type PayrollCreateWithoutLessonsInput = {
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
   academy: Prisma.AcademyCreateNestedOneWithoutPayrollsInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutPayrollInput
-  ledgerTransaction: Prisma.LedgerTransactionCreateNestedOneWithoutPayrollInput
 }
 
 export type PayrollUncheckedCreateWithoutLessonsInput = {
@@ -1068,7 +1002,6 @@ export type PayrollUncheckedCreateWithoutLessonsInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPayrollInput
 }
@@ -1105,7 +1038,6 @@ export type PayrollUpdateWithoutLessonsInput = {
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutPayrollsNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutPayrollNestedInput
-  ledgerTransaction?: Prisma.LedgerTransactionUpdateOneRequiredWithoutPayrollNestedInput
 }
 
 export type PayrollUncheckedUpdateWithoutLessonsInput = {
@@ -1122,100 +1054,7 @@ export type PayrollUncheckedUpdateWithoutLessonsInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPayrollNestedInput
-}
-
-export type PayrollCreateWithoutLedgerTransactionInput = {
-  id?: string
-  periodFrom: Date | string
-  periodTo: Date | string
-  baseSalary: number
-  totalLessonsCount: number
-  totalLessonsAmount: number
-  totalSubscriptionsCount: number
-  targetCount: number
-  bonusAmount: number
-  totalDeductions: number
-  netAmount: number
-  createdAt?: Date | string
-  jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
-  academy: Prisma.AcademyCreateNestedOneWithoutPayrollsInput
-  lessons?: Prisma.LessonCreateNestedManyWithoutPayrollInput
-  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutPayrollInput
-}
-
-export type PayrollUncheckedCreateWithoutLedgerTransactionInput = {
-  id?: string
-  jobProfileId: string
-  academyId: string
-  periodFrom: Date | string
-  periodTo: Date | string
-  baseSalary: number
-  totalLessonsCount: number
-  totalLessonsAmount: number
-  totalSubscriptionsCount: number
-  targetCount: number
-  bonusAmount: number
-  totalDeductions: number
-  netAmount: number
-  createdAt?: Date | string
-  lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
-  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPayrollInput
-}
-
-export type PayrollCreateOrConnectWithoutLedgerTransactionInput = {
-  where: Prisma.PayrollWhereUniqueInput
-  create: Prisma.XOR<Prisma.PayrollCreateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedCreateWithoutLedgerTransactionInput>
-}
-
-export type PayrollUpsertWithoutLedgerTransactionInput = {
-  update: Prisma.XOR<Prisma.PayrollUpdateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedUpdateWithoutLedgerTransactionInput>
-  create: Prisma.XOR<Prisma.PayrollCreateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedCreateWithoutLedgerTransactionInput>
-  where?: Prisma.PayrollWhereInput
-}
-
-export type PayrollUpdateToOneWithWhereWithoutLedgerTransactionInput = {
-  where?: Prisma.PayrollWhereInput
-  data: Prisma.XOR<Prisma.PayrollUpdateWithoutLedgerTransactionInput, Prisma.PayrollUncheckedUpdateWithoutLedgerTransactionInput>
-}
-
-export type PayrollUpdateWithoutLedgerTransactionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  periodFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  periodTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalLessonsCount?: Prisma.IntFieldUpdateOperationsInput | number
-  totalLessonsAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
-  targetCount?: Prisma.IntFieldUpdateOperationsInput | number
-  bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
-  netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
-  academy?: Prisma.AcademyUpdateOneRequiredWithoutPayrollsNestedInput
-  lessons?: Prisma.LessonUpdateManyWithoutPayrollNestedInput
-  subscriptions?: Prisma.SubscriptionUpdateManyWithoutPayrollNestedInput
-}
-
-export type PayrollUncheckedUpdateWithoutLedgerTransactionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  academyId?: Prisma.StringFieldUpdateOperationsInput | string
-  periodFrom?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  periodTo?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  baseSalary?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalLessonsCount?: Prisma.IntFieldUpdateOperationsInput | number
-  totalLessonsAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
-  targetCount?: Prisma.IntFieldUpdateOperationsInput | number
-  bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
-  netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPayrollNestedInput
 }
 
@@ -1232,7 +1071,6 @@ export type PayrollCreateManyAcademyInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
 }
 
@@ -1252,7 +1090,6 @@ export type PayrollUpdateWithoutAcademyInput = {
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutPayrollNestedInput
-  ledgerTransaction?: Prisma.LedgerTransactionUpdateOneRequiredWithoutPayrollNestedInput
 }
 
 export type PayrollUncheckedUpdateWithoutAcademyInput = {
@@ -1268,7 +1105,6 @@ export type PayrollUncheckedUpdateWithoutAcademyInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPayrollNestedInput
@@ -1287,7 +1123,6 @@ export type PayrollUncheckedUpdateManyWithoutAcademyInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1304,7 +1139,6 @@ export type PayrollCreateManyJobProfileInput = {
   bonusAmount: number
   totalDeductions: number
   netAmount: number
-  ledgerTransactionId: string
   createdAt?: Date | string
 }
 
@@ -1324,7 +1158,6 @@ export type PayrollUpdateWithoutJobProfileInput = {
   academy?: Prisma.AcademyUpdateOneRequiredWithoutPayrollsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutPayrollNestedInput
-  ledgerTransaction?: Prisma.LedgerTransactionUpdateOneRequiredWithoutPayrollNestedInput
 }
 
 export type PayrollUncheckedUpdateWithoutJobProfileInput = {
@@ -1340,7 +1173,6 @@ export type PayrollUncheckedUpdateWithoutJobProfileInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPayrollNestedInput
@@ -1359,7 +1191,6 @@ export type PayrollUncheckedUpdateManyWithoutJobProfileInput = {
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  ledgerTransactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -1417,13 +1248,11 @@ export type PayrollSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   bonusAmount?: boolean
   totalDeductions?: boolean
   netAmount?: boolean
-  ledgerTransactionId?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   lessons?: boolean | Prisma.Payroll$lessonsArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Payroll$subscriptionsArgs<ExtArgs>
-  ledgerTransaction?: boolean | Prisma.LedgerTransactionDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PayrollCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["payroll"]>
 
@@ -1441,11 +1270,9 @@ export type PayrollSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   bonusAmount?: boolean
   totalDeductions?: boolean
   netAmount?: boolean
-  ledgerTransactionId?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
-  ledgerTransaction?: boolean | Prisma.LedgerTransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["payroll"]>
 
 export type PayrollSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1462,11 +1289,9 @@ export type PayrollSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   bonusAmount?: boolean
   totalDeductions?: boolean
   netAmount?: boolean
-  ledgerTransactionId?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
-  ledgerTransaction?: boolean | Prisma.LedgerTransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["payroll"]>
 
 export type PayrollSelectScalar = {
@@ -1483,28 +1308,24 @@ export type PayrollSelectScalar = {
   bonusAmount?: boolean
   totalDeductions?: boolean
   netAmount?: boolean
-  ledgerTransactionId?: boolean
   createdAt?: boolean
 }
 
-export type PayrollOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobProfileId" | "academyId" | "periodFrom" | "periodTo" | "baseSalary" | "totalLessonsCount" | "totalLessonsAmount" | "totalSubscriptionsCount" | "targetCount" | "bonusAmount" | "totalDeductions" | "netAmount" | "ledgerTransactionId" | "createdAt", ExtArgs["result"]["payroll"]>
+export type PayrollOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobProfileId" | "academyId" | "periodFrom" | "periodTo" | "baseSalary" | "totalLessonsCount" | "totalLessonsAmount" | "totalSubscriptionsCount" | "targetCount" | "bonusAmount" | "totalDeductions" | "netAmount" | "createdAt", ExtArgs["result"]["payroll"]>
 export type PayrollInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   lessons?: boolean | Prisma.Payroll$lessonsArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Payroll$subscriptionsArgs<ExtArgs>
-  ledgerTransaction?: boolean | Prisma.LedgerTransactionDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PayrollCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PayrollIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
-  ledgerTransaction?: boolean | Prisma.LedgerTransactionDefaultArgs<ExtArgs>
 }
 export type PayrollIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
-  ledgerTransaction?: boolean | Prisma.LedgerTransactionDefaultArgs<ExtArgs>
 }
 
 export type $PayrollPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1514,7 +1335,6 @@ export type $PayrollPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     academy: Prisma.$AcademyPayload<ExtArgs>
     lessons: Prisma.$LessonPayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
-    ledgerTransaction: Prisma.$LedgerTransactionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1530,7 +1350,6 @@ export type $PayrollPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     bonusAmount: number
     totalDeductions: number
     netAmount: number
-    ledgerTransactionId: string
     createdAt: Date
   }, ExtArgs["result"]["payroll"]>
   composites: {}
@@ -1930,7 +1749,6 @@ export interface Prisma__PayrollClient<T, Null = never, ExtArgs extends runtime.
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   lessons<T extends Prisma.Payroll$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payroll$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Payroll$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payroll$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  ledgerTransaction<T extends Prisma.LedgerTransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerTransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__LedgerTransactionClient<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1973,7 +1791,6 @@ export interface PayrollFieldRefs {
   readonly bonusAmount: Prisma.FieldRef<"Payroll", 'Float'>
   readonly totalDeductions: Prisma.FieldRef<"Payroll", 'Float'>
   readonly netAmount: Prisma.FieldRef<"Payroll", 'Float'>
-  readonly ledgerTransactionId: Prisma.FieldRef<"Payroll", 'String'>
   readonly createdAt: Prisma.FieldRef<"Payroll", 'DateTime'>
 }
     

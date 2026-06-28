@@ -1889,7 +1889,8 @@ export const FinancialAccountScalarFieldEnum = {
   id: 'id',
   jobProfileId: 'jobProfileId',
   subscriptionId: 'subscriptionId',
-  academyId: 'academyId'
+  academyId: 'academyId',
+  balance: 'balance'
 } as const
 
 export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFieldEnum)[keyof typeof FinancialAccountScalarFieldEnum]
@@ -2117,7 +2118,6 @@ export const PayrollScalarFieldEnum = {
   bonusAmount: 'bonusAmount',
   totalDeductions: 'totalDeductions',
   netAmount: 'netAmount',
-  ledgerTransactionId: 'ledgerTransactionId',
   createdAt: 'createdAt'
 } as const
 
@@ -2169,6 +2169,20 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
  * Reference to a field of type 'Platform'
  */
 export type EnumPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Platform'>
@@ -2214,20 +2228,6 @@ export type ListEnumClientSourceFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 

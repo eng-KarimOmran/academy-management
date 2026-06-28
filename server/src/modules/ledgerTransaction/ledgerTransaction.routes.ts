@@ -9,7 +9,6 @@ const router = Router({ mergeParams: true });
 router.post(
   "/",
   validate(Schema.CreateLedgerTransactionSchema),
-  checkAcademyExists(),
   LedgerTransactionController.createLedgerTransaction
 );
 
@@ -23,7 +22,6 @@ router.get(
 router.get(
   "/:ledgerTransactionId",
   validate(Schema.GetLedgerTransactionDetailsSchema),
-  checkAcademyExists(),
   LedgerTransactionController.getLedgerTransactionDetails
 );
 

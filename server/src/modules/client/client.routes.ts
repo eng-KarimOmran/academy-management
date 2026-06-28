@@ -9,26 +9,22 @@ const router = Router({ mergeParams: true });
 router.post(
   "/",
   validate(Schema.CreateClientSchema),
-  checkAcademyExists(),
   ClientController.create
 );
 
 router.get(
   "/details",
   validate(Schema.GetClientDetailsSchema),
-  checkAcademyExists(),
   ClientController.getDetails
 );
 
-router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.get(
   "/",
   validate(Schema.GetAllClientsSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   ClientController.getAll
 );
-
-
 
 router.patch(
   "/:clientId",
@@ -39,6 +35,7 @@ router.patch(
 router.delete(
   "/:clientId",
   validate(Schema.DeleteClientSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   ClientController.delete
 );
 

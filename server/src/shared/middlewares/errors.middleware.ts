@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IErrorResponse } from "../shared/utils/errorResponse";
+import { IErrorResponse } from "../utils/errorResponse";
 
 const globalErrorHandler = (
   err: IErrorResponse,

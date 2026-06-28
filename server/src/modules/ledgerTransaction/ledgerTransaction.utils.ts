@@ -43,34 +43,3 @@ export const buildLedgerTransactionWhere = ({
 export const orderBy: LedgerTransactionOrderByWithRelationInput = {
   createdAt: "desc",
 }
-
-export const calculateSubscriptionBalance = ({
-  financialAccountId,
-  ledgerTransactions,
-}: {
-  financialAccountId?: string;
-  ledgerTransactions: LedgerTransaction[];
-}): {
-  netPaid: number;
-  totalRefund: number;
-} => {
-  if (!financialAccountId) {
-    return { netPaid: 0, totalRefund: 0 }
-  }
-
-  let totalPaid = 0;
-  let totalRefund = 0;
-
-  for (const transaction of ledgerTransactions) {
-    if (transaction.receiverId === financialAccountId) {
-      totalRefund += Number(transaction.amount)
-    }
-    if (transaction.senderId === financialAccountId) {
-      totalPaid += Number(transaction.amount)
-    }
-  }
-
-  const netPaid = totalPaid - totalRefund
-
-  return { netPaid, totalRefund }
-};

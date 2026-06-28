@@ -21,7 +21,7 @@ export const CreateLedgerTransactionSchema = {
       receiverId: id,
       transactionType,
       paymentMethod,
-      amount: price,
+      amount: price.min(1, "يجب أن يكون مبلغ الدفع أكبر من صفر"),
       subscriptionId: id.optional(),
 
       image: z

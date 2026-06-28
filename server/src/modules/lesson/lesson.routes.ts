@@ -6,8 +6,6 @@ import validate from "../../shared/middlewares/validate.middleware";
 
 const router = Router({ mergeParams: true });
 
-router.use(checkAcademyExists())
-
 router.post(
   "/",
   validate(Schema.CreateLessonSchema),

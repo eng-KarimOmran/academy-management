@@ -9,16 +9,7 @@ const router = Router({ mergeParams: true });
 router.get(
   "/",
   validate(Schema.getAllJobProfilesSchema),
-  checkAcademyExists(),
   JobProfileController.getAllJobProfiles
-);
-
-router.use(checkAcademyExists({ isAcademyOwner: true }))
-
-router.post(
-  "/",
-  validate(Schema.createJobProfileSchema),
-  JobProfileController.createJobProfile
 );
 
 router.get(
@@ -27,15 +18,24 @@ router.get(
   JobProfileController.getJobProfileDetails
 );
 
+router.post(
+  "/",
+  validate(Schema.createJobProfileSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
+  JobProfileController.createJobProfile
+);
+
 router.patch(
   "/:jobProfileId",
   validate(Schema.updateJobProfileSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   JobProfileController.updateJobProfile
 );
 
 router.delete(
   "/:jobProfileId",
   validate(Schema.deleteJobProfileSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   JobProfileController.deleteJobProfile
 );
 

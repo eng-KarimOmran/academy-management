@@ -28,7 +28,7 @@ export interface ISubscriptionService {
 export type GetSubscriptionStatusParams = {
     usedLessons: number;
     totalLessons: number;
-    totalPaid: number;
+    netPaid: number;
     requiredInitialDeposit: number;
     subscriptionPrice: number;
     isCanceled?: boolean;

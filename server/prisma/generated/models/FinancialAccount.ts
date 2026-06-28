@@ -20,8 +20,18 @@ export type FinancialAccountModel = runtime.Types.Result.DefaultSelection<Prisma
 
 export type AggregateFinancialAccount = {
   _count: FinancialAccountCountAggregateOutputType | null
+  _avg: FinancialAccountAvgAggregateOutputType | null
+  _sum: FinancialAccountSumAggregateOutputType | null
   _min: FinancialAccountMinAggregateOutputType | null
   _max: FinancialAccountMaxAggregateOutputType | null
+}
+
+export type FinancialAccountAvgAggregateOutputType = {
+  balance: number | null
+}
+
+export type FinancialAccountSumAggregateOutputType = {
+  balance: number | null
 }
 
 export type FinancialAccountMinAggregateOutputType = {
@@ -29,6 +39,7 @@ export type FinancialAccountMinAggregateOutputType = {
   jobProfileId: string | null
   subscriptionId: string | null
   academyId: string | null
+  balance: number | null
 }
 
 export type FinancialAccountMaxAggregateOutputType = {
@@ -36,6 +47,7 @@ export type FinancialAccountMaxAggregateOutputType = {
   jobProfileId: string | null
   subscriptionId: string | null
   academyId: string | null
+  balance: number | null
 }
 
 export type FinancialAccountCountAggregateOutputType = {
@@ -43,15 +55,25 @@ export type FinancialAccountCountAggregateOutputType = {
   jobProfileId: number
   subscriptionId: number
   academyId: number
+  balance: number
   _all: number
 }
 
+
+export type FinancialAccountAvgAggregateInputType = {
+  balance?: true
+}
+
+export type FinancialAccountSumAggregateInputType = {
+  balance?: true
+}
 
 export type FinancialAccountMinAggregateInputType = {
   id?: true
   jobProfileId?: true
   subscriptionId?: true
   academyId?: true
+  balance?: true
 }
 
 export type FinancialAccountMaxAggregateInputType = {
@@ -59,6 +81,7 @@ export type FinancialAccountMaxAggregateInputType = {
   jobProfileId?: true
   subscriptionId?: true
   academyId?: true
+  balance?: true
 }
 
 export type FinancialAccountCountAggregateInputType = {
@@ -66,6 +89,7 @@ export type FinancialAccountCountAggregateInputType = {
   jobProfileId?: true
   subscriptionId?: true
   academyId?: true
+  balance?: true
   _all?: true
 }
 
@@ -107,6 +131,18 @@ export type FinancialAccountAggregateArgs<ExtArgs extends runtime.Types.Extensio
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: FinancialAccountAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: FinancialAccountSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: FinancialAccountMinAggregateInputType
@@ -137,6 +173,8 @@ export type FinancialAccountGroupByArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   _count?: FinancialAccountCountAggregateInputType | true
+  _avg?: FinancialAccountAvgAggregateInputType
+  _sum?: FinancialAccountSumAggregateInputType
   _min?: FinancialAccountMinAggregateInputType
   _max?: FinancialAccountMaxAggregateInputType
 }
@@ -146,7 +184,10 @@ export type FinancialAccountGroupByOutputType = {
   jobProfileId: string | null
   subscriptionId: string | null
   academyId: string | null
+  balance: number
   _count: FinancialAccountCountAggregateOutputType | null
+  _avg: FinancialAccountAvgAggregateOutputType | null
+  _sum: FinancialAccountSumAggregateOutputType | null
   _min: FinancialAccountMinAggregateOutputType | null
   _max: FinancialAccountMaxAggregateOutputType | null
 }
@@ -174,6 +215,7 @@ export type FinancialAccountWhereInput = {
   jobProfileId?: Prisma.StringNullableFilter<"FinancialAccount"> | string | null
   subscriptionId?: Prisma.StringNullableFilter<"FinancialAccount"> | string | null
   academyId?: Prisma.StringNullableFilter<"FinancialAccount"> | string | null
+  balance?: Prisma.FloatFilter<"FinancialAccount"> | number
   jobProfile?: Prisma.XOR<Prisma.JobProfileNullableScalarRelationFilter, Prisma.JobProfileWhereInput> | null
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   academy?: Prisma.XOR<Prisma.AcademyNullableScalarRelationFilter, Prisma.AcademyWhereInput> | null
@@ -186,6 +228,7 @@ export type FinancialAccountOrderByWithRelationInput = {
   jobProfileId?: Prisma.SortOrderInput | Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   academyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  balance?: Prisma.SortOrder
   jobProfile?: Prisma.JobProfileOrderByWithRelationInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
   academy?: Prisma.AcademyOrderByWithRelationInput
@@ -201,6 +244,7 @@ export type FinancialAccountWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.FinancialAccountWhereInput | Prisma.FinancialAccountWhereInput[]
   OR?: Prisma.FinancialAccountWhereInput[]
   NOT?: Prisma.FinancialAccountWhereInput | Prisma.FinancialAccountWhereInput[]
+  balance?: Prisma.FloatFilter<"FinancialAccount"> | number
   jobProfile?: Prisma.XOR<Prisma.JobProfileNullableScalarRelationFilter, Prisma.JobProfileWhereInput> | null
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   academy?: Prisma.XOR<Prisma.AcademyNullableScalarRelationFilter, Prisma.AcademyWhereInput> | null
@@ -213,9 +257,12 @@ export type FinancialAccountOrderByWithAggregationInput = {
   jobProfileId?: Prisma.SortOrderInput | Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
   academyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  balance?: Prisma.SortOrder
   _count?: Prisma.FinancialAccountCountOrderByAggregateInput
+  _avg?: Prisma.FinancialAccountAvgOrderByAggregateInput
   _max?: Prisma.FinancialAccountMaxOrderByAggregateInput
   _min?: Prisma.FinancialAccountMinOrderByAggregateInput
+  _sum?: Prisma.FinancialAccountSumOrderByAggregateInput
 }
 
 export type FinancialAccountScalarWhereWithAggregatesInput = {
@@ -226,10 +273,12 @@ export type FinancialAccountScalarWhereWithAggregatesInput = {
   jobProfileId?: Prisma.StringNullableWithAggregatesFilter<"FinancialAccount"> | string | null
   subscriptionId?: Prisma.StringNullableWithAggregatesFilter<"FinancialAccount"> | string | null
   academyId?: Prisma.StringNullableWithAggregatesFilter<"FinancialAccount"> | string | null
+  balance?: Prisma.FloatWithAggregatesFilter<"FinancialAccount"> | number
 }
 
 export type FinancialAccountCreateInput = {
   id?: string
+  balance?: number
   jobProfile?: Prisma.JobProfileCreateNestedOneWithoutFinancialAccountInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutFinancialAccountInput
   academy?: Prisma.AcademyCreateNestedOneWithoutFinancialAccountInput
@@ -242,12 +291,14 @@ export type FinancialAccountUncheckedCreateInput = {
   jobProfileId?: string | null
   subscriptionId?: string | null
   academyId?: string | null
+  balance?: number
   sentTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSenderInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutReceiverInput
 }
 
 export type FinancialAccountUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   jobProfile?: Prisma.JobProfileUpdateOneWithoutFinancialAccountNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutFinancialAccountNestedInput
   academy?: Prisma.AcademyUpdateOneWithoutFinancialAccountNestedInput
@@ -260,6 +311,7 @@ export type FinancialAccountUncheckedUpdateInput = {
   jobProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   sentTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSenderNestedInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutReceiverNestedInput
 }
@@ -269,10 +321,12 @@ export type FinancialAccountCreateManyInput = {
   jobProfileId?: string | null
   subscriptionId?: string | null
   academyId?: string | null
+  balance?: number
 }
 
 export type FinancialAccountUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type FinancialAccountUncheckedUpdateManyInput = {
@@ -280,6 +334,7 @@ export type FinancialAccountUncheckedUpdateManyInput = {
   jobProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type FinancialAccountCountOrderByAggregateInput = {
@@ -287,6 +342,11 @@ export type FinancialAccountCountOrderByAggregateInput = {
   jobProfileId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
+}
+
+export type FinancialAccountAvgOrderByAggregateInput = {
+  balance?: Prisma.SortOrder
 }
 
 export type FinancialAccountMaxOrderByAggregateInput = {
@@ -294,6 +354,7 @@ export type FinancialAccountMaxOrderByAggregateInput = {
   jobProfileId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
 }
 
 export type FinancialAccountMinOrderByAggregateInput = {
@@ -301,6 +362,11 @@ export type FinancialAccountMinOrderByAggregateInput = {
   jobProfileId?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
+  balance?: Prisma.SortOrder
+}
+
+export type FinancialAccountSumOrderByAggregateInput = {
+  balance?: Prisma.SortOrder
 }
 
 export type FinancialAccountNullableScalarRelationFilter = {
@@ -311,6 +377,14 @@ export type FinancialAccountNullableScalarRelationFilter = {
 export type FinancialAccountScalarRelationFilter = {
   is?: Prisma.FinancialAccountWhereInput
   isNot?: Prisma.FinancialAccountWhereInput
+}
+
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -443,6 +517,7 @@ export type FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedIn
 
 export type FinancialAccountCreateWithoutAcademyInput = {
   id?: string
+  balance?: number
   jobProfile?: Prisma.JobProfileCreateNestedOneWithoutFinancialAccountInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutFinancialAccountInput
   sentTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSenderInput
@@ -453,6 +528,7 @@ export type FinancialAccountUncheckedCreateWithoutAcademyInput = {
   id?: string
   jobProfileId?: string | null
   subscriptionId?: string | null
+  balance?: number
   sentTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSenderInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutReceiverInput
 }
@@ -475,6 +551,7 @@ export type FinancialAccountUpdateToOneWithWhereWithoutAcademyInput = {
 
 export type FinancialAccountUpdateWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   jobProfile?: Prisma.JobProfileUpdateOneWithoutFinancialAccountNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutFinancialAccountNestedInput
   sentTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSenderNestedInput
@@ -485,12 +562,14 @@ export type FinancialAccountUncheckedUpdateWithoutAcademyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   sentTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSenderNestedInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
 export type FinancialAccountCreateWithoutSubscriptionInput = {
   id?: string
+  balance?: number
   jobProfile?: Prisma.JobProfileCreateNestedOneWithoutFinancialAccountInput
   academy?: Prisma.AcademyCreateNestedOneWithoutFinancialAccountInput
   sentTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSenderInput
@@ -501,6 +580,7 @@ export type FinancialAccountUncheckedCreateWithoutSubscriptionInput = {
   id?: string
   jobProfileId?: string | null
   academyId?: string | null
+  balance?: number
   sentTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSenderInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutReceiverInput
 }
@@ -523,6 +603,7 @@ export type FinancialAccountUpdateToOneWithWhereWithoutSubscriptionInput = {
 
 export type FinancialAccountUpdateWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   jobProfile?: Prisma.JobProfileUpdateOneWithoutFinancialAccountNestedInput
   academy?: Prisma.AcademyUpdateOneWithoutFinancialAccountNestedInput
   sentTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSenderNestedInput
@@ -533,12 +614,14 @@ export type FinancialAccountUncheckedUpdateWithoutSubscriptionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   sentTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSenderNestedInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
 export type FinancialAccountCreateWithoutJobProfileInput = {
   id?: string
+  balance?: number
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutFinancialAccountInput
   academy?: Prisma.AcademyCreateNestedOneWithoutFinancialAccountInput
   sentTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSenderInput
@@ -549,6 +632,7 @@ export type FinancialAccountUncheckedCreateWithoutJobProfileInput = {
   id?: string
   subscriptionId?: string | null
   academyId?: string | null
+  balance?: number
   sentTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSenderInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutReceiverInput
 }
@@ -571,6 +655,7 @@ export type FinancialAccountUpdateToOneWithWhereWithoutJobProfileInput = {
 
 export type FinancialAccountUpdateWithoutJobProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   subscription?: Prisma.SubscriptionUpdateOneWithoutFinancialAccountNestedInput
   academy?: Prisma.AcademyUpdateOneWithoutFinancialAccountNestedInput
   sentTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSenderNestedInput
@@ -581,12 +666,14 @@ export type FinancialAccountUncheckedUpdateWithoutJobProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   sentTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSenderNestedInput
   receivedTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
 export type FinancialAccountCreateWithoutSentTransactionsInput = {
   id?: string
+  balance?: number
   jobProfile?: Prisma.JobProfileCreateNestedOneWithoutFinancialAccountInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutFinancialAccountInput
   academy?: Prisma.AcademyCreateNestedOneWithoutFinancialAccountInput
@@ -598,6 +685,7 @@ export type FinancialAccountUncheckedCreateWithoutSentTransactionsInput = {
   jobProfileId?: string | null
   subscriptionId?: string | null
   academyId?: string | null
+  balance?: number
   receivedTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutReceiverInput
 }
 
@@ -608,6 +696,7 @@ export type FinancialAccountCreateOrConnectWithoutSentTransactionsInput = {
 
 export type FinancialAccountCreateWithoutReceivedTransactionsInput = {
   id?: string
+  balance?: number
   jobProfile?: Prisma.JobProfileCreateNestedOneWithoutFinancialAccountInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutFinancialAccountInput
   academy?: Prisma.AcademyCreateNestedOneWithoutFinancialAccountInput
@@ -619,6 +708,7 @@ export type FinancialAccountUncheckedCreateWithoutReceivedTransactionsInput = {
   jobProfileId?: string | null
   subscriptionId?: string | null
   academyId?: string | null
+  balance?: number
   sentTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSenderInput
 }
 
@@ -640,6 +730,7 @@ export type FinancialAccountUpdateToOneWithWhereWithoutSentTransactionsInput = {
 
 export type FinancialAccountUpdateWithoutSentTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   jobProfile?: Prisma.JobProfileUpdateOneWithoutFinancialAccountNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutFinancialAccountNestedInput
   academy?: Prisma.AcademyUpdateOneWithoutFinancialAccountNestedInput
@@ -651,6 +742,7 @@ export type FinancialAccountUncheckedUpdateWithoutSentTransactionsInput = {
   jobProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   receivedTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutReceiverNestedInput
 }
 
@@ -667,6 +759,7 @@ export type FinancialAccountUpdateToOneWithWhereWithoutReceivedTransactionsInput
 
 export type FinancialAccountUpdateWithoutReceivedTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   jobProfile?: Prisma.JobProfileUpdateOneWithoutFinancialAccountNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutFinancialAccountNestedInput
   academy?: Prisma.AcademyUpdateOneWithoutFinancialAccountNestedInput
@@ -678,6 +771,7 @@ export type FinancialAccountUncheckedUpdateWithoutReceivedTransactionsInput = {
   jobProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  balance?: Prisma.FloatFieldUpdateOperationsInput | number
   sentTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSenderNestedInput
 }
 
@@ -726,6 +820,7 @@ export type FinancialAccountSelect<ExtArgs extends runtime.Types.Extensions.Inte
   jobProfileId?: boolean
   subscriptionId?: boolean
   academyId?: boolean
+  balance?: boolean
   jobProfile?: boolean | Prisma.FinancialAccount$jobProfileArgs<ExtArgs>
   subscription?: boolean | Prisma.FinancialAccount$subscriptionArgs<ExtArgs>
   academy?: boolean | Prisma.FinancialAccount$academyArgs<ExtArgs>
@@ -739,6 +834,7 @@ export type FinancialAccountSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   jobProfileId?: boolean
   subscriptionId?: boolean
   academyId?: boolean
+  balance?: boolean
   jobProfile?: boolean | Prisma.FinancialAccount$jobProfileArgs<ExtArgs>
   subscription?: boolean | Prisma.FinancialAccount$subscriptionArgs<ExtArgs>
   academy?: boolean | Prisma.FinancialAccount$academyArgs<ExtArgs>
@@ -749,6 +845,7 @@ export type FinancialAccountSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   jobProfileId?: boolean
   subscriptionId?: boolean
   academyId?: boolean
+  balance?: boolean
   jobProfile?: boolean | Prisma.FinancialAccount$jobProfileArgs<ExtArgs>
   subscription?: boolean | Prisma.FinancialAccount$subscriptionArgs<ExtArgs>
   academy?: boolean | Prisma.FinancialAccount$academyArgs<ExtArgs>
@@ -759,9 +856,10 @@ export type FinancialAccountSelectScalar = {
   jobProfileId?: boolean
   subscriptionId?: boolean
   academyId?: boolean
+  balance?: boolean
 }
 
-export type FinancialAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobProfileId" | "subscriptionId" | "academyId", ExtArgs["result"]["financialAccount"]>
+export type FinancialAccountOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobProfileId" | "subscriptionId" | "academyId" | "balance", ExtArgs["result"]["financialAccount"]>
 export type FinancialAccountInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobProfile?: boolean | Prisma.FinancialAccount$jobProfileArgs<ExtArgs>
   subscription?: boolean | Prisma.FinancialAccount$subscriptionArgs<ExtArgs>
@@ -795,6 +893,7 @@ export type $FinancialAccountPayload<ExtArgs extends runtime.Types.Extensions.In
     jobProfileId: string | null
     subscriptionId: string | null
     academyId: string | null
+    balance: number
   }, ExtArgs["result"]["financialAccount"]>
   composites: {}
 }
@@ -1227,6 +1326,7 @@ export interface FinancialAccountFieldRefs {
   readonly jobProfileId: Prisma.FieldRef<"FinancialAccount", 'String'>
   readonly subscriptionId: Prisma.FieldRef<"FinancialAccount", 'String'>
   readonly academyId: Prisma.FieldRef<"FinancialAccount", 'String'>
+  readonly balance: Prisma.FieldRef<"FinancialAccount", 'Float'>
 }
     
 

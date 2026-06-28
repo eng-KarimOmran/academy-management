@@ -3,7 +3,7 @@ import { ILedgerTransactionService } from './ledgerTransaction.type';
 import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
 import SubscriptionService from "../subscription/subscription.service";
-import { buildLedgerTransactionWhere, calculateSubscriptionBalance, orderBy } from './ledgerTransaction.utils';
+import { buildLedgerTransactionWhere, orderBy } from './ledgerTransaction.utils';
 import { buildPagination, buildPaginationMeta } from '../../shared/utils/Pagination';
 import { TransactionClient } from '../../../prisma/generated/internal/prismaNamespace';
 
@@ -35,18 +35,20 @@ const LedgerTransactionService: ILedgerTransactionService = {
       if (subscriptionId) {
         const subscription = await tx.subscription.findUnique({
           where: { id: subscriptionId },
-          include: { financialAccount: true, ledgerTransactions: true }
+          include: { financialAccount: true }
         })
+
         if (!subscription) throw ApiError.NotFound("Subscription")
-        const financialAccountId = subscription.financialAccount?.id
-        const ledgerTransactions = subscription.ledgerTransactions
-        const { netPaid } = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
+        if (!subscription.financialAccount) throw ApiError.NotFound("financialAccount")
+        const balance = subscription.financialAccount.balance
+        const netPaid = subscription.priceAtBooking - balance
+
         if (netPaid >= subscription.priceAtBooking) {
           throw ApiError.Conflict("SUBSCRIPTION_ALREADY_PAID")
         }
 
         if (transactionType === "CUSTOMER_PAYMENT") {
-          if (netPaid + amount >= subscription.priceAtBooking) {
+          if (netPaid + amount > subscription.priceAtBooking) {
             throw ApiError.Conflict("OVERPAYMENT")
           }
           if (senderId !== subscription.financialAccount?.id) {
@@ -86,7 +88,12 @@ const LedgerTransactionService: ILedgerTransactionService = {
         ...(subscriptionId && { subscription: { connect: { id: subscriptionId } } }),
       }
 
-      const ledgerTransaction = await tx.ledgerTransaction.create({ data: dataLedgerTransaction });
+      const [ledgerTransaction] = await Promise.all([
+        tx.ledgerTransaction.create({ data: dataLedgerTransaction }),
+        tx.financialAccount.update({ where: { id: receiverId }, data: { balance: { increment: amount } } }),
+        tx.financialAccount.update({ where: { id: senderId }, data: { balance: { decrement: amount } } }),
+      ])
+
 
       if (subscriptionId) {
         await SubscriptionService.recalculateSubscriptionStatus({ subscriptionId, tx });

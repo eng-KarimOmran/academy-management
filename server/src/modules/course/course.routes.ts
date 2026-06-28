@@ -9,45 +9,48 @@ const router = Router({ mergeParams: true });
 router.get(
   "/",
   validate(Schema.GetAllSchema),
-  checkAcademyExists(),
   CourseController.getAllCourses
 );
-
-router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.post(
   "/",
   validate(Schema.CreateSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CourseController.createCourse
 );
 
 router.get(
   "/:courseId",
   validate(Schema.GetDetailsSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CourseController.getCourseDetails
 );
 
 router.patch(
   "/:courseId",
   validate(Schema.UpdateSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CourseController.updateCourse
 );
 
 router.delete(
   "/:courseId",
   validate(Schema.DeleteSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CourseController.deleteCourse
 );
 
 router.post(
   "/:courseId/features",
   validate(Schema.AddCourseFeaturesSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CourseController.addCourseFeature
 );
 
 router.delete(
   "/:courseId/features/:featureId",
   validate(Schema.DeleteCourseFeaturesSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CourseController.deleteCourseFeature
 );
 

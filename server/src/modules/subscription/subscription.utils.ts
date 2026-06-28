@@ -39,7 +39,7 @@ export const getSubscriptionStatus = (params: GetSubscriptionStatusParams): Subs
   const {
     usedLessons,
     totalLessons,
-    totalPaid,
+    netPaid,
     requiredInitialDeposit,
     subscriptionPrice,
     isCanceled,
@@ -55,8 +55,8 @@ export const getSubscriptionStatus = (params: GetSubscriptionStatusParams): Subs
     return SubscriptionStatus.COMPLETED;
   }
 
-  const isDepositPaid = totalPaid >= requiredInitialDeposit;
-  const isFullyPaid = totalPaid >= subscriptionPrice;
+  const isDepositPaid = netPaid >= requiredInitialDeposit;
+  const isFullyPaid = netPaid >= subscriptionPrice;
   const hasScheduledSession = scheduledLessons > 0;
   const reachedPaymentLimit = usedLessons + scheduledLessons >= sessionsBeforeFullPayment;
 

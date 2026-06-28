@@ -30,6 +30,7 @@ model FinancialAccount {
   jobProfileId   String?       @unique
   subscriptionId String?       @unique
   academyId      String?       @unique
+  balance        Float         @default(0)
 
   sentTransactions     LedgerTransaction[] @relation("Sender")
   receivedTransactions LedgerTransaction[] @relation("Receiver")
@@ -358,7 +359,6 @@ model LedgerTransaction {
   subscriptionId String?
 
   lessons Lesson[]
-  payroll Payroll?
 
   @@index([senderId])
   @@index([receiverId])
@@ -400,9 +400,6 @@ model Payroll {
 
   lessons       Lesson[]
   subscriptions Subscription[]
-
-  ledgerTransactionId String            @unique
-  ledgerTransaction   LedgerTransaction @relation(fields: [ledgerTransactionId], references: [id])
 
   createdAt DateTime @default(now())
 }

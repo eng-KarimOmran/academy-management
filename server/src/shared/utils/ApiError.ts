@@ -32,6 +32,7 @@ const NOT_FOUND_MESSAGES = {
   CourseFeature: "ميزة البرنامج غير موجوده",
   Sender: "الحساب المالى للمرسل غير موجود",
   Receiver: "الحساب المالى للمستلم غير موجود",
+  financialAccount: "الحساب المالى غير موجود"
 } as const;
 
 export const CONFLICT_MESSAGES = {

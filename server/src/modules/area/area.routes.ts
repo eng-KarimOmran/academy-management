@@ -9,33 +9,35 @@ const router = Router({ mergeParams: true });
 router.get(
   "/",
   validate(Schema.GetAllAreasSchema),
-  checkAcademyExists(),
   AreaController.getAllAreas
 );
 
-router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.post(
   "/",
   validate(Schema.CreateAreaSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   AreaController.createArea
 );
 
 router.get(
   "/:areaId",
   validate(Schema.GetAreaDetailsSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   AreaController.getAreaDetails
 );
 
 router.patch(
   "/:areaId",
   validate(Schema.UpdateAreaSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   AreaController.updateArea
 );
 
 router.delete(
   "/:areaId",
   validate(Schema.DeleteAreaSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   AreaController.deleteArea
 );
 

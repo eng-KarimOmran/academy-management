@@ -110,7 +110,8 @@ export const FinancialAccountScalarFieldEnum = {
   id: 'id',
   jobProfileId: 'jobProfileId',
   subscriptionId: 'subscriptionId',
-  academyId: 'academyId'
+  academyId: 'academyId',
+  balance: 'balance'
 } as const
 
 export type FinancialAccountScalarFieldEnum = (typeof FinancialAccountScalarFieldEnum)[keyof typeof FinancialAccountScalarFieldEnum]
@@ -338,7 +339,6 @@ export const PayrollScalarFieldEnum = {
   bonusAmount: 'bonusAmount',
   totalDeductions: 'totalDeductions',
   netAmount: 'netAmount',
-  ledgerTransactionId: 'ledgerTransactionId',
   createdAt: 'createdAt'
 } as const
 

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { getCycle } from './../../shared/utils/getCycle';
+import { getCycle } from '../../shared/utils/getCycle';
 
 export const getDashboardTimeFrames = ({ startDate, endDate }: { startDate?: Date, endDate?: Date }) => {
     const now = dayjs();

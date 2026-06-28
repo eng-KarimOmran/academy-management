@@ -1,8 +1,8 @@
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
-import DashboardController from "./dashboard.controller";
 import { checkAcademyExists } from "../academy/academy.middleware";
-import { GetDashboardAnalyticsSchema } from "./dashboard.schema";
+import validate from "../../shared/middlewares/validate.middleware";
+import { GetDashboardAnalyticsSchema } from "./statistics.schema";
+import DashboardController from "./statistics.controller";
 
 const router = Router({ mergeParams: true });
 
@@ -11,7 +11,7 @@ router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.get(
     "/",
-    validation(GetDashboardAnalyticsSchema),
+    validate(GetDashboardAnalyticsSchema),
     DashboardController.getStatistics
 );
 

@@ -9,33 +9,35 @@ const router = Router({ mergeParams: true });
 router.get(
   "/",
   validate(Schema.GetAllCarsSchema),
-  checkAcademyExists(),
   CarController.getAllCars
 );
 
-router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.post(
   "/",
   validate(Schema.CreateCarSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CarController.createCar
 );
 
 router.get(
   "/:carId",
   validate(Schema.GetCarDetailsSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CarController.getDetails
 );
 
 router.patch(
   "/:carId",
   validate(Schema.UpdateCarSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CarController.updateCar
 );
 
 router.delete(
   "/:carId",
   validate(Schema.DeleteCarSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   CarController.deleteCar
 );
 

@@ -2,7 +2,6 @@ import { SubscriptionCreateInput } from "../../../prisma/generated/models";
 import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
 import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
-import { calculateSubscriptionBalance } from "../ledgerTransaction/ledgerTransaction.utils";
 import { getLessonStats } from "../lesson/lesson.utils";
 import { ISubscriptionService } from "./Subscription.type";
 import { buildSubscriptionWhere, getSubscriptionStatus, orderBy } from "./subscription.utils";
@@ -39,7 +38,7 @@ const SubscriptionService: ISubscriptionService = {
         totalSessions: course.totalSessions,
         trainingTypeAtRegistration: body.trainingTypeAtRegistration,
         subscriptionStatus: "PENDING_DEPOSIT",
-        financialAccount: { create: {} },
+        financialAccount: { create: { balance: course.priceDiscounted } },
       }
 
       return await tx.subscription.create({ data: dataSubscription })
@@ -81,17 +80,16 @@ const SubscriptionService: ISubscriptionService = {
     })
 
     if (!subscription) throw ApiError.NotFound("Subscription")
+    if (!subscription.financialAccount) throw ApiError.NotFound("financialAccount")
 
-    const financialAccountId = subscription.financialAccount?.id
-    const ledgerTransactions = subscription.ledgerTransactions
+    const financialAccount = subscription.financialAccount
 
-    const { netPaid, totalRefund } = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
+    const netPaid = subscription.priceAtBooking - financialAccount.balance
 
     return {
       ...subscription,
       paymentDetails: {
         netPaid,
-        totalRefund,
         isPaidInFull: netPaid >= subscription.priceAtBooking
       }
     }
@@ -135,15 +133,14 @@ const SubscriptionService: ISubscriptionService = {
 
   async recalculateSubscriptionStatus({ subscriptionId, tx }) {
     const subscription = await tx.subscription.findUnique({
-      where: { id: subscriptionId },
-      include: {
-        ledgerTransactions: true,
-        lessons: true,
-        financialAccount: true
-      }
+      where: { id: subscriptionId }, include: { lessons: true, financialAccount: true }
     })
 
+
     if (!subscription) throw ApiError.NotFound("Subscription")
+
+    if (!subscription.financialAccount) throw ApiError.NotFound("financialAccount")
+
 
     const totalLessons = subscription.totalSessions
 
@@ -151,15 +148,14 @@ const SubscriptionService: ISubscriptionService = {
 
     const isCanceled = subscription.subscriptionStatus === "CANCELED"
 
-    const financialAccountId = subscription.financialAccount?.id
-    const ledgerTransactions = subscription.ledgerTransactions
+    const financialAccount = subscription.financialAccount
 
-    const { netPaid } = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
+    const netPaid = subscription.priceAtBooking - financialAccount.balance
 
     const subscriptionStatus = getSubscriptionStatus({
       usedLessons: COMPLETED + CANCELED_CHARGED,
       isCanceled,
-      totalPaid: netPaid,
+      netPaid,
       requiredInitialDeposit: subscription.requiredInitialDeposit,
       subscriptionPrice: subscription.priceAtBooking,
       sessionsBeforeFullPayment: subscription.sessionsBeforeFullPayment,

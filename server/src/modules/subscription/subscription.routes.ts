@@ -9,34 +9,33 @@ const router = Router({ mergeParams: true });
 router.post(
   "/",
   validate(Schema.CreateSubscriptionSchema),
-  checkAcademyExists(),
   SubscriptionController.createSubscription
 );
 
 router.get(
   "/:subscriptionId",
   validate(Schema.GetSubscriptionDetailsSchema),
-  checkAcademyExists(),
   SubscriptionController.getSubscriptionDetails
 );
-
-router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.get(
   "/",
   validate(Schema.GetAllSubscriptionsSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   SubscriptionController.getAllSubscriptions
 );
 
 router.patch(
   "/:subscriptionId/cancel",
   validate(Schema.CancelSubscriptionSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   SubscriptionController.cancelSubscription
 );
 
 router.delete(
   "/:subscriptionId",
   validate(Schema.DeleteSubscriptionSchema),
+  checkAcademyExists({ isAcademyOwner: true }),
   SubscriptionController.deleteSubscription
 );
 
