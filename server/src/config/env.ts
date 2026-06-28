@@ -14,11 +14,6 @@ interface IEnv {
     REFRESH_EXPIRATION: number;
     ACCESS_EXPIRATION: number;
   };
-  cloudinary: {
-    cloud_name: string;
-    api_key: string;
-    api_secret: string;
-  };
 }
 
 const env: IEnv = {
@@ -36,12 +31,7 @@ const env: IEnv = {
     REFRESH_SECRET: process.env.JWT_REFRESH_SECRET!,
     REFRESH_EXPIRATION: Number(process.env.JWT_REFRESH_EXPIRATION),
     ACCESS_EXPIRATION: Number(process.env.JWT_ACCESS_EXPIRATION),
-  },
-  cloudinary: {
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
-    api_key: process.env.CLOUDINARY_API_KEY!,
-    api_secret: process.env.CLOUDINARY_API_SECRET!,
-  },
+  }
 };
 
 export default env;

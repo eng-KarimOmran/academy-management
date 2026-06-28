@@ -1,25 +1,16 @@
 import z from "zod";
-import { LedgerTransactionSchema } from "./ledgerTransaction.schema";
+import * as Schema from "./ledgerTransaction.schema";
 
 export type CreateLedgerTransactionDto = {
-  params: z.infer<typeof LedgerTransactionSchema.create.params>;
-  body: z.infer<typeof LedgerTransactionSchema.create.body>;
-};
-
-export type UpdateLedgerTransactionDto = {
-  params: z.infer<typeof LedgerTransactionSchema.update.params>;
-  body: z.infer<typeof LedgerTransactionSchema.update.body>;
-};
-
-export type DeleteLedgerTransactionDto = {
-  params: z.infer<typeof LedgerTransactionSchema.delete.params>;
-};
-
-export type GetLedgerTransactionDto = {
-  params: z.infer<typeof LedgerTransactionSchema.get.params>;
+  params: z.infer<typeof Schema.CreateLedgerTransactionSchema.params>;
+  body: z.infer<typeof Schema.CreateLedgerTransactionSchema.body>;
 };
 
 export type GetAllLedgerTransactionsDto = {
-  params: z.infer<typeof LedgerTransactionSchema.getAll.params>;
-  query: z.infer<typeof LedgerTransactionSchema.getAll.query>;
+  params: z.infer<typeof Schema.GetAllLedgerTransactionsSchema.params>;
+  query: z.infer<typeof Schema.GetAllLedgerTransactionsSchema.query>;
+};
+
+export type GetLedgerTransactionDetailsDto = {
+  params: z.infer<typeof Schema.GetLedgerTransactionDetailsSchema.params>;
 };

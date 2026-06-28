@@ -1,228 +1,143 @@
-import * as utils from "./ledgerTransaction.utils";
-import * as Dto from "./ledgerTransaction.dto";
-import ApiError from "../../shared/utils/ApiError";
-import LedgerTransactionRepository from "./ledgerTransaction.repository";
-import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
-import { ILedgerTransactionService } from "./ledgerTransaction.type";
+import { userSafe } from './../user/user.utils';
+import { LedgerTransactionCreateInput } from './../../../prisma/generated/models/LedgerTransaction';
+import { ILedgerTransactionService } from './ledgerTransaction.type';
 import { prisma } from "../../lib/prisma";
-import { LedgerTransactionCreateInput, LedgerTransactionUpdateInput } from "../../../prisma/generated/models";
+import ApiError from "../../shared/utils/ApiError";
+import SubscriptionService from "../subscription/subscription.service";
+import { buildLedgerTransactionWhere, orderBy } from './ledgerTransaction.utils';
+import { buildPagination, buildPaginationMeta } from '../../shared/utils/Pagination';
 
 const LedgerTransactionService: ILedgerTransactionService = {
-  async create(dataSafe: Dto.CreateLedgerTransactionDto) {
-    const { academyId } = dataSafe.params;
-
-    const {
-      paymentMethod,
-      senderId,
-      receiverId,
-      proofOfPaymentImage,
-      subscriptionId,
-      amount,
-      transactionType
-    } = dataSafe.body;
-
-    if (paymentMethod === "ELECTRONIC_WALLET" && !proofOfPaymentImage) {
-      throw ApiError.ValidationError("يجب إرسال صورة تأكيد عملية الدفع.");
-    }
+  async createLedgerTransaction({ params, body }) {
+    const { academyId } = params;
 
     return prisma.$transaction(async (tx) => {
-      const { sender, receiver, subscription } = await utils.getTransferEntities({ senderId, receiverId, subscriptionId, tx });
-      const { receiverType, senderType, transactionDirection } = utils.transactionConfig[transactionType];
+      let imageId: string | undefined;
 
-      if (subscription) {
-        const { residual } = utils.calculateLedgerSummary(
-          subscription.ledgerTransactions,
-          subscription.priceAtBooking,
-        );
-        const remaining = residual ?? 0;
-        if (remaining <= 0) {
-          throw ApiError.Conflict("SUBSCRIPTION_ALREADY_PAID");
-        }
-        if (amount > remaining) {
-          throw ApiError.Conflict("OVERPAYMENT");
-        }
+      const {
+        senderId,
+        receiverId,
+        subscriptionId,
+        image,
+        amount,
+        paymentMethod,
+        transactionType,
+      } = body;
+
+      const [sender, receiver] = await Promise.all([
+        tx.financialAccount.findUnique({ where: { id: senderId } }),
+        tx.financialAccount.findUnique({ where: { id: receiverId } }),
+      ]);
+
+      if (!sender) throw ApiError.NotFound("Sender");
+      if (!receiver) throw ApiError.NotFound("Receiver");
+
+      if (subscriptionId) {
+        const subscription = await tx.subscription.findUnique({ where: { id: subscriptionId } })
+        if (!subscription) throw ApiError.NotFound("Subscription")
+      }
+
+
+      if (image) {
+        const createdImage = await tx.image.create({
+          data: {
+            publicId: image.publicId,
+            imageUrl: image.imageUrl,
+          },
+        });
+        imageId = createdImage.id;
       }
 
       const dataLedgerTransaction: LedgerTransactionCreateInput = {
         academy: { connect: { id: academyId } },
-        amount,
-        paymentMethod,
         receiver: { connect: { id: receiverId } },
         sender: { connect: { id: senderId } },
-        receiverType,
-        senderType,
-        transactionType,
-        transactionDirection,
-        ...(subscriptionId && { subscription: { connect: { id: subscriptionId } } }),
-        ...(proofOfPaymentImage && { proofOfPaymentImage: { create: proofOfPaymentImage } })
-      };
-
-      return LedgerTransactionRepository.create(dataLedgerTransaction, tx);
-    });
-  },
-
-  async update({ params, body }: Dto.UpdateLedgerTransactionDto) {
-    const { transactionId } = params;
-    const {
-      transactionType,
-      paymentMethod,
-      senderId,
-      receiverId,
-      amount,
-      subscriptionId,
-      proofOfPaymentImage,
-    } = body;
-
-    return prisma.$transaction(async (tx) => {
-      const existingTransaction = await utils.getLedgerTransactionOrThrow(transactionId, tx);
-      const currentTransactionType = transactionType || existingTransaction.transactionType;
-      const { receiverType, senderType, transactionDirection } = utils.transactionConfig[currentTransactionType];
-
-      const data: LedgerTransactionUpdateInput = {
-        senderType,
-        receiverType,
-        transactionType,
-        transactionDirection,
-        paymentMethod,
         amount,
-        ...(senderId && { sender: { connect: { id: senderId } } }),
-        ...(receiverId && { receiver: { connect: { id: receiverId } } }),
+        paymentMethod,
+        transactionType,
+        ...(imageId && { image: { connect: { id: imageId } } }),
         ...(subscriptionId && { subscription: { connect: { id: subscriptionId } } }),
-        ...(proofOfPaymentImage && {
-          proofOfPaymentImage: {
-            upsert: {
-              create: {
-                imageUrl: proofOfPaymentImage.imageUrl,
-                publicId: proofOfPaymentImage.publicId,
-              },
-              update: {
-                imageUrl: proofOfPaymentImage.imageUrl,
-                publicId: proofOfPaymentImage.publicId,
-              },
-            },
-          },
-        }),
-      };
+      }
 
-      return LedgerTransactionRepository.update(transactionId, data, tx);
+      const ledgerTransaction = await tx.ledgerTransaction.create({ data: dataLedgerTransaction });
+
+      if (subscriptionId) {
+        await SubscriptionService.recalculateSubscriptionStatus({ subscriptionId, tx });
+      }
+
+      return ledgerTransaction;
     });
   },
-
-  async delete({ params }: Dto.DeleteLedgerTransactionDto) {
-    const { transactionId } = params;
-
-    return prisma.$transaction(async (tx) => {
-      await utils.getLedgerTransactionOrThrow(transactionId, tx);
-      return LedgerTransactionRepository.delete(transactionId, tx);
-    });
-  },
-
-  async getDetails({ params }: Dto.GetLedgerTransactionDto) {
-    return prisma.$transaction(async (tx) => {
-      return utils.getLedgerTransactionOrThrow(params.transactionId, tx);
-    });
-  },
-
-  async getAll({ params, query }: Dto.GetAllLedgerTransactionsDto) {
+  async getAllLedgerTransactions({ params, query }) {
     const { academyId } = params;
-    const { limit, page, search, senderType, receiverType, transactionType, paymentMethod } = query;
 
-    const where = utils.buildLedgerTransactionWhere({
+    const {
+      page,
+      limit,
       search,
-      academyId,
-      senderType,
-      receiverType,
-      transactionType,
       paymentMethod,
+      transactionType,
+    } = query;
+
+    const where = buildLedgerTransactionWhere({
+      academyId,
+      search,
+      paymentMethod,
+      transactionType,
     });
 
-    const { take, skip } = buildPagination({ page, limit });
-
-    const { transactions, count } = await prisma.$transaction(async (tx) => {
-      const [transactions, count] = await Promise.all([
-        LedgerTransactionRepository.findAll({ where, take, skip }, tx),
-        LedgerTransactionRepository.count(where, tx),
-      ]);
-
-      return { transactions, count };
+    const { take, skip } = buildPagination({
+      page,
+      limit,
     });
 
-    const pagination = buildPaginationMeta({ limit, count, page });
+    const [items, count] = await prisma.$transaction([
+      prisma.ledgerTransaction.findMany({
+        where,
+        skip,
+        take,
+        orderBy,
+        include: {
+          image: true,
+        },
+      }),
 
-    return { items: transactions, pagination };
+      prisma.ledgerTransaction.count({
+        where,
+      }),
+    ]);
+
+    return {
+      items,
+      pagination: buildPaginationMeta({
+        count,
+        page,
+        limit,
+      }),
+    };
   },
+  async getLedgerTransactionDetails({ params }) {
+    const { academyId, ledgerTransactionId } = params;
 
-  async getCurrentUserDues(userId: string) {
-    return prisma.$transaction(async (tx) => {
-      const [incoming, outgoing] = await Promise.all([
-        LedgerTransactionRepository.aggregate(
-          {
-            where: { receiver: { user: { id: userId } } },
-            _sum: { amount: true },
-          },
-          tx
-        ),
-        LedgerTransactionRepository.aggregate(
-          {
-            where: { sender: { user: { id: userId } } },
-            _sum: { amount: true },
-          },
-          tx
-        ),
-      ]);
-
-      const totalIn = Number(incoming._sum?.amount ?? 0);
-      const totalOut = Number(outgoing._sum?.amount ?? 0);
-
-      return { totalDebt: totalIn - totalOut }
+    const ledgerTransaction = await prisma.ledgerTransaction.findFirst({
+      where: {
+        id: ledgerTransactionId,
+        academyId,
+      },
+      include: {
+        sender: { select: { academy: { select: { id: true, name: true } }, jobProfile: { select: { id: true, user: { select: { id: true, name: true, phone: true } } } }, subscription: { select: { id: true, client: { select: { id: true, name: true, phone: true } } } } } },
+        receiver: { select: { academy: { select: { id: true, name: true } }, jobProfile: { select: { id: true, user: { select: { id: true, name: true, phone: true } } } }, subscription: { select: { id: true, client: { select: { id: true, name: true, phone: true } } } } } },
+        lessons: true,
+        image: true,
+        academy: true,
+      },
     });
-  },
 
-  async getAcademyUsersDues(academyId: string) {
-    return prisma.$transaction(async (tx) => {
-      const persons = await tx.person.findMany({ where: {} });
+    if (!ledgerTransaction) {
+      throw ApiError.NotFound("LedgerTransaction");
+    }
 
-      const usersDues = await Promise.all(
-        persons.map(async (person) => {
-          const [incoming, outgoing] = await Promise.all([
-            LedgerTransactionRepository.aggregate(
-              {
-                where: { receiverId: person.id },
-                _sum: { amount: true },
-              },
-              tx
-            ),
-            LedgerTransactionRepository.aggregate(
-              {
-                where: { senderId: person.id },
-                _sum: { amount: true },
-              },
-              tx
-            ),
-          ]);
-
-          const balance =
-            Number(incoming._sum?.amount ?? 0) -
-            Number(outgoing._sum?.amount ?? 0);
-
-          return {
-            personId: person.id,
-            name: person.name,
-            balance,
-          };
-        })
-      );
-
-      const totalDues = usersDues.reduce(
-        (sum, user) => sum + user.balance,
-        0
-      );
-
-      return {
-        users: usersDues,
-        totalDues,
-      };
-    });
+    return ledgerTransaction;
   }
 };
 

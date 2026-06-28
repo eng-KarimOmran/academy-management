@@ -12,23 +12,22 @@ import {
 
 export const CreateSchema = {
   params: z.object({ academyId: id }),
-  body: z.object({
-    name: entityName,
-    description: z.string(),
-    priceOriginal: price,
-    priceDiscounted: price,
-    requiredInitialDeposit: price.default(50),
-    sessionsBeforeFullPayment: price,
-    sessionDurationMinutes: positiveNumber.default(50),
-    totalSessions: positiveNumber,
-    featuredReason: z.string().optional(),
-  }).refine(
-    (data) => data.priceOriginal >= data.priceDiscounted,
-    {
-      message: "السعر بعد الخصم يجب أن يكون أقل من أو يساوي السعر الأصلي",
+  body: z
+    .object({
+      name: entityName,
+      description: z.string(),
+      priceOriginal: price,
+      priceDiscounted: price,
+      requiredInitialDeposit: price.default(50),
+      sessionsBeforeFullPayment: price,
+      sessionDurationMinutes: positiveNumber.default(50),
+      totalSessions: positiveNumber,
+      featuredReason: z.string().optional(),
+    })
+    .refine((data) => data.priceOriginal >= data.priceDiscounted, {
+      error: "السعر بعد الخصم يجب أن يكون أقل من أو يساوي السعر الأصلي",
       path: ["priceDiscounted"],
-    }
-  ),
+    }),
 };
 
 export const UpdateSchema = {

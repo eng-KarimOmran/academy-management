@@ -18,6 +18,9 @@ export const buildClientWhere = ({
   if (search) {
     where.OR = [
       {
+        id: { contains: search }
+      },
+      {
         name: { contains: search, mode: "insensitive" }
       },
       {

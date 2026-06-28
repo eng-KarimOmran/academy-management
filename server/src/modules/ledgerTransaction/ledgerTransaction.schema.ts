@@ -1,70 +1,86 @@
-import z from "zod";
-import { id, limit, paymentMethod, positiveNumber, price, transactionParty, transactionType, url } from "../../shared/utils/common.validation";
+import * as z from "zod";
+import { TransactionType } from "../../../prisma/generated/enums";
+import {
+  id,
+  price,
+  paymentMethod,
+  transactionType,
+  url,
+  page,
+  limit,
+} from "../../shared/utils/common.validation";
 
-export const LedgerTransactionSchema = {
-  create: {
-    params: z.object({
-      academyId: id,
-    }),
-    body: z.object({
-      transactionType: transactionType,
-      paymentMethod: paymentMethod,
+export const CreateLedgerTransactionSchema = {
+  params: z.object({
+    academyId: id,
+  }),
+
+  body: z
+    .object({
       senderId: id,
       receiverId: id,
+      transactionType,
+      paymentMethod,
       amount: price,
       subscriptionId: id.optional(),
-      proofOfPaymentImage: z.object({
-        imageUrl: url,
-        publicId: z.string()
-      }).optional(),
-    }),
-  },
 
-  update: {
-    params: z.object({
-      academyId: id,
-      transactionId: id,
-    }),
-    body: z.object({
-      transactionType: transactionType.optional(),
-      paymentMethod: paymentMethod.optional(),
-      senderId: id.optional(),
-      receiverId: id.optional(),
-      amount: price.optional(),
-      subscriptionId: id.optional(),
-      proofOfPaymentImage: z.object({
-        imageUrl: url,
-        publicId: z.string()
-      }).optional(),
-    }),
-  },
+      image: z
+        .object({
+          publicId: z.string().min(1, "معرف الصورة مطلوب"),
+          imageUrl: url,
+        })
+        .optional(),
+    })
+    .refine((data) => data.senderId !== data.receiverId, {
+      error: "لا يمكن أن يكون المرسل والمستقبل نفس الحساب",
+      path: ["receiverId"],
+    })
+    .refine(
+      (data) => {
+        const isCustomerTx =
+          data.transactionType === TransactionType.CUSTOMER_PAYMENT ||
+          data.transactionType === TransactionType.CUSTOMER_REFUND;
 
-  delete: {
-    params: z.object({
-      academyId: id,
-      transactionId: id,
-    }),
-  },
+        return !isCustomerTx || !!data.subscriptionId;
+      },
+      {
+        error: "رقم الاشتراك مطلوب عند عمليات دفع أو استرداد العميل",
+        path: ["subscriptionId"],
+      },
+    )
+    .refine(
+      (data) => {
+        const isElectronic = data.paymentMethod === "ELECTRONIC";
+        return !isElectronic || !!data.image;
+      },
+      {
+        error: "الصورة مطلوبة عند الدفع الإلكتروني",
+        path: ["image"],
+      },
+    ),
+};
 
-  get: {
-    params: z.object({
-      academyId: id,
-      transactionId: id,
-    }),
-  },
+export const GetAllLedgerTransactionsSchema = {
+  params: z.object({
+    academyId: id,
+  }),
 
-  getAll: {
-    params: z.object({
-      academyId: id,
-    }),
-    query: z.object({
-      page: positiveNumber.optional().default(1),
-      search: z.string().optional(),
-      senderType: transactionParty.optional(),
-      receiverType: transactionParty.optional(),
-      transactionType: transactionType.optional(),
-      paymentMethod: paymentMethod.optional(),
-      limit,
-    }),
-  },
+  query: z.object({
+    page,
+
+    limit,
+
+    search: z.string().optional(),
+
+    transactionType: transactionType.optional(),
+
+    paymentMethod: paymentMethod.optional(),
+  }),
+};
+
+export const GetLedgerTransactionDetailsSchema = {
+  params: z.object({
+    academyId: id,
+    ledgerTransactionId: id,
+  }),
 };

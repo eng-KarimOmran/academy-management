@@ -2,7 +2,7 @@ import { SubscriptionCreateInput } from "../../../prisma/generated/models";
 import { prisma } from "../../lib/prisma";
 import ApiError from "../../shared/utils/ApiError";
 import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
-import { calculateAccountBalance } from "../ledgerTransaction/ledgerTransaction.utils";
+import { calculateSubscriptionBalance } from "../ledgerTransaction/ledgerTransaction.utils";
 import { getLessonStats } from "../lesson/lesson.utils";
 import { ISubscriptionService } from "./Subscription.type";
 import { buildSubscriptionWhere, getSubscriptionStatus, orderBy } from "./subscription.utils";
@@ -75,7 +75,8 @@ const SubscriptionService: ISubscriptionService = {
       where: { id: subscriptionId },
       include: {
         lessons: true,
-        ledgerTransactions: true
+        ledgerTransactions: true,
+        financialAccount: true
       }
     })
 
@@ -140,7 +141,7 @@ const SubscriptionService: ISubscriptionService = {
 
     const financialAccountId = subscription.financialAccount?.id
     const ledgerTransactions = subscription.ledgerTransactions
-    const balance = calculateAccountBalance({ financialAccountId, ledgerTransactions })
+    const balance = calculateSubscriptionBalance({ financialAccountId, ledgerTransactions })
 
     const subscriptionStatus = getSubscriptionStatus({
       usedLessons: COMPLETED + CANCELED_CHARGED,

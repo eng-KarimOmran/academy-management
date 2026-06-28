@@ -30,7 +30,9 @@ const NOT_FOUND_MESSAGES = {
   AcademyPaymentLink: "رابط الدفع غير موجود",
   PATH_NOT_FOUND: "المسار غير موجود",
   JobProfile: "الملف الوظيفي غير موجد",
-  CourseFeature: "ميزة البرنامج غير موجوده"
+  CourseFeature: "ميزة البرنامج غير موجوده",
+  Sender: "الحساب المالى للمرسل غير موجود",
+  Receiver: "الحساب المالى للمستلم غير موجود",
 } as const;
 
 export const CONFLICT_MESSAGES = {

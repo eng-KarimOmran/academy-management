@@ -1,26 +1,71 @@
+import { LedgerTransactionOrderByWithRelationInput } from './../../../prisma/generated/models/LedgerTransaction';
 import { LedgerTransaction } from "../../../prisma/generated/client";
+import {
+  PaymentMethod,
+  TransactionType,
+} from "../../../prisma/generated/enums";
+import { LedgerTransactionWhereInput } from "../../../prisma/generated/models";
 
-export const calculateAccountBalance = (
-  { financialAccountId,
-    ledgerTransactions
-  }: {
-    financialAccountId?: string,
-    ledgerTransactions: LedgerTransaction[]
-  }) => {
-  let IN = 0;
-  let OUT = 0;
+export const buildLedgerTransactionWhere = ({
+  academyId,
+  search,
+  paymentMethod,
+  transactionType,
+}: {
+  academyId: string;
+  search?: string;
+  paymentMethod?: PaymentMethod;
+  transactionType?: TransactionType;
+}): LedgerTransactionWhereInput => {
+  const where: LedgerTransactionWhereInput = {
+    academyId,
+  };
 
-  if (financialAccountId) return 0
+  if (transactionType) {
+    where.transactionType = transactionType;
+  }
+
+  if (paymentMethod) {
+    where.paymentMethod = paymentMethod;
+  }
+
+  if (search) {
+    where.OR = [
+      {
+        subscription: { id: { contains: search } },
+      },
+    ];
+  }
+
+  return where;
+};
+
+export const orderBy: LedgerTransactionOrderByWithRelationInput = {
+  createdAt: "desc",
+}
+
+export const calculateSubscriptionBalance = ({
+  financialAccountId,
+  ledgerTransactions,
+}: {
+  financialAccountId?: string;
+  ledgerTransactions: LedgerTransaction[];
+}) => {
+  if (!financialAccountId) return 0;
+
+  let totalPaid = 0;
+  let totalRefund = 0;
 
   for (const transaction of ledgerTransactions) {
     if (transaction.receiverId === financialAccountId) {
-      IN += Number(transaction.amount);
+      totalRefund += Number(transaction.amount)
     }
-
     if (transaction.senderId === financialAccountId) {
-      OUT += Number(transaction.amount);
+      totalPaid += Number(transaction.amount)
     }
   }
 
-  return IN - OUT;
-}
+  const netPaid = totalPaid - totalRefund
+
+  return netPaid
+};

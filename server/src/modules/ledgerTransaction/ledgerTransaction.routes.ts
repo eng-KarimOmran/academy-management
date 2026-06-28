@@ -1,40 +1,30 @@
-import { uploadPaymentProof } from './ledgerTransaction.middleware';
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
-import * as Schema from "./ledgerTransaction.schema";
 import LedgerTransactionController from "./ledgerTransaction.controller";
-import checkRole from "../../shared/middlewares/role.middleware";
+import * as Schema from "./ledgerTransaction.schema";
+import validate from "../../shared/middlewares/validate.middleware";
 import { checkAcademyExists } from "../academy/academy.middleware";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
-  uploadPaymentProof,
-  validation(Schema.CreateLedgerTransactionSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  LedgerTransactionController.createLedgerTransaction,
+  validate(Schema.CreateLedgerTransactionSchema),
+  checkAcademyExists(),
+  LedgerTransactionController.createLedgerTransaction
 );
 
 router.get(
   "/",
-  validation(Schema.GetAllLedgerTransactionsSchema),
+  validate(Schema.GetAllLedgerTransactionsSchema),
   checkAcademyExists({ isAcademyOwner: true }),
-  LedgerTransactionController.getAllLedgerTransactions,
+  LedgerTransactionController.getAllLedgerTransactions
 );
 
 router.get(
   "/:ledgerTransactionId",
-  validation(Schema.GetLedgerTransactionDetailsSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  LedgerTransactionController.getLedgerTransactionDetails,
-);
-
-router.delete(
-  "/:ledgerTransactionId",
-  validation(Schema.DeleteLedgerTransactionSchema),
-  checkAcademyExists({ isAcademyOwner: true }),
-  LedgerTransactionController.deleteLedgerTransaction,
+  validate(Schema.GetLedgerTransactionDetailsSchema),
+  checkAcademyExists(),
+  LedgerTransactionController.getLedgerTransactionDetails
 );
 
 export default router;

@@ -1,21 +1,31 @@
+import { LedgerTransaction } from "../../../prisma/generated/browser";
 import { PaginatedResponse } from "../../shared/types/types";
-import { LedgerTransaction } from "../../../prisma/generated/client";
-import * as DTO from "./ledgerTransaction.dto";
-import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
+import { AcademyRequestHandler } from "../academy/academy.type";
+
+import {
+    CreateLedgerTransactionDto,
+    GetAllLedgerTransactionsDto,
+    GetLedgerTransactionDetailsDto,
+} from "./ledgerTransaction.dto";
 
 export interface ILedgerTransactionService {
-    create: (data: DTO.CreateLedgerTransactionDto) => Promise<LedgerTransaction>;
-    update: (data: DTO.UpdateLedgerTransactionDto) => Promise<LedgerTransaction>;
-    delete: (data: DTO.DeleteLedgerTransactionDto) => Promise<LedgerTransaction>;
-    getDetails: (data: DTO.GetLedgerTransactionDto) => Promise<LedgerTransaction>;
-    getAll: (data: DTO.GetAllLedgerTransactionsDto) => Promise<PaginatedResponse<LedgerTransaction>>;
-    getCurrentUserDues: (userId: string) => Promise<{ totalDebt: number }>
-    getAcademyUsersDues: (academyId: string) => Promise<any>
+    createLedgerTransaction(
+        data: CreateLedgerTransactionDto
+    ): Promise<LedgerTransaction>;
+
+    getAllLedgerTransactions(
+        data: GetAllLedgerTransactionsDto
+    ): Promise<PaginatedResponse<LedgerTransaction>>;
+
+    getLedgerTransactionDetails(
+        data: GetLedgerTransactionDetailsDto
+    ): Promise<LedgerTransaction>;
 }
 
-export type GetTransferEntitiesParams = {
-    senderId: string
-    receiverId: string
-    subscriptionId?: string
-    tx: TransactionClient
+export interface ILedgerTransactionController {
+    createLedgerTransaction: AcademyRequestHandler;
+
+    getAllLedgerTransactions: AcademyRequestHandler;
+
+    getLedgerTransactionDetails: AcademyRequestHandler;
 }

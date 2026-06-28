@@ -46,7 +46,7 @@ export const getSubscriptionStatus = (params: GetSubscriptionStatusParams): Subs
     scheduledLessons,
     sessionsBeforeFullPayment,
   } = params
-  
+
   if (isCanceled) {
     return SubscriptionStatus.CANCELED;
   }

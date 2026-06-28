@@ -22,21 +22,26 @@ export const buildJobProfileWhere = ({
   };
 
   if (search) {
-    where.user = {
-      OR: [
-        {
-          name: {
-            contains: search,
-            mode: "insensitive",
-          },
-        },
-        {
-          phone: {
-            contains: search,
-          },
-        },
-      ],
-    };
+    where.OR = [
+      { id: { contains: search } },
+      {
+        user: {
+          OR: [
+            {
+              name: {
+                contains: search,
+                mode: "insensitive",
+              },
+            },
+            {
+              phone: {
+                contains: search,
+              },
+            },
+          ],
+        }
+      }
+    ]
   }
 
   if (typeof isActive === "boolean") {

@@ -259,7 +259,7 @@ export type LedgerTransactionWhereInput = {
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   sender?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   receiver?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
-  Image?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.ImageWhereInput> | null
+  image?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.ImageWhereInput> | null
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   lessons?: Prisma.LessonListRelationFilter
   payroll?: Prisma.XOR<Prisma.PayrollNullableScalarRelationFilter, Prisma.PayrollWhereInput> | null
@@ -279,7 +279,7 @@ export type LedgerTransactionOrderByWithRelationInput = {
   academy?: Prisma.AcademyOrderByWithRelationInput
   sender?: Prisma.FinancialAccountOrderByWithRelationInput
   receiver?: Prisma.FinancialAccountOrderByWithRelationInput
-  Image?: Prisma.ImageOrderByWithRelationInput
+  image?: Prisma.ImageOrderByWithRelationInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
   lessons?: Prisma.LessonOrderByRelationAggregateInput
   payroll?: Prisma.PayrollOrderByWithRelationInput
@@ -302,7 +302,7 @@ export type LedgerTransactionWhereUniqueInput = Prisma.AtLeast<{
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   sender?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   receiver?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
-  Image?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.ImageWhereInput> | null
+  image?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.ImageWhereInput> | null
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   lessons?: Prisma.LessonListRelationFilter
   payroll?: Prisma.XOR<Prisma.PayrollNullableScalarRelationFilter, Prisma.PayrollWhereInput> | null
@@ -351,7 +351,7 @@ export type LedgerTransactionCreateInput = {
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutLedgerTransactionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutLedgerTransactionInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLedgerTransactionInput
@@ -381,7 +381,7 @@ export type LedgerTransactionUpdateInput = {
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutLedgerTransactionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutLedgerTransactionNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLedgerTransactionNestedInput
@@ -837,7 +837,7 @@ export type LedgerTransactionCreateWithoutSenderInput = {
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutLedgerTransactionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutLedgerTransactionInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLedgerTransactionInput
@@ -875,7 +875,7 @@ export type LedgerTransactionCreateWithoutReceiverInput = {
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutLedgerTransactionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutLedgerTransactionInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLedgerTransactionInput
@@ -945,7 +945,7 @@ export type LedgerTransactionCreateWithoutAcademyInput = {
   createdAt?: Date | string
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutLedgerTransactionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutLedgerTransactionInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLedgerTransactionInput
@@ -1000,7 +1000,7 @@ export type LedgerTransactionCreateWithoutSubscriptionInput = {
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutLedgerTransactionInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLedgerTransactionInput
 }
@@ -1054,7 +1054,7 @@ export type LedgerTransactionCreateWithoutLessonsInput = {
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutLedgerTransactionsInput
   payroll?: Prisma.PayrollCreateNestedOneWithoutLedgerTransactionInput
 }
@@ -1098,7 +1098,7 @@ export type LedgerTransactionUpdateWithoutLessonsInput = {
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutLedgerTransactionsNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLedgerTransactionNestedInput
 }
@@ -1126,7 +1126,7 @@ export type LedgerTransactionCreateWithoutPayrollInput = {
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
-  Image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
+  image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutLedgerTransactionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutLedgerTransactionInput
 }
@@ -1170,7 +1170,7 @@ export type LedgerTransactionUpdateWithoutPayrollInput = {
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutLedgerTransactionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutLedgerTransactionNestedInput
 }
@@ -1273,7 +1273,7 @@ export type LedgerTransactionUpdateWithoutSenderInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutLedgerTransactionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutLedgerTransactionNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLedgerTransactionNestedInput
@@ -1313,7 +1313,7 @@ export type LedgerTransactionUpdateWithoutReceiverInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutLedgerTransactionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutLedgerTransactionNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLedgerTransactionNestedInput
@@ -1365,7 +1365,7 @@ export type LedgerTransactionUpdateWithoutAcademyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutLedgerTransactionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutLedgerTransactionNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLedgerTransactionNestedInput
@@ -1418,7 +1418,7 @@ export type LedgerTransactionUpdateWithoutSubscriptionInput = {
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
-  Image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
+  image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutLedgerTransactionNestedInput
   payroll?: Prisma.PayrollUpdateOneWithoutLedgerTransactionNestedInput
 }
@@ -1494,7 +1494,7 @@ export type LedgerTransactionSelect<ExtArgs extends runtime.Types.Extensions.Int
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
-  Image?: boolean | Prisma.LedgerTransaction$ImageArgs<ExtArgs>
+  image?: boolean | Prisma.LedgerTransaction$imageArgs<ExtArgs>
   subscription?: boolean | Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>
   lessons?: boolean | Prisma.LedgerTransaction$lessonsArgs<ExtArgs>
   payroll?: boolean | Prisma.LedgerTransaction$payrollArgs<ExtArgs>
@@ -1515,7 +1515,7 @@ export type LedgerTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.T
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
-  Image?: boolean | Prisma.LedgerTransaction$ImageArgs<ExtArgs>
+  image?: boolean | Prisma.LedgerTransaction$imageArgs<ExtArgs>
   subscription?: boolean | Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["ledgerTransaction"]>
 
@@ -1533,7 +1533,7 @@ export type LedgerTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
-  Image?: boolean | Prisma.LedgerTransaction$ImageArgs<ExtArgs>
+  image?: boolean | Prisma.LedgerTransaction$imageArgs<ExtArgs>
   subscription?: boolean | Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>
 }, ExtArgs["result"]["ledgerTransaction"]>
 
@@ -1555,7 +1555,7 @@ export type LedgerTransactionInclude<ExtArgs extends runtime.Types.Extensions.In
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
-  Image?: boolean | Prisma.LedgerTransaction$ImageArgs<ExtArgs>
+  image?: boolean | Prisma.LedgerTransaction$imageArgs<ExtArgs>
   subscription?: boolean | Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>
   lessons?: boolean | Prisma.LedgerTransaction$lessonsArgs<ExtArgs>
   payroll?: boolean | Prisma.LedgerTransaction$payrollArgs<ExtArgs>
@@ -1565,14 +1565,14 @@ export type LedgerTransactionIncludeCreateManyAndReturn<ExtArgs extends runtime.
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
-  Image?: boolean | Prisma.LedgerTransaction$ImageArgs<ExtArgs>
+  image?: boolean | Prisma.LedgerTransaction$imageArgs<ExtArgs>
   subscription?: boolean | Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>
 }
 export type LedgerTransactionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
-  Image?: boolean | Prisma.LedgerTransaction$ImageArgs<ExtArgs>
+  image?: boolean | Prisma.LedgerTransaction$imageArgs<ExtArgs>
   subscription?: boolean | Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>
 }
 
@@ -1582,7 +1582,7 @@ export type $LedgerTransactionPayload<ExtArgs extends runtime.Types.Extensions.I
     academy: Prisma.$AcademyPayload<ExtArgs>
     sender: Prisma.$FinancialAccountPayload<ExtArgs>
     receiver: Prisma.$FinancialAccountPayload<ExtArgs>
-    Image: Prisma.$ImagePayload<ExtArgs> | null
+    image: Prisma.$ImagePayload<ExtArgs> | null
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
     lessons: Prisma.$LessonPayload<ExtArgs>[]
     payroll: Prisma.$PayrollPayload<ExtArgs> | null
@@ -1995,7 +1995,7 @@ export interface Prisma__LedgerTransactionClient<T, Null = never, ExtArgs extend
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sender<T extends Prisma.FinancialAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FinancialAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   receiver<T extends Prisma.FinancialAccountDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FinancialAccountDefaultArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  Image<T extends Prisma.LedgerTransaction$ImageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerTransaction$ImageArgs<ExtArgs>>): Prisma.Prisma__ImageClient<runtime.Types.Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  image<T extends Prisma.LedgerTransaction$imageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerTransaction$imageArgs<ExtArgs>>): Prisma.Prisma__ImageClient<runtime.Types.Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   subscription<T extends Prisma.LedgerTransaction$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerTransaction$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lessons<T extends Prisma.LedgerTransaction$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerTransaction$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payroll<T extends Prisma.LedgerTransaction$payrollArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerTransaction$payrollArgs<ExtArgs>>): Prisma.Prisma__PayrollClient<runtime.Types.Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2439,9 +2439,9 @@ export type LedgerTransactionDeleteManyArgs<ExtArgs extends runtime.Types.Extens
 }
 
 /**
- * LedgerTransaction.Image
+ * LedgerTransaction.image
  */
-export type LedgerTransaction$ImageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type LedgerTransaction$imageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Image
    */
