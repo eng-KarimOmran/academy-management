@@ -17,12 +17,14 @@ const SubscriptionService: ISubscriptionService = {
         tx.client.findFirst({ where: { id: body.clientId, academyId } }),
         tx.area.findFirst({ where: { id: body.areaId, academyId } }),
         tx.course.findFirst({ where: { id: body.courseId, academyId } }),
-        tx.jobProfile.findFirst({ where: { academyId_userId: { academyId, userId }, jobProfileType: "SECRETARY" } }),
+        tx.jobProfile.findFirst({ where: { academyId, userId, jobProfileType: "SECRETARY" } }),
       ])
 
       if (!client) throw ApiError.NotFound("Client")
       if (!area) throw ApiError.NotFound("Area")
       if (!course) throw ApiError.NotFound("Course")
+
+      if (!course.isActive) throw ApiError.Inactive("Course")
 
       const dataSubscription: SubscriptionCreateInput = {
         academy: { connect: { id: academyId } },
