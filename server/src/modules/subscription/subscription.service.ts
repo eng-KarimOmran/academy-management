@@ -1,194 +1,157 @@
-import { ledgerTransactionBaseSelect } from './../ledgerTransaction/ledgerTransaction.selectors';
-import * as DTO from "./subscription.dto";
-import ApiError from "../../shared/utils/ApiError";
-import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
-import { buildSubscriptionWhere, getSubscriptionStatus } from "./subscription.utils";
-import { subscriptionBaseSelect, subscriptionDetailsSelect } from "./subscription.selectors";
+import { SubscriptionCreateInput } from "../../../prisma/generated/models";
 import { prisma } from "../../lib/prisma";
-import { LedgerTransaction, LessonStatus, Prisma, Subscription } from "../../../prisma/generated/client";
-import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
-
-interface ISubscriptionService {
-  create: (data: { userId: string; dataSafe: DTO.CreateSubscriptionDto; tx?: TransactionClient }) => Promise<Subscription>;
-  getAll: (data: { dataSafe: DTO.GetAllSubscriptionsDto; tx?: TransactionClient }) => Promise<{ items: Subscription[]; pagination: { limit: number; page: number; totalPages: number; count: number } }>;
-  getDetails: (data: { dataSafe: DTO.GetSubscriptionDetailsDto; tx?: TransactionClient }) => Promise<{ subscription: Subscription, ledgerTransactions: LedgerTransaction[] }>;
-  delete: (data: { dataSafe: DTO.DeleteSubscriptionDto; tx?: TransactionClient }) => Promise<Subscription>;
-  cancel: (data: { dataSafe: DTO.CancelSubscriptionDto; tx?: TransactionClient }) => Promise<Subscription>;
-  recalculateSubscriptionStatus: (data: { subscriptionId: string, tx?: TransactionClient }) => Promise<Subscription>;
-}
+import ApiError from "../../shared/utils/ApiError";
+import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
+import { calculateAccountBalance } from "../ledgerTransaction/ledgerTransaction.utils";
+import { getLessonStats } from "../lesson/lesson.utils";
+import { ISubscriptionService } from "./Subscription.type";
+import { buildSubscriptionWhere, getSubscriptionStatus, orderBy } from "./subscription.utils";
 
 const SubscriptionService: ISubscriptionService = {
-  async create({ userId, dataSafe, tx }) {
-    const { body } = dataSafe;
-    const { clientId, courseId, trainingTypeAtRegistration, areaId } = body;
+  async createSubscription(data, userId) {
+    const { params, body } = data;
+    const { academyId } = params;
 
-    const run = async (tx: TransactionClient) => {
-      const [course, client, area] = await Promise.all([
-        tx.course.findUnique({ where: { id: courseId } }),
-        tx.client.findUnique({ where: { id: clientId } }),
-        tx.area.findUnique({ where: { id: areaId } })
-      ]);
+    const subscription = prisma.$transaction(async (tx) => {
+      const [client, area, course, jobProfile] = await Promise.all([
+        tx.client.findFirst({ where: { id: body.clientId, academyId } }),
+        tx.area.findFirst({ where: { id: body.areaId, academyId } }),
+        tx.course.findFirst({ where: { id: body.courseId, academyId } }),
+        tx.jobProfile.findFirst({ where: { academyId_userId: { academyId, userId }, jobProfileType: "SECRETARY" } }),
+      ])
 
-      if (!course) throw ApiError.NotFound({ model: "Course" });
-      if (!client) throw ApiError.NotFound({ model: "Client" });
-      if (!area) throw ApiError.NotFound({ model: "Area" });
+      if (!client) throw ApiError.NotFound("Client")
+      if (!area) throw ApiError.NotFound("Area")
+      if (!course) throw ApiError.NotFound("Course")
 
-
-      const data: Prisma.SubscriptionCreateInput = {
-        trainingTypeAtRegistration,
-        priceAtBooking: course.priceDiscounted ?? course.priceOriginal,
-        sessionDurationMinutes: course.sessionDurationMinutes,
-        totalSessions: course.totalSessions,
-        status: "PENDING_DEPOSIT",
-        requiredInitialDeposit: course.requiredInitialDeposit,
-        sessionsBeforeFullPayment: course.sessionsBeforeFullPayment,
+      const dataSubscription: SubscriptionCreateInput = {
+        academy: { connect: { id: academyId } },
         client: { connect: { id: client.id } },
         course: { connect: { id: course.id } },
         area: { connect: { id: area.id } },
-        createdBy: { connect: { id: userId } },
-        academy: { connect: { id: client.academyId } },
-      };
+        ...(jobProfile && { createdBy: { connect: { id: jobProfile.id } } }),
+        priceAtBooking: course.priceDiscounted,
+        requiredInitialDeposit: course.requiredInitialDeposit,
+        sessionDurationMinutes: course.sessionDurationMinutes,
+        sessionsBeforeFullPayment: course.sessionsBeforeFullPayment,
+        totalSessions: course.totalSessions,
+        trainingTypeAtRegistration: body.trainingTypeAtRegistration,
+        subscriptionStatus: "PENDING_DEPOSIT",
+        financialAccount: { create: {} },
+      }
 
-      const subscription = await tx.subscription.create({ data });
+      return await tx.subscription.create({ data: dataSubscription })
+    })
 
-      return subscription;
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    return subscription
   },
 
-  async getAll({ dataSafe, tx }) {
-    const { query, params } = dataSafe;
+  async getAllSubscriptions(data) {
+    const { params, query } = data;
     const { academyId } = params;
-    const { limit, page, search, status } = query;
+    const { page, limit, search, subscriptionStatus } = query;
 
-    const run = async (tx: TransactionClient) => {
-      const where = buildSubscriptionWhere({ search, status, academyId });
-      const { take, skip } = getPagination({ page, limit });
+    const where = buildSubscriptionWhere({ search, subscriptionStatus, academyId })
 
-      const [subscriptions, count] = await Promise.all([
-        tx.subscription.findMany({
-          where,
-          take,
-          skip,
-          orderBy: { createdAt: "desc" },
-          select: subscriptionBaseSelect
-        }),
-        tx.subscription.count({ where })
-      ]);
+    const { take, skip } = buildPagination({ page, limit })
 
-      const totalPages = getTotalPages({ limit, count });
-      const pagination = { limit, page, count, totalPages };
+    const [subscriptions, count] = await prisma.$transaction([
+      prisma.subscription.findMany({ where, skip, take, orderBy }),
+      prisma.subscription.count({ where }),
+    ]);
 
-      return { items: subscriptions, pagination };
+    return {
+      items: subscriptions,
+      pagination: buildPaginationMeta({ count, limit, page }),
     };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
   },
 
-  async getDetails({ dataSafe, tx }) {
-    const { subscriptionId } = dataSafe.params;
-
-    const run = async (tx: TransactionClient) => {
-      const subscription = await tx.subscription.findUnique({
-        where: { id: subscriptionId },
-        select: subscriptionDetailsSelect,
-      });
-
-      if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
-
-      const ledgerTransactions = await tx.ledgerTransaction.findMany({
-        where: {
-          OR: [
-            { receiverId: subscriptionId },
-            { senderId: subscriptionId }
-          ]
-        },
-        select: ledgerTransactionBaseSelect
-      });
-
-      return { subscription, ledgerTransactions }
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async delete({ dataSafe, tx }) {
-    const { subscriptionId } = dataSafe.params;
-
-    const run = async (tx: TransactionClient) => {
-      const subscriptionEx = await tx.subscription.findUnique({ where: { id: subscriptionId } });
-      if (!subscriptionEx) throw ApiError.NotFound({ model: "Subscription" });
-
-      return await tx.subscription.delete({ where: { id: subscriptionId } });
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async cancel({ dataSafe, tx }) {
-    const { params } = dataSafe;
+  async getSubscriptionDetails({ params }) {
     const { subscriptionId } = params;
 
-    const run = async (tx: TransactionClient) => {
-      const subscriptionEx = await tx.subscription.findUnique({ where: { id: subscriptionId } });
-      if (!subscriptionEx) throw ApiError.NotFound({ model: "Subscription" });
-      return await tx.subscription.update({
-        where: { id: subscriptionId },
-        data: {
-          status: "CANCELED",
-          lessons: {
-            deleteMany: {
-              status: "SCHEDULED"
-            },
-          },
-        },
-      });
-    };
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+      include: {
+        lessons: true,
+        ledgerTransactions: true
+      }
+    })
 
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    if (!subscription) throw ApiError.NotFound("Subscription")
+
+    return subscription
+  },
+
+  async deleteSubscription({ params }) {
+    const { subscriptionId } = params;
+
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+    })
+
+    if (!subscription) throw ApiError.NotFound("Subscription")
+
+    return prisma.subscription.delete({
+      where: {
+        id: subscriptionId,
+      },
+    });
+  },
+
+  async cancelSubscription({ params }) {
+    const { subscriptionId } = params;
+
+    const subscription = await prisma.subscription.findUnique({
+      where: { id: subscriptionId },
+    })
+
+    if (!subscription) throw ApiError.NotFound("Subscription")
+
+    return prisma.subscription.update({
+      where: {
+        id: subscriptionId,
+      },
+      data: {
+        subscriptionStatus: "CANCELED",
+        lessons: { deleteMany: { lessonStatus: "SCHEDULED" } }
+      },
+    });
   },
 
   async recalculateSubscriptionStatus({ subscriptionId, tx }) {
+    const subscription = await tx.subscription.findUnique({
+      where: { id: subscriptionId },
+      include: {
+        ledgerTransactions: true,
+        lessons: true,
+        financialAccount: true
+      }
+    })
 
-    const run = async (tx: TransactionClient) => {
-      const subscription = await tx.subscription.findUnique({
-        where: { id: subscriptionId },
-        select: subscriptionDetailsSelect,
-      });
+    if (!subscription) throw ApiError.NotFound("Subscription")
 
-      if (!subscription) throw ApiError.NotFound({ model: "Subscription" });
+    const totalLessons = subscription.totalSessions
 
+    const { SCHEDULED, COMPLETED, CANCELED_CHARGED } = getLessonStats(subscription.lessons)
 
-      const [paymentAggregate, refundAggregate] = await Promise.all([
-        tx.ledgerTransaction.aggregate({ where: { senderId: subscriptionId, senderType: "SUBSCRIPTION", transactionType: "PAYMENT" }, _sum: { amount: true } }),
-        tx.ledgerTransaction.aggregate({ where: { receiverId: subscriptionId, receiverType: "SUBSCRIPTION", transactionType: "REFUND" }, _sum: { amount: true } })
-      ])
+    const isCanceled = subscription.subscriptionStatus === "CANCELED"
 
-      const payment = Number(paymentAggregate._sum.amount ?? 0);
-      const refund = Number(refundAggregate._sum.amount ?? 0);
+    const financialAccountId = subscription.financialAccount?.id
+    const ledgerTransactions = subscription.ledgerTransactions
+    const balance = calculateAccountBalance({ financialAccountId, ledgerTransactions })
 
-      const totalPaid = payment - refund
+    const subscriptionStatus = getSubscriptionStatus({
+      usedLessons: COMPLETED + CANCELED_CHARGED,
+      isCanceled,
+      totalPaid: balance,
+      requiredInitialDeposit: subscription.requiredInitialDeposit,
+      subscriptionPrice: subscription.priceAtBooking,
+      sessionsBeforeFullPayment: subscription.sessionsBeforeFullPayment,
+      totalLessons,
+      scheduledLessons: SCHEDULED
+    })
 
-      const USED_STATUSES: LessonStatus[] = ["CANCELED_CHARGED", "COMPLETED"]
-
-      const usedLessons = subscription.lessons.filter((s) => USED_STATUSES.includes(s.status)).length;
-
-      const status = getSubscriptionStatus({
-        requiredInitialDeposit: subscription.requiredInitialDeposit,
-        subscriptionPrice: subscription.priceAtBooking,
-        totalLessons: subscription.totalSessions,
-        totalPaid,
-        usedLessons,
-        isCanceled: subscription.status === "CANCELED",
-      })
-
-      await tx.subscription.update({ where: { id: subscription.id }, data: { status } })
-
-      return subscription
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    return tx.subscription.update({ where: { id: subscription.id }, data: { subscriptionStatus } })
   },
 };
 

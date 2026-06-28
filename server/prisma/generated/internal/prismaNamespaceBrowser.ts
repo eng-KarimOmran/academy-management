@@ -207,6 +207,7 @@ export const SubscriptionScalarFieldEnum = {
   clientId: 'clientId',
   courseId: 'courseId',
   academyId: 'academyId',
+  areaId: 'areaId',
   createdById: 'createdById',
   createdAt: 'createdAt',
   payrollId: 'payrollId'

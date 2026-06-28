@@ -1,16 +1,18 @@
 import { Transmission } from "../../../prisma/generated/enums";
-import { CarWhereInput } from "../../../prisma/generated/models";
+import { CarOrderByRelationAggregateInput, CarOrderByWithRelationInput, CarWhereInput } from "../../../prisma/generated/models";
 
 export const buildCarWhere = ({
   search,
   gearType,
   isActive,
+  academyId
 }: {
   search?: string;
   isActive?: boolean;
   gearType?: Transmission;
+  academyId: string
 }): CarWhereInput => {
-  const where: CarWhereInput = {};
+  const where: CarWhereInput = { academyId };
 
   if (search) {
     where.OR = [
@@ -29,3 +31,7 @@ export const buildCarWhere = ({
 
   return where;
 };
+
+export const orderBy:CarOrderByWithRelationInput = {
+  createdAt: "desc",
+}

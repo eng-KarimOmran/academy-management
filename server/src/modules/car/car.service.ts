@@ -1,115 +1,141 @@
-import { carBaseSelect } from './car.selectors';
-import { TransactionClient } from './../../../prisma/generated/internal/prismaNamespace';
-import * as DTO from "./car.dto";
-import ApiError from "../../shared/utils/ApiError";
-import { getPagination, getTotalPages } from "../../shared/utils/Pagination";
-import { Prisma, Car } from "../../../prisma/generated/client"; // تأكد من الـ Import الخاص بموديل Car
 import { prisma } from "../../lib/prisma";
-import { buildCarWhere } from './cat.utils';
-
-interface ICarService {
-  create: (data: { dataSafe: DTO.CreateDto; tx?: TransactionClient }) => Promise<Car>;
-  update: (data: { dataSafe: DTO.UpdateDto; tx?: TransactionClient }) => Promise<Car>;
-  getDetails: (data: { dataSafe: DTO.GetDetailsDto; tx?: TransactionClient }) => Promise<Car>;
-  delete: (data: { dataSafe: DTO.DeleteDto; tx?: TransactionClient }) => Promise<Car>;
-  getAll: (data: { dataSafe: DTO.GetAllDto; tx?: TransactionClient }) => Promise<{ items: Car[]; pagination: { limit: number; page: number; totalPages: number; total: number } }>;
-}
+import ApiError from "../../shared/utils/ApiError";
+import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
+import { ICarService } from "./car.type";
+import { buildCarWhere  , orderBy } from "./cat.utils";
 
 const CarService: ICarService = {
-  async create({ dataSafe, tx }) {
-    const { plateNumber, ...otherData } = dataSafe.body;
+  async createCar({ params, body }) {
+    const { academyId } = params;
 
-    const run = async (tx: TransactionClient) => {
-      const carExists = await tx.car.findUnique({ where: { plateNumber }, select: carBaseSelect });
-      if (carExists) throw ApiError.Conflict("PlateNumber");
-
-      return await tx.car.create({
-        data: { plateNumber, ...otherData }
-      });
-    };
-
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  },
-
-  async update({ dataSafe, tx }) {
-    const { body, params } = dataSafe;
-    const { carId } = params;
-    const { plateNumber, ...otherData } = body;
-
-    const run = async (tx: TransactionClient) => {
-      const car = await tx.car.findUnique({ where: { id: carId } });
-      if (!car) throw ApiError.NotFound({ model: "Car" });
-
-      const updateData: Prisma.CarUpdateInput = { ...otherData };
-
-      if (plateNumber && plateNumber !== car.plateNumber) {
-        const carExists = await tx.car.findUnique({ where: { plateNumber } });
-        if (carExists) throw ApiError.Conflict("PlateNumber");
-        updateData.plateNumber = plateNumber;
+    const car = await prisma.car.findUnique(
+      {
+        where:
+        {
+          plateNumber_academyId:
+          {
+            academyId,
+            plateNumber: body.plateNumber
+          }
+        }
       }
+    )
 
-      return await tx.car.update({
-        where: { id: carId },
-        data: updateData,
-        select: carBaseSelect
-      });
-    };
+    if (car) throw ApiError.Conflict("PLATE_NUMBER_ALREADY_EXISTS")
 
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    return prisma.car.create({
+      data: {
+        academy: { connect: { id: academyId } },
+        plateNumber: body.plateNumber,
+        modelName: body.modelName,
+        gearType: body.gearType,
+        carSessionPrice: body.carSessionPrice,
+      },
+    });
   },
 
-  async getDetails({ dataSafe, tx }) {
-    const { carId } = dataSafe.params;
+  async updateCar({ params, body }) {
+    const { academyId, carId } = params;
 
-    const run = async (tx: TransactionClient) => {
-      const car = await tx.car.findUnique({ where: { id: carId }, select: carBaseSelect });
-      if (!car) throw ApiError.NotFound({ model: "Car" });
+    const car = await prisma.car.findFirst({
+      where: {
+        id: carId,
+        academyId,
+      },
+    });
 
-      return car;
-    };
+    if (!car) throw ApiError.NotFound("Car");
 
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    if (body.plateNumber && body.plateNumber !== car.plateNumber) {
+      const car = await prisma.car.findUnique(
+        {
+          where:
+          {
+            plateNumber_academyId:
+            {
+              academyId,
+              plateNumber: body.plateNumber
+            }
+          }
+        }
+      )
+      if (car) throw ApiError.Conflict("PLATE_NUMBER_ALREADY_EXISTS")
+    }
+
+    return prisma.car.update({
+      where: {
+        id: carId,
+      },
+      data: body,
+    });
   },
 
-  async delete({ dataSafe, tx }) {
-    const { carId } = dataSafe.params;
+  async deleteCar({ params }) {
+    const { academyId, carId } = params;
 
-    const run = async (tx: TransactionClient) => {
-      const car = await tx.car.findUnique({ where: { id: carId, select: carBaseSelect } });
-      if (!car) throw ApiError.NotFound({ model: "Car" });
+    const car = await prisma.car.findFirst({
+      where: {
+        id: carId,
+        academyId,
+      },
+    });
 
-      return await tx.car.delete({ where: { id: carId } });
-    };
+    if (!car) throw ApiError.NotFound("Car");
 
-    return tx ? await run(tx) : await prisma.$transaction(run);
+    return prisma.car.delete({
+      where: {
+        id: carId,
+      },
+    });
   },
 
-  async getAll({ dataSafe, tx }) {
-    const { limit, page, search, gearType, isActive } = dataSafe.query;
+  async getAllCars({ params, query }) {
+    const { academyId } = params;
+    const { page, limit, search, gearType, isActive } = query;
 
-    const run = async (tx: TransactionClient) => {
-      const { take, skip } = getPagination({ page, limit });
-      const where = buildCarWhere({ gearType, isActive, search })
+    const where = buildCarWhere({
+      academyId,
+      search,
+      gearType,
+      isActive,
+    });
 
-      const [cars, count] = await Promise.all([
-        tx.car.findMany({
-          where,
-          take,
-          skip,
-          orderBy: { createdAt: "desc" },
-          select: carBaseSelect
-        }),
-        tx.car.count({ where })
-      ]);
+    const { take, skip } = buildPagination({ page, limit });
 
-      const totalPages = getTotalPages({ limit, count });
-      const pagination = { limit, page, totalPages, total: count };
+    const [items, count] = await prisma.$transaction([
+      prisma.car.findMany({
+        where,
+        skip,
+        take,
+        orderBy,
+      }),
+      prisma.car.count({ where }),
+    ]);
 
-      return { items: cars, pagination };
+    return {
+      items,
+      pagination: buildPaginationMeta({
+        count,
+        page,
+        limit,
+      }),
     };
+  },
 
-    return tx ? await run(tx) : await prisma.$transaction(run);
-  }
+  async getDetails({ params }) {
+    const { academyId, carId } = params;
+
+    const car = await prisma.car.findFirst({
+      where: {
+        id: carId,
+        academyId,
+      },
+    });
+
+    if (!car) throw ApiError.NotFound("Car");
+
+    return car;
+  },
 };
 
 export default CarService;

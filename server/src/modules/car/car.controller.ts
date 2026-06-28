@@ -1,14 +1,13 @@
-import { Response } from "express";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./car.dto";
 import CarService from "./car.service";
 import sendSuccess from "../../shared/utils/successResponse";
+import { ICarController } from "./car.type";
 
-const CarController = {
-  createCar: async (req: RequestAuth, res: Response) => {
+const CarController: ICarController = {
+  createCar: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CreateDto;
 
-    const car = await CarService.create({ dataSafe });
+    const car = await CarService.createCar(dataSafe);
 
     return sendSuccess({
       res,
@@ -18,42 +17,48 @@ const CarController = {
     });
   },
 
-  updateCar: async (req: RequestAuth, res: Response) => {
+  updateCar: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.UpdateDto;
 
-    const carUpdate = await CarService.update({ dataSafe });
+    const car = await CarService.updateCar(dataSafe);
 
     return sendSuccess({
       res,
-      data: carUpdate,
+      data: car,
       message: "تم تحديث السيارة بنجاح",
     });
   },
 
-  getAllCars: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetAllDto;
-
-    const data = await CarService.getAll({ dataSafe });
-
-    return sendSuccess({ res, data });
-  },
-
-  getDetailsCar: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetDetailsDto;
-
-    const car = await CarService.getDetails({ dataSafe });
-
-    return sendSuccess({ res, data: car });
-  },
-
-  deleteCar: async (req: RequestAuth, res: Response) => {
+  deleteCar: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.DeleteDto;
 
-    await CarService.delete({ dataSafe });
+    await CarService.deleteCar(dataSafe);
 
     return sendSuccess({
       res,
       message: "تم حذف السيارة بنجاح",
+    });
+  },
+
+  getAllCars: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.GetAllDto;
+
+    const data = await CarService.getAllCars(dataSafe);
+
+    return sendSuccess({
+      res,
+      data,
+    });
+  },
+
+  getDetails: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.GetDetailsDto;
+
+    const car = await CarService.getDetails(dataSafe);
+
+    return sendSuccess({
+      res,
+      data: car,
     });
   },
 };

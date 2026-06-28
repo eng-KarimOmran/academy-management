@@ -1,45 +1,38 @@
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
-import * as Schema from "./subscription.schema";
 import SubscriptionController from "./subscription.controller";
-import checkRole from "../../shared/middlewares/role.middleware";
-import { checkAcademyExists } from "../academy/academy.middleware";
+import * as Schema from "./subscription.schema";
+import validate from "../../shared/middlewares/validate.middleware";
 
 const router = Router({ mergeParams: true });
 
 router.post(
   "/",
-  validation(Schema.CreateSubscriptionSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  SubscriptionController.createSubscription,
+  validate(Schema.CreateSubscriptionSchema),
+  SubscriptionController.createSubscription
 );
 
 router.get(
   "/",
-  validation(Schema.GetAllSubscriptionsSchema),
-  checkAcademyExists({ isAcademyOwner: true }),
-  SubscriptionController.getAllSubscriptions,
-);
-
-router.post(
-  "/:subscriptionId/cancel",
-  validation(Schema.CancelSubscriptionSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  SubscriptionController.cancelSubscription,
+  validate(Schema.GetAllSubscriptionsSchema),
+  SubscriptionController.getAllSubscriptions
 );
 
 router.get(
   "/:subscriptionId",
-  validation(Schema.GetSubscriptionDetailsSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  SubscriptionController.getSubscriptionDetails,
+  validate(Schema.GetSubscriptionDetailsSchema),
+  SubscriptionController.getSubscriptionDetails
+);
+
+router.patch(
+  "/:subscriptionId/cancel",
+  validate(Schema.CancelSubscriptionSchema),
+  SubscriptionController.cancelSubscription
 );
 
 router.delete(
   "/:subscriptionId",
-  validation(Schema.DeleteSubscriptionSchema),
-  checkAcademyExists({ isAcademyOwner: true }),
-  SubscriptionController.deleteSubscription,
+  validate(Schema.DeleteSubscriptionSchema),
+  SubscriptionController.deleteSubscription
 );
 
 export default router;

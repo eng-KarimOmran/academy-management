@@ -5,7 +5,7 @@ import LedgerTransactionRepository from "./ledgerTransaction.repository";
 import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
 import { ILedgerTransactionService } from "./ledgerTransaction.type";
 import { prisma } from "../../lib/prisma";
-import { LedgerTransactionCreateInput, LedgerTransactionUpdateInput, LedgerTransactionWhereInput } from "../../../prisma/generated/models";
+import { LedgerTransactionCreateInput, LedgerTransactionUpdateInput } from "../../../prisma/generated/models";
 
 const LedgerTransactionService: ILedgerTransactionService = {
   async create(dataSafe: Dto.CreateLedgerTransactionDto) {

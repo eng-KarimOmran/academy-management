@@ -8,19 +8,21 @@ import {
   price,
   positiveNumber,
   booleanQuery,
+  page,
 } from "../../shared/utils/common.validation";
 
 export const CreateCarSchema = {
+  params: z.object({ academyId: id }),
   body: z.object({
     plateNumber: entityName,
     modelName: entityName,
     gearType: transmission,
-    carSessionPrice: price.optional().default(0),
+    carSessionPrice: price,
   }),
 };
 
 export const UpdateCarSchema = {
-  params: z.object({ carId: id }),
+  params: z.object({ academyId: id, carId: id }),
   body: z.object({
     plateNumber: entityName.optional(),
     modelName: entityName.optional(),
@@ -31,9 +33,10 @@ export const UpdateCarSchema = {
 };
 
 export const GetAllCarsSchema = {
+  params: z.object({ academyId: id }),
   query: z.object({
-    page: positiveNumber.optional().default(1),
-    limit: limit,
+    page,
+    limit,
     search: z.string().optional(),
     isActive: booleanQuery.optional(),
     gearType: transmission.optional(),
@@ -41,9 +44,9 @@ export const GetAllCarsSchema = {
 };
 
 export const GetCarDetailsSchema = {
-  params: z.object({ carId: id }),
+  params: z.object({ carId: id, academyId: id }),
 };
 
 export const DeleteCarSchema = {
-  params: z.object({ carId: id }),
+  params: z.object({ carId: id, academyId: id }),
 };

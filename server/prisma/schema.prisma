@@ -122,6 +122,7 @@ enum SubscriptionStatus {
   PENDING_DEPOSIT
   PENDING_FIRST_SESSION
   ACTIVE_LIMITED
+  SUSPENDED
   ACTIVE
   CANCELED
   COMPLETED
@@ -172,6 +173,9 @@ model Subscription {
 
   academyId String
   academy   Academy @relation(fields: [academyId], references: [id], onDelete: Restrict)
+
+  areaId String
+  area   Area   @relation(fields: [areaId], references: [id], onDelete: Restrict)
 
   createdById String?
   createdBy   JobProfile? @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
@@ -269,14 +273,15 @@ model Car {
 }
 
 model Area {
-  id          String      @id @default(cuid())
-  name        String
-  supportType SupportType
-  isActive    Boolean     @default(true)
-  lessons     Lesson[]
-  academy     Academy     @relation(fields: [academyId], references: [id])
-  academyId   String
-  createdAt   DateTime    @default(now())
+  id            String         @id @default(cuid())
+  name          String
+  supportType   SupportType
+  isActive      Boolean        @default(true)
+  lessons       Lesson[]
+  academy       Academy        @relation(fields: [academyId], references: [id])
+  academyId     String
+  createdAt     DateTime       @default(now())
+  subscriptions Subscription[]
 
   @@unique([name, academyId])
 }
@@ -346,8 +351,9 @@ model LedgerTransaction {
   createdAt      DateTime      @default(now())
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
   subscriptionId String?
-  lessons        Lesson[]
-  payroll        Payroll?
+
+  lessons Lesson[]
+  payroll Payroll?
 
   @@index([senderId])
   @@index([receiverId])

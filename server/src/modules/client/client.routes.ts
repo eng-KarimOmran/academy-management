@@ -13,17 +13,20 @@ router.post(
 );
 
 router.get(
-  "/",
-  validate(Schema.GetAllClientsSchema),
-  checkAcademyExists({ isAcademyOwner: true }),
-  ClientController.getAll
-);
-
-router.get(
   "/details",
   validate(Schema.GetClientDetailsSchema),
   ClientController.getDetails
 );
+
+router.use(checkAcademyExists({ isAcademyOwner: true }))
+
+router.get(
+  "/",
+  validate(Schema.GetAllClientsSchema),
+  ClientController.getAll
+);
+
+
 
 router.patch(
   "/:clientId",
@@ -34,7 +37,6 @@ router.patch(
 router.delete(
   "/:clientId",
   validate(Schema.DeleteClientSchema),
-  checkAcademyExists({ isAcademyOwner: true }),
   ClientController.delete
 );
 

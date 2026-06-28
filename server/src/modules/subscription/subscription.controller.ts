@@ -1,66 +1,68 @@
-import { Response } from "express";
 import * as DTO from "./subscription.dto";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import SubscriptionService from "./subscription.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestAcademy } from "../academy/academy.middleware";
+import { ISubscriptionController } from "./Subscription.type";
 
-const SubscriptionController = {
-  createSubscription: async (req: RequestAuth, res: Response) => {
+const SubscriptionController: ISubscriptionController = {
+  createSubscription: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CreateSubscriptionDto;
-    const userLogin = req.userLogin!;
+    const userId = req.userLogin!.id
 
-    const subscription = await SubscriptionService.create({
-      userId: userLogin.id,
-      dataSafe,
-    });
+    const subscription = await SubscriptionService.createSubscription(dataSafe, userId);
 
     return sendSuccess({
       res,
       statusCode: 201,
       data: subscription,
-      message: "تم إنشاء الاشتراك بنجاح وتفعيله.",
+      message: "تم إنشاء الاشتراك بنجاح",
     });
   },
 
-  getAllSubscriptions: async (req: RequestAcademy, res: Response) => {
+  getAllSubscriptions: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetAllSubscriptionsDto;
 
-    const data = await SubscriptionService.getAll({ dataSafe });
+    const data = await SubscriptionService.getAllSubscriptions(dataSafe);
 
-    return sendSuccess({ res, data });
+    return sendSuccess({
+      res,
+      data,
+    });
   },
 
-  getSubscriptionDetails: async (req: RequestAuth, res: Response) => {
+  getSubscriptionDetails: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.GetSubscriptionDetailsDto;
 
-    const subscriptionData = await SubscriptionService.getDetails({ dataSafe });
+    const subscription = await SubscriptionService.getSubscriptionDetails(dataSafe);
 
-    return sendSuccess({ res, data: subscriptionData });
+    return sendSuccess({
+      res,
+      data: subscription,
+    });
   },
 
-  deleteSubscription: async (req: RequestAcademy, res: Response) => {
+  deleteSubscription: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.DeleteSubscriptionDto;
 
-    await SubscriptionService.delete({ dataSafe });
+    const subscription = await SubscriptionService.deleteSubscription(dataSafe);
 
     return sendSuccess({
       res,
-      message: "تم حذف الاشتراك نهائياً من النظام.",
+      data: subscription,
+      message: "تم حذف الاشتراك بنجاح",
     });
   },
 
-  cancelSubscription: async (req: RequestAcademy, res: Response) => {
+  cancelSubscription: async (req, res) => {
     const dataSafe = req.dataSafe as DTO.CancelSubscriptionDto;
 
-    const cancellationRecord = await SubscriptionService.cancel({ dataSafe });
+    const subscription = await SubscriptionService.cancelSubscription(dataSafe);
 
     return sendSuccess({
       res,
-      data: cancellationRecord,
-      message: "تم إلغاء الاشتراك بنجاح، وتفريغ جدول الحصص المستقبلية.",
+      data: subscription,
+      message: "تم إلغاء الاشتراك بنجاح",
     });
-  }
+  },
 };
 
 export default SubscriptionController;

@@ -2,6 +2,7 @@ import z from "zod";
 import * as Schema from "./car.schema";
 
 export type CreateDto = {
+  params: z.infer<typeof Schema.CreateCarSchema.params>;
   body: z.infer<typeof Schema.CreateCarSchema.body>;
 };
 
@@ -11,6 +12,7 @@ export type UpdateDto = {
 };
 
 export type GetAllDto = {
+  params: z.infer<typeof Schema.GetAllCarsSchema.params>;
   query: z.infer<typeof Schema.GetAllCarsSchema.query>;
 };
 

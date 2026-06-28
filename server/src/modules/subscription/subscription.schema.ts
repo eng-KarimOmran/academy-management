@@ -6,6 +6,7 @@ import {
   positiveNumber,
   transmission,
   subscriptionStatus,
+  page,
 } from "../../shared/utils/common.validation";
 
 export const CreateSubscriptionSchema = {
@@ -25,10 +26,10 @@ export const GetAllSubscriptionsSchema = {
     academyId: id,
   }),
   query: z.object({
-    page: positiveNumber.optional().default(1),
-    limit: limit,
+    page,
+    limit,
     search: z.string().optional(),
-    status: subscriptionStatus.optional(),
+    subscriptionStatus: subscriptionStatus.optional(),
   }),
 };
 

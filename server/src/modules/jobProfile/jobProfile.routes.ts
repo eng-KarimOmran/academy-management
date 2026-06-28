@@ -2,19 +2,22 @@ import { Router } from "express";
 import JobProfileController from "./jobProfile.controller";
 import * as Schema from "./jobProfile.schema";
 import validate from "../../shared/middlewares/validate.middleware";
+import { checkAcademyExists } from "../academy/academy.middleware";
 
 const router = Router({ mergeParams: true });
-
-router.post(
-  "/",
-  validate(Schema.createJobProfileSchema),
-  JobProfileController.createJobProfile
-);
 
 router.get(
   "/",
   validate(Schema.getAllJobProfilesSchema),
   JobProfileController.getAllJobProfiles
+);
+
+router.use(checkAcademyExists({ isAcademyOwner: true }))
+
+router.post(
+  "/",
+  validate(Schema.createJobProfileSchema),
+  JobProfileController.createJobProfile
 );
 
 router.get(

@@ -1,44 +1,42 @@
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
-import * as Schema from "./car.schema";
 import CarController from "./car.controller";
-import checkRole from "../../shared/middlewares/role.middleware";
+import * as Schema from "./car.schema";
+import validate from "../../shared/middlewares/validate.middleware";
+import { checkAcademyExists } from "../academy/academy.middleware";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 router.get(
   "/",
-  validation(Schema.GetAllCarsSchema),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  CarController.getAllCars,
+  validate(Schema.GetAllCarsSchema),
+  checkAcademyExists(),
+  CarController.getAllCars
 );
+
+router.use(checkAcademyExists({ isAcademyOwner: true }))
 
 router.post(
   "/",
-  validation(Schema.CreateCarSchema),
-  checkRole(["OWNER"]),
-  CarController.createCar,
+  validate(Schema.CreateCarSchema),
+  CarController.createCar
 );
 
 router.get(
   "/:carId",
-  validation(Schema.GetCarDetailsSchema),
-  checkRole(["OWNER"]),
-  CarController.getDetailsCar,
+  validate(Schema.GetCarDetailsSchema),
+  CarController.getDetails
 );
 
 router.patch(
   "/:carId",
-  validation(Schema.UpdateCarSchema),
-  checkRole(["OWNER"]),
-  CarController.updateCar,
+  validate(Schema.UpdateCarSchema),
+  CarController.updateCar
 );
 
 router.delete(
   "/:carId",
-  validation(Schema.DeleteCarSchema),
-  checkRole(["OWNER"]),
-  CarController.deleteCar,
+  validate(Schema.DeleteCarSchema),
+  CarController.deleteCar
 );
 
 export default router;

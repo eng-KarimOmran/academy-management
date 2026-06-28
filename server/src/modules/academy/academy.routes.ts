@@ -7,15 +7,15 @@ import { isAdmin } from '../user/user.middleware';
 
 import routerJobProfile from "../jobProfile/jobProfile.routes";
 import routerClient from "../client/client.routes";
+import routerSubscription from "../subscription/subscription.routes";
+import routerCar from "../car/car.routes";
 
 // import routerCourse from "../course/course.routes";
-// import routerSubscription from "../subscription/subscription.routes";
 // import routerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
 // import routerLesson from "../lesson/lesson.routes";
 // import routerStatistics from "../dashboard/dashboard.routes";
 // import routerAccount from "../account/account.routes";
 // import routerArea from "../area/area.routes";
-// import routerCar from "../car/car.routes";
 
 const router = Router();
 
@@ -25,12 +25,8 @@ const router = Router();
 router.get(
   "/",
   validate(AcademySchema.getAll),
+  isAdmin,
   AcademyController.getAll
-);
-
-router.get(
-  "/my-academics",
-  AcademyController.myAcademics
 );
 
 router.post(
@@ -38,6 +34,11 @@ router.post(
   validate(AcademySchema.create),
   isAdmin,
   AcademyController.create
+);
+
+router.get(
+  "/my-academics",
+  AcademyController.myAcademics
 );
 
 // =======================
@@ -153,26 +154,21 @@ router.delete(
 // Nested Routes Sub-router
 // =======================
 
-router.use(
-  "/:academyId/job-profile",
-  checkAcademyExists({ isAcademyOwner: true }),
-  routerJobProfile
-);
+router.use("/:academyId/car", routerCar);
 
-router.use(
-  "/:academyId/client",
-  checkAcademyExists(),
-  routerClient
-);
+router.use("/:academyId/job-profile", routerJobProfile);
+
+router.use("/:academyId/client", routerClient);
+
+router.use("/:academyId/subscription", routerSubscription);
+
 
 // router.use("/:academyId/courses", routerCourse);
-// router.use("/:academyId/subscriptions", routerSubscription);
 // router.use("/:academyId/transactions", routerTransactions);
 // router.use("/:academyId/lessons", routerLesson);
 // router.use("/:academyId/statistics", routerStatistics);
 // router.use("/:academyId/secretaries", routerSecretary);
 // router.use("/:academyId/accounts", routerAccount);
-// router.use("/:academyId/cars", routerCar);
 // router.use("/:academyId/areas", routerArea);
 
 export default router;
