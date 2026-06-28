@@ -98,13 +98,13 @@ const ClientService: IClientService = {
     if (!phone && !clientId) {
       throw ApiError.ValidationError("يجب إرسال رقم الهاتف أو معرف العميل")
     }
-    
+
     let currentClient: ClientGetPayload<{ include: { subscriptions: true } }> | null = null
 
     if (clientId) {
       const client = await prisma.client.findUnique({
         where: { id: clientId, academyId },
-        include: { subscriptions: true }
+        include: { subscriptions: true, academy: true }
       });
       if (client) {
         currentClient = client
@@ -114,7 +114,7 @@ const ClientService: IClientService = {
     if (phone) {
       const client = await prisma.client.findFirst({
         where: { academyId, phone },
-        include: { subscriptions: true }
+        include: { subscriptions: true, academy: true }
       });
       if (client) {
         currentClient = client
@@ -124,7 +124,8 @@ const ClientService: IClientService = {
     if (!currentClient) throw ApiError.NotFound("Client")
 
     const OtherFiles = await prisma.client.findMany({
-      where: { phone, id: { not: currentClient.id }, }
+      where: { phone, academyId: { not: currentClient.academyId } },
+      include: { academy: true }
     });
 
     return {

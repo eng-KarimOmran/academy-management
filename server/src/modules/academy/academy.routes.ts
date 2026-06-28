@@ -166,7 +166,6 @@ router.use("/:academyId/client", routerClient);
 
 router.use("/:academyId/subscription", routerSubscription);
 
-
 // router.use("/:academyId/transaction", routerTransactions);
 // router.use("/:academyId/lesson", routerLesson);
 // router.use("/:academyId/statistic", routerStatistics);
