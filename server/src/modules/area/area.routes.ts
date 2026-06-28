@@ -1,43 +1,41 @@
 import { Router } from "express";
-import validation from "../../shared/middlewares/validation.middleware";
-import checkRole from "../../shared/middlewares/role.middleware";
 import AreaController from "./area.controller";
-import { AreaSchema } from "./area.schema";
+import * as Schema from "./area.schema";
+import validate from "../../shared/middlewares/validate.middleware";
+import { checkAcademyExists } from "../academy/academy.middleware";
 
 const router = Router({ mergeParams: true });
 
 router.get(
   "/",
-  validation(AreaSchema.getAll),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
+  validate(Schema.GetAllAreasSchema),
+  checkAcademyExists(),
   AreaController.getAllAreas
 );
 
+router.use(checkAcademyExists({ isAcademyOwner: true }))
+
 router.post(
   "/",
-  validation(AreaSchema.create),
-  checkRole(["OWNER", "MANAGER"]),
+  validate(Schema.CreateAreaSchema),
   AreaController.createArea
 );
 
 router.get(
   "/:areaId",
-  validation(AreaSchema.get),
-  checkRole(["OWNER", "SECRETARY", "MANAGER"]),
-  AreaController.getDetailsArea
+  validate(Schema.GetAreaDetailsSchema),
+  AreaController.getAreaDetails
 );
 
 router.patch(
   "/:areaId",
-  validation(AreaSchema.update),
-  checkRole(["OWNER", "MANAGER"]),
+  validate(Schema.UpdateAreaSchema),
   AreaController.updateArea
 );
 
 router.delete(
   "/:areaId",
-  validation(AreaSchema.delete),
-  checkRole(["OWNER", "MANAGER"]),
+  validate(Schema.DeleteAreaSchema),
   AreaController.deleteArea
 );
 

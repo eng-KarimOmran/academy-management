@@ -1,83 +1,122 @@
-import { buildAreaWhere, getAreaOrThrow } from "./area.utils";
-import { AreaCreateInput, AreaUpdateInput } from "../../../prisma/generated/models/Area";
-import ApiError from "../../shared/utils/ApiError";
 import { prisma } from "../../lib/prisma";
+import ApiError from "../../shared/utils/ApiError";
+import {
+  buildPagination,
+  buildPaginationMeta,
+} from "../../shared/utils/Pagination";
+import { buildAreaWhere, orderBy } from "./area.utils";
 import { IAreaService } from "./area.type";
-import AreaRepository from "./area.repository";
-import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
 
 const AreaService: IAreaService = {
-  async create({ params, body }) {
+  async createArea({ params, body }) {
     const { academyId } = params;
-    const { name, supportType } = body;
 
-    return prisma.$transaction(async (tx) => {
-      const areaExists = await AreaRepository.findByNameAndAcademy(name, academyId, tx);
-      if (areaExists) throw ApiError.Conflict("Name");
+    const area = await prisma.area.findUnique({ where: { name_academyId: { academyId, name: body.name } } })
+    if (area) throw ApiError.Conflict("NAME_ALREADY_EXISTS")
 
-      const data: AreaCreateInput = {
-        name,
-        supportType,
-        isActive: true,
-        academy: { connect: { id: academyId } },
-      };
-
-      return AreaRepository.create(data, tx);
+    return prisma.area.create({
+      data: {
+        academy: {
+          connect: {
+            id: academyId,
+          },
+        },
+        ...body,
+      },
     });
   },
 
-  async update({ params, body }) {
-    const { areaId, academyId } = params;
-    const { name, supportType, isActive } = body;
+  async updateArea({ params, body }) {
+    const { academyId, areaId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      const areaEx = await getAreaOrThrow(areaId, tx);
+    const area = await prisma.area.findFirst({
+      where: {
+        id: areaId,
+        academyId,
+      },
+    });
 
-      if (name && name !== areaEx.name) {
-        const nameExists = await AreaRepository.findByNameAndAcademy(name, academyId, tx);
-        if (nameExists) throw ApiError.Conflict("Name");
-      }
+    if (!area) throw ApiError.NotFound("Area");
 
-      const data: AreaUpdateInput = { name, supportType, isActive };
+    if (body.name && body.name !== area.name) {
+      const area = await prisma.area.findUnique({ where: { name_academyId: { academyId, name: body.name } } })
+      if (area) throw ApiError.Conflict("NAME_ALREADY_EXISTS")
+    }
 
-      return AreaRepository.update(areaId, data, tx);
+    return prisma.area.update({
+      where: {
+        id: areaId,
+      },
+      data: body,
     });
   },
 
-  async delete({ params }) {
-    const { areaId } = params;
+  async deleteArea({ params }) {
+    const { academyId, areaId } = params;
 
-    return prisma.$transaction(async (tx) => {
-      await getAreaOrThrow(areaId, tx);
-      return AreaRepository.delete(areaId, tx);
+    const area = await prisma.area.findFirst({
+      where: {
+        id: areaId,
+        academyId,
+      },
+    });
+
+    if (!area) throw ApiError.NotFound("Area");
+
+    return prisma.area.delete({
+      where: {
+        id: areaId,
+      },
     });
   },
 
-  async getDetails({ params }) {
-    return prisma.$transaction(async (tx) => {
-      return getAreaOrThrow(params.areaId, tx);
-    });
-  },
-
-  async getAll({ params, query }) {
+  async getAllAreas({ params, query }) {
     const { academyId } = params;
-    const { limit, page, search, isActive, supportType } = query;
+    const { page, limit, search, isActive } = query;
 
-    const where = buildAreaWhere({ search, academyId, isActive, supportType });
+    const where = buildAreaWhere({
+      academyId,
+      search,
+      isActive,
+    });
+
     const { take, skip } = buildPagination({ page, limit });
 
-    const { areas, count } = await prisma.$transaction(async (tx) => {
-      const [areas, count] = await Promise.all([
-        AreaRepository.findAll({ where, take, skip }, tx),
-        AreaRepository.count(where, tx),
-      ]);
+    const [items, count] = await prisma.$transaction([
+      prisma.area.findMany({
+        where,
+        skip,
+        take,
+        orderBy,
+      }),
+      prisma.area.count({
+        where,
+      }),
+    ]);
 
-      return { areas, count };
+    return {
+      items,
+      pagination: buildPaginationMeta({
+        count,
+        page,
+        limit,
+      }),
+    };
+  },
+
+  async getAreaDetails({ params }) {
+    const { academyId, areaId } = params;
+
+    const area = await prisma.area.findFirst({
+      where: {
+        id: areaId,
+        academyId,
+      },
     });
 
-    const pagination = buildPaginationMeta({ limit, count, page });
+    if (!area) throw ApiError.NotFound("Area");
 
-    return { items: areas, pagination };
+    return area;
   },
 };
 

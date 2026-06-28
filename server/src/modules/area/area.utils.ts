@@ -1,8 +1,5 @@
 import { SupportType } from "../../../prisma/generated/enums";
-import { TransactionClient } from "../../../prisma/generated/internal/prismaNamespace";
-import { AreaWhereInput } from "../../../prisma/generated/models";
-import ApiError from "../../shared/utils/ApiError";
-import AreaRepository from "./area.repository";
+import { AreaOrderByWithRelationInput, AreaWhereInput } from "../../../prisma/generated/models";
 
 export const buildAreaWhere = ({
   search,
@@ -37,10 +34,6 @@ export const buildAreaWhere = ({
   return where;
 };
 
-export const getAreaOrThrow = async (areaId: string, tx: TransactionClient,) => {
-  const areaEx = await AreaRepository.findById(areaId, tx)
-
-  if (!areaEx) throw ApiError.NotFound("Area");
-
-  return areaEx;
-};
+export const orderBy: AreaOrderByWithRelationInput = {
+  createdAt: "desc",
+}

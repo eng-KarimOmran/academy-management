@@ -9,6 +9,7 @@ const router = Router({ mergeParams: true });
 router.get(
   "/",
   validate(Schema.getAllJobProfilesSchema),
+  checkAcademyExists(),
   JobProfileController.getAllJobProfiles
 );
 

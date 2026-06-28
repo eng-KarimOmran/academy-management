@@ -6,16 +6,16 @@ import { AcademySchema } from "./academy.Schema";
 import { isAdmin } from '../user/user.middleware';
 
 import routerJobProfile from "../jobProfile/jobProfile.routes";
+import routerArea from "../area/area.routes";
+import routerCar from "../car/car.routes";
 import routerClient from "../client/client.routes";
 import routerSubscription from "../subscription/subscription.routes";
-import routerCar from "../car/car.routes";
 
 // import routerCourse from "../course/course.routes";
 // import routerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
 // import routerLesson from "../lesson/lesson.routes";
 // import routerStatistics from "../dashboard/dashboard.routes";
 // import routerAccount from "../account/account.routes";
-// import routerArea from "../area/area.routes";
 
 const router = Router();
 
@@ -154,21 +154,21 @@ router.delete(
 // Nested Routes Sub-router
 // =======================
 
+router.use("/:academyId/job-profile", routerJobProfile);
+
 router.use("/:academyId/car", routerCar);
 
-router.use("/:academyId/job-profile", routerJobProfile);
+router.use("/:academyId/area", routerArea);
 
 router.use("/:academyId/client", routerClient);
 
 router.use("/:academyId/subscription", routerSubscription);
 
 
-// router.use("/:academyId/courses", routerCourse);
-// router.use("/:academyId/transactions", routerTransactions);
-// router.use("/:academyId/lessons", routerLesson);
-// router.use("/:academyId/statistics", routerStatistics);
-// router.use("/:academyId/secretaries", routerSecretary);
-// router.use("/:academyId/accounts", routerAccount);
-// router.use("/:academyId/areas", routerArea);
+// router.use("/:academyId/course", routerCourse);
+// router.use("/:academyId/transaction", routerTransactions);
+// router.use("/:academyId/lesson", routerLesson);
+// router.use("/:academyId/statistic", routerStatistics);
+// router.use("/:academyId/account", routerAccount);
 
 export default router;

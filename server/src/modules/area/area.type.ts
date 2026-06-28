@@ -1,11 +1,45 @@
+import { Area } from "../../../prisma/generated/browser";
 import { PaginatedResponse } from "../../shared/types/types";
-import { Area } from "../../../prisma/generated/client";
-import * as DTO from "./area.dto";
+import { AcademyRequestHandler } from "../academy/academy.type";
+
+import {
+    CreateAreaDto,
+    UpdateAreaDto,
+    DeleteAreaDto,
+    GetAllAreasDto,
+    GetAreaDetailsDto,
+} from "./area.dto";
 
 export interface IAreaService {
-    create: (data: DTO.CreateAreaDto) => Promise<Area>;
-    update: (data: DTO.UpdateAreaDto) => Promise<Area>;
-    delete: (data: DTO.DeleteAreaDto) => Promise<Area>;
-    getDetails: (data: DTO.GetAreaDto) => Promise<Area>;
-    getAll: (data: DTO.GetAllAreasDto) => Promise<PaginatedResponse<Area>>;
+    createArea(
+        data: CreateAreaDto
+    ): Promise<Area>;
+
+    updateArea(
+        data: UpdateAreaDto
+    ): Promise<Area>;
+
+    deleteArea(
+        data: DeleteAreaDto
+    ): Promise<Area>;
+
+    getAllAreas(
+        data: GetAllAreasDto
+    ): Promise<PaginatedResponse<Area>>;
+
+    getAreaDetails(
+        data: GetAreaDetailsDto
+    ): Promise<Area>;
+}
+
+export interface IAreaController {
+    createArea: AcademyRequestHandler;
+
+    updateArea: AcademyRequestHandler;
+
+    deleteArea: AcademyRequestHandler;
+
+    getAllAreas: AcademyRequestHandler;
+
+    getAreaDetails: AcademyRequestHandler;
 }

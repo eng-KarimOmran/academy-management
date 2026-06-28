@@ -9,12 +9,14 @@ const router = Router({ mergeParams: true });
 router.post(
   "/",
   validate(Schema.CreateClientSchema),
+  checkAcademyExists(),
   ClientController.create
 );
 
 router.get(
   "/details",
   validate(Schema.GetClientDetailsSchema),
+  checkAcademyExists(),
   ClientController.getDetails
 );
 
