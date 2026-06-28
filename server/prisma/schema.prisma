@@ -134,10 +134,10 @@ enum Transmission {
 }
 
 model Course {
-  id                        String            @id @default(cuid())
+  id                        String          @id @default(cuid())
   name                      String
   description               String
-  isActive                  Boolean           @default(true)
+  isActive                  Boolean         @default(true)
   priceOriginal             Float
   priceDiscounted           Float
   requiredInitialDeposit    Float
@@ -146,10 +146,10 @@ model Course {
   sessionDurationMinutes    Int
   featuredReason            String?
   academyId                 String
-  academy                   Academy           @relation(fields: [academyId], references: [id], onDelete: Restrict)
-  features                  TrainingDetails[]
+  academy                   Academy         @relation(fields: [academyId], references: [id], onDelete: Restrict)
+  features                  CourseFeature[]
   subscriptions             Subscription[]
-  createdAt                 DateTime          @default(now())
+  createdAt                 DateTime        @default(now())
 
   @@unique([academyId, name])
 }
@@ -250,7 +250,7 @@ enum SupportType {
   BOTH
 }
 
-model TrainingDetails {
+model CourseFeature {
   id       String @id @default(cuid())
   feature  String
   courseId String

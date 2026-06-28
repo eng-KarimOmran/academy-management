@@ -29,7 +29,8 @@ const NOT_FOUND_MESSAGES = {
   AcademyAddress: "عنوان الأكاديمية غير موجود",
   AcademyPaymentLink: "رابط الدفع غير موجود",
   PATH_NOT_FOUND: "المسار غير موجود",
-  JobProfile: "الملف الوظيفي غير موجد"
+  JobProfile: "الملف الوظيفي غير موجد",
+  CourseFeature: "ميزة البرنامج غير موجوده"
 } as const;
 
 export const CONFLICT_MESSAGES = {

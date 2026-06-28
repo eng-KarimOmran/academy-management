@@ -1,18 +1,33 @@
-import { CourseWhereInput } from "../../../prisma/generated/models";
+import { CourseOrderByWithRelationInput, CourseWhereInput } from "../../../prisma/generated/models";
 
 export const buildCourseWhere = ({
+  academyId,
   search,
   isActive,
-  academyId,
 }: {
+  academyId: string;
   search?: string;
   isActive?: boolean;
-  academyId: string;
 }): CourseWhereInput => {
-  const where: CourseWhereInput = { academyId };
+  const where: CourseWhereInput = {
+    academyId,
+  };
 
   if (search) {
-    where.OR = [{ name: { contains: search, mode: "insensitive" } }];
+    where.OR = [
+      {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        description: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    ];
   }
 
   if (typeof isActive !== "undefined") {
@@ -21,3 +36,7 @@ export const buildCourseWhere = ({
 
   return where;
 };
+
+export const orderBy: CourseOrderByWithRelationInput = {
+  createdAt: "desc",
+}

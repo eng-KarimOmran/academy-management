@@ -1,40 +1,49 @@
-import { Response } from "express";
-import { RequestAuth } from "../../shared/middlewares/auth.middleware";
 import * as DTO from "./course.dto";
-import sendSuccess from "../../shared/utils/successResponse";
 import CourseService from "./course.service";
-import { RequestAcademy } from "../academy/academy.middleware";
+import sendSuccess from "../../shared/utils/successResponse";
+import { ICourseController } from "./course.type";
 
-const CourseController = {
-  createCourse: async (req: RequestAcademy, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.CreateDto;
+const CourseController: ICourseController = {
+  createCourse: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.CreateCourseDto;
 
-    const course = await CourseService.create({dataSafe});
+    const course = await CourseService.createCourse(dataSafe);
 
     return sendSuccess({
       res,
       statusCode: 201,
       data: course,
-      message: "تم إضافة البرنامج بنجاح",
+      message: "تم إنشاء الكورس بنجاح",
     });
   },
 
-  updateCourse: async (req: RequestAcademy, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.UpdateDto;
+  updateCourse: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.UpdateCourseDto;
 
-    const updatedCourse = await CourseService.update({dataSafe});
+    const course = await CourseService.updateCourse(dataSafe);
 
     return sendSuccess({
       res,
-      data: updatedCourse,
-      message: "تم تحديث البرنامج بنجاح",
+      data: course,
+      message: "تم تحديث الكورس بنجاح",
     });
   },
 
-  getAllCourses: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetAllDto;
+  deleteCourse: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.DeleteCourseDto;
 
-    const data = await CourseService.getAll({dataSafe});
+    await CourseService.deleteCourse(dataSafe);
+
+    return sendSuccess({
+      res,
+      message: "تم حذف الكورس بنجاح",
+    });
+  },
+
+  getAllCourses: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.GetAllCoursesDto;
+
+    const data = await CourseService.getAllCourses(dataSafe);
 
     return sendSuccess({
       res,
@@ -42,46 +51,37 @@ const CourseController = {
     });
   },
 
-  getDetailsCourse: async (req: RequestAuth, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.GetDetailsDto;
+  getCourseDetails: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.GetCourseDetailsDto;
 
-    const course = await CourseService.getDetails({dataSafe});
-
-    return sendSuccess({ res, data: course });
-  },
-
-  deleteCourse: async (req: RequestAcademy, res: Response) => {
-    const dataSafe = req.dataSafe as DTO.DeleteDto;
-
-    await CourseService.deleteCourse({dataSafe});
-
-    return sendSuccess({ res, message: "تم حذف البرنامج نهائياً" });
-  },
-
-  addCourseFeatures: async (req: RequestAcademy, res: Response) => {
-    const { body, params } = req.dataSafe as DTO.AddCourseFeaturesDto;
-    const { courseId } = params;
-    const { text } = body;
-
-    const data = await CourseService.addFeature({ courseId, text });
+    const course = await CourseService.getCourseDetails(dataSafe);
 
     return sendSuccess({
       res,
-      statusCode: 201,
-      data: data,
-      message: "تم اضافة الميزة بنجاح",
+      data: course,
     });
   },
 
-  deleteCourseFeatures: async (req: RequestAcademy, res: Response) => {
-    const { params } = req.dataSafe as DTO.DeleteCourseFeaturesDto;
-    const { courseId, featureId } = params;
+  addCourseFeature: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.AddCourseFeaturesDto;
 
-    const data = await CourseService.deleteFeature({ courseId, featureId });
+    const course = await CourseService.addCourseFeature(dataSafe);
 
     return sendSuccess({
       res,
-      data: data,
+      data: course,
+      message: "تم إضافة الميزة بنجاح",
+    });
+  },
+
+  deleteCourseFeature: async (req, res) => {
+    const dataSafe = req.dataSafe as DTO.DeleteCourseFeaturesDto;
+
+    const course = await CourseService.deleteCourseFeature(dataSafe);
+
+    return sendSuccess({
+      res,
+      data: course,
       message: "تم حذف الميزة بنجاح",
     });
   },

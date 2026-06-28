@@ -8,10 +8,10 @@ import { isAdmin } from '../user/user.middleware';
 import routerJobProfile from "../jobProfile/jobProfile.routes";
 import routerArea from "../area/area.routes";
 import routerCar from "../car/car.routes";
+import routerCourse from "../course/course.routes";
 import routerClient from "../client/client.routes";
 import routerSubscription from "../subscription/subscription.routes";
 
-// import routerCourse from "../course/course.routes";
 // import routerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
 // import routerLesson from "../lesson/lesson.routes";
 // import routerStatistics from "../dashboard/dashboard.routes";
@@ -160,12 +160,13 @@ router.use("/:academyId/car", routerCar);
 
 router.use("/:academyId/area", routerArea);
 
+router.use("/:academyId/course", routerCourse);
+
 router.use("/:academyId/client", routerClient);
 
 router.use("/:academyId/subscription", routerSubscription);
 
 
-// router.use("/:academyId/course", routerCourse);
 // router.use("/:academyId/transaction", routerTransactions);
 // router.use("/:academyId/lesson", routerLesson);
 // router.use("/:academyId/statistic", routerStatistics);

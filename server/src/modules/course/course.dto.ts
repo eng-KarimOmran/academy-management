@@ -1,26 +1,26 @@
 import z from "zod";
 import * as Schema from "./course.schema";
 
-export type CreateDto = {
+export type CreateCourseDto = {
   params: z.infer<typeof Schema.CreateSchema.params>;
   body: z.infer<typeof Schema.CreateSchema.body>;
 };
 
-export type UpdateDto = {
+export type UpdateCourseDto = {
   params: z.infer<typeof Schema.UpdateSchema.params>;
   body: z.infer<typeof Schema.UpdateSchema.body>;
 };
 
-export type DeleteDto = {
+export type DeleteCourseDto = {
   params: z.infer<typeof Schema.DeleteSchema.params>;
 };
 
-export type GetAllDto = {
+export type GetAllCoursesDto = {
   params: z.infer<typeof Schema.GetAllSchema.params>;
   query: z.infer<typeof Schema.GetAllSchema.query>;
 };
 
-export type GetDetailsDto = {
+export type GetCourseDetailsDto = {
   params: z.infer<typeof Schema.GetDetailsSchema.params>;
 };
 

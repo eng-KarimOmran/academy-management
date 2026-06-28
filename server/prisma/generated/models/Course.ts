@@ -301,7 +301,7 @@ export type CourseWhereInput = {
   academyId?: Prisma.StringFilter<"Course"> | string
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
-  features?: Prisma.TrainingDetailsListRelationFilter
+  features?: Prisma.CourseFeatureListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
 }
 
@@ -320,7 +320,7 @@ export type CourseOrderByWithRelationInput = {
   academyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   academy?: Prisma.AcademyOrderByWithRelationInput
-  features?: Prisma.TrainingDetailsOrderByRelationAggregateInput
+  features?: Prisma.CourseFeatureOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
 }
 
@@ -343,7 +343,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
   academyId?: Prisma.StringFilter<"Course"> | string
   createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
-  features?: Prisma.TrainingDetailsListRelationFilter
+  features?: Prisma.CourseFeatureListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
 }, "id" | "academyId_name">
 
@@ -401,7 +401,7 @@ export type CourseCreateInput = {
   featuredReason?: string | null
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutCoursesInput
-  features?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
+  features?: Prisma.CourseFeatureCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCourseInput
 }
 
@@ -419,7 +419,7 @@ export type CourseUncheckedCreateInput = {
   featuredReason?: string | null
   academyId: string
   createdAt?: Date | string
-  features?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
+  features?: Prisma.CourseFeatureUncheckedCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCourseInput
 }
 
@@ -437,7 +437,7 @@ export type CourseUpdateInput = {
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutCoursesNestedInput
-  features?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
+  features?: Prisma.CourseFeatureUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCourseNestedInput
 }
 
@@ -455,7 +455,7 @@ export type CourseUncheckedUpdateInput = {
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  features?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
+  features?: Prisma.CourseFeatureUncheckedUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -695,7 +695,7 @@ export type CourseCreateWithoutAcademyInput = {
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  features?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
+  features?: Prisma.CourseFeatureCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCourseInput
 }
 
@@ -712,7 +712,7 @@ export type CourseUncheckedCreateWithoutAcademyInput = {
   sessionDurationMinutes: number
   featuredReason?: string | null
   createdAt?: Date | string
-  features?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
+  features?: Prisma.CourseFeatureUncheckedCreateNestedManyWithoutCourseInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCourseInput
 }
 
@@ -775,7 +775,7 @@ export type CourseCreateWithoutSubscriptionsInput = {
   featuredReason?: string | null
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutCoursesInput
-  features?: Prisma.TrainingDetailsCreateNestedManyWithoutCourseInput
+  features?: Prisma.CourseFeatureCreateNestedManyWithoutCourseInput
 }
 
 export type CourseUncheckedCreateWithoutSubscriptionsInput = {
@@ -792,7 +792,7 @@ export type CourseUncheckedCreateWithoutSubscriptionsInput = {
   featuredReason?: string | null
   academyId: string
   createdAt?: Date | string
-  features?: Prisma.TrainingDetailsUncheckedCreateNestedManyWithoutCourseInput
+  features?: Prisma.CourseFeatureUncheckedCreateNestedManyWithoutCourseInput
 }
 
 export type CourseCreateOrConnectWithoutSubscriptionsInput = {
@@ -825,7 +825,7 @@ export type CourseUpdateWithoutSubscriptionsInput = {
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutCoursesNestedInput
-  features?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
+  features?: Prisma.CourseFeatureUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseUncheckedUpdateWithoutSubscriptionsInput = {
@@ -842,7 +842,7 @@ export type CourseUncheckedUpdateWithoutSubscriptionsInput = {
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  features?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
+  features?: Prisma.CourseFeatureUncheckedUpdateManyWithoutCourseNestedInput
 }
 
 export type CourseCreateWithoutFeaturesInput = {
@@ -957,7 +957,7 @@ export type CourseUpdateWithoutAcademyInput = {
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  features?: Prisma.TrainingDetailsUpdateManyWithoutCourseNestedInput
+  features?: Prisma.CourseFeatureUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCourseNestedInput
 }
 
@@ -974,7 +974,7 @@ export type CourseUncheckedUpdateWithoutAcademyInput = {
   sessionDurationMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   featuredReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  features?: Prisma.TrainingDetailsUncheckedUpdateManyWithoutCourseNestedInput
+  features?: Prisma.CourseFeatureUncheckedUpdateManyWithoutCourseNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCourseNestedInput
 }
 
@@ -1022,7 +1022,7 @@ export type CourseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
  * CourseCountOutputType without action
  */
 export type CourseCountOutputTypeCountFeaturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TrainingDetailsWhereInput
+  where?: Prisma.CourseFeatureWhereInput
 }
 
 /**
@@ -1121,7 +1121,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Course"
   objects: {
     academy: Prisma.$AcademyPayload<ExtArgs>
-    features: Prisma.$TrainingDetailsPayload<ExtArgs>[]
+    features: Prisma.$CourseFeaturePayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1533,7 +1533,7 @@ readonly fields: CourseFieldRefs;
 export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  features<T extends Prisma.Course$featuresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$featuresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TrainingDetailsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  features<T extends Prisma.Course$featuresArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$featuresArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseFeaturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Course$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1982,23 +1982,23 @@ export type CourseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
  */
 export type Course$featuresArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the TrainingDetails
+   * Select specific fields to fetch from the CourseFeature
    */
-  select?: Prisma.TrainingDetailsSelect<ExtArgs> | null
+  select?: Prisma.CourseFeatureSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the TrainingDetails
+   * Omit specific fields from the CourseFeature
    */
-  omit?: Prisma.TrainingDetailsOmit<ExtArgs> | null
+  omit?: Prisma.CourseFeatureOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TrainingDetailsInclude<ExtArgs> | null
-  where?: Prisma.TrainingDetailsWhereInput
-  orderBy?: Prisma.TrainingDetailsOrderByWithRelationInput | Prisma.TrainingDetailsOrderByWithRelationInput[]
-  cursor?: Prisma.TrainingDetailsWhereUniqueInput
+  include?: Prisma.CourseFeatureInclude<ExtArgs> | null
+  where?: Prisma.CourseFeatureWhereInput
+  orderBy?: Prisma.CourseFeatureOrderByWithRelationInput | Prisma.CourseFeatureOrderByWithRelationInput[]
+  cursor?: Prisma.CourseFeatureWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TrainingDetailsScalarFieldEnum | Prisma.TrainingDetailsScalarFieldEnum[]
+  distinct?: Prisma.CourseFeatureScalarFieldEnum | Prisma.CourseFeatureScalarFieldEnum[]
 }
 
 /**

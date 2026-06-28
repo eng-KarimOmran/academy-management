@@ -64,7 +64,7 @@ export const ModelName = {
   Subscription: 'Subscription',
   JobProfile: 'JobProfile',
   User: 'User',
-  TrainingDetails: 'TrainingDetails',
+  CourseFeature: 'CourseFeature',
   Car: 'Car',
   Area: 'Area',
   Lesson: 'Lesson',
@@ -249,13 +249,13 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const TrainingDetailsScalarFieldEnum = {
+export const CourseFeatureScalarFieldEnum = {
   id: 'id',
   feature: 'feature',
   courseId: 'courseId'
 } as const
 
-export type TrainingDetailsScalarFieldEnum = (typeof TrainingDetailsScalarFieldEnum)[keyof typeof TrainingDetailsScalarFieldEnum]
+export type CourseFeatureScalarFieldEnum = (typeof CourseFeatureScalarFieldEnum)[keyof typeof CourseFeatureScalarFieldEnum]
 
 
 export const CarScalarFieldEnum = {

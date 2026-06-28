@@ -7,6 +7,7 @@ import {
   boolean,
   price,
   booleanQuery,
+  page,
 } from "../../shared/utils/common.validation";
 
 export const CreateSchema = {
@@ -37,8 +38,8 @@ export const UpdateSchema = {
     description: z.string().optional(),
     priceOriginal: price.optional(),
     priceDiscounted: price.optional(),
-    requiredInitialDeposit: price.default(50),
-    sessionsBeforeFullPayment: price,
+    requiredInitialDeposit: price.optional(),
+    sessionsBeforeFullPayment: price.optional(),
     totalSessions: positiveNumber.optional(),
     sessionDurationMinutes: positiveNumber.optional(),
     featuredReason: z.string().optional(),
@@ -64,8 +65,8 @@ export const DeleteSchema = {
 export const GetAllSchema = {
   params: z.object({ academyId: id }),
   query: z.object({
-    page: positiveNumber.optional().default(1),
-    limit: limit,
+    page,
+    limit,
     search: z.string().optional(),
     isActive: booleanQuery.optional(),
   }),

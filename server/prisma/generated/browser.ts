@@ -83,10 +83,10 @@ export type JobProfile = Prisma.JobProfileModel
  */
 export type User = Prisma.UserModel
 /**
- * Model TrainingDetails
+ * Model CourseFeature
  * 
  */
-export type TrainingDetails = Prisma.TrainingDetailsModel
+export type CourseFeature = Prisma.CourseFeatureModel
 /**
  * Model Car
  * 

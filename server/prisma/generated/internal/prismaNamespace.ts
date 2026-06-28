@@ -397,7 +397,7 @@ export const ModelName = {
   Subscription: 'Subscription',
   JobProfile: 'JobProfile',
   User: 'User',
-  TrainingDetails: 'TrainingDetails',
+  CourseFeature: 'CourseFeature',
   Car: 'Car',
   Area: 'Area',
   Lesson: 'Lesson',
@@ -418,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "image" | "academyPhone" | "financialAccount" | "address" | "paymentLink" | "socialMedia" | "academy" | "blacklistedToken" | "client" | "course" | "subscription" | "jobProfile" | "user" | "trainingDetails" | "car" | "area" | "lesson" | "ledgerTransaction" | "payroll"
+    modelProps: "image" | "academyPhone" | "financialAccount" | "address" | "paymentLink" | "socialMedia" | "academy" | "blacklistedToken" | "client" | "course" | "subscription" | "jobProfile" | "user" | "courseFeature" | "car" | "area" | "lesson" | "ledgerTransaction" | "payroll"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1384,77 +1384,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    TrainingDetails: {
-      payload: Prisma.$TrainingDetailsPayload<ExtArgs>
-      fields: Prisma.TrainingDetailsFieldRefs
+    CourseFeature: {
+      payload: Prisma.$CourseFeaturePayload<ExtArgs>
+      fields: Prisma.CourseFeatureFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.TrainingDetailsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload> | null
+          args: Prisma.CourseFeatureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.TrainingDetailsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>
+          args: Prisma.CourseFeatureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>
         }
         findFirst: {
-          args: Prisma.TrainingDetailsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload> | null
+          args: Prisma.CourseFeatureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.TrainingDetailsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>
+          args: Prisma.CourseFeatureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>
         }
         findMany: {
-          args: Prisma.TrainingDetailsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>[]
+          args: Prisma.CourseFeatureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>[]
         }
         create: {
-          args: Prisma.TrainingDetailsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>
+          args: Prisma.CourseFeatureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>
         }
         createMany: {
-          args: Prisma.TrainingDetailsCreateManyArgs<ExtArgs>
+          args: Prisma.CourseFeatureCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.TrainingDetailsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>[]
+          args: Prisma.CourseFeatureCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>[]
         }
         delete: {
-          args: Prisma.TrainingDetailsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>
+          args: Prisma.CourseFeatureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>
         }
         update: {
-          args: Prisma.TrainingDetailsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>
+          args: Prisma.CourseFeatureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>
         }
         deleteMany: {
-          args: Prisma.TrainingDetailsDeleteManyArgs<ExtArgs>
+          args: Prisma.CourseFeatureDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.TrainingDetailsUpdateManyArgs<ExtArgs>
+          args: Prisma.CourseFeatureUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.TrainingDetailsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>[]
+          args: Prisma.CourseFeatureUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>[]
         }
         upsert: {
-          args: Prisma.TrainingDetailsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$TrainingDetailsPayload>
+          args: Prisma.CourseFeatureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CourseFeaturePayload>
         }
         aggregate: {
-          args: Prisma.TrainingDetailsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateTrainingDetails>
+          args: Prisma.CourseFeatureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCourseFeature>
         }
         groupBy: {
-          args: Prisma.TrainingDetailsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TrainingDetailsGroupByOutputType>[]
+          args: Prisma.CourseFeatureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseFeatureGroupByOutputType>[]
         }
         count: {
-          args: Prisma.TrainingDetailsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.TrainingDetailsCountAggregateOutputType> | number
+          args: Prisma.CourseFeatureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CourseFeatureCountAggregateOutputType> | number
         }
       }
     }
@@ -2028,13 +2028,13 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const TrainingDetailsScalarFieldEnum = {
+export const CourseFeatureScalarFieldEnum = {
   id: 'id',
   feature: 'feature',
   courseId: 'courseId'
 } as const
 
-export type TrainingDetailsScalarFieldEnum = (typeof TrainingDetailsScalarFieldEnum)[keyof typeof TrainingDetailsScalarFieldEnum]
+export type CourseFeatureScalarFieldEnum = (typeof CourseFeatureScalarFieldEnum)[keyof typeof CourseFeatureScalarFieldEnum]
 
 
 export const CarScalarFieldEnum = {
@@ -2477,7 +2477,7 @@ export type GlobalOmitConfig = {
   subscription?: Prisma.SubscriptionOmit
   jobProfile?: Prisma.JobProfileOmit
   user?: Prisma.UserOmit
-  trainingDetails?: Prisma.TrainingDetailsOmit
+  courseFeature?: Prisma.CourseFeatureOmit
   car?: Prisma.CarOmit
   area?: Prisma.AreaOmit
   lesson?: Prisma.LessonOmit
