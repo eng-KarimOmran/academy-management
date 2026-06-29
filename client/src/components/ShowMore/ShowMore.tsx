@@ -22,7 +22,8 @@ export default function ShowMore({ text = "", columns = 8 }: ShowMoreProps) {
   const isMobile = useIsMobile();
   const max = getMaxByColumns(columns);
   const isLong = text.length > max;
-  const shortText = isLong ? `${text.slice(0, max)}...` : text;
+  const shortTextMax = 2;
+  const shortText = isLong ? `${text.slice(0, shortTextMax)}...` : text;
 
   if (!isLong) return <span>{text}</span>;
 

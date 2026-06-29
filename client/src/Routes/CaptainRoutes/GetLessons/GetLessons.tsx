@@ -3,11 +3,11 @@
 // import { useEffect } from "react";
 // import { toast } from "sonner";
 // import { LessonCard } from "./Components/LessonCard/LessonCard";
-// import { useAuthState } from "@/store/AuthState";
+// import { useUserDetailsState } from "@/store/AuthState";
 // import { getDateRange } from "@/lib/utils";
 
 // export default function GetLessons({ day }: { day?: "today" | "tomorrow" }) {
-//   const { user } = useAuthState();
+//   const { user } = useUserDetailsState();
 //   const userId = user?.id;
 //   const dateRange = getDateRange(day);
 

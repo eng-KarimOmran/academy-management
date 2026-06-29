@@ -3,18 +3,11 @@ import Form from "@/components/Form/Form";
 
 import { LoginSchema } from "@/validations/auth.validation";
 import { login } from "@/service/auth.service";
-import { toast } from "sonner";
-
-import { useNavigate } from "react-router-dom";
-import { useAuthState } from "@/store/AuthState";
 
 import type { LoginDto } from "@/DTOs/auth.dto";
 import type { UserAuth } from "@/types/user";
 
 export default function Login() {
-  const navigate = useNavigate();
-  const { setUser } = useAuthState();
-
   const config: FormProps<LoginDto["body"], UserAuth> = {
     inputs: [
       {
@@ -39,12 +32,8 @@ export default function Login() {
 
     service: (data) => login({ body: data }),
 
-    onSuccess: (res) => {
-      if ("data" in res) {
-        setUser(res.data);
-      }
-      navigate("/dashboard", { replace: true });
-      toast.success("تم تسجيل الدخول بنجاح");
+    onSuccess: () => {
+      window.location.reload();
     },
   };
 

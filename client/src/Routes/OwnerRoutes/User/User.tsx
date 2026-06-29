@@ -14,7 +14,7 @@ export default function UserPage() {
     queryFn: getAllUsers,
     queryKey: ["users"],
     keepPrevious: true,
-    filters: ["isActive", "role"],
+    filters: ["isActive"],
   });
 
   const filters = [
@@ -30,31 +30,6 @@ export default function UserPage() {
           key: "isActive",
           label: "غير نشط",
           val: "false",
-        },
-      ],
-    },
-    {
-      group: "الدور الوظيفي",
-      option: [
-        {
-          key: "role",
-          label: "مدير",
-          val: "MANAGER",
-        },
-        {
-          key: "role",
-          label: "كابتن",
-          val: "CAPTAIN",
-        },
-        {
-          key: "role",
-          label: "سكرتير",
-          val: "SECRETARY",
-        },
-        {
-          key: "role",
-          label: "مالك النظام",
-          val: "OWNER",
         },
       ],
     },

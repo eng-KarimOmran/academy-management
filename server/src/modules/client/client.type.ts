@@ -13,7 +13,7 @@ import {
 
 type ClientDetails = {
     currentClient: ClientGetPayload<{ include: { subscriptions: true } }>
-    OtherFiles: Client[]
+    otherFiles: Client[]
 }
 
 export interface IClientService {

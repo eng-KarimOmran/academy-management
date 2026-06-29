@@ -1984,6 +1984,7 @@ export const SubscriptionScalarFieldEnum = {
   requiredInitialDeposit: 'requiredInitialDeposit',
   sessionsBeforeFullPayment: 'sessionsBeforeFullPayment',
   trainingTypeAtRegistration: 'trainingTypeAtRegistration',
+  courseName: 'courseName',
   clientId: 'clientId',
   courseId: 'courseId',
   academyId: 'academyId',

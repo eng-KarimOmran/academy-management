@@ -1,11 +1,11 @@
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 import ChangePasswordForm from "./Form/ChangePasswordForm";
 
 export default function ChangePassword() {
-  const { user } = useAuthState();
-  if (!user) return;
-  const isChangePassword = user.isPasswordChanged;
-  
+  const { userDetails } = useUserDetailsState();
+  if (!userDetails) return;
+  const isChangePassword = userDetails.isPasswordChanged;
+
   return (
     <section
       className={`w-full flex justify-center items-center ${

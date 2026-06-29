@@ -31,6 +31,7 @@ const SubscriptionService: ISubscriptionService = {
         course: { connect: { id: course.id } },
         area: { connect: { id: area.id } },
         ...(jobProfile && { createdBy: { connect: { id: jobProfile.id } } }),
+        courseName: course.name,
         priceAtBooking: course.priceDiscounted,
         requiredInitialDeposit: course.requiredInitialDeposit,
         sessionDurationMinutes: course.sessionDurationMinutes,

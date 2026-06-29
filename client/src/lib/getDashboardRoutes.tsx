@@ -1,14 +1,30 @@
-import type { AppRoute } from "@/App";
-import { CAPTAIN_ROUTES } from "./routes/captainRoutes";
-import { OWNER_ROUTES } from "./routes/ownerRoutes";
-import { SECRETARY_ROUTES } from "./routes/secretaryRoutes";
-import type { Role } from "@/types/enums";
-export const getDashboardRoutes = (roles: Role[]): AppRoute[] => {
-  if (roles.includes("OWNER")) return OWNER_ROUTES;
+// import { CAPTAIN_ROUTES } from "./routes/captainRoutes";
+import type { AppRoute } from "@/components/AppRoutes/AppRoutes";
+import { ADMIN_ROUTES, OWNER_ROUTES } from "./routes/ownerRoutes";
+// import { SECRETARY_ROUTES } from "./routes/secretaryRoutes";
+import ChangePassword from "@/Routes/AuthRoutes/ChangePassword/ChangePassword";
+import type { UserDetails } from "@/types/user";
 
-  if (roles.includes("SECRETARY")) return SECRETARY_ROUTES;
+export const getDashboardRoutes = (
+  userDetails: UserDetails | null,
+): AppRoute[] => {
+  if (!userDetails) return [];
 
-  if (roles.includes("CAPTAIN")) return CAPTAIN_ROUTES;
+  const BASIC_ROUTES: AppRoute[] = [
+    {
+      path: "change-password",
+      element: <ChangePassword />,
+      showInNavbar: false,
+    },
+  ];
 
-  return [];
+  if (userDetails?.academies.length) {
+    BASIC_ROUTES.push(...OWNER_ROUTES);
+  }
+
+  if (userDetails.isAdmin) {
+    BASIC_ROUTES.push(...ADMIN_ROUTES);
+  }
+
+  return BASIC_ROUTES;
 };

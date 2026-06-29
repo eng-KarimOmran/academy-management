@@ -51,6 +51,7 @@ export type SubscriptionMinAggregateOutputType = {
   requiredInitialDeposit: number | null
   sessionsBeforeFullPayment: number | null
   trainingTypeAtRegistration: $Enums.Transmission | null
+  courseName: string | null
   clientId: string | null
   courseId: string | null
   academyId: string | null
@@ -69,6 +70,7 @@ export type SubscriptionMaxAggregateOutputType = {
   requiredInitialDeposit: number | null
   sessionsBeforeFullPayment: number | null
   trainingTypeAtRegistration: $Enums.Transmission | null
+  courseName: string | null
   clientId: string | null
   courseId: string | null
   academyId: string | null
@@ -87,6 +89,7 @@ export type SubscriptionCountAggregateOutputType = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: number
+  courseName: number
   clientId: number
   courseId: number
   academyId: number
@@ -123,6 +126,7 @@ export type SubscriptionMinAggregateInputType = {
   requiredInitialDeposit?: true
   sessionsBeforeFullPayment?: true
   trainingTypeAtRegistration?: true
+  courseName?: true
   clientId?: true
   courseId?: true
   academyId?: true
@@ -141,6 +145,7 @@ export type SubscriptionMaxAggregateInputType = {
   requiredInitialDeposit?: true
   sessionsBeforeFullPayment?: true
   trainingTypeAtRegistration?: true
+  courseName?: true
   clientId?: true
   courseId?: true
   academyId?: true
@@ -159,6 +164,7 @@ export type SubscriptionCountAggregateInputType = {
   requiredInitialDeposit?: true
   sessionsBeforeFullPayment?: true
   trainingTypeAtRegistration?: true
+  courseName?: true
   clientId?: true
   courseId?: true
   academyId?: true
@@ -264,6 +270,7 @@ export type SubscriptionGroupByOutputType = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -305,6 +312,7 @@ export type SubscriptionWhereInput = {
   requiredInitialDeposit?: Prisma.FloatFilter<"Subscription"> | number
   sessionsBeforeFullPayment?: Prisma.IntFilter<"Subscription"> | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFilter<"Subscription"> | $Enums.Transmission
+  courseName?: Prisma.StringFilter<"Subscription"> | string
   clientId?: Prisma.StringFilter<"Subscription"> | string
   courseId?: Prisma.StringFilter<"Subscription"> | string
   academyId?: Prisma.StringFilter<"Subscription"> | string
@@ -332,6 +340,7 @@ export type SubscriptionOrderByWithRelationInput = {
   requiredInitialDeposit?: Prisma.SortOrder
   sessionsBeforeFullPayment?: Prisma.SortOrder
   trainingTypeAtRegistration?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
@@ -362,6 +371,7 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   requiredInitialDeposit?: Prisma.FloatFilter<"Subscription"> | number
   sessionsBeforeFullPayment?: Prisma.IntFilter<"Subscription"> | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFilter<"Subscription"> | $Enums.Transmission
+  courseName?: Prisma.StringFilter<"Subscription"> | string
   clientId?: Prisma.StringFilter<"Subscription"> | string
   courseId?: Prisma.StringFilter<"Subscription"> | string
   academyId?: Prisma.StringFilter<"Subscription"> | string
@@ -389,6 +399,7 @@ export type SubscriptionOrderByWithAggregationInput = {
   requiredInitialDeposit?: Prisma.SortOrder
   sessionsBeforeFullPayment?: Prisma.SortOrder
   trainingTypeAtRegistration?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
@@ -415,6 +426,7 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   requiredInitialDeposit?: Prisma.FloatWithAggregatesFilter<"Subscription"> | number
   sessionsBeforeFullPayment?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionWithAggregatesFilter<"Subscription"> | $Enums.Transmission
+  courseName?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   clientId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   courseId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   academyId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
@@ -433,6 +445,7 @@ export type SubscriptionCreateInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -454,6 +467,7 @@ export type SubscriptionUncheckedCreateInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -475,6 +489,7 @@ export type SubscriptionUpdateInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -496,6 +511,7 @@ export type SubscriptionUncheckedUpdateInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -517,6 +533,7 @@ export type SubscriptionCreateManyInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -535,6 +552,7 @@ export type SubscriptionUpdateManyMutationInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -547,6 +565,7 @@ export type SubscriptionUncheckedUpdateManyInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -580,6 +599,7 @@ export type SubscriptionCountOrderByAggregateInput = {
   requiredInitialDeposit?: Prisma.SortOrder
   sessionsBeforeFullPayment?: Prisma.SortOrder
   trainingTypeAtRegistration?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
@@ -606,6 +626,7 @@ export type SubscriptionMaxOrderByAggregateInput = {
   requiredInitialDeposit?: Prisma.SortOrder
   sessionsBeforeFullPayment?: Prisma.SortOrder
   trainingTypeAtRegistration?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
@@ -624,6 +645,7 @@ export type SubscriptionMinOrderByAggregateInput = {
   requiredInitialDeposit?: Prisma.SortOrder
   sessionsBeforeFullPayment?: Prisma.SortOrder
   trainingTypeAtRegistration?: Prisma.SortOrder
+  courseName?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
@@ -961,6 +983,7 @@ export type SubscriptionCreateWithoutFinancialAccountInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -981,6 +1004,7 @@ export type SubscriptionUncheckedCreateWithoutFinancialAccountInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1017,6 +1041,7 @@ export type SubscriptionUpdateWithoutFinancialAccountInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1037,6 +1062,7 @@ export type SubscriptionUncheckedUpdateWithoutFinancialAccountInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1057,6 +1083,7 @@ export type SubscriptionCreateWithoutAcademyInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -1077,6 +1104,7 @@ export type SubscriptionUncheckedCreateWithoutAcademyInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   areaId: string
@@ -1126,6 +1154,7 @@ export type SubscriptionScalarWhereInput = {
   requiredInitialDeposit?: Prisma.FloatFilter<"Subscription"> | number
   sessionsBeforeFullPayment?: Prisma.IntFilter<"Subscription"> | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFilter<"Subscription"> | $Enums.Transmission
+  courseName?: Prisma.StringFilter<"Subscription"> | string
   clientId?: Prisma.StringFilter<"Subscription"> | string
   courseId?: Prisma.StringFilter<"Subscription"> | string
   academyId?: Prisma.StringFilter<"Subscription"> | string
@@ -1144,6 +1173,7 @@ export type SubscriptionCreateWithoutClientInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
@@ -1164,6 +1194,7 @@ export type SubscriptionUncheckedCreateWithoutClientInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   courseId: string
   academyId: string
   areaId: string
@@ -1210,6 +1241,7 @@ export type SubscriptionCreateWithoutCourseInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
@@ -1230,6 +1262,7 @@ export type SubscriptionUncheckedCreateWithoutCourseInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   academyId: string
   areaId: string
@@ -1276,6 +1309,7 @@ export type SubscriptionCreateWithoutCreatedByInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -1296,6 +1330,7 @@ export type SubscriptionUncheckedCreateWithoutCreatedByInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1342,6 +1377,7 @@ export type SubscriptionCreateWithoutAreaInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -1362,6 +1398,7 @@ export type SubscriptionUncheckedCreateWithoutAreaInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1408,6 +1445,7 @@ export type SubscriptionCreateWithoutLessonsInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -1428,6 +1466,7 @@ export type SubscriptionUncheckedCreateWithoutLessonsInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1464,6 +1503,7 @@ export type SubscriptionUpdateWithoutLessonsInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1484,6 +1524,7 @@ export type SubscriptionUncheckedUpdateWithoutLessonsInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1504,6 +1545,7 @@ export type SubscriptionCreateWithoutLedgerTransactionsInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -1524,6 +1566,7 @@ export type SubscriptionUncheckedCreateWithoutLedgerTransactionsInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1560,6 +1603,7 @@ export type SubscriptionUpdateWithoutLedgerTransactionsInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1580,6 +1624,7 @@ export type SubscriptionUncheckedUpdateWithoutLedgerTransactionsInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1600,6 +1645,7 @@ export type SubscriptionCreateWithoutPayrollInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   createdAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
@@ -1620,6 +1666,7 @@ export type SubscriptionUncheckedCreateWithoutPayrollInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1666,6 +1713,7 @@ export type SubscriptionCreateManyAcademyInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   areaId: string
@@ -1683,6 +1731,7 @@ export type SubscriptionUpdateWithoutAcademyInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1703,6 +1752,7 @@ export type SubscriptionUncheckedUpdateWithoutAcademyInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1723,6 +1773,7 @@ export type SubscriptionUncheckedUpdateManyWithoutAcademyInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1740,6 +1791,7 @@ export type SubscriptionCreateManyClientInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   courseId: string
   academyId: string
   areaId: string
@@ -1757,6 +1809,7 @@ export type SubscriptionUpdateWithoutClientInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1777,6 +1830,7 @@ export type SubscriptionUncheckedUpdateWithoutClientInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1797,6 +1851,7 @@ export type SubscriptionUncheckedUpdateManyWithoutClientInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1814,6 +1869,7 @@ export type SubscriptionCreateManyCourseInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   academyId: string
   areaId: string
@@ -1831,6 +1887,7 @@ export type SubscriptionUpdateWithoutCourseInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1851,6 +1908,7 @@ export type SubscriptionUncheckedUpdateWithoutCourseInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1871,6 +1929,7 @@ export type SubscriptionUncheckedUpdateManyWithoutCourseInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1888,6 +1947,7 @@ export type SubscriptionCreateManyCreatedByInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1905,6 +1965,7 @@ export type SubscriptionUpdateWithoutCreatedByInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1925,6 +1986,7 @@ export type SubscriptionUncheckedUpdateWithoutCreatedByInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1945,6 +2007,7 @@ export type SubscriptionUncheckedUpdateManyWithoutCreatedByInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1962,6 +2025,7 @@ export type SubscriptionCreateManyAreaInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -1979,6 +2043,7 @@ export type SubscriptionUpdateWithoutAreaInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -1999,6 +2064,7 @@ export type SubscriptionUncheckedUpdateWithoutAreaInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2019,6 +2085,7 @@ export type SubscriptionUncheckedUpdateManyWithoutAreaInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2036,6 +2103,7 @@ export type SubscriptionCreateManyPayrollInput = {
   requiredInitialDeposit: number
   sessionsBeforeFullPayment: number
   trainingTypeAtRegistration: $Enums.Transmission
+  courseName: string
   clientId: string
   courseId: string
   academyId: string
@@ -2053,6 +2121,7 @@ export type SubscriptionUpdateWithoutPayrollInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
@@ -2073,6 +2142,7 @@ export type SubscriptionUncheckedUpdateWithoutPayrollInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2093,6 +2163,7 @@ export type SubscriptionUncheckedUpdateManyWithoutPayrollInput = {
   requiredInitialDeposit?: Prisma.FloatFieldUpdateOperationsInput | number
   sessionsBeforeFullPayment?: Prisma.IntFieldUpdateOperationsInput | number
   trainingTypeAtRegistration?: Prisma.EnumTransmissionFieldUpdateOperationsInput | $Enums.Transmission
+  courseName?: Prisma.StringFieldUpdateOperationsInput | string
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2150,6 +2221,7 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   requiredInitialDeposit?: boolean
   sessionsBeforeFullPayment?: boolean
   trainingTypeAtRegistration?: boolean
+  courseName?: boolean
   clientId?: boolean
   courseId?: boolean
   academyId?: boolean
@@ -2178,6 +2250,7 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   requiredInitialDeposit?: boolean
   sessionsBeforeFullPayment?: boolean
   trainingTypeAtRegistration?: boolean
+  courseName?: boolean
   clientId?: boolean
   courseId?: boolean
   academyId?: boolean
@@ -2202,6 +2275,7 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   requiredInitialDeposit?: boolean
   sessionsBeforeFullPayment?: boolean
   trainingTypeAtRegistration?: boolean
+  courseName?: boolean
   clientId?: boolean
   courseId?: boolean
   academyId?: boolean
@@ -2226,6 +2300,7 @@ export type SubscriptionSelectScalar = {
   requiredInitialDeposit?: boolean
   sessionsBeforeFullPayment?: boolean
   trainingTypeAtRegistration?: boolean
+  courseName?: boolean
   clientId?: boolean
   courseId?: boolean
   academyId?: boolean
@@ -2235,7 +2310,7 @@ export type SubscriptionSelectScalar = {
   createdAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subscriptionStatus" | "priceAtBooking" | "totalSessions" | "sessionDurationMinutes" | "requiredInitialDeposit" | "sessionsBeforeFullPayment" | "trainingTypeAtRegistration" | "clientId" | "courseId" | "academyId" | "areaId" | "payrollId" | "createdById" | "createdAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subscriptionStatus" | "priceAtBooking" | "totalSessions" | "sessionDurationMinutes" | "requiredInitialDeposit" | "sessionsBeforeFullPayment" | "trainingTypeAtRegistration" | "courseName" | "clientId" | "courseId" | "academyId" | "areaId" | "payrollId" | "createdById" | "createdAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -2287,6 +2362,7 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     requiredInitialDeposit: number
     sessionsBeforeFullPayment: number
     trainingTypeAtRegistration: $Enums.Transmission
+    courseName: string
     clientId: string
     courseId: string
     academyId: string
@@ -2734,6 +2810,7 @@ export interface SubscriptionFieldRefs {
   readonly requiredInitialDeposit: Prisma.FieldRef<"Subscription", 'Float'>
   readonly sessionsBeforeFullPayment: Prisma.FieldRef<"Subscription", 'Int'>
   readonly trainingTypeAtRegistration: Prisma.FieldRef<"Subscription", 'Transmission'>
+  readonly courseName: Prisma.FieldRef<"Subscription", 'String'>
   readonly clientId: Prisma.FieldRef<"Subscription", 'String'>
   readonly courseId: Prisma.FieldRef<"Subscription", 'String'>
   readonly academyId: Prisma.FieldRef<"Subscription", 'String'>

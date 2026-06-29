@@ -2,9 +2,9 @@ import { Response } from "express";
 import * as DTO from "./auth.dto";
 import AuthService from "./auth.service";
 import sendSuccess from "../../shared/utils/successResponse";
-import { RequestValidation } from "../../shared/middlewares/validation.middleware";
 import { cookieAccess, cookieRefresh } from "./auth.utils";
 import { RequestAuth } from "./auth.type";
+import { RequestValidation } from "../../shared/middlewares/validate.middleware";
 
 const AuthController = {
   login: async (req: RequestValidation, res: Response) => {
@@ -81,7 +81,7 @@ const AuthController = {
     const dataSafe = req.dataSafe as DTO.createFirstUserDto
     const body = dataSafe.body
 
-    const user = await AuthService.createFirstUser(body);
+    const data = await AuthService.createFirstUser(body);
 
     res.clearCookie("access", cookieAccess);
     res.clearCookie("refresh", cookieRefresh);
@@ -89,7 +89,7 @@ const AuthController = {
     return sendSuccess({
       res,
       statusCode: 201,
-      data: true,
+      data,
       message: "تم إنشاء المستخدم بنجاح",
     });
   },

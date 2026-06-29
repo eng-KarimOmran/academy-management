@@ -1,10 +1,10 @@
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function ProtectedLayout() {
-  const { user } = useAuthState();
+  const { userDetails } = useUserDetailsState();
 
-  if (!user) {
+  if (!userDetails) {
     return <Navigate to={"/"} replace={true} />;
   }
 

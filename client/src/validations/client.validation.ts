@@ -5,7 +5,7 @@ import {
   positiveNumber,
   phone,
   personName,
-  clientSource,
+  source,
 } from "../validations/common.validation";
 
 export const CreateClientSchema = {
@@ -13,7 +13,7 @@ export const CreateClientSchema = {
     academyId: id,
     name: personName,
     phone,
-    clientSource,
+    source,
   }),
 };
 
@@ -22,7 +22,7 @@ export const UpdateClientSchema = {
   body: z.object({
     name: personName.optional(),
     phone: phone.optional(),
-    clientSource: clientSource.optional(),
+    source: source.optional(),
   }),
 };
 
@@ -34,13 +34,18 @@ export const GetAllClientsSchema = {
   params: z.object({ academyId: id }),
   query: z.object({
     page: positiveNumber.optional().default(1),
-    limit: limit,
+    limit,
     search: z.string().optional(),
+    source: source.optional(),
   }),
 };
 
 export const GetClientDetailsSchema = {
-  params: z.object({ academyId: id, clientId: id }),
+  params: z.object({ academyId: id }),
+  query: z.object({
+    clientId: id.optional(),
+    phone: phone.optional(),
+  }),
 };
 
 export const GetClientByPhoneSchema = {

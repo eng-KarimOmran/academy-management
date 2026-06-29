@@ -1,4 +1,4 @@
-import Dashboard from "@/Routes/OwnerRoutes/Dashboard/Dashboard";
+import Statistic from "@/Routes/OwnerRoutes/Statistic/Statistic";
 import ClientsPage from "@/Routes/OwnerRoutes/Client/Client";
 import SubscriptionPage from "@/Routes/OwnerRoutes/Subscription/Subscription";
 import TransactionsPage from "@/Routes/OwnerRoutes/Transaction/Transaction";
@@ -10,7 +10,6 @@ import CaptainPage from "@/Routes/OwnerRoutes/Captain/Captain";
 import SecretaryPage from "@/Routes/OwnerRoutes/Secretary/Secretary";
 import UserPage from "@/Routes/OwnerRoutes/User/User";
 import AcademyPage from "@/Routes/OwnerRoutes/Academies/Academies";
-import type { AppRoute } from "@/App";
 
 import {
   RiCarLine,
@@ -36,6 +35,7 @@ import ClientDetailsPage from "@/Routes/OwnerRoutes/Client/ClientDetailsPage/Cli
 import SubscriptionDetailsPage from "@/Routes/OwnerRoutes/Subscription/SubscriptionDetailsPage/SubscriptionDetailsPage";
 import LessonDetailsPage from "@/Routes/OwnerRoutes/Lesson/components/LessonDetailsPage";
 import TransactionDetailsPage from "@/Routes/OwnerRoutes/Transaction/TransactionDetailsPage/TransactionDetailsPage";
+import type { AppRoute } from "@/components/AppRoutes/AppRoutes";
 
 export const OWNER_ROUTES_SHARED: AppRoute[] = [
   {
@@ -63,7 +63,7 @@ export const OWNER_ROUTES_SHARED: AppRoute[] = [
 export const OWNER_ROUTES: AppRoute[] = [
   {
     path: "",
-    element: <Dashboard />,
+    element: <Statistic />,
     label: "لوحة التحكم",
     icon: <RiLayout2Line />,
     showInNavbar: true,
@@ -139,20 +139,6 @@ export const OWNER_ROUTES: AppRoute[] = [
     showInNavbar: true,
   },
   {
-    path: "user",
-    element: <UserPage />,
-    label: "المستخدمين",
-    icon: <RiUserSettingsFill />,
-    showInNavbar: true,
-  },
-  {
-    path: "academy",
-    element: <AcademyPage />,
-    label: "الأكاديميات",
-    icon: <RiSchoolFill />,
-    showInNavbar: true,
-  },
-  {
     path: "academy/:academyId",
     element: <AcademyDetailsPage />,
     showInNavbar: false,
@@ -162,10 +148,27 @@ export const OWNER_ROUTES: AppRoute[] = [
     element: <CourseDetailsPage />,
     showInNavbar: false,
   },
+  ...OWNER_ROUTES_SHARED,
+];
+
+export const ADMIN_ROUTES: AppRoute[] = [
+  {
+    path: "user",
+    element: <UserPage />,
+    label: "المستخدمين",
+    icon: <RiUserSettingsFill />,
+    showInNavbar: true,
+  },
   {
     path: "user/:userId",
     element: <UserDetailsPage />,
     showInNavbar: false,
   },
-  ...OWNER_ROUTES_SHARED,
+  {
+    path: "academy",
+    element: <AcademyPage />,
+    label: "الأكاديميات",
+    icon: <RiSchoolFill />,
+    showInNavbar: true,
+  },
 ];

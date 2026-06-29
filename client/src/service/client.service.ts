@@ -9,16 +9,13 @@ type EntityDetails = ClientDetails;
 
 const clientsUrl = {
   base: (academyId: string) =>
-    `/academies/${academyId}/clients`,
+    `/academies/${academyId}/client`,
 
   byId: (academyId: string, clientId: string) =>
-    `/academies/${academyId}/clients/${clientId}`,
+    `/academies/${academyId}/client/${clientId}`,
 
-  details: (academyId: string, clientId: string) =>
-    `/academies/${academyId}/clients/${clientId}`,
-
-  byPhone: (academyId: string, phone: string) =>
-    `/academies/${academyId}/clients/phone/${phone}`,
+  details: ({ academyId, phone, clientId }: { academyId: string, clientId?: string, phone?: string }) =>
+    `/academies/${academyId}/client/details?${clientId ? `clientId=${clientId}` : phone ? `phone=${phone}` : ""}`
 };
 
 export const createClient = (data: Dto.CreateClientDto) => {
@@ -62,19 +59,11 @@ export const getAllClients = (data: Dto.GetAllClientsDto) => {
 };
 
 export const getClientDetails = (data: Dto.ClientDetailsDto) => {
-  const { params } = data;
-  const { academyId, clientId } = params;
+  const { params, query } = data;
+  const { academyId } = params;
+  const { clientId, phone } = query
 
   return axiosClient.get<SuccessfulResponse<EntityDetails>>(
-    clientsUrl.details(academyId, clientId)
-  );
-};
-
-export const getClientByPhone = (data: Dto.GetClientByPhoneDto) => {
-  const { params } = data;
-  const { academyId, phone } = params;
-
-  return axiosClient.get<SuccessfulResponse<Entity>>(
-    clientsUrl.byPhone(academyId, phone)
+    clientsUrl.details({ academyId, clientId, phone })
   );
 };

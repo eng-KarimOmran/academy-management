@@ -74,7 +74,9 @@ export const checkPasswordChange = async (
   next: NextFunction,
 ) => {
   const user = req.userLogin;
+
   if (!user) throw ApiError.Unauthorized()
+    
   if (!user.isPasswordChanged) {
     throw ApiError.passwordChangeRequired();
   }

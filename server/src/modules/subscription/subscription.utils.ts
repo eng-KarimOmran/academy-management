@@ -69,7 +69,7 @@ export const getSubscriptionStatus = (params: GetSubscriptionStatusParams): Subs
   }
 
   if (!isFullyPaid) {
-    return reachedPaymentLimit ? SubscriptionStatus.SUSPENDED : SubscriptionStatus.ACTIVE_LIMITED;
+    return reachedPaymentLimit ? SubscriptionStatus.SUSPENDED : SubscriptionStatus.GRACE_PERIOD;
   }
 
   return SubscriptionStatus.ACTIVE;

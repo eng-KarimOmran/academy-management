@@ -17,6 +17,7 @@ export type GetAllClientsDto = {
 
 export type ClientDetailsDto = {
   params: z.infer<typeof Schema.GetClientDetailsSchema.params>;
+  query: z.infer<typeof Schema.GetClientDetailsSchema.query>;
 };
 
 export type DeleteClientDto = {

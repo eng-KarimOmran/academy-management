@@ -6,7 +6,6 @@ import { isAdmin } from "./user.middleware";
 
 const router = Router();
 
-
 router.get(
   "/",
   validate(Schema.GetAllUsersSchema),
@@ -22,15 +21,20 @@ router.post(
 );
 
 router.get(
+  "/me",
+  UserController.getMe,
+);
+
+router.get(
   "/:userId",
   validate(Schema.GetUserDetailsSchema),
+  isAdmin,
   UserController.getDetailsUser,
 );
 
 router.patch(
   "/:userId/new-password",
   validate(Schema.newPasswordSchema),
-  isAdmin,
   UserController.newPassword,
 );
 

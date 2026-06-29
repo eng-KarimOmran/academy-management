@@ -48,7 +48,6 @@ export interface IAuthService {
     email?: string
   }): Promise<{
     id: string;
-    phone: string;
   }>;
 }
 

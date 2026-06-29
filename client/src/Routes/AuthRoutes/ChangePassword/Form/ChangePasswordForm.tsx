@@ -3,25 +3,25 @@ import Form from "@/components/Form/Form";
 import type { ChangePasswordDto } from "@/DTOs/auth.dto";
 import { queryClient } from "@/lib/queryClient";
 import { changePassword } from "@/service/auth.service";
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 import { useDialogState } from "@/store/DialogState";
-import type { UserAuth } from "@/types/user";
 import { changePasswordSchema } from "@/validations/auth.validation";
 import { toast } from "sonner";
 
 export default function ChangePasswordForm() {
-  const { setUser } = useAuthState();
+  const { setUser } = useUserDetailsState();
   const { setConfigDialog } = useDialogState();
 
-  const config: FormProps<ChangePasswordDto["body"], UserAuth> = {
+  const config: FormProps<ChangePasswordDto["body"], boolean> = {
     inputs: [
       {
-        name: "password",
+        name: "newPassword",
         type: "password",
         label: "كلمة المرور الحالية",
+        col: "half",
       },
       {
-        name: "newPassword",
+        name: "currentPassword",
         type: "password",
         label: "كلمة المرور الجديده",
         col: "half",

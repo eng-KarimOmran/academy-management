@@ -22,24 +22,19 @@ export default function SignUp() {
         label: "رقم الهاتف",
         placeholder: "01xxxxxxxxx",
       },
-      {
-        name: "password",
-        type: "password",
-        label: "كلمة المرور",
-      },
     ],
 
     schema: CreateUserSchema.body,
 
     submitButton: {
-      text: "تسجيل الدخول",
-      loadingText: "جاري تسجيل الدخول...",
+      text: "تسجيل",
+      loadingText: "جاري التسجيل ...",
     },
 
     service: (data) => signup({ body: data }),
 
     onSuccess: () => {
-      navigate("/", { replace: true });
+      navigate(`/`, { replace: true });
       toast.success("تم تسجيل المستخدم بنجاح");
     },
   };

@@ -84,7 +84,7 @@ export const platform = z.enum(Platform);
 export const paymentMethod = z.enum(PaymentMethod);
 export const lessonStatus = z.enum(LessonStatus);
 export const subscriptionStatus = z.enum(SubscriptionStatus);
-export const clientSource = z.enum(ClientSource);
+export const source = z.enum(ClientSource);
 export const transactionParty = z.enum(TransactionParty);
 export const transactionType = z.enum(TransactionType);
 

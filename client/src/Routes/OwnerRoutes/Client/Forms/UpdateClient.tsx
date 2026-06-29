@@ -36,7 +36,7 @@ export default function UpdateClient({ item }: { item: Client }) {
     defaultValues: {
       name: item.name,
       phone: item.phone,
-      clientSource: item.clientSource,
+      source: item.source,
     },
 
     schema: UpdateClientSchema.body,

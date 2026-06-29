@@ -2,7 +2,6 @@ import CopyBtn from "@/components/CopyBtn/CopyBtn";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useDialogState } from "@/store/DialogState";
-import type { UserProfile } from "@/types/user";
 import { RiPhoneLine, RiWhatsappLine } from "@remixicon/react";
 import UpdateUser from "../../Forms/UpdateUser";
 import DeleteUser from "../../Forms/DeleteUser";
@@ -10,10 +9,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import userImg from "../../../../../assets/user.png";
 import { formatDate } from "@/lib/utils";
 import dayjs from "dayjs";
+import type { UserDetails } from "@/types/user";
 
 type UserActionType = "update" | "delete" | "whatsapp" | "call";
 
-export default function BasicInfoSection({ data }: { data: UserProfile }) {
+export default function BasicInfoSection({ data }: { data: UserDetails }) {
   const { name, phone, isActive, createdAt } = data;
   const { setConfigDialog } = useDialogState();
 

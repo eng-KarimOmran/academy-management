@@ -17,7 +17,7 @@ export interface IDashboardService {
     subscriptions: (data: { dataSafe: DTO.GetDashboardAnalyticsDto; tx?: TransactionClient }) => Promise<{
         PENDING_DEPOSIT: number;
         PENDING_FIRST_SESSION: number;
-        ACTIVE_LIMITED: number;
+        GRACE_PERIOD: number;
         SUSPENDED: number;
         ACTIVE: number;
         CANCELED: number;

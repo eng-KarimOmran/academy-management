@@ -1,7 +1,10 @@
 import z from "zod";
 import * as Schema from "../validations/area.validation";
 
-export type CreateDto = { body: z.infer<typeof Schema.CreateAreaSchema.body> };
+export type CreateDto = {
+  params: z.infer<typeof Schema.CreateAreaSchema.params>;
+  body: z.infer<typeof Schema.CreateAreaSchema.body>
+};
 
 export type UpdateDto = {
   params: z.infer<typeof Schema.UpdateAreaSchema.params>;
@@ -9,6 +12,7 @@ export type UpdateDto = {
 };
 
 export type GetAllDto = {
+  params: z.infer<typeof Schema.GetAllAreasSchema.params>;
   query: z.infer<typeof Schema.GetAllAreasSchema.query>;
 };
 

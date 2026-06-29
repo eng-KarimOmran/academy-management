@@ -5,7 +5,7 @@ export interface PageHeaderProps {
 
 export default function PageHeader({ title, description }: PageHeaderProps) {
   return (
-    <header className="bg-muted/50 rounded-md p-4">
+    <header>
       <h1 className="text-2xl font-semibold">{title}</h1>
       {description && <p className="text-muted-foreground">{description}</p>}
     </header>

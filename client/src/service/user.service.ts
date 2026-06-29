@@ -2,14 +2,15 @@ import { axiosClient } from "@/lib/axios";
 import * as Dto from "@/DTOs/user.dto";
 
 import type { PaginatedResponse, SuccessfulResponse } from "@/types/axios";
-import type { User, UserProfile } from "@/types/user";
+import type { User, UserDetails } from "@/types/user";
 
 type Entity = User;
-type EntityDetails = UserProfile;
+type EntityDetails = UserDetails;
 
 const usersUrl = {
   base: "/users",
   byId: (userId: string) => `/users/${userId}`,
+  me: "/users/me"
 };
 
 export const createUser = (data: Dto.CreateUserDto) => {
@@ -57,5 +58,11 @@ export const getUserDetails = (data: Dto.GetUserDetailsDto) => {
 
   return axiosClient.get<SuccessfulResponse<EntityDetails>>(
     usersUrl.byId(userId)
+  );
+};
+
+export const getMe = () => {
+  return axiosClient.get<SuccessfulResponse<EntityDetails>>(
+    usersUrl.me
   );
 };

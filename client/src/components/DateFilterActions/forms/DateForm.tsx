@@ -36,13 +36,13 @@ export default function DateForm({ setDate, date }: Props) {
     ],
     defaultValues: {
       startDate: date.startDate,
-      endDate:  date.endDate ,
+      endDate: date.endDate,
     },
     schema: GetDashboardAnalyticsSchema.query,
     onSuccess: (data) => {
       if (!("data" in data)) {
-        const startDate = dayjs(data.startDate).toISOString();
-        const endDate = dayjs(data.endDate).toISOString();
+        const startDate = dayjs(data.startDate).startOf("day").toISOString();
+        const endDate = dayjs(data.endDate).endOf("day").toISOString();
         setDate({ startDate, endDate });
         setConfigDialog(null);
       }

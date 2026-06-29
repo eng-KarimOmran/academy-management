@@ -1,4 +1,3 @@
-import { useAuthState } from "@/store/AuthState";
 import {
   SidebarContent,
   SidebarGroup,
@@ -9,12 +8,15 @@ import {
 } from "../ui/sidebar";
 import { Link, useLocation } from "react-router-dom";
 import { getDashboardRoutes } from "@/lib/getDashboardRoutes";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 
 export default function ContentSidebar() {
   const currentPath = useLocation().pathname;
-  const { user } = useAuthState();
-  const routes = getDashboardRoutes(user?.roles ?? []);
-  const links = routes.filter((r) => r.showInNavbar === true);
+  const { userDetails } = useUserDetailsState();
+
+  const links = getDashboardRoutes(userDetails).filter(
+    (r) => r.showInNavbar === true,
+  );
 
   const getActiveLink = (currentPath: string, path: string): string => {
     let currentPathSafe = "";

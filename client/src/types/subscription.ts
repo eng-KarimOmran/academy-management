@@ -4,34 +4,28 @@ import type { LessonBase } from "./lesson";
 
 export interface SubscriptionBase {
   id: string;
-  status: SubscriptionStatus;
+  subscriptionStatus: SubscriptionStatus;
+
   priceAtBooking: number;
   totalSessions: number;
-  trainingTypeAtRegistration: Transmission;
   sessionDurationMinutes: number;
+
+  requiredInitialDeposit: number;
+  sessionsBeforeFullPayment: number;
+
+  trainingTypeAtRegistration: Transmission;
+
+  courseName: string
+
+  clientId: string;
+  courseId: string;
+  academyId: string;
+  areaId: string;
+
+  payrollId: string | null;
+  createdById: string | null;
+
   createdAt: string;
-
-  area: {
-    id: string;
-    name: string;
-  };
-
-  client: {
-    id: string;
-    name: string;
-    phone: string;
-    academyId: string;
-  };
-
-  course: {
-    id: string;
-    name: string;
-  };
-
-  academy: {
-    id: string;
-    name: string;
-  };
 }
 
 export interface SubscriptionLesson extends SubscriptionBase {

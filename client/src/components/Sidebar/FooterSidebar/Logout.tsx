@@ -3,7 +3,7 @@ import Form from "@/components/Form/Form";
 
 import { logout } from "@/service/auth.service";
 import { queryClient } from "@/lib/queryClient";
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 
 import { LogoutSchema } from "@/validations/auth.validation";
 
@@ -11,7 +11,7 @@ import type { LogoutDto } from "@/DTOs/auth.dto";
 import { useDialogState } from "@/store/DialogState";
 
 export default function Logout() {
-  const { setUser } = useAuthState();
+  const { setUser } = useUserDetailsState();
   const { setConfigDialog } = useDialogState();
 
   const config: FormProps<LogoutDto, null> = {

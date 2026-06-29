@@ -7,11 +7,11 @@ import type { Car } from "@/types/car";
 type Entity = Car;
 
 const carsUrl = {
-  base: "/cars",
+  base: "/car",
 
-  byId: (carId: string) => `/cars/${carId}`,
+  byId: (carId: string) => `/car/${carId}`,
 
-  details: (carId: string) => `/cars/details/${carId}`,
+  details: (carId: string) => `/cars/detail/${carId}`,
 };
 
 export const getAllCars = (data: Dto.GetAllDto) => {

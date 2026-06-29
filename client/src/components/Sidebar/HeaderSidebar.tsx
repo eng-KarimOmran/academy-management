@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   SidebarHeader,
   SidebarMenu,
@@ -19,127 +18,62 @@ import {
   RiSchoolFill,
   RiStackFill,
 } from "@remixicon/react";
-import { useQuery } from "@tanstack/react-query";
-import { getMyAcademics } from "@/service/academy.service";
-import { toast } from "sonner";
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
-import { useAuthState } from "@/store/AuthState";
-import type { Role } from "@/types/enums";
+import { useUserDetailsState } from "@/store/UserDetailsState";
+import { Link } from "react-router-dom";
+import { useEffect, useMemo } from "react";
 
 export default function HeaderSidebar() {
   const { isMobile } = useSidebar();
+  const { userDetails } = useUserDetailsState();
+  const isOwner = !!userDetails?.academies?.length;
+
+  const academies = useMemo(
+    () => (isOwner ? userDetails.academies : []),
+    [isOwner, userDetails],
+  );
+
   const { activeAcademy, setActiveAcademy } = useActiveAcademyState();
-  const { user } = useAuthState();
-
-  const isOwner = (roles?: Role[]): boolean => {
-    if (!roles) return false;
-    return roles.includes("OWNER");
-  };
-
-  const canFetchAcademies = isOwner(user?.roles);
-
-  const {
-    isLoading,
-    error,
-    data: academies = [],
-  } = useQuery({
-    queryKey: ["academies", "my-academies"],
-    queryFn: () => getMyAcademics(),
-    select: (res) => res.data.data,
-    staleTime: Infinity,
-    enabled: canFetchAcademies,
-  });
 
   useEffect(() => {
-    if (error) {
-      localStorage.clear();
-      toast.error(
-        error instanceof Error ? error.message : "خطأ في تحميل البيانات",
-      );
-    }
-  }, [error]);
-
-  useEffect(() => {
-    if (!academies.length) return;
-    const exists = academies.some((a) => a.id === activeAcademy?.id);
-    if (activeAcademy && !exists) {
-      setActiveAcademy(null);
-      return;
-    }
-    if (!activeAcademy) {
+    if (!activeAcademy && academies.length > 0) {
       setActiveAcademy(academies[0]);
     }
-  }, [academies, activeAcademy, setActiveAcademy]);
-
-  if (!canFetchAcademies) {
-    return (
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              size="lg"
-              className="cursor-default hover:bg-transparent active:bg-transparent"
-            >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <RiSchoolFill className="size-4" />
-              </div>
-
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium text-start">
-                  إدارة الأكاديميات
-                </span>
-              </div>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-
-        <Separator />
-      </SidebarHeader>
-    );
-  }
+  }, [activeAcademy, setActiveAcademy, academies]);
 
   return (
     <SidebarHeader>
       <SidebarMenu>
         <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+          {isOwner ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                >
+                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                    <RiStackFill className="size-4" />
+                  </div>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium text-start">
+                      {activeAcademy?.name ?? "اختر أكاديمية"}
+                    </span>
+                  </div>
+                  <RiArrowLeftDoubleLine className="ms-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                align="start"
+                side={isMobile ? "bottom" : "right"}
+                sideOffset={4}
               >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <RiStackFill className="size-4" />
-                </div>
-
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium text-start">
-                    {isLoading
-                      ? "جاري التحميل..."
-                      : (activeAcademy?.name ?? "لا يوجد أكاديميات")}
-                  </span>
-                </div>
-
-                <RiArrowLeftDoubleLine className="ms-auto" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-              align="start"
-              side={isMobile ? "bottom" : "right"}
-              sideOffset={4}
-            >
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
-                الأكاديميات
-              </DropdownMenuLabel>
-
-              {isLoading ? (
-                <div className="p-2 text-sm text-center text-muted-foreground">
-                  جاري تحميل الأكاديميات...
-                </div>
-              ) : academies.length > 0 ? (
-                academies.map((academy) => (
+                <DropdownMenuLabel className="text-xs text-muted-foreground">
+                  الأكاديميات
+                </DropdownMenuLabel>
+                {academies.map((academy) => (
                   <DropdownMenuItem
                     key={academy.id}
                     onClick={() => setActiveAcademy(academy)}
@@ -152,17 +86,29 @@ export default function HeaderSidebar() {
                     </div>
                     {academy.name}
                   </DropdownMenuItem>
-                ))
-              ) : (
-                <div className="p-2 text-sm text-center text-muted-foreground">
-                  لا يوجد أكاديميات
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <SidebarMenuButton
+              size="lg"
+              asChild
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <Link to="/dashboard">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <RiSchoolFill className="size-4" />
                 </div>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-medium text-start">
+                    إدارة الأكاديميات
+                  </span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          )}
         </SidebarMenuItem>
       </SidebarMenu>
-
       <Separator />
     </SidebarHeader>
   );

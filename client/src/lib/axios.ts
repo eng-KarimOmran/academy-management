@@ -1,4 +1,4 @@
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 import axios from "axios";
 
 export const axiosClient = axios.create({
@@ -25,11 +25,11 @@ axiosClient.interceptors.response.use(
         await axiosClient.get("/auth/refresh");
         return axiosClient(originalRequest);
       } catch {
-        useAuthState.getState().setUser(null);
+        useUserDetailsState.getState().setUserDetails(null);
         return Promise.reject(error);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );

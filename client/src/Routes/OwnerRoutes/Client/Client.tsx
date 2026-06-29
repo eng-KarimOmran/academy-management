@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useDebounce } from "use-debounce";
-import { useSearchParams } from "react-router-dom";
-import { toast } from "sonner";
-
 import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
-import PageHeader from "@/components/PageHeader/PageHeader";
+import PageHeader, {
+  type PageHeaderProps,
+} from "@/components/PageHeader/PageHeader";
 
 import { getAllClients } from "@/service/client.service";
 import type { Client } from "@/types/client";
@@ -14,57 +10,57 @@ import AddClient from "./Forms/AddClient";
 import ActionsClient from "./ActionsClient";
 
 import { columns } from "./columns";
+import type { GetAllClientsDto } from "@/DTOs/client.dto";
+import useAppQuery from "@/hooks/useAppQuery";
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 
 export default function ClientsPage() {
-  const [searchParams] = useSearchParams();
   const { activeAcademy } = useActiveAcademyState();
-
-  const page = Math.max(1, Number(searchParams.get("page")) || 1);
-
-  const search = searchParams.get("search") ?? "";
-
-  const [debouncedSearch] = useDebounce(search, 500);
-  const runSearch = debouncedSearch.length > 2;
-  const [limit] = useState(10);
-
   const academyId = activeAcademy?.id;
 
-  const { data, isLoading, isFetching, error } = useQuery({
-    queryKey: [
-      "clients",
-      academyId,
-      ...[runSearch ? debouncedSearch : undefined],
-      page,
-    ],
-    queryFn: () =>
-      getAllClients({
-        query: {
-          page,
-          limit,
-          search: runSearch ? debouncedSearch : undefined,
-        },
-        params: { academyId: academyId! },
-      }),
-    select: (res) => res.data.data,
-    placeholderData: keepPreviousData,
-    enabled: !!academyId,
-  });
+  const { data, isFetching, isLoading } = useAppQuery<GetAllClientsDto, Client>(
+    {
+      queryFn: (params) => {
+        if (!academyId) throw new Error("من فضلك اختر الأكاديمية");
+        return getAllClients({
+          query: params.query,
+          params: { academyId },
+        });
+      },
+      queryKey: ["clients", academyId!],
+      keepPrevious: true,
+      filters: ["source"],
+    },
+  );
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error.message || "خطأ في تحميل العملاء");
-    }
-  }, [error]);
+  const filters = [
+    {
+      group: "مصدر العميل",
+      option: [
+        {
+          key: "source",
+          label: "منصة",
+          val: "PLATFORM",
+        },
+        {
+          key: "source",
+          label: "المكتب",
+          val: "OFFICE",
+        },
+      ],
+    },
+  ];
 
   const configTable: DataTableProps<Client> = {
-    data: data?.items || [],
+    data: data?.items ?? [],
     maxPage: data?.pagination?.totalPages ?? 1,
     isLoading,
     isFetching,
     headers: columns,
 
     actions: (item) => <ActionsClient item={item} />,
+
+    filters,
 
     configDialogAdd: {
       title: "إضافة عميل جديد",
@@ -73,13 +69,14 @@ export default function ClientsPage() {
     },
   };
 
+  const configHeader: PageHeaderProps = {
+    title: "إدارة العملاء",
+    description: "عرض وإدارة جميع العملاء داخل الأكاديمية",
+  };
+
   return (
     <section className="flex flex-col gap-6">
-      <PageHeader
-        title="إدارة العملاء"
-        description="عرض وإدارة جميع العملاء داخل الأكاديمية"
-      />
-
+      <PageHeader {...configHeader} />
       <TableUi {...configTable} />
     </section>
   );

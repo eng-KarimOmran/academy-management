@@ -34,7 +34,7 @@ export type ClientSource = (typeof ClientSource)[keyof typeof ClientSource]
 export const SubscriptionStatus = {
   PENDING_DEPOSIT: 'PENDING_DEPOSIT',
   PENDING_FIRST_SESSION: 'PENDING_FIRST_SESSION',
-  ACTIVE_LIMITED: 'ACTIVE_LIMITED',
+  GRACE_PERIOD: 'GRACE_PERIOD',
   SUSPENDED: 'SUSPENDED',
   ACTIVE: 'ACTIVE',
   CANCELED: 'CANCELED',

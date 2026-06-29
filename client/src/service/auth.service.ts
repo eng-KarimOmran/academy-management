@@ -3,9 +3,9 @@ import type { CreateUserDto } from "@/DTOs/user.dto";
 import { axiosClient } from "@/lib/axios";
 
 import type { SuccessfulResponse } from "@/types/axios";
-import type { UserAuth } from "@/types/user";
+import type { User, UserAuth } from "@/types/user";
 
-type Entity = UserAuth;
+type Entity = UserAuth
 
 const authUrl = {
   base: "/auth",
@@ -13,7 +13,7 @@ const authUrl = {
   refresh: "/auth/refresh",
   changePassword: "/auth/change-password",
   logout: "/auth/logout",
-  signup: "/auth/sign-up-first-user",
+  signup: "/auth/first-user",
   newPassword: (userId: string) => `/auth/${userId}/new-password`
 };
 
@@ -32,7 +32,7 @@ export const refresh = () => {
 export const changePassword = (data: Dto.ChangePasswordDto) => {
   const { body } = data;
 
-  return axiosClient.patch<SuccessfulResponse<Entity>>(
+  return axiosClient.patch<SuccessfulResponse<boolean>>(
     authUrl.changePassword,
     body
   );
@@ -56,7 +56,7 @@ export const newPassword = (data: Dto.NewPasswordDto) => {
   const { body, params } = data;
   const { userId } = params
 
-  return axiosClient.patch<SuccessfulResponse<Entity>>(
+  return axiosClient.patch<SuccessfulResponse<User>>(
     authUrl.newPassword(userId),
     body
   );

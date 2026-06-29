@@ -1,4 +1,4 @@
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -26,7 +26,7 @@ import { Link } from "react-router-dom";
 
 export default function NavUser() {
   const { isMobile } = useSidebar();
-  const { user } = useAuthState();
+  const { userDetails } = useUserDetailsState();
   const { setConfigDialog } = useDialogState();
 
   const handelLogout = () => {
@@ -50,15 +50,15 @@ export default function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src="/src/assets/user.png" alt={"user"} />
                   <AvatarFallback className="rounded-lg">
-                    {user?.name[0]}
+                    {userDetails?.name[0]}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-start text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {user?.name || "غير معروف"}
+                    {userDetails?.name || "غير معروف"}
                   </span>
                   <span className="truncate text-xs">
-                    {user?.phone || "غير معروف"}
+                    {userDetails?.phone || "غير معروف"}
                   </span>
                 </div>
                 <RiArrowDownSLine className="ml-auto size-4" />
@@ -75,15 +75,15 @@ export default function NavUser() {
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src="/src/assets/user.png" alt={"user"} />
                     <AvatarFallback className="rounded-lg">
-                      {user?.name[0]}
+                      {userDetails?.name[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-start text-sm leading-tight">
                     <span className="truncate font-medium">
-                      {user?.name || "غير معروف"}
+                      {userDetails?.name || "غير معروف"}
                     </span>
                     <span className="truncate text-xs">
-                      {user?.phone || "غير معروف"}
+                      {userDetails?.phone || "غير معروف"}
                     </span>
                   </div>
                 </div>

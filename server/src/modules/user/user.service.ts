@@ -6,6 +6,7 @@ import env from "../../config/env";
 import { assertCanModifyUser, buildUserWhere, orderBy, userSafe } from "./user.utils";
 import dayjs from "dayjs";
 import { buildPagination, buildPaginationMeta } from "../../shared/utils/Pagination";
+import { omit } from "../../shared/utils/omit";
 
 const UserService: IUserService = {
   async createUser({ body }) {
@@ -160,6 +161,21 @@ const UserService: IUserService = {
     });
 
     return userSafe(user)
+  },
+
+  async getMe(currentUser) {
+
+    const user = await prisma.user.findUnique({
+      where: { id: currentUser.id },
+      include: {
+        academies: true,
+        jobProfile: true
+      }
+    });
+
+    if (!user) throw ApiError.NotFound("User");
+    
+    return omit(user, ["logoutAt", "password"])
   },
 };
 

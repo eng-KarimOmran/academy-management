@@ -8,14 +8,13 @@ import { createClient } from "@/service/client.service";
 import { queryClient } from "@/lib/queryClient";
 import { toast } from "sonner";
 
-import { ClientSource } from "@/types/enums";
-import { enumTranslations } from "@/lib/enumTranslations";
 import type { Client } from "@/types/client";
 import { useNavigate } from "react-router-dom";
 import { useDialogState } from "@/store/DialogState";
 import { useEffect } from "react";
 import { getAllAcademies } from "@/service/academy.service";
 import { useQuery } from "@tanstack/react-query";
+import { clientSourceOptions } from "@/lib/enumOptions";
 
 export default function AddClient() {
   const navigate = useNavigate();
@@ -55,14 +54,11 @@ export default function AddClient() {
         placeholder: "01xxxxxxxxx",
       },
       {
-        name: "clientSource",
+        name: "source",
         type: "select",
         label: "مصدر العميل",
         placeholder: "اختر المصدر",
-        options: ClientSource.map((s) => ({
-          label: enumTranslations[s],
-          value: s,
-        })),
+        options: clientSourceOptions,
       },
       {
         name: "academyId",
@@ -78,7 +74,7 @@ export default function AddClient() {
     ],
 
     defaultValues: {
-      clientSource: "OFFICE",
+      source: "OFFICE",
     },
 
     schema: CreateClientSchema.body,

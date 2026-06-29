@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { refresh } from "@/service/auth.service";
-import { useAuthState } from "@/store/AuthState";
+import { useUserDetailsState } from "@/store/UserDetailsState";
 import { Spinner } from "@/components/ui/spinner";
+import { getMe } from "@/service/user.service";
 
 export default function AuthInitializer({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { setUser } = useAuthState();
+  const { setUserDetails } = useUserDetailsState();
   const [loading, setLoading] = useState(true);
   const [initialized, setInitialized] = useState(false);
 
@@ -17,17 +18,18 @@ export default function AuthInitializer({
 
     const init = async () => {
       try {
-        const res = await refresh();
-        setUser(res.data.data);
+        await refresh();
+        const me = await getMe();
+        setUserDetails(me.data.data);
       } catch {
-        setUser(null);
+        setUserDetails(null);
       } finally {
         setLoading(false);
         setInitialized(true);
       }
     };
     init();
-  }, [initialized, setUser]);
+  }, [initialized, setUserDetails]);
 
   if (loading) {
     return (

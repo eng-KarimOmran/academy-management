@@ -7,11 +7,11 @@ import { ClientSource } from "../../../prisma/generated/enums";
 export const buildClientWhere = ({
   academyId,
   search,
-  clientSource,
+  source,
 }: {
   academyId: string;
   search?: string;
-  clientSource?: ClientSource;
+  source?: ClientSource;
 }): ClientWhereInput => {
   const where: ClientWhereInput = { academyId }
 
@@ -29,8 +29,8 @@ export const buildClientWhere = ({
     ]
   }
 
-  if (clientSource) {
-    where.source = clientSource
+  if (source) {
+    where.source = source
   }
 
   return where

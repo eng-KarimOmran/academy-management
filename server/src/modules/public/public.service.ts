@@ -141,6 +141,7 @@ const PublicService: IPublicService = {
                     sessionDurationMinutes: course.sessionDurationMinutes,
                     sessionsBeforeFullPayment: course.sessionsBeforeFullPayment,
                     totalSessions: course.totalSessions,
+                    courseName: course.name,
 
                     trainingTypeAtRegistration: subscription.trainingTypeAtRegistration,
 

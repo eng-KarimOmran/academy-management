@@ -20,6 +20,9 @@ CREATE TYPE "SupportType" AS ENUM ('MANUAL', 'AUTOMATIC', 'BOTH');
 CREATE TYPE "LessonStatus" AS ENUM ('SCHEDULED', 'COMPLETED', 'CANCELED', 'CANCELED_CHARGED');
 
 -- CreateEnum
+CREATE TYPE "LedgerTransactionStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
+
+-- CreateEnum
 CREATE TYPE "PaymentMethod" AS ENUM ('MONETARY', 'ELECTRONIC');
 
 -- CreateEnum
@@ -145,9 +148,9 @@ CREATE TABLE "Subscription" (
     "courseId" TEXT NOT NULL,
     "academyId" TEXT NOT NULL,
     "areaId" TEXT NOT NULL,
+    "payrollId" TEXT,
     "createdById" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "payrollId" TEXT,
 
     CONSTRAINT "Subscription_pkey" PRIMARY KEY ("id")
 );
@@ -238,8 +241,8 @@ CREATE TABLE "Lesson" (
     "ledgerTransactionId" TEXT,
     "areaId" TEXT NOT NULL,
     "jobProfileId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "payrollId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Lesson_pkey" PRIMARY KEY ("id")
 );
@@ -256,6 +259,7 @@ CREATE TABLE "LedgerTransaction" (
     "imageId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "subscriptionId" TEXT,
+    "ledgerTransactionStatus" "LedgerTransactionStatus" NOT NULL DEFAULT 'PENDING',
 
     CONSTRAINT "LedgerTransaction_pkey" PRIMARY KEY ("id")
 );
@@ -273,7 +277,6 @@ CREATE TABLE "Payroll" (
     "totalSubscriptionsCount" INTEGER NOT NULL,
     "targetCount" INTEGER NOT NULL,
     "bonusAmount" DOUBLE PRECISION NOT NULL,
-    "totalDeductions" DOUBLE PRECISION NOT NULL,
     "netAmount" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -388,10 +391,10 @@ ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_academyId_fkey" FOREIGN 
 ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_areaId_fkey" FOREIGN KEY ("areaId") REFERENCES "Area"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "JobProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_payrollId_fkey" FOREIGN KEY ("payrollId") REFERENCES "Payroll"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Subscription" ADD CONSTRAINT "Subscription_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "JobProfile"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "JobProfile" ADD CONSTRAINT "JobProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

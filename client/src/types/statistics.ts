@@ -12,19 +12,21 @@ export interface DashboardStatistics {
   }[];
 
   subscriptions: {
-    subscriptionActive: number;
-    subscriptionActiveLimited: number;
-    subscriptionCanceled: number;
-    subscriptionCompleted: number;
-    subscriptionPendingDeposit: number;
+    PENDING_DEPOSIT: number;
+    PENDING_FIRST_SESSION: number;
+    GRACE_PERIOD: number;
+    SUSPENDED: number;
+    ACTIVE: number;
+    CANCELED: number;
+    COMPLETED: number;
     totalSubscription: number;
   };
 
-  transactions: {
+  ledgerTransaction: {
     totalCash: number;
     totalRefund: number;
     totalCollected: number;
-    totalWallet: number
+    totalWallet: number;
   };
 
   lessons: {
@@ -59,7 +61,7 @@ export interface DashboardStatistics {
   }[];
 
   usersCreatedSubscription: {
-    userId: string;
+    jobProfilesId: string;
     name: string;
     phone: string;
     countSubscription: number;

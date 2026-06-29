@@ -7,7 +7,7 @@ import type { DashboardStatistics } from "@/types/statistics";
 type Entity = DashboardStatistics;
 
 const statisticsUrl = {
-    base: (academyId: string) => `/academies/${academyId}/statistics`,
+    base: (academyId: string) => `/academies/${academyId}/statistic`,
 };
 
 export const getDashboardAnalytics = (

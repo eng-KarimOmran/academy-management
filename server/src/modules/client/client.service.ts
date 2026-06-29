@@ -111,7 +111,7 @@ const ClientService: IClientService = {
       }
     }
 
-    if (phone) {
+    if (phone && !currentClient) {
       const client = await prisma.client.findFirst({
         where: { academyId, phone },
         include: { subscriptions: true, academy: true }
@@ -123,14 +123,14 @@ const ClientService: IClientService = {
 
     if (!currentClient) throw ApiError.NotFound("Client")
 
-    const OtherFiles = await prisma.client.findMany({
-      where: { phone, academyId: { not: currentClient.academyId } },
+    const otherFiles = await prisma.client.findMany({
+      where: { phone: currentClient.phone, academyId: { not: currentClient.academyId } },
       include: { academy: true }
     });
 
     return {
       currentClient,
-      OtherFiles,
+      otherFiles,
     };
   }
 };

@@ -70,6 +70,18 @@ const UserController = {
 
     return sendSuccess({ res, data: user });
   },
+
+  getMe: async (req: RequestAuth, res: Response) => {
+    const currentUser = req.userLogin!;
+
+    const user = await UserService.getMe(currentUser);
+
+    return sendSuccess({
+      res,
+      data: user,
+      message: "تم جلب بيانات المستخدم الحالي بنجاح",
+    });
+  },
 };
 
 export default UserController;

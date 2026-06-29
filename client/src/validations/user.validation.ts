@@ -3,7 +3,6 @@ import z from "zod";
 import {
   id,
   personName,
-  password,
   phone,
   limit,
   positiveNumber,
@@ -16,7 +15,6 @@ export const CreateUserSchema = {
   body: z.object({
     name: personName,
     phone,
-    password,
   }),
 };
 

@@ -1,5 +1,6 @@
 import ShowMore from "@/components/ShowMore/ShowMore";
 import type { Header } from "@/components/Table/HeaderTable";
+import { enumTranslations } from "@/lib/enumTranslations";
 import type { Client } from "@/types/client";
 
 export const columns: Header<Client>[] = [
@@ -19,8 +20,8 @@ export const columns: Header<Client>[] = [
     display: (data) => data.phone,
   },
   {
-    key: "clientSource",
+    key: "source",
     header: "مصدر العميل",
-    display: (data) => data.clientSource,
+    display: (data) => enumTranslations[data.source],
   },
 ];
