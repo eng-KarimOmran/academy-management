@@ -2098,7 +2098,8 @@ export const LedgerTransactionScalarFieldEnum = {
   amount: 'amount',
   imageId: 'imageId',
   createdAt: 'createdAt',
-  subscriptionId: 'subscriptionId'
+  subscriptionId: 'subscriptionId',
+  ledgerTransactionStatus: 'ledgerTransactionStatus'
 } as const
 
 export type LedgerTransactionScalarFieldEnum = (typeof LedgerTransactionScalarFieldEnum)[keyof typeof LedgerTransactionScalarFieldEnum]
@@ -2353,6 +2354,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LedgerTransactionStatus'
+ */
+export type EnumLedgerTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LedgerTransactionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LedgerTransactionStatus[]'
+ */
+export type ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LedgerTransactionStatus[]'>
     
 
 /**

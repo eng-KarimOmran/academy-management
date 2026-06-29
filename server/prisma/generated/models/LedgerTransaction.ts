@@ -45,6 +45,7 @@ export type LedgerTransactionMinAggregateOutputType = {
   imageId: string | null
   createdAt: Date | null
   subscriptionId: string | null
+  ledgerTransactionStatus: $Enums.LedgerTransactionStatus | null
 }
 
 export type LedgerTransactionMaxAggregateOutputType = {
@@ -58,6 +59,7 @@ export type LedgerTransactionMaxAggregateOutputType = {
   imageId: string | null
   createdAt: Date | null
   subscriptionId: string | null
+  ledgerTransactionStatus: $Enums.LedgerTransactionStatus | null
 }
 
 export type LedgerTransactionCountAggregateOutputType = {
@@ -71,6 +73,7 @@ export type LedgerTransactionCountAggregateOutputType = {
   imageId: number
   createdAt: number
   subscriptionId: number
+  ledgerTransactionStatus: number
   _all: number
 }
 
@@ -94,6 +97,7 @@ export type LedgerTransactionMinAggregateInputType = {
   imageId?: true
   createdAt?: true
   subscriptionId?: true
+  ledgerTransactionStatus?: true
 }
 
 export type LedgerTransactionMaxAggregateInputType = {
@@ -107,6 +111,7 @@ export type LedgerTransactionMaxAggregateInputType = {
   imageId?: true
   createdAt?: true
   subscriptionId?: true
+  ledgerTransactionStatus?: true
 }
 
 export type LedgerTransactionCountAggregateInputType = {
@@ -120,6 +125,7 @@ export type LedgerTransactionCountAggregateInputType = {
   imageId?: true
   createdAt?: true
   subscriptionId?: true
+  ledgerTransactionStatus?: true
   _all?: true
 }
 
@@ -220,6 +226,7 @@ export type LedgerTransactionGroupByOutputType = {
   imageId: string | null
   createdAt: Date
   subscriptionId: string | null
+  ledgerTransactionStatus: $Enums.LedgerTransactionStatus
   _count: LedgerTransactionCountAggregateOutputType | null
   _avg: LedgerTransactionAvgAggregateOutputType | null
   _sum: LedgerTransactionSumAggregateOutputType | null
@@ -256,6 +263,7 @@ export type LedgerTransactionWhereInput = {
   imageId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerTransaction"> | Date | string
   subscriptionId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFilter<"LedgerTransaction"> | $Enums.LedgerTransactionStatus
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   sender?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   receiver?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
@@ -275,6 +283,7 @@ export type LedgerTransactionOrderByWithRelationInput = {
   imageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ledgerTransactionStatus?: Prisma.SortOrder
   academy?: Prisma.AcademyOrderByWithRelationInput
   sender?: Prisma.FinancialAccountOrderByWithRelationInput
   receiver?: Prisma.FinancialAccountOrderByWithRelationInput
@@ -297,6 +306,7 @@ export type LedgerTransactionWhereUniqueInput = Prisma.AtLeast<{
   imageId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerTransaction"> | Date | string
   subscriptionId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFilter<"LedgerTransaction"> | $Enums.LedgerTransactionStatus
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   sender?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
   receiver?: Prisma.XOR<Prisma.FinancialAccountScalarRelationFilter, Prisma.FinancialAccountWhereInput>
@@ -316,6 +326,7 @@ export type LedgerTransactionOrderByWithAggregationInput = {
   imageId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  ledgerTransactionStatus?: Prisma.SortOrder
   _count?: Prisma.LedgerTransactionCountOrderByAggregateInput
   _avg?: Prisma.LedgerTransactionAvgOrderByAggregateInput
   _max?: Prisma.LedgerTransactionMaxOrderByAggregateInput
@@ -337,6 +348,7 @@ export type LedgerTransactionScalarWhereWithAggregatesInput = {
   imageId?: Prisma.StringNullableWithAggregatesFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LedgerTransaction"> | Date | string
   subscriptionId?: Prisma.StringNullableWithAggregatesFilter<"LedgerTransaction"> | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusWithAggregatesFilter<"LedgerTransaction"> | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateInput = {
@@ -345,6 +357,7 @@ export type LedgerTransactionCreateInput = {
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
@@ -364,6 +377,7 @@ export type LedgerTransactionUncheckedCreateInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutLedgerTransactionInput
 }
 
@@ -373,6 +387,7 @@ export type LedgerTransactionUpdateInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
@@ -392,6 +407,7 @@ export type LedgerTransactionUncheckedUpdateInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutLedgerTransactionNestedInput
 }
 
@@ -406,6 +422,7 @@ export type LedgerTransactionCreateManyInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUpdateManyMutationInput = {
@@ -414,6 +431,7 @@ export type LedgerTransactionUpdateManyMutationInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUncheckedUpdateManyInput = {
@@ -427,6 +445,7 @@ export type LedgerTransactionUncheckedUpdateManyInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionListRelationFilter = {
@@ -455,6 +474,7 @@ export type LedgerTransactionCountOrderByAggregateInput = {
   imageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
+  ledgerTransactionStatus?: Prisma.SortOrder
 }
 
 export type LedgerTransactionAvgOrderByAggregateInput = {
@@ -472,6 +492,7 @@ export type LedgerTransactionMaxOrderByAggregateInput = {
   imageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
+  ledgerTransactionStatus?: Prisma.SortOrder
 }
 
 export type LedgerTransactionMinOrderByAggregateInput = {
@@ -485,6 +506,7 @@ export type LedgerTransactionMinOrderByAggregateInput = {
   imageId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   subscriptionId?: Prisma.SortOrder
+  ledgerTransactionStatus?: Prisma.SortOrder
 }
 
 export type LedgerTransactionSumOrderByAggregateInput = {
@@ -733,12 +755,17 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumLedgerTransactionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.LedgerTransactionStatus
+}
+
 export type LedgerTransactionCreateWithoutImageInput = {
   id?: string
   transactionType: $Enums.TransactionType
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
@@ -756,6 +783,7 @@ export type LedgerTransactionUncheckedCreateWithoutImageInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutLedgerTransactionInput
 }
 
@@ -799,6 +827,7 @@ export type LedgerTransactionScalarWhereInput = {
   imageId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerTransaction"> | Date | string
   subscriptionId?: Prisma.StringNullableFilter<"LedgerTransaction"> | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFilter<"LedgerTransaction"> | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateWithoutSenderInput = {
@@ -807,6 +836,7 @@ export type LedgerTransactionCreateWithoutSenderInput = {
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
   image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
@@ -824,6 +854,7 @@ export type LedgerTransactionUncheckedCreateWithoutSenderInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutLedgerTransactionInput
 }
 
@@ -843,6 +874,7 @@ export type LedgerTransactionCreateWithoutReceiverInput = {
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
@@ -860,6 +892,7 @@ export type LedgerTransactionUncheckedCreateWithoutReceiverInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutLedgerTransactionInput
 }
 
@@ -911,6 +944,7 @@ export type LedgerTransactionCreateWithoutAcademyInput = {
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
   image?: Prisma.ImageCreateNestedOneWithoutLedgerTransactionsInput
@@ -928,6 +962,7 @@ export type LedgerTransactionUncheckedCreateWithoutAcademyInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutLedgerTransactionInput
 }
 
@@ -963,6 +998,7 @@ export type LedgerTransactionCreateWithoutSubscriptionInput = {
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
@@ -980,6 +1016,7 @@ export type LedgerTransactionUncheckedCreateWithoutSubscriptionInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageId?: string | null
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutLedgerTransactionInput
 }
 
@@ -1015,6 +1052,7 @@ export type LedgerTransactionCreateWithoutLessonsInput = {
   paymentMethod: $Enums.PaymentMethod
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
   academy: Prisma.AcademyCreateNestedOneWithoutLedgerTransactionsInput
   sender: Prisma.FinancialAccountCreateNestedOneWithoutSentTransactionsInput
   receiver: Prisma.FinancialAccountCreateNestedOneWithoutReceivedTransactionsInput
@@ -1033,6 +1071,7 @@ export type LedgerTransactionUncheckedCreateWithoutLessonsInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateOrConnectWithoutLessonsInput = {
@@ -1057,6 +1096,7 @@ export type LedgerTransactionUpdateWithoutLessonsInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
@@ -1075,6 +1115,7 @@ export type LedgerTransactionUncheckedUpdateWithoutLessonsInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateManyImageInput = {
@@ -1087,6 +1128,7 @@ export type LedgerTransactionCreateManyImageInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUpdateWithoutImageInput = {
@@ -1095,6 +1137,7 @@ export type LedgerTransactionUpdateWithoutImageInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
@@ -1112,6 +1155,7 @@ export type LedgerTransactionUncheckedUpdateWithoutImageInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutLedgerTransactionNestedInput
 }
 
@@ -1125,6 +1169,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutImageInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateManySenderInput = {
@@ -1137,6 +1182,7 @@ export type LedgerTransactionCreateManySenderInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateManyReceiverInput = {
@@ -1149,6 +1195,7 @@ export type LedgerTransactionCreateManyReceiverInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUpdateWithoutSenderInput = {
@@ -1157,6 +1204,7 @@ export type LedgerTransactionUpdateWithoutSenderInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
   image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
@@ -1174,6 +1222,7 @@ export type LedgerTransactionUncheckedUpdateWithoutSenderInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutLedgerTransactionNestedInput
 }
 
@@ -1187,6 +1236,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutSenderInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUpdateWithoutReceiverInput = {
@@ -1195,6 +1245,7 @@ export type LedgerTransactionUpdateWithoutReceiverInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
@@ -1212,6 +1263,7 @@ export type LedgerTransactionUncheckedUpdateWithoutReceiverInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutLedgerTransactionNestedInput
 }
 
@@ -1225,6 +1277,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutReceiverInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateManyAcademyInput = {
@@ -1237,6 +1290,7 @@ export type LedgerTransactionCreateManyAcademyInput = {
   imageId?: string | null
   createdAt?: Date | string
   subscriptionId?: string | null
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUpdateWithoutAcademyInput = {
@@ -1245,6 +1299,7 @@ export type LedgerTransactionUpdateWithoutAcademyInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
   image?: Prisma.ImageUpdateOneWithoutLedgerTransactionsNestedInput
@@ -1262,6 +1317,7 @@ export type LedgerTransactionUncheckedUpdateWithoutAcademyInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutLedgerTransactionNestedInput
 }
 
@@ -1275,6 +1331,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutAcademyInput = {
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionCreateManySubscriptionInput = {
@@ -1287,6 +1344,7 @@ export type LedgerTransactionCreateManySubscriptionInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   imageId?: string | null
   createdAt?: Date | string
+  ledgerTransactionStatus?: $Enums.LedgerTransactionStatus
 }
 
 export type LedgerTransactionUpdateWithoutSubscriptionInput = {
@@ -1295,6 +1353,7 @@ export type LedgerTransactionUpdateWithoutSubscriptionInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   academy?: Prisma.AcademyUpdateOneRequiredWithoutLedgerTransactionsNestedInput
   sender?: Prisma.FinancialAccountUpdateOneRequiredWithoutSentTransactionsNestedInput
   receiver?: Prisma.FinancialAccountUpdateOneRequiredWithoutReceivedTransactionsNestedInput
@@ -1312,6 +1371,7 @@ export type LedgerTransactionUncheckedUpdateWithoutSubscriptionInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutLedgerTransactionNestedInput
 }
 
@@ -1325,6 +1385,7 @@ export type LedgerTransactionUncheckedUpdateManyWithoutSubscriptionInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ledgerTransactionStatus?: Prisma.EnumLedgerTransactionStatusFieldUpdateOperationsInput | $Enums.LedgerTransactionStatus
 }
 
 
@@ -1369,6 +1430,7 @@ export type LedgerTransactionSelect<ExtArgs extends runtime.Types.Extensions.Int
   imageId?: boolean
   createdAt?: boolean
   subscriptionId?: boolean
+  ledgerTransactionStatus?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
@@ -1389,6 +1451,7 @@ export type LedgerTransactionSelectCreateManyAndReturn<ExtArgs extends runtime.T
   imageId?: boolean
   createdAt?: boolean
   subscriptionId?: boolean
+  ledgerTransactionStatus?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
@@ -1407,6 +1470,7 @@ export type LedgerTransactionSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   imageId?: boolean
   createdAt?: boolean
   subscriptionId?: boolean
+  ledgerTransactionStatus?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
   receiver?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
@@ -1425,9 +1489,10 @@ export type LedgerTransactionSelectScalar = {
   imageId?: boolean
   createdAt?: boolean
   subscriptionId?: boolean
+  ledgerTransactionStatus?: boolean
 }
 
-export type LedgerTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "academyId" | "transactionType" | "paymentMethod" | "senderId" | "receiverId" | "amount" | "imageId" | "createdAt" | "subscriptionId", ExtArgs["result"]["ledgerTransaction"]>
+export type LedgerTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "academyId" | "transactionType" | "paymentMethod" | "senderId" | "receiverId" | "amount" | "imageId" | "createdAt" | "subscriptionId" | "ledgerTransactionStatus", ExtArgs["result"]["ledgerTransaction"]>
 export type LedgerTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   sender?: boolean | Prisma.FinancialAccountDefaultArgs<ExtArgs>
@@ -1473,6 +1538,7 @@ export type $LedgerTransactionPayload<ExtArgs extends runtime.Types.Extensions.I
     imageId: string | null
     createdAt: Date
     subscriptionId: string | null
+    ledgerTransactionStatus: $Enums.LedgerTransactionStatus
   }, ExtArgs["result"]["ledgerTransaction"]>
   composites: {}
 }
@@ -1912,6 +1978,7 @@ export interface LedgerTransactionFieldRefs {
   readonly imageId: Prisma.FieldRef<"LedgerTransaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"LedgerTransaction", 'DateTime'>
   readonly subscriptionId: Prisma.FieldRef<"LedgerTransaction", 'String'>
+  readonly ledgerTransactionStatus: Prisma.FieldRef<"LedgerTransaction", 'LedgerTransactionStatus'>
 }
     
 

@@ -1,5 +1,5 @@
 import { LedgerTransactionOrderByWithRelationInput } from './../../../prisma/generated/models/LedgerTransaction';
-import { LedgerTransaction } from "../../../prisma/generated/client";
+
 import {
   PaymentMethod,
   TransactionType,

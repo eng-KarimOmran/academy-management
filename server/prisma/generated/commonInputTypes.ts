@@ -365,6 +365,13 @@ export type DecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumLedgerTransactionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LedgerTransactionStatus | Prisma.EnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLedgerTransactionStatusFilter<$PrismaModel> | $Enums.LedgerTransactionStatus
+}
+
 export type EnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TransactionType | Prisma.EnumTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.TransactionType[] | Prisma.ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -399,6 +406,16 @@ export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type EnumLedgerTransactionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LedgerTransactionStatus | Prisma.EnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLedgerTransactionStatusWithAggregatesFilter<$PrismaModel> | $Enums.LedgerTransactionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLedgerTransactionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLedgerTransactionStatusFilter<$PrismaModel>
 }
 
 export type NestedStringFilter<$PrismaModel = never> = {
@@ -754,6 +771,13 @@ export type NestedDecimalFilter<$PrismaModel = never> = {
   not?: Prisma.NestedDecimalFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type NestedEnumLedgerTransactionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LedgerTransactionStatus | Prisma.EnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLedgerTransactionStatusFilter<$PrismaModel> | $Enums.LedgerTransactionStatus
+}
+
 export type NestedEnumTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.TransactionType | Prisma.EnumTransactionTypeFieldRefInput<$PrismaModel>
   in?: $Enums.TransactionType[] | Prisma.ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -788,6 +812,16 @@ export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalFilter<$PrismaModel>
+}
+
+export type NestedEnumLedgerTransactionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LedgerTransactionStatus | Prisma.EnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LedgerTransactionStatus[] | Prisma.ListEnumLedgerTransactionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLedgerTransactionStatusWithAggregatesFilter<$PrismaModel> | $Enums.LedgerTransactionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLedgerTransactionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLedgerTransactionStatusFilter<$PrismaModel>
 }
 
 

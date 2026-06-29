@@ -118,6 +118,7 @@ const LedgerTransactionService: ILedgerTransactionService = {
         amount,
         paymentMethod,
         transactionType,
+        ledgerTransactionStatus: "APPROVED",
         ...(imageId && { image: { connect: { id: imageId } } }),
         ...(subscriptionId && { subscription: { connect: { id: subscriptionId } } }),
       }
@@ -210,6 +211,57 @@ const LedgerTransactionService: ILedgerTransactionService = {
     }
 
     return ledgerTransaction;
+  },
+
+  async changeLedgerTransactionStatus({ params, body }) {
+    const { ledgerTransactionId } = params;
+    const { ledgerTransactionStatus } = body;
+
+    return await prisma.$transaction(async (tx) => {
+
+      const ledgerTransaction = await tx.ledgerTransaction.findUnique({
+        where: { id: ledgerTransactionId },
+      });
+
+      if (!ledgerTransaction) throw ApiError.NotFound("LedgerTransaction");
+
+      if (ledgerTransaction.ledgerTransactionStatus === ledgerTransactionStatus) return ledgerTransaction;
+
+      const amount = Number(ledgerTransaction.amount);
+
+      const currentStatus = ledgerTransaction.ledgerTransactionStatus;
+
+      if (currentStatus === "APPROVED") {
+        await tx.financialAccount.update({
+          where: { id: ledgerTransaction.receiverId },
+          data: { balance: { decrement: amount } },
+        });
+
+        await tx.financialAccount.update({
+          where: { id: ledgerTransaction.senderId },
+          data: { balance: { increment: amount } },
+        });
+      }
+
+      if (ledgerTransactionStatus === "APPROVED") {
+        await tx.financialAccount.update({
+          where: { id: ledgerTransaction.receiverId },
+          data: { balance: { increment: amount } },
+        });
+
+        await tx.financialAccount.update({
+          where: { id: ledgerTransaction.senderId },
+          data: { balance: { decrement: amount } },
+        });
+      }
+
+      const updated = await tx.ledgerTransaction.update({
+        where: { id: ledgerTransactionId },
+        data: { ledgerTransactionStatus },
+      });
+
+      return updated;
+    });
   }
 };
 

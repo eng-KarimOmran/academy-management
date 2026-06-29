@@ -80,6 +80,15 @@ export const LessonStatus = {
 export type LessonStatus = (typeof LessonStatus)[keyof typeof LessonStatus]
 
 
+export const LedgerTransactionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type LedgerTransactionStatus = (typeof LedgerTransactionStatus)[keyof typeof LedgerTransactionStatus]
+
+
 export const PaymentMethod = {
   MONETARY: 'MONETARY',
   ELECTRONIC: 'ELECTRONIC'

@@ -8,6 +8,7 @@ import {
   url,
   page,
   limit,
+  ledgerTransactionStatus
 } from "../../shared/utils/common.validation";
 
 export const CreateLedgerTransactionSchema = {
@@ -91,5 +92,16 @@ export const GetLedgerTransactionDetailsSchema = {
   params: z.object({
     academyId: id,
     ledgerTransactionId: id,
+  }),
+};
+
+export const ChangeLedgerTransactionStatusSchema = {
+  params: z.object({
+    academyId: id,
+    ledgerTransactionId: id,
+  }),
+
+  body: z.object({
+    ledgerTransactionStatus,
   }),
 };

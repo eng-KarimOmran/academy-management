@@ -5,6 +5,7 @@ import { AcademyRequestHandler } from "../academy/academy.type";
 import { JobProfileRequestHandler } from "../jobProfile/jobProfile.type";
 
 import {
+    ChangeLedgerTransactionStatusDto,
     CreateLedgerTransactionDto,
     GetAllLedgerTransactionsDto,
     GetLedgerTransactionDetailsDto,
@@ -22,6 +23,10 @@ export interface ILedgerTransactionService {
     getLedgerTransactionDetails(
         data: GetLedgerTransactionDetailsDto
     ): Promise<LedgerTransaction>;
+
+    changeLedgerTransactionStatus(
+        data: ChangeLedgerTransactionStatusDto
+    ): Promise<LedgerTransaction>;
 }
 
 export interface ILedgerTransactionController {
@@ -30,4 +35,6 @@ export interface ILedgerTransactionController {
     getAllLedgerTransactions: AcademyRequestHandler;
 
     getLedgerTransactionDetails: JobProfileRequestHandler;
+
+    changeLedgerTransactionStatus: AcademyRequestHandler;
 }

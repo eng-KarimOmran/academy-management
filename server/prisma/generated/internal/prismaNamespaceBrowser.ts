@@ -319,7 +319,8 @@ export const LedgerTransactionScalarFieldEnum = {
   amount: 'amount',
   imageId: 'imageId',
   createdAt: 'createdAt',
-  subscriptionId: 'subscriptionId'
+  subscriptionId: 'subscriptionId',
+  ledgerTransactionStatus: 'ledgerTransactionStatus'
 } as const
 
 export type LedgerTransactionScalarFieldEnum = (typeof LedgerTransactionScalarFieldEnum)[keyof typeof LedgerTransactionScalarFieldEnum]

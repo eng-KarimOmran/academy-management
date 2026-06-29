@@ -8,7 +8,8 @@ import {
   SupportType,
   TransactionType,
   JobProfileType,
-  Platform
+  Platform,
+  LedgerTransactionStatus
 } from "./../../../prisma/generated/enums";
 
 import dayjs from "dayjs";
@@ -94,6 +95,7 @@ export const clientSource = z.enum(ClientSource);
 export const jobProfileType = z.enum(JobProfileType);
 export const transactionType = z.enum(TransactionType);
 export const platform = z.enum(Platform);
+export const ledgerTransactionStatus = z.enum(LedgerTransactionStatus);
 
 export const booleanQuery = z.enum(["true", "false"]).transform((value) => value === "true");
 

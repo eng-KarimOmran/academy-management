@@ -14,3 +14,8 @@ export type GetAllLedgerTransactionsDto = {
 export type GetLedgerTransactionDetailsDto = {
   params: z.infer<typeof Schema.GetLedgerTransactionDetailsSchema.params>;
 };
+
+export type ChangeLedgerTransactionStatusDto = {
+  params: z.infer<typeof Schema.ChangeLedgerTransactionStatusSchema.params>;
+  body: z.infer<typeof Schema.ChangeLedgerTransactionStatusSchema.body>;
+};

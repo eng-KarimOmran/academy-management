@@ -334,6 +334,12 @@ enum LessonStatus {
   CANCELED_CHARGED
 }
 
+enum LedgerTransactionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 model LedgerTransaction {
   id String @id @default(cuid())
 
@@ -358,6 +364,8 @@ model LedgerTransaction {
   createdAt      DateTime      @default(now())
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
   subscriptionId String?
+
+  ledgerTransactionStatus LedgerTransactionStatus @default(PENDING)
 
   lessons Lesson[]
 
