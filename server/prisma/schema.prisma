@@ -179,6 +179,9 @@ model Subscription {
   areaId String
   area   Area   @relation(fields: [areaId], references: [id], onDelete: Restrict)
 
+  payrollId String?
+  payroll   Payroll? @relation(fields: [payrollId], references: [id], onDelete: SetNull)
+
   createdById String?
   createdBy   JobProfile? @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
 
@@ -187,8 +190,6 @@ model Subscription {
   financialAccount   FinancialAccount?
 
   createdAt DateTime @default(now())
-  payroll   Payroll? @relation(fields: [payrollId], references: [id])
-  payrollId String?
 
   @@index([clientId])
   @@index([academyId])
@@ -320,10 +321,10 @@ model Lesson {
   jobProfile   JobProfile @relation(fields: [jobProfileId], references: [id])
   jobProfileId String
 
-  createdAt DateTime @default(now())
-
-  payroll   Payroll? @relation(fields: [payrollId], references: [id])
   payrollId String?
+  payroll   Payroll? @relation(fields: [payrollId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
 }
 
 enum LessonStatus {
@@ -395,11 +396,9 @@ model Payroll {
   totalSubscriptionsCount Int
   targetCount             Int
   bonusAmount             Float
-  totalDeductions         Float
   netAmount               Float
 
+  createdAt     DateTime       @default(now())
   lessons       Lesson[]
   subscriptions Subscription[]
-
-  createdAt DateTime @default(now())
 }

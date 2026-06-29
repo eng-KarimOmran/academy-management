@@ -33,7 +33,6 @@ export type PayrollAvgAggregateOutputType = {
   totalSubscriptionsCount: number | null
   targetCount: number | null
   bonusAmount: number | null
-  totalDeductions: number | null
   netAmount: number | null
 }
 
@@ -44,7 +43,6 @@ export type PayrollSumAggregateOutputType = {
   totalSubscriptionsCount: number | null
   targetCount: number | null
   bonusAmount: number | null
-  totalDeductions: number | null
   netAmount: number | null
 }
 
@@ -60,7 +58,6 @@ export type PayrollMinAggregateOutputType = {
   totalSubscriptionsCount: number | null
   targetCount: number | null
   bonusAmount: number | null
-  totalDeductions: number | null
   netAmount: number | null
   createdAt: Date | null
 }
@@ -77,7 +74,6 @@ export type PayrollMaxAggregateOutputType = {
   totalSubscriptionsCount: number | null
   targetCount: number | null
   bonusAmount: number | null
-  totalDeductions: number | null
   netAmount: number | null
   createdAt: Date | null
 }
@@ -94,7 +90,6 @@ export type PayrollCountAggregateOutputType = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt: number
   _all: number
@@ -108,7 +103,6 @@ export type PayrollAvgAggregateInputType = {
   totalSubscriptionsCount?: true
   targetCount?: true
   bonusAmount?: true
-  totalDeductions?: true
   netAmount?: true
 }
 
@@ -119,7 +113,6 @@ export type PayrollSumAggregateInputType = {
   totalSubscriptionsCount?: true
   targetCount?: true
   bonusAmount?: true
-  totalDeductions?: true
   netAmount?: true
 }
 
@@ -135,7 +128,6 @@ export type PayrollMinAggregateInputType = {
   totalSubscriptionsCount?: true
   targetCount?: true
   bonusAmount?: true
-  totalDeductions?: true
   netAmount?: true
   createdAt?: true
 }
@@ -152,7 +144,6 @@ export type PayrollMaxAggregateInputType = {
   totalSubscriptionsCount?: true
   targetCount?: true
   bonusAmount?: true
-  totalDeductions?: true
   netAmount?: true
   createdAt?: true
 }
@@ -169,7 +160,6 @@ export type PayrollCountAggregateInputType = {
   totalSubscriptionsCount?: true
   targetCount?: true
   bonusAmount?: true
-  totalDeductions?: true
   netAmount?: true
   createdAt?: true
   _all?: true
@@ -273,7 +263,6 @@ export type PayrollGroupByOutputType = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt: Date
   _count: PayrollCountAggregateOutputType | null
@@ -313,7 +302,6 @@ export type PayrollWhereInput = {
   totalSubscriptionsCount?: Prisma.IntFilter<"Payroll"> | number
   targetCount?: Prisma.IntFilter<"Payroll"> | number
   bonusAmount?: Prisma.FloatFilter<"Payroll"> | number
-  totalDeductions?: Prisma.FloatFilter<"Payroll"> | number
   netAmount?: Prisma.FloatFilter<"Payroll"> | number
   createdAt?: Prisma.DateTimeFilter<"Payroll"> | Date | string
   jobProfile?: Prisma.XOR<Prisma.JobProfileScalarRelationFilter, Prisma.JobProfileWhereInput>
@@ -334,7 +322,6 @@ export type PayrollOrderByWithRelationInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   jobProfile?: Prisma.JobProfileOrderByWithRelationInput
@@ -358,7 +345,6 @@ export type PayrollWhereUniqueInput = Prisma.AtLeast<{
   totalSubscriptionsCount?: Prisma.IntFilter<"Payroll"> | number
   targetCount?: Prisma.IntFilter<"Payroll"> | number
   bonusAmount?: Prisma.FloatFilter<"Payroll"> | number
-  totalDeductions?: Prisma.FloatFilter<"Payroll"> | number
   netAmount?: Prisma.FloatFilter<"Payroll"> | number
   createdAt?: Prisma.DateTimeFilter<"Payroll"> | Date | string
   jobProfile?: Prisma.XOR<Prisma.JobProfileScalarRelationFilter, Prisma.JobProfileWhereInput>
@@ -379,7 +365,6 @@ export type PayrollOrderByWithAggregationInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.PayrollCountOrderByAggregateInput
@@ -404,7 +389,6 @@ export type PayrollScalarWhereWithAggregatesInput = {
   totalSubscriptionsCount?: Prisma.IntWithAggregatesFilter<"Payroll"> | number
   targetCount?: Prisma.IntWithAggregatesFilter<"Payroll"> | number
   bonusAmount?: Prisma.FloatWithAggregatesFilter<"Payroll"> | number
-  totalDeductions?: Prisma.FloatWithAggregatesFilter<"Payroll"> | number
   netAmount?: Prisma.FloatWithAggregatesFilter<"Payroll"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payroll"> | Date | string
 }
@@ -419,7 +403,6 @@ export type PayrollCreateInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
@@ -440,7 +423,6 @@ export type PayrollUncheckedCreateInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
@@ -457,7 +439,6 @@ export type PayrollUpdateInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
@@ -478,7 +459,6 @@ export type PayrollUncheckedUpdateInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
@@ -497,7 +477,6 @@ export type PayrollCreateManyInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
 }
@@ -512,7 +491,6 @@ export type PayrollUpdateManyMutationInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -529,7 +507,6 @@ export type PayrollUncheckedUpdateManyInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -561,7 +538,6 @@ export type PayrollCountOrderByAggregateInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -573,7 +549,6 @@ export type PayrollAvgOrderByAggregateInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
 }
 
@@ -589,7 +564,6 @@ export type PayrollMaxOrderByAggregateInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -606,7 +580,6 @@ export type PayrollMinOrderByAggregateInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -618,7 +591,6 @@ export type PayrollSumOrderByAggregateInput = {
   totalSubscriptionsCount?: Prisma.SortOrder
   targetCount?: Prisma.SortOrder
   bonusAmount?: Prisma.SortOrder
-  totalDeductions?: Prisma.SortOrder
   netAmount?: Prisma.SortOrder
 }
 
@@ -748,7 +720,6 @@ export type PayrollCreateWithoutAcademyInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
@@ -767,7 +738,6 @@ export type PayrollUncheckedCreateWithoutAcademyInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
@@ -815,7 +785,6 @@ export type PayrollScalarWhereInput = {
   totalSubscriptionsCount?: Prisma.IntFilter<"Payroll"> | number
   targetCount?: Prisma.IntFilter<"Payroll"> | number
   bonusAmount?: Prisma.FloatFilter<"Payroll"> | number
-  totalDeductions?: Prisma.FloatFilter<"Payroll"> | number
   netAmount?: Prisma.FloatFilter<"Payroll"> | number
   createdAt?: Prisma.DateTimeFilter<"Payroll"> | Date | string
 }
@@ -830,7 +799,6 @@ export type PayrollCreateWithoutSubscriptionsInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
@@ -850,7 +818,6 @@ export type PayrollUncheckedCreateWithoutSubscriptionsInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
@@ -882,7 +849,6 @@ export type PayrollUpdateWithoutSubscriptionsInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
@@ -902,7 +868,6 @@ export type PayrollUncheckedUpdateWithoutSubscriptionsInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
@@ -918,7 +883,6 @@ export type PayrollCreateWithoutJobProfileInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   academy: Prisma.AcademyCreateNestedOneWithoutPayrollsInput
@@ -937,7 +901,6 @@ export type PayrollUncheckedCreateWithoutJobProfileInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutPayrollInput
@@ -980,7 +943,6 @@ export type PayrollCreateWithoutLessonsInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   jobProfile: Prisma.JobProfileCreateNestedOneWithoutPayrollsInput
@@ -1000,7 +962,6 @@ export type PayrollUncheckedCreateWithoutLessonsInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutPayrollInput
@@ -1032,7 +993,6 @@ export type PayrollUpdateWithoutLessonsInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
@@ -1052,7 +1012,6 @@ export type PayrollUncheckedUpdateWithoutLessonsInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutPayrollNestedInput
@@ -1069,7 +1028,6 @@ export type PayrollCreateManyAcademyInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
 }
@@ -1084,7 +1042,6 @@ export type PayrollUpdateWithoutAcademyInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobProfile?: Prisma.JobProfileUpdateOneRequiredWithoutPayrollsNestedInput
@@ -1103,7 +1060,6 @@ export type PayrollUncheckedUpdateWithoutAcademyInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
@@ -1121,7 +1077,6 @@ export type PayrollUncheckedUpdateManyWithoutAcademyInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1137,7 +1092,6 @@ export type PayrollCreateManyJobProfileInput = {
   totalSubscriptionsCount: number
   targetCount: number
   bonusAmount: number
-  totalDeductions: number
   netAmount: number
   createdAt?: Date | string
 }
@@ -1152,7 +1106,6 @@ export type PayrollUpdateWithoutJobProfileInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academy?: Prisma.AcademyUpdateOneRequiredWithoutPayrollsNestedInput
@@ -1171,7 +1124,6 @@ export type PayrollUncheckedUpdateWithoutJobProfileInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutPayrollNestedInput
@@ -1189,7 +1141,6 @@ export type PayrollUncheckedUpdateManyWithoutJobProfileInput = {
   totalSubscriptionsCount?: Prisma.IntFieldUpdateOperationsInput | number
   targetCount?: Prisma.IntFieldUpdateOperationsInput | number
   bonusAmount?: Prisma.FloatFieldUpdateOperationsInput | number
-  totalDeductions?: Prisma.FloatFieldUpdateOperationsInput | number
   netAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1246,7 +1197,6 @@ export type PayrollSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   totalSubscriptionsCount?: boolean
   targetCount?: boolean
   bonusAmount?: boolean
-  totalDeductions?: boolean
   netAmount?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -1268,7 +1218,6 @@ export type PayrollSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   totalSubscriptionsCount?: boolean
   targetCount?: boolean
   bonusAmount?: boolean
-  totalDeductions?: boolean
   netAmount?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -1287,7 +1236,6 @@ export type PayrollSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   totalSubscriptionsCount?: boolean
   targetCount?: boolean
   bonusAmount?: boolean
-  totalDeductions?: boolean
   netAmount?: boolean
   createdAt?: boolean
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
@@ -1306,12 +1254,11 @@ export type PayrollSelectScalar = {
   totalSubscriptionsCount?: boolean
   targetCount?: boolean
   bonusAmount?: boolean
-  totalDeductions?: boolean
   netAmount?: boolean
   createdAt?: boolean
 }
 
-export type PayrollOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobProfileId" | "academyId" | "periodFrom" | "periodTo" | "baseSalary" | "totalLessonsCount" | "totalLessonsAmount" | "totalSubscriptionsCount" | "targetCount" | "bonusAmount" | "totalDeductions" | "netAmount" | "createdAt", ExtArgs["result"]["payroll"]>
+export type PayrollOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobProfileId" | "academyId" | "periodFrom" | "periodTo" | "baseSalary" | "totalLessonsCount" | "totalLessonsAmount" | "totalSubscriptionsCount" | "targetCount" | "bonusAmount" | "netAmount" | "createdAt", ExtArgs["result"]["payroll"]>
 export type PayrollInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   jobProfile?: boolean | Prisma.JobProfileDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
@@ -1348,7 +1295,6 @@ export type $PayrollPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     totalSubscriptionsCount: number
     targetCount: number
     bonusAmount: number
-    totalDeductions: number
     netAmount: number
     createdAt: Date
   }, ExtArgs["result"]["payroll"]>
@@ -1789,7 +1735,6 @@ export interface PayrollFieldRefs {
   readonly totalSubscriptionsCount: Prisma.FieldRef<"Payroll", 'Int'>
   readonly targetCount: Prisma.FieldRef<"Payroll", 'Int'>
   readonly bonusAmount: Prisma.FieldRef<"Payroll", 'Float'>
-  readonly totalDeductions: Prisma.FieldRef<"Payroll", 'Float'>
   readonly netAmount: Prisma.FieldRef<"Payroll", 'Float'>
   readonly createdAt: Prisma.FieldRef<"Payroll", 'DateTime'>
 }

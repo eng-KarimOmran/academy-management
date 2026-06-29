@@ -32,7 +32,8 @@ const NOT_FOUND_MESSAGES = {
   CourseFeature: "ميزة البرنامج غير موجوده",
   Sender: "الحساب المالى للمرسل غير موجود",
   Receiver: "الحساب المالى للمستلم غير موجود",
-  financialAccount: "الحساب المالى غير موجود"
+  financialAccount: "الحساب المالى غير موجود",
+  Payroll: "الراتب غير موجود"
 } as const;
 
 export const CONFLICT_MESSAGES = {
@@ -71,7 +72,8 @@ export const CONFLICT_MESSAGES = {
   JOB_PROFILE_EXISTS: "المستخدم لديه ملف وظيفي بالأكاديمية",
   PAYMENT_SENDER_MUST_BE_SUBSCRIPTION: "في عملية الدفع يجب أن يكون المرسل هو الاشتراك",
   REFUND_RECEIVER_MUST_BE_SUBSCRIPTION: "في عملية الاسترداد يجب أن يكون المستلم هو الاشتراك",
-  LESSON_NOT_SCHEDULED: "لا يمكن تعديل بيانات الحصة إلا في حالة الجدولة"
+  LESSON_NOT_SCHEDULED: "لا يمكن تعديل بيانات الحصة إلا في حالة الجدولة",
+  PAYROLL_ALREADY_EXISTS: "تم انشاء راتب لهذه الفترة من قبل"
 } as const;
 
 type NotFoundModel = keyof typeof NOT_FOUND_MESSAGES;

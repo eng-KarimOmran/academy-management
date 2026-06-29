@@ -57,8 +57,8 @@ export type LessonMinAggregateOutputType = {
   ledgerTransactionId: string | null
   areaId: string | null
   jobProfileId: string | null
-  createdAt: Date | null
   payrollId: string | null
+  createdAt: Date | null
 }
 
 export type LessonMaxAggregateOutputType = {
@@ -78,8 +78,8 @@ export type LessonMaxAggregateOutputType = {
   ledgerTransactionId: string | null
   areaId: string | null
   jobProfileId: string | null
-  createdAt: Date | null
   payrollId: string | null
+  createdAt: Date | null
 }
 
 export type LessonCountAggregateOutputType = {
@@ -99,8 +99,8 @@ export type LessonCountAggregateOutputType = {
   ledgerTransactionId: number
   areaId: number
   jobProfileId: number
-  createdAt: number
   payrollId: number
+  createdAt: number
   _all: number
 }
 
@@ -136,8 +136,8 @@ export type LessonMinAggregateInputType = {
   ledgerTransactionId?: true
   areaId?: true
   jobProfileId?: true
-  createdAt?: true
   payrollId?: true
+  createdAt?: true
 }
 
 export type LessonMaxAggregateInputType = {
@@ -157,8 +157,8 @@ export type LessonMaxAggregateInputType = {
   ledgerTransactionId?: true
   areaId?: true
   jobProfileId?: true
-  createdAt?: true
   payrollId?: true
+  createdAt?: true
 }
 
 export type LessonCountAggregateInputType = {
@@ -178,8 +178,8 @@ export type LessonCountAggregateInputType = {
   ledgerTransactionId?: true
   areaId?: true
   jobProfileId?: true
-  createdAt?: true
   payrollId?: true
+  createdAt?: true
   _all?: true
 }
 
@@ -286,8 +286,8 @@ export type LessonGroupByOutputType = {
   ledgerTransactionId: string | null
   areaId: string
   jobProfileId: string
-  createdAt: Date
   payrollId: string | null
+  createdAt: Date
   _count: LessonCountAggregateOutputType | null
   _avg: LessonAvgAggregateOutputType | null
   _sum: LessonSumAggregateOutputType | null
@@ -330,8 +330,8 @@ export type LessonWhereInput = {
   ledgerTransactionId?: Prisma.StringNullableFilter<"Lesson"> | string | null
   areaId?: Prisma.StringFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringFilter<"Lesson"> | string
-  createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   payrollId?: Prisma.StringNullableFilter<"Lesson"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionScalarRelationFilter, Prisma.SubscriptionWhereInput>
   car?: Prisma.XOR<Prisma.CarScalarRelationFilter, Prisma.CarWhereInput>
@@ -359,8 +359,8 @@ export type LessonOrderByWithRelationInput = {
   ledgerTransactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   payrollId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   academy?: Prisma.AcademyOrderByWithRelationInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
   car?: Prisma.CarOrderByWithRelationInput
@@ -391,8 +391,8 @@ export type LessonWhereUniqueInput = Prisma.AtLeast<{
   ledgerTransactionId?: Prisma.StringNullableFilter<"Lesson"> | string | null
   areaId?: Prisma.StringFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringFilter<"Lesson"> | string
-  createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   payrollId?: Prisma.StringNullableFilter<"Lesson"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   subscription?: Prisma.XOR<Prisma.SubscriptionScalarRelationFilter, Prisma.SubscriptionWhereInput>
   car?: Prisma.XOR<Prisma.CarScalarRelationFilter, Prisma.CarWhereInput>
@@ -420,8 +420,8 @@ export type LessonOrderByWithAggregationInput = {
   ledgerTransactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   payrollId?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
   _count?: Prisma.LessonCountOrderByAggregateInput
   _avg?: Prisma.LessonAvgOrderByAggregateInput
   _max?: Prisma.LessonMaxOrderByAggregateInput
@@ -449,8 +449,8 @@ export type LessonScalarWhereWithAggregatesInput = {
   ledgerTransactionId?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
   areaId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lesson"> | Date | string
   payrollId?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Lesson"> | Date | string
 }
 
 export type LessonCreateInput = {
@@ -491,8 +491,8 @@ export type LessonUncheckedCreateInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateInput = {
@@ -533,8 +533,8 @@ export type LessonUncheckedUpdateInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyInput = {
@@ -554,8 +554,8 @@ export type LessonCreateManyInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateManyMutationInput = {
@@ -588,8 +588,8 @@ export type LessonUncheckedUpdateManyInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonListRelationFilter = {
@@ -619,8 +619,8 @@ export type LessonCountOrderByAggregateInput = {
   ledgerTransactionId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   payrollId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type LessonAvgOrderByAggregateInput = {
@@ -647,8 +647,8 @@ export type LessonMaxOrderByAggregateInput = {
   ledgerTransactionId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   payrollId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type LessonMinOrderByAggregateInput = {
@@ -668,8 +668,8 @@ export type LessonMinOrderByAggregateInput = {
   ledgerTransactionId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
   jobProfileId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   payrollId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
 export type LessonSumOrderByAggregateInput = {
@@ -1063,8 +1063,8 @@ export type LessonUncheckedCreateWithoutAcademyInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutAcademyInput = {
@@ -1113,8 +1113,8 @@ export type LessonScalarWhereInput = {
   ledgerTransactionId?: Prisma.StringNullableFilter<"Lesson"> | string | null
   areaId?: Prisma.StringFilter<"Lesson"> | string
   jobProfileId?: Prisma.StringFilter<"Lesson"> | string
-  createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
   payrollId?: Prisma.StringNullableFilter<"Lesson"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Lesson"> | Date | string
 }
 
 export type LessonCreateWithoutClientInput = {
@@ -1153,8 +1153,8 @@ export type LessonUncheckedCreateWithoutClientInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutClientInput = {
@@ -1219,8 +1219,8 @@ export type LessonUncheckedCreateWithoutSubscriptionInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutSubscriptionInput = {
@@ -1285,8 +1285,8 @@ export type LessonUncheckedCreateWithoutJobProfileInput = {
   clientId: string
   ledgerTransactionId?: string | null
   areaId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutJobProfileInput = {
@@ -1351,8 +1351,8 @@ export type LessonUncheckedCreateWithoutCarInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutCarInput = {
@@ -1417,8 +1417,8 @@ export type LessonUncheckedCreateWithoutAreaInput = {
   clientId: string
   ledgerTransactionId?: string | null
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutAreaInput = {
@@ -1483,8 +1483,8 @@ export type LessonUncheckedCreateWithoutLedgerTransactionInput = {
   clientId: string
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonCreateOrConnectWithoutLedgerTransactionInput = {
@@ -1595,8 +1595,8 @@ export type LessonCreateManyAcademyInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutAcademyInput = {
@@ -1635,8 +1635,8 @@ export type LessonUncheckedUpdateWithoutAcademyInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutAcademyInput = {
@@ -1655,8 +1655,8 @@ export type LessonUncheckedUpdateManyWithoutAcademyInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyClientInput = {
@@ -1675,8 +1675,8 @@ export type LessonCreateManyClientInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutClientInput = {
@@ -1715,8 +1715,8 @@ export type LessonUncheckedUpdateWithoutClientInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutClientInput = {
@@ -1735,8 +1735,8 @@ export type LessonUncheckedUpdateManyWithoutClientInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManySubscriptionInput = {
@@ -1755,8 +1755,8 @@ export type LessonCreateManySubscriptionInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutSubscriptionInput = {
@@ -1795,8 +1795,8 @@ export type LessonUncheckedUpdateWithoutSubscriptionInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutSubscriptionInput = {
@@ -1815,8 +1815,8 @@ export type LessonUncheckedUpdateManyWithoutSubscriptionInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyJobProfileInput = {
@@ -1835,8 +1835,8 @@ export type LessonCreateManyJobProfileInput = {
   clientId: string
   ledgerTransactionId?: string | null
   areaId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutJobProfileInput = {
@@ -1875,8 +1875,8 @@ export type LessonUncheckedUpdateWithoutJobProfileInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutJobProfileInput = {
@@ -1895,8 +1895,8 @@ export type LessonUncheckedUpdateManyWithoutJobProfileInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyCarInput = {
@@ -1915,8 +1915,8 @@ export type LessonCreateManyCarInput = {
   ledgerTransactionId?: string | null
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutCarInput = {
@@ -1955,8 +1955,8 @@ export type LessonUncheckedUpdateWithoutCarInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutCarInput = {
@@ -1975,8 +1975,8 @@ export type LessonUncheckedUpdateManyWithoutCarInput = {
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyAreaInput = {
@@ -1995,8 +1995,8 @@ export type LessonCreateManyAreaInput = {
   clientId: string
   ledgerTransactionId?: string | null
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutAreaInput = {
@@ -2035,8 +2035,8 @@ export type LessonUncheckedUpdateWithoutAreaInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutAreaInput = {
@@ -2055,8 +2055,8 @@ export type LessonUncheckedUpdateManyWithoutAreaInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   ledgerTransactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyLedgerTransactionInput = {
@@ -2075,8 +2075,8 @@ export type LessonCreateManyLedgerTransactionInput = {
   clientId: string
   areaId: string
   jobProfileId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type LessonUpdateWithoutLedgerTransactionInput = {
@@ -2115,8 +2115,8 @@ export type LessonUncheckedUpdateWithoutLedgerTransactionInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonUncheckedUpdateManyWithoutLedgerTransactionInput = {
@@ -2135,8 +2135,8 @@ export type LessonUncheckedUpdateManyWithoutLedgerTransactionInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
   jobProfileId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LessonCreateManyPayrollInput = {
@@ -2238,8 +2238,8 @@ export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
-  createdAt?: boolean
   payrollId?: boolean
+  createdAt?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
@@ -2267,8 +2267,8 @@ export type LessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
-  createdAt?: boolean
   payrollId?: boolean
+  createdAt?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
@@ -2296,8 +2296,8 @@ export type LessonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
-  createdAt?: boolean
   payrollId?: boolean
+  createdAt?: boolean
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
   car?: boolean | Prisma.CarDefaultArgs<ExtArgs>
@@ -2325,11 +2325,11 @@ export type LessonSelectScalar = {
   ledgerTransactionId?: boolean
   areaId?: boolean
   jobProfileId?: boolean
-  createdAt?: boolean
   payrollId?: boolean
+  createdAt?: boolean
 }
 
-export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "lessonStatus" | "transmission" | "sessionDurationMinutes" | "expectedPaymentAmount" | "carSessionPrice" | "captainLessonPrice" | "academyId" | "subscriptionId" | "carId" | "clientId" | "ledgerTransactionId" | "areaId" | "jobProfileId" | "createdAt" | "payrollId", ExtArgs["result"]["lesson"]>
+export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startTime" | "endTime" | "lessonStatus" | "transmission" | "sessionDurationMinutes" | "expectedPaymentAmount" | "carSessionPrice" | "captainLessonPrice" | "academyId" | "subscriptionId" | "carId" | "clientId" | "ledgerTransactionId" | "areaId" | "jobProfileId" | "payrollId" | "createdAt", ExtArgs["result"]["lesson"]>
 export type LessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   subscription?: boolean | Prisma.SubscriptionDefaultArgs<ExtArgs>
@@ -2390,8 +2390,8 @@ export type $LessonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     ledgerTransactionId: string | null
     areaId: string
     jobProfileId: string
-    createdAt: Date
     payrollId: string | null
+    createdAt: Date
   }, ExtArgs["result"]["lesson"]>
   composites: {}
 }
@@ -2839,8 +2839,8 @@ export interface LessonFieldRefs {
   readonly ledgerTransactionId: Prisma.FieldRef<"Lesson", 'String'>
   readonly areaId: Prisma.FieldRef<"Lesson", 'String'>
   readonly jobProfileId: Prisma.FieldRef<"Lesson", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Lesson", 'DateTime'>
   readonly payrollId: Prisma.FieldRef<"Lesson", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Lesson", 'DateTime'>
 }
     
 

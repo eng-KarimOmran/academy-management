@@ -1988,9 +1988,9 @@ export const SubscriptionScalarFieldEnum = {
   courseId: 'courseId',
   academyId: 'academyId',
   areaId: 'areaId',
+  payrollId: 'payrollId',
   createdById: 'createdById',
-  createdAt: 'createdAt',
-  payrollId: 'payrollId'
+  createdAt: 'createdAt'
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
@@ -2081,8 +2081,8 @@ export const LessonScalarFieldEnum = {
   ledgerTransactionId: 'ledgerTransactionId',
   areaId: 'areaId',
   jobProfileId: 'jobProfileId',
-  createdAt: 'createdAt',
-  payrollId: 'payrollId'
+  payrollId: 'payrollId',
+  createdAt: 'createdAt'
 } as const
 
 export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
@@ -2116,7 +2116,6 @@ export const PayrollScalarFieldEnum = {
   totalSubscriptionsCount: 'totalSubscriptionsCount',
   targetCount: 'targetCount',
   bonusAmount: 'bonusAmount',
-  totalDeductions: 'totalDeductions',
   netAmount: 'netAmount',
   createdAt: 'createdAt'
 } as const

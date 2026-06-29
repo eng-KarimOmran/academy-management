@@ -13,8 +13,8 @@ import routerClient from "../client/client.routes";
 import routerSubscription from "../subscription/subscription.routes";
 import routerLedgerTransactions from "../ledgerTransaction/ledgerTransaction.routes";
 import routerLesson from "../lesson/lesson.routes";
-import routerStatistics from "../statistics/statistics.routes";
-import allowJobProfiles from "../jobProfile/jobProfile.middlewares";
+import routerStatistic from "../statistics/statistics.routes";
+import routerPayroll from "../payroll/payroll.routes";
 
 const router = Router();
 
@@ -170,6 +170,8 @@ router.use("/:academyId/ledger-transactions", routerLedgerTransactions);
 
 router.use("/:academyId/lesson", routerLesson);
 
-router.use("/:academyId/statistic", routerStatistics);
+router.use("/:academyId/statistic", routerStatistic);
+
+router.use("/:academyId/payroll", routerPayroll);
 
 export default router;

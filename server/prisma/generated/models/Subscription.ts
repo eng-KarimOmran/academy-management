@@ -55,9 +55,9 @@ export type SubscriptionMinAggregateOutputType = {
   courseId: string | null
   academyId: string | null
   areaId: string | null
+  payrollId: string | null
   createdById: string | null
   createdAt: Date | null
-  payrollId: string | null
 }
 
 export type SubscriptionMaxAggregateOutputType = {
@@ -73,9 +73,9 @@ export type SubscriptionMaxAggregateOutputType = {
   courseId: string | null
   academyId: string | null
   areaId: string | null
+  payrollId: string | null
   createdById: string | null
   createdAt: Date | null
-  payrollId: string | null
 }
 
 export type SubscriptionCountAggregateOutputType = {
@@ -91,9 +91,9 @@ export type SubscriptionCountAggregateOutputType = {
   courseId: number
   academyId: number
   areaId: number
+  payrollId: number
   createdById: number
   createdAt: number
-  payrollId: number
   _all: number
 }
 
@@ -127,9 +127,9 @@ export type SubscriptionMinAggregateInputType = {
   courseId?: true
   academyId?: true
   areaId?: true
+  payrollId?: true
   createdById?: true
   createdAt?: true
-  payrollId?: true
 }
 
 export type SubscriptionMaxAggregateInputType = {
@@ -145,9 +145,9 @@ export type SubscriptionMaxAggregateInputType = {
   courseId?: true
   academyId?: true
   areaId?: true
+  payrollId?: true
   createdById?: true
   createdAt?: true
-  payrollId?: true
 }
 
 export type SubscriptionCountAggregateInputType = {
@@ -163,9 +163,9 @@ export type SubscriptionCountAggregateInputType = {
   courseId?: true
   academyId?: true
   areaId?: true
+  payrollId?: true
   createdById?: true
   createdAt?: true
-  payrollId?: true
   _all?: true
 }
 
@@ -268,9 +268,9 @@ export type SubscriptionGroupByOutputType = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId: string | null
   createdById: string | null
   createdAt: Date
-  payrollId: string | null
   _count: SubscriptionCountAggregateOutputType | null
   _avg: SubscriptionAvgAggregateOutputType | null
   _sum: SubscriptionSumAggregateOutputType | null
@@ -309,18 +309,18 @@ export type SubscriptionWhereInput = {
   courseId?: Prisma.StringFilter<"Subscription"> | string
   academyId?: Prisma.StringFilter<"Subscription"> | string
   areaId?: Prisma.StringFilter<"Subscription"> | string
+  payrollId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   createdById?: Prisma.StringNullableFilter<"Subscription"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
-  payrollId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   area?: Prisma.XOR<Prisma.AreaScalarRelationFilter, Prisma.AreaWhereInput>
+  payroll?: Prisma.XOR<Prisma.PayrollNullableScalarRelationFilter, Prisma.PayrollWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.JobProfileNullableScalarRelationFilter, Prisma.JobProfileWhereInput> | null
   lessons?: Prisma.LessonListRelationFilter
   ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
   financialAccount?: Prisma.XOR<Prisma.FinancialAccountNullableScalarRelationFilter, Prisma.FinancialAccountWhereInput> | null
-  payroll?: Prisma.XOR<Prisma.PayrollNullableScalarRelationFilter, Prisma.PayrollWhereInput> | null
 }
 
 export type SubscriptionOrderByWithRelationInput = {
@@ -336,18 +336,18 @@ export type SubscriptionOrderByWithRelationInput = {
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
+  payrollId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  payrollId?: Prisma.SortOrderInput | Prisma.SortOrder
   client?: Prisma.ClientOrderByWithRelationInput
   course?: Prisma.CourseOrderByWithRelationInput
   academy?: Prisma.AcademyOrderByWithRelationInput
   area?: Prisma.AreaOrderByWithRelationInput
+  payroll?: Prisma.PayrollOrderByWithRelationInput
   createdBy?: Prisma.JobProfileOrderByWithRelationInput
   lessons?: Prisma.LessonOrderByRelationAggregateInput
   ledgerTransactions?: Prisma.LedgerTransactionOrderByRelationAggregateInput
   financialAccount?: Prisma.FinancialAccountOrderByWithRelationInput
-  payroll?: Prisma.PayrollOrderByWithRelationInput
 }
 
 export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
@@ -366,18 +366,18 @@ export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   courseId?: Prisma.StringFilter<"Subscription"> | string
   academyId?: Prisma.StringFilter<"Subscription"> | string
   areaId?: Prisma.StringFilter<"Subscription"> | string
+  payrollId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   createdById?: Prisma.StringNullableFilter<"Subscription"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
-  payrollId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
   academy?: Prisma.XOR<Prisma.AcademyScalarRelationFilter, Prisma.AcademyWhereInput>
   area?: Prisma.XOR<Prisma.AreaScalarRelationFilter, Prisma.AreaWhereInput>
+  payroll?: Prisma.XOR<Prisma.PayrollNullableScalarRelationFilter, Prisma.PayrollWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.JobProfileNullableScalarRelationFilter, Prisma.JobProfileWhereInput> | null
   lessons?: Prisma.LessonListRelationFilter
   ledgerTransactions?: Prisma.LedgerTransactionListRelationFilter
   financialAccount?: Prisma.XOR<Prisma.FinancialAccountNullableScalarRelationFilter, Prisma.FinancialAccountWhereInput> | null
-  payroll?: Prisma.XOR<Prisma.PayrollNullableScalarRelationFilter, Prisma.PayrollWhereInput> | null
 }, "id">
 
 export type SubscriptionOrderByWithAggregationInput = {
@@ -393,9 +393,9 @@ export type SubscriptionOrderByWithAggregationInput = {
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
+  payrollId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  payrollId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SubscriptionCountOrderByAggregateInput
   _avg?: Prisma.SubscriptionAvgOrderByAggregateInput
   _max?: Prisma.SubscriptionMaxOrderByAggregateInput
@@ -419,9 +419,9 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   courseId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   academyId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   areaId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
+  payrollId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   createdById?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
-  payrollId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
 }
 
 export type SubscriptionCreateInput = {
@@ -438,11 +438,11 @@ export type SubscriptionCreateInput = {
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateInput = {
@@ -458,9 +458,9 @@ export type SubscriptionUncheckedCreateInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
@@ -480,11 +480,11 @@ export type SubscriptionUpdateInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateInput = {
@@ -500,9 +500,9 @@ export type SubscriptionUncheckedUpdateInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
@@ -521,9 +521,9 @@ export type SubscriptionCreateManyInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
 }
 
 export type SubscriptionUpdateManyMutationInput = {
@@ -551,9 +551,9 @@ export type SubscriptionUncheckedUpdateManyInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SubscriptionNullableScalarRelationFilter = {
@@ -584,9 +584,9 @@ export type SubscriptionCountOrderByAggregateInput = {
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
+  payrollId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  payrollId?: Prisma.SortOrder
 }
 
 export type SubscriptionAvgOrderByAggregateInput = {
@@ -610,9 +610,9 @@ export type SubscriptionMaxOrderByAggregateInput = {
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
+  payrollId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  payrollId?: Prisma.SortOrder
 }
 
 export type SubscriptionMinOrderByAggregateInput = {
@@ -628,9 +628,9 @@ export type SubscriptionMinOrderByAggregateInput = {
   courseId?: Prisma.SortOrder
   academyId?: Prisma.SortOrder
   areaId?: Prisma.SortOrder
+  payrollId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  payrollId?: Prisma.SortOrder
 }
 
 export type SubscriptionSumOrderByAggregateInput = {
@@ -966,10 +966,10 @@ export type SubscriptionCreateWithoutFinancialAccountInput = {
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutFinancialAccountInput = {
@@ -985,9 +985,9 @@ export type SubscriptionUncheckedCreateWithoutFinancialAccountInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
 }
@@ -1022,10 +1022,10 @@ export type SubscriptionUpdateWithoutFinancialAccountInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutFinancialAccountInput = {
@@ -1041,9 +1041,9 @@ export type SubscriptionUncheckedUpdateWithoutFinancialAccountInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
@@ -1061,11 +1061,11 @@ export type SubscriptionCreateWithoutAcademyInput = {
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutAcademyInput = {
@@ -1080,9 +1080,9 @@ export type SubscriptionUncheckedCreateWithoutAcademyInput = {
   clientId: string
   courseId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
@@ -1130,9 +1130,9 @@ export type SubscriptionScalarWhereInput = {
   courseId?: Prisma.StringFilter<"Subscription"> | string
   academyId?: Prisma.StringFilter<"Subscription"> | string
   areaId?: Prisma.StringFilter<"Subscription"> | string
+  payrollId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   createdById?: Prisma.StringNullableFilter<"Subscription"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
-  payrollId?: Prisma.StringNullableFilter<"Subscription"> | string | null
 }
 
 export type SubscriptionCreateWithoutClientInput = {
@@ -1148,11 +1148,11 @@ export type SubscriptionCreateWithoutClientInput = {
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutClientInput = {
@@ -1167,9 +1167,9 @@ export type SubscriptionUncheckedCreateWithoutClientInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
@@ -1214,11 +1214,11 @@ export type SubscriptionCreateWithoutCourseInput = {
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutCourseInput = {
@@ -1233,9 +1233,9 @@ export type SubscriptionUncheckedCreateWithoutCourseInput = {
   clientId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
@@ -1281,10 +1281,10 @@ export type SubscriptionCreateWithoutCreatedByInput = {
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutCreatedByInput = {
@@ -1300,8 +1300,8 @@ export type SubscriptionUncheckedCreateWithoutCreatedByInput = {
   courseId: string
   academyId: string
   areaId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
@@ -1346,11 +1346,11 @@ export type SubscriptionCreateWithoutAreaInput = {
   client: Prisma.ClientCreateNestedOneWithoutSubscriptionsInput
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutAreaInput = {
@@ -1365,9 +1365,9 @@ export type SubscriptionUncheckedCreateWithoutAreaInput = {
   clientId: string
   courseId: string
   academyId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
@@ -1413,10 +1413,10 @@ export type SubscriptionCreateWithoutLessonsInput = {
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   ledgerTransactions?: Prisma.LedgerTransactionCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutLessonsInput = {
@@ -1432,9 +1432,9 @@ export type SubscriptionUncheckedCreateWithoutLessonsInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
 }
@@ -1469,10 +1469,10 @@ export type SubscriptionUpdateWithoutLessonsInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutLessonsInput = {
@@ -1488,9 +1488,9 @@ export type SubscriptionUncheckedUpdateWithoutLessonsInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
 }
@@ -1509,10 +1509,10 @@ export type SubscriptionCreateWithoutLedgerTransactionsInput = {
   course: Prisma.CourseCreateNestedOneWithoutSubscriptionsInput
   academy: Prisma.AcademyCreateNestedOneWithoutSubscriptionsInput
   area: Prisma.AreaCreateNestedOneWithoutSubscriptionsInput
+  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
   createdBy?: Prisma.JobProfileCreateNestedOneWithoutSubscriptionsInput
   lessons?: Prisma.LessonCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountCreateNestedOneWithoutSubscriptionInput
-  payroll?: Prisma.PayrollCreateNestedOneWithoutSubscriptionsInput
 }
 
 export type SubscriptionUncheckedCreateWithoutLedgerTransactionsInput = {
@@ -1528,9 +1528,9 @@ export type SubscriptionUncheckedCreateWithoutLedgerTransactionsInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutSubscriptionInput
   financialAccount?: Prisma.FinancialAccountUncheckedCreateNestedOneWithoutSubscriptionInput
 }
@@ -1565,10 +1565,10 @@ export type SubscriptionUpdateWithoutLedgerTransactionsInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutLedgerTransactionsInput = {
@@ -1584,9 +1584,9 @@ export type SubscriptionUncheckedUpdateWithoutLedgerTransactionsInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
 }
@@ -1669,9 +1669,9 @@ export type SubscriptionCreateManyAcademyInput = {
   clientId: string
   courseId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
 }
 
 export type SubscriptionUpdateWithoutAcademyInput = {
@@ -1687,11 +1687,11 @@ export type SubscriptionUpdateWithoutAcademyInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutAcademyInput = {
@@ -1706,9 +1706,9 @@ export type SubscriptionUncheckedUpdateWithoutAcademyInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
@@ -1726,9 +1726,9 @@ export type SubscriptionUncheckedUpdateManyWithoutAcademyInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SubscriptionCreateManyClientInput = {
@@ -1743,9 +1743,9 @@ export type SubscriptionCreateManyClientInput = {
   courseId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
 }
 
 export type SubscriptionUpdateWithoutClientInput = {
@@ -1761,11 +1761,11 @@ export type SubscriptionUpdateWithoutClientInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutClientInput = {
@@ -1780,9 +1780,9 @@ export type SubscriptionUncheckedUpdateWithoutClientInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
@@ -1800,9 +1800,9 @@ export type SubscriptionUncheckedUpdateManyWithoutClientInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SubscriptionCreateManyCourseInput = {
@@ -1817,9 +1817,9 @@ export type SubscriptionCreateManyCourseInput = {
   clientId: string
   academyId: string
   areaId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
 }
 
 export type SubscriptionUpdateWithoutCourseInput = {
@@ -1835,11 +1835,11 @@ export type SubscriptionUpdateWithoutCourseInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutCourseInput = {
@@ -1854,9 +1854,9 @@ export type SubscriptionUncheckedUpdateWithoutCourseInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
@@ -1874,9 +1874,9 @@ export type SubscriptionUncheckedUpdateManyWithoutCourseInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SubscriptionCreateManyCreatedByInput = {
@@ -1892,8 +1892,8 @@ export type SubscriptionCreateManyCreatedByInput = {
   courseId: string
   academyId: string
   areaId: string
-  createdAt?: Date | string
   payrollId?: string | null
+  createdAt?: Date | string
 }
 
 export type SubscriptionUpdateWithoutCreatedByInput = {
@@ -1910,10 +1910,10 @@ export type SubscriptionUpdateWithoutCreatedByInput = {
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
   area?: Prisma.AreaUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutCreatedByInput = {
@@ -1929,8 +1929,8 @@ export type SubscriptionUncheckedUpdateWithoutCreatedByInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
@@ -1949,8 +1949,8 @@ export type SubscriptionUncheckedUpdateManyWithoutCreatedByInput = {
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
   areaId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type SubscriptionCreateManyAreaInput = {
@@ -1965,9 +1965,9 @@ export type SubscriptionCreateManyAreaInput = {
   clientId: string
   courseId: string
   academyId: string
+  payrollId?: string | null
   createdById?: string | null
   createdAt?: Date | string
-  payrollId?: string | null
 }
 
 export type SubscriptionUpdateWithoutAreaInput = {
@@ -1983,11 +1983,11 @@ export type SubscriptionUpdateWithoutAreaInput = {
   client?: Prisma.ClientUpdateOneRequiredWithoutSubscriptionsNestedInput
   course?: Prisma.CourseUpdateOneRequiredWithoutSubscriptionsNestedInput
   academy?: Prisma.AcademyUpdateOneRequiredWithoutSubscriptionsNestedInput
+  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
   createdBy?: Prisma.JobProfileUpdateOneWithoutSubscriptionsNestedInput
   lessons?: Prisma.LessonUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUpdateOneWithoutSubscriptionNestedInput
-  payroll?: Prisma.PayrollUpdateOneWithoutSubscriptionsNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutAreaInput = {
@@ -2002,9 +2002,9 @@ export type SubscriptionUncheckedUpdateWithoutAreaInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutSubscriptionNestedInput
   ledgerTransactions?: Prisma.LedgerTransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
   financialAccount?: Prisma.FinancialAccountUncheckedUpdateOneWithoutSubscriptionNestedInput
@@ -2022,9 +2022,9 @@ export type SubscriptionUncheckedUpdateManyWithoutAreaInput = {
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   academyId?: Prisma.StringFieldUpdateOperationsInput | string
+  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  payrollId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SubscriptionCreateManyPayrollInput = {
@@ -2154,18 +2154,18 @@ export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   courseId?: boolean
   academyId?: boolean
   areaId?: boolean
+  payrollId?: boolean
   createdById?: boolean
   createdAt?: boolean
-  payrollId?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
+  payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
   createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
   lessons?: boolean | Prisma.Subscription$lessonsArgs<ExtArgs>
   ledgerTransactions?: boolean | Prisma.Subscription$ledgerTransactionsArgs<ExtArgs>
   financialAccount?: boolean | Prisma.Subscription$financialAccountArgs<ExtArgs>
-  payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
@@ -2182,15 +2182,15 @@ export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   courseId?: boolean
   academyId?: boolean
   areaId?: boolean
+  payrollId?: boolean
   createdById?: boolean
   createdAt?: boolean
-  payrollId?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
   payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2206,15 +2206,15 @@ export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   courseId?: boolean
   academyId?: boolean
   areaId?: boolean
+  payrollId?: boolean
   createdById?: boolean
   createdAt?: boolean
-  payrollId?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
   payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectScalar = {
@@ -2230,22 +2230,22 @@ export type SubscriptionSelectScalar = {
   courseId?: boolean
   academyId?: boolean
   areaId?: boolean
+  payrollId?: boolean
   createdById?: boolean
   createdAt?: boolean
-  payrollId?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subscriptionStatus" | "priceAtBooking" | "totalSessions" | "sessionDurationMinutes" | "requiredInitialDeposit" | "sessionsBeforeFullPayment" | "trainingTypeAtRegistration" | "clientId" | "courseId" | "academyId" | "areaId" | "createdById" | "createdAt" | "payrollId", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "subscriptionStatus" | "priceAtBooking" | "totalSessions" | "sessionDurationMinutes" | "requiredInitialDeposit" | "sessionsBeforeFullPayment" | "trainingTypeAtRegistration" | "clientId" | "courseId" | "academyId" | "areaId" | "payrollId" | "createdById" | "createdAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
+  payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
   createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
   lessons?: boolean | Prisma.Subscription$lessonsArgs<ExtArgs>
   ledgerTransactions?: boolean | Prisma.Subscription$ledgerTransactionsArgs<ExtArgs>
   financialAccount?: boolean | Prisma.Subscription$financialAccountArgs<ExtArgs>
-  payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
   _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SubscriptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2253,16 +2253,16 @@ export type SubscriptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
   payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
 }
 export type SubscriptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   academy?: boolean | Prisma.AcademyDefaultArgs<ExtArgs>
   area?: boolean | Prisma.AreaDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
   payroll?: boolean | Prisma.Subscription$payrollArgs<ExtArgs>
+  createdBy?: boolean | Prisma.Subscription$createdByArgs<ExtArgs>
 }
 
 export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2272,11 +2272,11 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     course: Prisma.$CoursePayload<ExtArgs>
     academy: Prisma.$AcademyPayload<ExtArgs>
     area: Prisma.$AreaPayload<ExtArgs>
+    payroll: Prisma.$PayrollPayload<ExtArgs> | null
     createdBy: Prisma.$JobProfilePayload<ExtArgs> | null
     lessons: Prisma.$LessonPayload<ExtArgs>[]
     ledgerTransactions: Prisma.$LedgerTransactionPayload<ExtArgs>[]
     financialAccount: Prisma.$FinancialAccountPayload<ExtArgs> | null
-    payroll: Prisma.$PayrollPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2291,9 +2291,9 @@ export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     courseId: string
     academyId: string
     areaId: string
+    payrollId: string | null
     createdById: string | null
     createdAt: Date
-    payrollId: string | null
   }, ExtArgs["result"]["subscription"]>
   composites: {}
 }
@@ -2692,11 +2692,11 @@ export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends run
   course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   academy<T extends Prisma.AcademyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AcademyDefaultArgs<ExtArgs>>): Prisma.Prisma__AcademyClient<runtime.Types.Result.GetResult<Prisma.$AcademyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   area<T extends Prisma.AreaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AreaDefaultArgs<ExtArgs>>): Prisma.Prisma__AreaClient<runtime.Types.Result.GetResult<Prisma.$AreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  payroll<T extends Prisma.Subscription$payrollArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$payrollArgs<ExtArgs>>): Prisma.Prisma__PayrollClient<runtime.Types.Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.Subscription$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$createdByArgs<ExtArgs>>): Prisma.Prisma__JobProfileClient<runtime.Types.Result.GetResult<Prisma.$JobProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lessons<T extends Prisma.Subscription$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ledgerTransactions<T extends Prisma.Subscription$ledgerTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$ledgerTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   financialAccount<T extends Prisma.Subscription$financialAccountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$financialAccountArgs<ExtArgs>>): Prisma.Prisma__FinancialAccountClient<runtime.Types.Result.GetResult<Prisma.$FinancialAccountPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  payroll<T extends Prisma.Subscription$payrollArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$payrollArgs<ExtArgs>>): Prisma.Prisma__PayrollClient<runtime.Types.Result.GetResult<Prisma.$PayrollPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2738,9 +2738,9 @@ export interface SubscriptionFieldRefs {
   readonly courseId: Prisma.FieldRef<"Subscription", 'String'>
   readonly academyId: Prisma.FieldRef<"Subscription", 'String'>
   readonly areaId: Prisma.FieldRef<"Subscription", 'String'>
+  readonly payrollId: Prisma.FieldRef<"Subscription", 'String'>
   readonly createdById: Prisma.FieldRef<"Subscription", 'String'>
   readonly createdAt: Prisma.FieldRef<"Subscription", 'DateTime'>
-  readonly payrollId: Prisma.FieldRef<"Subscription", 'String'>
 }
     
 
@@ -3142,6 +3142,25 @@ export type SubscriptionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
+ * Subscription.payroll
+ */
+export type Subscription$payrollArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payroll
+   */
+  select?: Prisma.PayrollSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payroll
+   */
+  omit?: Prisma.PayrollOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayrollInclude<ExtArgs> | null
+  where?: Prisma.PayrollWhereInput
+}
+
+/**
  * Subscription.createdBy
  */
 export type Subscription$createdByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3225,25 +3244,6 @@ export type Subscription$financialAccountArgs<ExtArgs extends runtime.Types.Exte
    */
   include?: Prisma.FinancialAccountInclude<ExtArgs> | null
   where?: Prisma.FinancialAccountWhereInput
-}
-
-/**
- * Subscription.payroll
- */
-export type Subscription$payrollArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Payroll
-   */
-  select?: Prisma.PayrollSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Payroll
-   */
-  omit?: Prisma.PayrollOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PayrollInclude<ExtArgs> | null
-  where?: Prisma.PayrollWhereInput
 }
 
 /**
