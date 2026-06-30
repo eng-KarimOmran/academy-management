@@ -6,7 +6,7 @@ import {
   transmission,
   id,
   subscriptionStatus,
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const CreateSubscriptionSchema = {
   params: z.object({

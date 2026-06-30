@@ -8,7 +8,7 @@ import {
   positiveNumber,
   url,
   entityName,
-} from "./common.validation";
+} from "../lib/common.validation";
 
 export const CreateAcademySchema = {
   body: z.object({

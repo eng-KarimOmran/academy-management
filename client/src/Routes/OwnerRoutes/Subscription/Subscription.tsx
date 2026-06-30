@@ -1,7 +1,7 @@
 import PageHeader from "@/components/PageHeader/PageHeader";
 import TableUi, { type DataTableProps } from "@/components/Table/TableUi";
 
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 import { getAllSubscriptions } from "@/service/subscription.service";
 
 import type { SubscriptionBase } from "@/types/subscription";

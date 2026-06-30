@@ -9,7 +9,7 @@ import {
   price,
   positiveNumber,
   booleanQuery,
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const CreateCarSchema = {
   body: z.object({

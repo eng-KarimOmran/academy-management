@@ -1,5 +1,9 @@
 import { useEffect } from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import {
+  useQuery,
+  keepPreviousData,
+  type QueryKey,
+} from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "use-debounce";
 import { toast } from "sonner";
@@ -20,7 +24,7 @@ type BassParams = {
 };
 
 export interface UseAppQueryParams<T extends BassParams, J> {
-  queryKey: (string | number)[];
+  queryKey: QueryKey;
   searchMinLength?: number;
   filters?: (keyof T["query"])[];
   enabled?: boolean;

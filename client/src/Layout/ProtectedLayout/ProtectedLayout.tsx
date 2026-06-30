@@ -1,10 +1,10 @@
-import { useUserDetailsState } from "@/store/UserDetailsState";
+import { useUserProfileState } from "@/store/UserDetailsState";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function ProtectedLayout() {
-  const { userDetails } = useUserDetailsState();
+  const { userProfile } = useUserProfileState();
 
-  if (!userDetails) {
+  if (!userProfile) {
     return <Navigate to={"/"} replace={true} />;
   }
 

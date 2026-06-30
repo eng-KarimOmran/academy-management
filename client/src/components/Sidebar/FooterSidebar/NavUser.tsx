@@ -1,4 +1,4 @@
-import { useUserDetailsState } from "@/store/UserDetailsState";
+import { useUserProfileState } from "@/store/UserDetailsState";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -20,20 +20,20 @@ import {
   RiDoorLockLine,
   RiLogoutBoxLine,
 } from "@remixicon/react";
-import Logout from "@/components/Sidebar/FooterSidebar/Logout";
 import { useDialogState } from "@/store/DialogState";
 import { Link } from "react-router-dom";
+import LogoutForm from "@/features/auth/components/authForm/LogoutForm";
 
 export default function NavUser() {
   const { isMobile } = useSidebar();
-  const { userDetails } = useUserDetailsState();
+  const { userProfile } = useUserProfileState();
   const { setConfigDialog } = useDialogState();
 
   const handelLogout = () => {
     setConfigDialog({
       title: "هل أنت متأكد أنك تريد تسجيل الخروج؟",
       description: "سيؤدي هذا الإجراء إلى إغلاق جلستك وتسجيل خروجك من حسابك.",
-      children: <Logout />,
+      children: <LogoutForm />,
     });
   };
 
@@ -50,15 +50,15 @@ export default function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src="/src/assets/user.png" alt={"user"} />
                   <AvatarFallback className="rounded-lg">
-                    {userDetails?.name[0]}
+                    {userProfile?.name[0]}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-start text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {userDetails?.name || "غير معروف"}
+                    {userProfile?.name || "غير معروف"}
                   </span>
                   <span className="truncate text-xs">
-                    {userDetails?.phone || "غير معروف"}
+                    {userProfile?.phone || "غير معروف"}
                   </span>
                 </div>
                 <RiArrowDownSLine className="ml-auto size-4" />
@@ -75,15 +75,15 @@ export default function NavUser() {
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src="/src/assets/user.png" alt={"user"} />
                     <AvatarFallback className="rounded-lg">
-                      {userDetails?.name[0]}
+                      {userProfile?.name[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-start text-sm leading-tight">
                     <span className="truncate font-medium">
-                      {userDetails?.name || "غير معروف"}
+                      {userProfile?.name || "غير معروف"}
                     </span>
                     <span className="truncate text-xs">
-                      {userDetails?.phone || "غير معروف"}
+                      {userProfile?.phone || "غير معروف"}
                     </span>
                   </div>
                 </div>

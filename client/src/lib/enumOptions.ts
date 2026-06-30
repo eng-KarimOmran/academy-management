@@ -5,7 +5,7 @@ export const createOptions = <T extends Record<string, keyof typeof enumTranslat
     return Object.values(obj).map((value) => ({ label: enumTranslations[value], value }));
 }
 
-export const roleOptions = createOptions(Enums.Role);
+export const jobProfileTypeOptions = createOptions(Enums.JobProfileType);
 export const transmissionOptions = createOptions(Enums.Transmission);
 export const supportTypeOptions = createOptions(Enums.SupportType);
 export const lessonStatusOptions = createOptions(Enums.LessonStatus);

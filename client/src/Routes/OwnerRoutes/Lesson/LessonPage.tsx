@@ -11,7 +11,7 @@ import { columns } from "./columns";
 
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import type { GetAllLessonsDto } from "@/DTOs/lesson.dto";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 
 export default function LessonPage() {
   const { activeAcademy } = useActiveAcademyState();

@@ -7,7 +7,7 @@ import {
     price,
     transactionParty,
     transactionType,
-} from "./common.validation";
+} from "../lib/common.validation";
 
 export const CreateLedgerTransactionSchema = {
     params: z.object({ academyId: id }),

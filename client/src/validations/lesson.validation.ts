@@ -8,7 +8,7 @@ import {
   lessonStatus,
   transmission,
   price,
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const CreateLessonSchema = {
   params: z.object({

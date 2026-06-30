@@ -1,12 +1,12 @@
-import type { UserDetails } from "@/types/user";
+import type { UserProfile } from "@/types/user";
 import { create } from "zustand";
 
-interface UserDetailsState {
-  userDetails: UserDetails | null;
-  setUserDetails: (data: UserDetails | null) => void;
+interface UserProfileState {
+  userProfile: UserProfile | null;
+  setUserProfile: (data: UserProfile | null) => void;
 }
 
-export const useUserDetailsState = create<UserDetailsState>((set) => ({
-  userDetails: null,
-  setUserDetails: (data) => set({ userDetails: data }),
+export const useUserProfileState = create<UserProfileState>((set) => ({
+  userProfile: null,
+  setUserProfile: (data) => set({ userProfile: data }),
 }));

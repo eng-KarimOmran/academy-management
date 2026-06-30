@@ -2,7 +2,6 @@ import z from "zod";
 
 import {
   booleanQuery,
-  id,
   password,
   phone,
   personName

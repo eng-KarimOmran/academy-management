@@ -10,7 +10,7 @@ import { columns } from "./columns";
 
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import type { GetAllLedgerTransactionsDto } from "@/DTOs/ledgerTransactions.dto";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 import type { LedgerTransaction } from "@/types/ledgerTransaction";
 
 export default function TransactionsPage() {

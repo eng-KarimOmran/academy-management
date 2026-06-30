@@ -6,7 +6,7 @@ import {
   phone,
   personName,
   source,
-} from "../validations/common.validation";
+} from "../lib/common.validation";
 
 export const CreateClientSchema = {
   body: z.object({

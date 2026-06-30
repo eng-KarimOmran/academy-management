@@ -7,9 +7,9 @@ import {
   limit,
   positiveNumber,
   boolean,
-  userRole,
   booleanQuery,
-} from "@/validations/common.validation";
+  jobProfileType
+} from "@/lib/common.validation";
 
 export const CreateUserSchema = {
   body: z.object({
@@ -40,7 +40,7 @@ export const GetAllUsersSchema = {
     page: positiveNumber,
     limit: limit,
     search: z.string().optional(),
-    role: userRole.optional(),
+    jobProfileType: jobProfileType.optional(),
     isActive: booleanQuery.optional(),
   }),
 };

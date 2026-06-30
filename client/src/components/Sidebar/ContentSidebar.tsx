@@ -8,13 +8,11 @@ import {
 } from "../ui/sidebar";
 import { Link, useLocation } from "react-router-dom";
 import { getDashboardRoutes } from "@/lib/getDashboardRoutes";
-import { useUserDetailsState } from "@/store/UserDetailsState";
 
 export default function ContentSidebar() {
   const currentPath = useLocation().pathname;
-  const { userDetails } = useUserDetailsState();
 
-  const links = getDashboardRoutes(userDetails).filter(
+  const links = getDashboardRoutes().filter(
     (r) => r.showInNavbar === true,
   );
 

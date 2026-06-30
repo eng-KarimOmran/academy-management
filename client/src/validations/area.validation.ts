@@ -8,7 +8,7 @@ import {
   boolean,
   supportType,
   booleanQuery,
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const CreateAreaSchema = {
   params: z.object({ academyId: id }),

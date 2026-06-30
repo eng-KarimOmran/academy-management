@@ -15,7 +15,6 @@ export const CreateUserSchema = {
   body: z.object({
     name: personName,
     phone,
-    email: z.email().optional()
   }),
 };
 

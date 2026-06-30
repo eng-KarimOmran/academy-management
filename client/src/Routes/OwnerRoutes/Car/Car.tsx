@@ -9,7 +9,7 @@ import AddCar from "./Forms/AddCar";
 import ActionsCar from "./ActionsCar";
 import { columns } from "./columns";
 import type { GetAllDto } from "@/DTOs/car.dto";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 
 export default function CarPage() {
   const { data, isLoading, isFetching } = useAppQuery<GetAllDto, Car>({

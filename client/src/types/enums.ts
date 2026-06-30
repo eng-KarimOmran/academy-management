@@ -1,11 +1,10 @@
-export const Role = {
-  OWNER: "OWNER",
+export const JobProfileType = {
   SECRETARY: "SECRETARY",
   CAPTAIN: "CAPTAIN",
   MANAGER: "MANAGER",
 } as const;
 
-export type Role = (typeof Role)[keyof typeof Role];
+export type JobProfileType = (typeof JobProfileType)[keyof typeof JobProfileType];
 
 export const Transmission = {
   MANUAL: "MANUAL",
@@ -80,23 +79,6 @@ export const ClientSource = {
 
 export type ClientSource = (typeof ClientSource)[keyof typeof ClientSource];
 
-export const LedgerEffect = {
-  CREDIT: "CREDIT",
-  DEBIT: "DEBIT",
-} as const;
-
-export type LedgerEffect = (typeof LedgerEffect)[keyof typeof LedgerEffect];
-
-export const ReferenceCategory = {
-  LESSON: "lessonId",
-  PAYMENT: "paymentId",
-  LEDGER: "ledgerId",
-  SUBSCRIPTION: "subscriptionId",
-} as const;
-
-export type ReferenceCategory =
-  (typeof ReferenceCategory)[keyof typeof ReferenceCategory];
-
 export const TransactionType = {
   CUSTOMER_PAYMENT: "CUSTOMER_PAYMENT",
   CUSTOMER_REFUND: "CUSTOMER_REFUND",
@@ -107,12 +89,3 @@ export const TransactionType = {
 
 export type TransactionType =
   (typeof TransactionType)[keyof typeof TransactionType];
-
-export const TransactionParty = {
-  ACADEMY: "ACADEMY",
-  USER: "USER",
-  SUBSCRIPTION: "SUBSCRIPTION",
-} as const;
-
-export type TransactionParty =
-  (typeof TransactionParty)[keyof typeof TransactionParty];

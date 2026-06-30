@@ -6,7 +6,7 @@ import {
   paymentMethod,
   price,
   transactionType
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const getEmployeesBalancesSchema = {
   params: z.object({ academyId: id }),

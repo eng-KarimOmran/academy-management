@@ -4,7 +4,7 @@ import {
   limit,
   positiveNumber,
   price,
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const CreateSecretarySchema = {
   params: z.object({ academyId: id }),

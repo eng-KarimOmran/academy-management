@@ -8,7 +8,7 @@ import {
   price,
   supportType,
   booleanQuery,
-} from "@/validations/common.validation";
+} from "@/lib/common.validation";
 
 export const CreateCaptainSchema = {
   params: z.object({ academyId: id }),

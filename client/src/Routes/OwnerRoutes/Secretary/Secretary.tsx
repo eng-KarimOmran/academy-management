@@ -10,7 +10,7 @@ import { columns } from "./columns";
 
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import type { GetAllDto } from "@/DTOs/secretary.dto";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 
 export default function SecretaryPage() {
   const { activeAcademy } = useActiveAcademyState();

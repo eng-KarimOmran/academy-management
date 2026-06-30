@@ -1,59 +1,44 @@
-import DashboardLayout from "@/Layout/DashboardLayout/DashboardLayout";
-import ProtectedLayout from "@/Layout/ProtectedLayout/ProtectedLayout";
-import { getDashboardRoutes } from "@/lib/getDashboardRoutes";
-import ChangePassword from "@/Routes/AuthRoutes/ChangePassword/ChangePassword";
-import NotFound from "@/Routes/PublicRoutes/NotFound/NotFound";
-import { useUserDetailsState } from "@/store/UserDetailsState";
-import type { ReactNode } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CustomDialog from "../Dialog/CustomDialog";
-import Login from "@/Routes/AuthRoutes/Login/Login";
+import { getDashboardRoutes } from "@/lib/getDashboardRoutes";
 import AuthLayout from "@/Layout/AuthLayout/AuthLayout";
-import SignUp from "@/Routes/AuthRoutes/SignUp/SignUp";
-import { TooltipProvider } from "../ui/tooltip";
-import { Toaster } from "sonner";
+import ProtectedLayout from "@/Layout/ProtectedLayout/ProtectedLayout";
+import NotFound from "@/Routes/PublicRoutes/NotFound/NotFound";
+import DashboardLayout from "@/Layout/DashboardLayout/DashboardLayout";
+import LoginPage from "@/features/auth/pages/Login";
+import SignUpPage from "@/features/auth/pages/SignUp";
+import ChangePasswordPage from "@/features/auth/pages/ChangePassword";
 
-export interface AppRoute {
-  path: string;
-  element: ReactNode;
-  label?: string;
-  icon?: ReactNode;
-  showInNavbar?: boolean;
-}
 
 export default function AppRoutes() {
-  const { userDetails } = useUserDetailsState();
-  const authorizedRoutes = getDashboardRoutes(userDetails);
+  const authorizedRoutes = getDashboardRoutes();
 
   return (
-    <TooltipProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<AuthLayout />}>
-            <Route index element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AuthLayout />}>
+          <Route index element={<LoginPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+        </Route>
+
+        <Route element={<ProtectedLayout />}>
+          <Route path="change-password" element={<ChangePasswordPage />} />
+
+          <Route path="dashboard" element={<DashboardLayout />}>
+            {authorizedRoutes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
           </Route>
+        </Route>
 
-          <Route element={<ProtectedLayout />}>
-            <Route path="change-password" element={<ChangePassword />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
-            <Route path="dashboard" element={<DashboardLayout />}>
-              {authorizedRoutes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))}
-            </Route>
-
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-
-        <CustomDialog />
-      </BrowserRouter>
-      <Toaster richColors position="top-center" />
-    </TooltipProvider>
+      <CustomDialog />
+    </BrowserRouter>
   );
 }

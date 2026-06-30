@@ -1,4 +1,3 @@
-import { UserGetPayload } from '../../../prisma/generated/models';
 import { PaginatedResponse } from '../../shared/types/types';
 import { User } from './../../../prisma/generated/browser';
 import { CreateUserDto, DeleteUserDto, GetAllUsersDto, GetUserDetailsDto, NewPasswordDto, UpdateUserDto } from './user.dto';

@@ -8,7 +8,7 @@ import type { Area } from "@/types/area";
 import AddArea from "./Forms/AddArea";
 import ActionsArea from "./ActionsArea";
 import { columns } from "./columns";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 import type { GetAllDto } from "@/DTOs/area.dto";
 
 export default function AreaPage() {

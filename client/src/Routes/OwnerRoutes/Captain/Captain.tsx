@@ -10,7 +10,7 @@ import { columns } from "./columns";
 
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 import type { GetAllDto } from "@/DTOs/captain.dto";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 
 export default function CaptainPage() {
   const { activeAcademy } = useActiveAcademyState();

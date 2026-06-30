@@ -86,17 +86,16 @@ export const futureDate = z.coerce
 
 // --- Enums Validation ---
 
-export const supportType = z.enum(SupportType);
-export const transmission = z.enum(Transmission);
-export const paymentMethod = z.enum(PaymentMethod);
-export const lessonStatus = z.enum(LessonStatus);
-export const subscriptionStatus = z.enum(SubscriptionStatus);
-export const clientSource = z.enum(ClientSource);
-export const jobProfileType = z.enum(JobProfileType);
-export const transactionType = z.enum(TransactionType);
-export const platform = z.enum(Platform);
-export const ledgerTransactionStatus = z.enum(LedgerTransactionStatus);
-
+export const supportType = z.enum(SupportType, "نوع الدعم غير صالح");
+export const transmission = z.enum(Transmission, "نوع الدعم غير صالح");
+export const paymentMethod = z.enum(PaymentMethod, "طريقة الدفع غير صالحة");
+export const lessonStatus = z.enum(LessonStatus, "حالة الحصة غير صالحة");
+export const subscriptionStatus = z.enum(SubscriptionStatus, "حالة الاشتراك غير صالحة");
+export const clientSource = z.enum(ClientSource, "مصدر العميل غير صالح");
+export const jobProfileType = z.enum(JobProfileType, "نوع الملف الوظيفي غير صالح");
+export const transactionType = z.enum(TransactionType, "نوع العملية غير صالح");
+export const platform = z.enum(Platform, "المنصة غير صالحة");
+export const ledgerTransactionStatus = z.enum(LedgerTransactionStatus, "حالة عملية الدفع غير صالحة")
 export const booleanQuery = z.enum(["true", "false"]).transform((value) => value === "true");
 
 export const boolean = z.boolean();

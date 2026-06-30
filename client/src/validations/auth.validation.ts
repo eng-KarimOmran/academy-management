@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { booleanQuery, id, password, phone } from "./common.validation";
+import { booleanQuery, id, password, phone } from "../lib/common.validation";
 
 export const LoginSchema = {
   body: z.object({ phone, password }),

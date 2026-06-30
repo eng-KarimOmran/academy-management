@@ -1,6 +1,5 @@
 export const enumTranslations = {
   // Role
-  OWNER: "المالك",
   SECRETARY: "سكرتير",
   CAPTAIN: "مدرب",
   MANAGER: "مدير",

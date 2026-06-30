@@ -197,7 +197,7 @@ model Subscription {
 }
 
 enum JobProfileType {
-  TRAINER
+  CAPTAIN
   SECRETARY
   MANAGER
 }

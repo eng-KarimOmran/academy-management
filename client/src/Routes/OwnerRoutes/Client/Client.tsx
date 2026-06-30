@@ -11,7 +11,7 @@ import ActionsClient from "./ActionsClient";
 
 import { columns } from "./columns";
 import type { GetAllClientsDto } from "@/DTOs/client.dto";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
 
 export default function ClientsPage() {
@@ -31,7 +31,7 @@ export default function ClientsPage() {
       keepPrevious: true,
       filters: ["source"],
     },
-  );
+  )
 
   const filters = [
     {
@@ -39,7 +39,6 @@ export default function ClientsPage() {
       option: [
         {
           key: "source",
-          label: "منصة",
           val: "PLATFORM",
         },
         {

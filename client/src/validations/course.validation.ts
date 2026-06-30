@@ -7,7 +7,7 @@ import {
   boolean,
   price,
   booleanQuery,
-} from "../validations/common.validation";
+} from "../lib/common.validation";
 
 export const CreateSchema = {
   params: z.object({ academyId: id }),

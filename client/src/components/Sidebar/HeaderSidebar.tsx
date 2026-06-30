@@ -19,18 +19,18 @@ import {
   RiStackFill,
 } from "@remixicon/react";
 import { useActiveAcademyState } from "@/store/ActiveAcademyState";
-import { useUserDetailsState } from "@/store/UserDetailsState";
+import { useUserProfileState } from "@/store/UserDetailsState";
 import { Link } from "react-router-dom";
 import { useEffect, useMemo } from "react";
 
 export default function HeaderSidebar() {
   const { isMobile } = useSidebar();
-  const { userDetails } = useUserDetailsState();
-  const isOwner = !!userDetails?.academies?.length;
+  const { userProfile } = useUserProfileState();
+  const isOwner = !!userProfile?.academies?.length;
 
   const academies = useMemo(
-    () => (isOwner ? userDetails.academies : []),
-    [isOwner, userDetails],
+    () => (isOwner ? userProfile.academies : []),
+    [isOwner, userProfile],
   );
 
   const { activeAcademy, setActiveAcademy } = useActiveAcademyState();

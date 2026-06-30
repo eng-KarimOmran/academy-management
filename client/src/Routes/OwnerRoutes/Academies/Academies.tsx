@@ -7,7 +7,7 @@ import type { Academy } from "@/types/academy";
 
 import Add from "./Forms/AddAcademy";
 import ActionsAcademy from "./ActionsAcademy";
-import useAppQuery from "@/hooks/useAppQuery";
+import useAppQuery from "@/hooks/useAppQueryGetAll";
 import type { GetAllAcademiesDto } from "@/DTOs/academy.dto";
 import { columns } from "./columns";
 

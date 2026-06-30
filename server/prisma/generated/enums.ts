@@ -53,7 +53,7 @@ export type Transmission = (typeof Transmission)[keyof typeof Transmission]
 
 
 export const JobProfileType = {
-  TRAINER: 'TRAINER',
+  CAPTAIN: 'CAPTAIN',
   SECRETARY: 'SECRETARY',
   MANAGER: 'MANAGER'
 } as const

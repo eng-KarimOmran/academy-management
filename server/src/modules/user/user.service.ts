@@ -10,21 +10,13 @@ import { omit } from "../../shared/utils/omit";
 
 const UserService: IUserService = {
   async createUser({ body }) {
-    const { name, phone, email } = body;
+    const { name, phone } = body;
 
     const userExPhone = await prisma.user.findUnique({
       where: { phone },
     });
 
     if (userExPhone) throw ApiError.Conflict("PHONE_ALREADY_EXISTS");
-
-    if (email) {
-      const userExEmail = await prisma.user.findUnique({
-        where: { email },
-      });
-      if (userExEmail) throw ApiError.Conflict("EMAIL_ALREADY_EXISTS");
-    }
-
 
     const hashPassword = await HashHelper.hash(env.app.DEFAULT_USER_PASSWORD);
 
@@ -127,6 +119,7 @@ const UserService: IUserService = {
       where: { id: userId },
       include: {
         academies: true,
+        jobProfile: { include: { academy: true } },
       }
     });
 
@@ -174,7 +167,7 @@ const UserService: IUserService = {
     });
 
     if (!user) throw ApiError.NotFound("User");
-    
+
     return omit(user, ["logoutAt", "password"])
   },
 };
